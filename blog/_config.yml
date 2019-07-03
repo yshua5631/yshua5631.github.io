@@ -81,3 +81,10 @@ deploy:
   type: git
   repo: git@github.com:yshua5631/yshua5631.github.io.git
   branch: master
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+local_search:
+  enable: true
