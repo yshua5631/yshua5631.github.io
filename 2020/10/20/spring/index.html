@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也">
+<meta name="keywords" content="Java,框架,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java之武林盟主 - Spring">
+<meta property="og:url" content="http://yoursite.com/2020/10/20/spring/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/spring-framework-runtime.jpeg">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.191Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java之武林盟主 - Spring">
+<meta name="twitter:description" content="许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/spring-framework-runtime.jpeg">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/20/spring/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java之武林盟主 - Spring | 迷途书童</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迷途书童</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/20/spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java之武林盟主 - Spring
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-20 11:12:01" itemprop="dateCreated datePublished" datetime="2020-10-20T11:12:01+08:00">2020-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/20/spring/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/20/spring/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
+<ul>
+<li>什么是Spring?</li>
+<li>为什么是Spring?</li>
+<li>如何实现一个Spring?</li>
+<li>Spring实践？</li>
+<li>Spring的发展</li>
+<li>拾遗</li>
+</ul>
+<a id="more"></a>
+<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
+<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
+<ul>
+<li>IOC</li>
+<li>AOP<br>这是Spring其他的功能的基础和起点</li>
+</ul>
+<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
+<ul>
+<li>一个最低的JDK版本 </li>
+<li>特定的JavaEE规范 </li>
+</ul>
+<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
+<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
+<li><p>基于POJO的轻量级和最小侵入编程</p>
+<ul>
+<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
+</ul>
+</li>
+<li><p>DI和面对接口实现松耦合编程</p>
+<ul>
+<li>隔离了接口和实现</li>
+</ul>
+</li>
+<li><p>基于AOP和惯例的声明式编程</p>
+<ul>
+<li>AOP是为了隔离了核心功能和非核心功能</li>
+<li>惯例是用户熟悉的事物</li>
+</ul>
+</li>
+<li><p>基于AOP和模板减少样板式代码</p>
+<ul>
+<li>模版说明是一致的编程模型，减少重复代码.</li>
+</ul>
+<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>基于上面的策略，可以总结出这些策略背后的思想</p>
+</li>
+<li><p>符合用户的心智模型 - 简单，熟悉，一致</p>
+<ul>
+<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
+<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
+</ul>
+</li>
+<li><p>隔离</p>
+<ul>
+<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
+<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
+</ul>
+<p>上面这两大思想可以用来指导架构设计和类库设计.</p>
+<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p><img src="/images/2020/spring-framework-runtime.jpeg" alt></p>
+<ul>
+<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石</li>
+<li>Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
+<li>如何定义一个Bean</li>
+<li>如何创建一个Bean</li>
+<li>如何解析一个Bean</li>
+</ul>
+</li>
+<li>Context<br>Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力<ul>
+<li>获得Bean列表</li>
+<li>解析资源</li>
+<li>发布事件</li>
+<li>国际化</li>
+</ul>
+</li>
+<li>Core<br>Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
+<ul>
+<li><p>前后端不分离</p>
+</li>
+<li><p>前后端分离</p>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
+</li>
+<li><p>关系型数据</p>
+</li>
+<li><p>非关系型数据</p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>对于大多数系统，必须回答两个问题</p>
+</li>
+<li><p>这个用户是谁？</p>
+</li>
+<li><p>这个用户能做什么？</p>
+<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
+</li>
+<li><p>系统A调用系统B的接口</p>
+</li>
+<li><p>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
+</li>
+<li><p>日志</p>
+</li>
+<li><p>监控</p>
+</li>
+</ul>
+<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
+</blockquote>
+<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
+<ul>
+<li><p>没有繁琐的XML的配置</p>
+</li>
+<li><p>不需要操作Jar包之间的依赖关系</p>
+</li>
+<li><p>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</p>
+<p>两个例子</p>
+</li>
+<li><p>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</p>
+</li>
+<li><p>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。 </p>
+<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
+<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
+</blockquote>
+<p>从这里可以看出, Spring Cloud的定位和明确</p>
+</li>
+<li><p>聚焦于分布式的问题 </p>
+</li>
+<li><p>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul </p>
+<p>所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
+</li>
+<li><p>Spring Cloud Eureka - 解决了服务注册和发现的问题</p>
+</li>
+<li><p>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.</p>
+</li>
+<li><p>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.</p>
+</li>
+<li><p>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.</p>
+</li>
+<li><p>Spring Cloud Config - 解决了服务配置信息集中管理的问题</p>
+</li>
+<li><p>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</p>
+</li>
+<li><p>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</p>
+</li>
+<li><p>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题</p>
+</li>
+<li><p>Spring Cloud Feign - 简化了服务的调用方式</p>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
+<blockquote>
+<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
+</blockquote>
+<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
+<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
+<blockquote>
+<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
+</blockquote>
+<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/框架/" rel="tag"># 框架</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/18/B-plus-tree/" rel="prev" title="数据结构之B+树">
+      <i class="fa fa-chevron-left"></i> 数据结构之B+树
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/25/transaction/" rel="next" title="系统的正确性 - 事务及相关">
+      系统的正确性 - 事务及相关 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Spring"><span class="nav-number">1.</span> <span class="nav-text">什么是Spring?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是Spring"><span class="nav-number">2.</span> <span class="nav-text">为什么是Spring?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何实现一个Spring"><span class="nav-number">3.</span> <span class="nav-text">如何实现一个Spring?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体设计目标"><span class="nav-number">3.1.</span> <span class="nav-text">整体设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略"><span class="nav-number">3.2.</span> <span class="nav-text">策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#战略背后的思想"><span class="nav-number">3.3.</span> <span class="nav-text">战略背后的思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块图"><span class="nav-number">3.4.</span> <span class="nav-text">模块图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring实践？"><span class="nav-number">4.</span> <span class="nav-text">Spring实践？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#展示"><span class="nav-number">4.1.</span> <span class="nav-text">展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据"><span class="nav-number">4.2.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">4.3.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全"><span class="nav-number">4.4.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息"><span class="nav-number">4.5.</span> <span class="nav-text">消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">4.6.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的发展"><span class="nav-number">5.</span> <span class="nav-text">Spring的发展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot"><span class="nav-number">5.1.</span> <span class="nav-text">Spring Boot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Cloud"><span class="nav-number">5.2.</span> <span class="nav-text">Spring Cloud</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拾遗"><span class="nav-number">6.</span> <span class="nav-text">拾遗</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">52 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。这篇文章聚焦于传统的架构应该如何过渡到微服务架构。  传统三层架构 传统的DDD分层架构 依赖倒置的DDD分层架构 DDD 五层架构 DDD 六层架构 六边形架构 整洁架构-洋葱模型">
+<meta name="keywords" content="架构,微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务架构二三事">
+<meta property="og:url" content="http://yoursite.com/2020/09/20/mircro-services-archi/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。这篇文章聚焦于传统的架构应该如何过渡到微服务架构。  传统三层架构 传统的DDD分层架构 依赖倒置的DDD分层架构 DDD 五层架构 DDD 六层架构 六边形架构 整洁架构-洋葱模型">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/3-layers.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/rubik.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2020/ddd-traditional4-layers.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/ddd-4-layers.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/ddd-5-layers.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/hexagon.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/onion-model.png">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务架构二三事">
+<meta name="twitter:description" content="就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。这篇文章聚焦于传统的架构应该如何过渡到微服务架构。  传统三层架构 传统的DDD分层架构 依赖倒置的DDD分层架构 DDD 五层架构 DDD 六层架构 六边形架构 整洁架构-洋葱模型">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/3-layers.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/20/mircro-services-archi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>微服务架构二三事 | 迷途书童</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迷途书童</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/20/mircro-services-archi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微服务架构二三事
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-20 19:28:23" itemprop="dateCreated datePublished" datetime="2020-09-20T19:28:23+08:00">2020-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/20/mircro-services-archi/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/20/mircro-services-archi/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。<br>这篇文章聚焦于传统的架构应该如何过渡到微服务架构。</p>
+<ul>
+<li>传统三层架构</li>
+<li>传统的DDD分层架构</li>
+<li>依赖倒置的DDD分层架构</li>
+<li>DDD 五层架构</li>
+<li>DDD 六层架构</li>
+<li>六边形架构</li>
+<li>整洁架构-洋葱模型</li>
+</ul>
+<a id="more"></a>
+<h2 id="传统的三层架构"><a href="#传统的三层架构" class="headerlink" title="传统的三层架构"></a>传统的三层架构</h2><p><img src="/images/2020/3-layers.png" alt><br>人往往会忽视简单和习以为常的东西，就比如“好好学习”这句话。<br>三层架构是所有架构的基石和鼻祖，当若干年之后人们再会想架构的时候，首先想到的应该是三层架构。我们应当向三层架构致敬.<br>正如我前面的提到的《分解》，软件开发的核心原则是分解。今天是这个分解，明天是那个分解，分解和分解之间的不同是维度的不同</p>
+<p>根据奥卡姆剃刀原则，如果一个问题有两个模型可以解释，那么肯定选择最简单的那个模型。<br>想到霍金提到的一个例子</p>
+<blockquote>
+<p>两者都是正确的宇宙模型，人们既可以假定地球静止，也可以假定太阳静止来解释星球的运转，只是哥白尼的日心说具有比较简洁的优势，可以用简单的运动方程来解释太阳系行星的运转。因为用地心说来描述星球的运行将非常复杂，不但要考虑天体的旋转，还要考虑地球的自转，因此托勒密虽然制作了以地球为中心的模型，很多现象依然无法解释，不得不用偏心圆和小轮体系来进行修正.</p>
+</blockquote>
+<p>简而言之，地心说本身没有问题，只是在解释宇宙的时候更复杂，不如日心说那么简单. 这个道理通用适用于三层架构模型。</p>
+<p>三层架构不考虑实现，仅仅从概念上来说是完美的。</p>
+<ul>
+<li>数据库 - 代表了信息存储的地方，也代表了事实，可以作为企业决策的依据。</li>
+<li>数据访问层 - 这一层主要用来获取数据库信息。</li>
+<li>业务逻辑层 - 世界上一切行为都可以看作是业务逻辑，这一层主要是加工（分解和组合）信息。</li>
+<li>用户界面层 - 用来显示给用户显示信息。</li>
+</ul>
+<p>三层模型从概念上是抽象度极高的，抽象度高意味着在落地时候还需要做很多工作.</p>
+<p>基本上，在三层模型里，对任意一层，可以有如下处理</p>
+<ul>
+<li>将这一层根据需要拆解成n层</li>
+<li>将这一层和其他层合并</li>
+<li>这一层和其他层之间增加新的一层</li>
+</ul>
+<p><img src="/images/2020/rubik.jpg" alt><br>我个人很感兴趣的一件事情：</p>
+<ul>
+<li>三层架构模型能不能像魔方一样经过几次变换然后变成其他架构模型呢？</li>
+</ul>
+<h2 id="传统的DDD分层架构"><a href="#传统的DDD分层架构" class="headerlink" title="传统的DDD分层架构"></a>传统的DDD分层架构</h2><p>  <img src="/images/2020/ddd-traditional4-layers.png" alt><br>  从概念上来说, 传统的DDD4层模型可以由三层模型稍加改进得来.</p>
+<ul>
+<li><p>用户接口层， 这层对应三层当中的用户界面层. 可以有两者解读</p>
+<ul>
+<li>广义上是指UI，API</li>
+<li>狭义上是指API</li>
+</ul>
+</li>
+<li><p>应用层，组合领域层和调用其他应用层。 这层可以看成是由业务逻辑层拆解而来。</p>
+</li>
+<li><p>领域层，这是整个系统的重点，也是兵家必争之地。领域层要确保在整个系统的复用性.这层可以看成是由业务逻辑层拆解而来。这层包括</p>
+<ul>
+<li>领域服务的定义</li>
+<li>领域对象的定义</li>
+<li>领域事件的发布</li>
+</ul>
+</li>
+<li><p>基础设施层，包括缓存，队列，网关，数据库，可以对应三层的数据层.</p>
+<p>这里的特点是任何一层都可以访问基础设施层。 就好像一个组织里，大领导可以过问下层的工作细节，下层可以越级汇报给上层。</p>
+</li>
+</ul>
+<h2 id="依赖倒置的DDD分层架构"><a href="#依赖倒置的DDD分层架构" class="headerlink" title="依赖倒置的DDD分层架构"></a>依赖倒置的DDD分层架构</h2><p>  <img src="/images/2020/ddd-4-layers.png" alt><br>   相比于传统的DDD的分层，依赖倒置的分层一点点反直觉。<br>   传统的DDD分层，层和层之间的箭头流向代表着</p>
+<ul>
+<li><p>调用关系-RPC调用或者发布一个事件</p>
+<p>但是依赖倒置的DDD分层的箭头带来的确实含义完全不一样的理解</p>
+</li>
+<li><p>绿色的箭头代表的不是调用关系，因为很明显技术设施层怎么可能调用用户接口层呢？这是最明显反直觉的一点。所以这里(A-&gt;B)的绿色箭头代表着，B比A要重要，A的任何改动不会影响B,B的变化会影响A.</p>
+</li>
+<li><p>黑色的箭头代表着正常的调用。</p>
+</li>
+<li><p>这幅图最大的问题在于一个箭头有两种完全不同的语义.</p>
+<h3 id="绿色思考帽"><a href="#绿色思考帽" class="headerlink" title="绿色思考帽"></a>绿色思考帽</h3><p>想象一个人在飞机上，有四个包裹分别为用户接口层，应用层，领域层，基础设施层，这个四个包裹的重量一样，但价值不一样。现在飞机动力不足了，我们要扔掉包裹，才能让飞机有动力继续飞行. 我们会怎么扔？</p>
+</li>
+<li><p>扔第一个包裹。扔掉基础设施层，因为落地之后，换一个基础设施层就好了</p>
+</li>
+<li><p>扔第二个包裹。扔掉用户接口层，相比于其他层，用户接口层没那么重要.</p>
+</li>
+<li><p>扔第三个包裹。扔掉应用层，相比于领域层，应用层没那么重要.</p>
+<p>所以我们可以看到领域层是最重要，只要领域层在，一个业务的灵魂就在。正如我们听到的紧紧围绕在XX同志为代表的领导下，开发业务的时候同样如此，要紧密团结在领域层周围做事情.</p>
+</li>
+</ul>
+<h2 id="DDD-五层架构"><a href="#DDD-五层架构" class="headerlink" title="DDD 五层架构"></a>DDD 五层架构</h2><p>  <img src="/images/2020/ddd-5-layers.png" alt></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>  一个人在公司里是员工，可以完成上级的任务，在家里就是父亲，可以教育子女. 如何用从代码层面描述这两种场景，而且符合开发者的心智模型？</p>
+<ul>
+<li><p>张三 + 场景 (公司) -&gt; 完成上级任务</p>
+</li>
+<li><p>张三 + 场景（家里）-&gt; 教育子女</p>
+<p>一个可行的的公式：谁(Who)什么时候(When)在什么地方(where)用什么方式(How)完成了某件事(What)？基本上这个公式可以描述很多场景的行为，这样能保证描述不具备歧义性。比如：我上午骑车去超市买了瓶可乐。</p>
+<h3 id="什么是五层架构？"><a href="#什么是五层架构？" class="headerlink" title="什么是五层架构？"></a>什么是五层架构？</h3><p>五层架构也叫DCI(Data + Context + Interactive)架构，是2009年由James O. Coplien和Trygve Reenskaug共同提出.<br>DDD五层是对DDD四层的改进</p>
+</li>
+<li><p>Context层 - 由四层的domain拆解而来</p>
+<ul>
+<li>负责将领域对象变成Role</li>
+</ul>
+</li>
+<li><p>Domain层 - 由四层的domain拆解而来</p>
+<ul>
+<li>object - 描述对象的关系</li>
+<li>role - 用来给对象创建一个 role, 员工或父亲。 这个Role可能以后会带来歧义，因为一些权限验证框架里面也由Role这个概念.</li>
+</ul>
+<h3 id="什么时候应该用五层架构？"><a href="#什么时候应该用五层架构？" class="headerlink" title="什么时候应该用五层架构？"></a>什么时候应该用五层架构？</h3></li>
+<li><p>梳理完整个业务之后，如果一个实体在业务中有多个不同的称呼，这个时候就应当用五层架构模型，如果实体在业务中的称呼是唯一的，那们就四层模型就够了。可能有朋友要问了，如果用四层模型，现在业务实体的称呼只有一个，那将来实体要是有多个称呼可怎么办呢？那就演化到五层。</p>
+</li>
+</ul>
+<h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png" alt></p>
+<h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png" alt></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/架构/" rel="tag"># 架构</a>
+              <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/18/system-restrain-power/" rel="prev" title="系统的约束和动力">
+      <i class="fa fa-chevron-left"></i> 系统的约束和动力
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/21/docker/" rel="next" title="Docker初回忆">
+      Docker初回忆 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统的三层架构"><span class="nav-number">1.</span> <span class="nav-text">传统的三层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统的DDD分层架构"><span class="nav-number">2.</span> <span class="nav-text">传统的DDD分层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖倒置的DDD分层架构"><span class="nav-number">3.</span> <span class="nav-text">依赖倒置的DDD分层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绿色思考帽"><span class="nav-number">3.1.</span> <span class="nav-text">绿色思考帽</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDD-五层架构"><span class="nav-number">4.</span> <span class="nav-text">DDD 五层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">4.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是五层架构？"><span class="nav-number">4.2.</span> <span class="nav-text">什么是五层架构？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候应该用五层架构？"><span class="nav-number">4.3.</span> <span class="nav-text">什么时候应该用五层架构？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDD-六层架构"><span class="nav-number">5.</span> <span class="nav-text">DDD 六层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六边形架构"><span class="nav-number">6.</span> <span class="nav-text">六边形架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整洁架构-洋葱模型"><span class="nav-number">7.</span> <span class="nav-text">整洁架构-洋葱模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">52 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

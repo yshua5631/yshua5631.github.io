@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。  这篇">
+<meta name="keywords" content="架构,微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闻香识微服务">
+<meta property="og:url" content="http://yoursite.com/2020/09/14/micro-services/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。  这篇">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/travel.png">
+<meta property="og:image" content="http://yoursite.com/images/2020/restraunt.png">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="闻香识微服务">
+<meta name="twitter:description" content="微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。  这篇">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/travel.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/14/micro-services/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>闻香识微服务 | 迷途书童</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迷途书童</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/14/micro-services/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          闻香识微服务
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-14 22:48:29" itemprop="dateCreated datePublished" datetime="2020-09-14T22:48:29+08:00">2020-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/14/micro-services/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/14/micro-services/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
+<p><img src="/images/2020/travel.png" alt><br>这篇文章不试图搞清楚微服务的确切含义是什么，因为这这样做是徒劳无功的。<br>本文试图探索</p>
+<ul>
+<li>微服务大概是什么？</li>
+<li>为什么是微服务？</li>
+<li>要实现一个微服务，它应该具备哪些行为和特征？</li>
+<li>微服务的未来</li>
+<li>微服务带来的副作用</li>
+</ul>
+<a id="more"></a>
+<h2 id="微服务大概是什么？"><a href="#微服务大概是什么？" class="headerlink" title="微服务大概是什么？"></a>微服务大概是什么？</h2><p>名不正，则言不顺，言不顺，则事不成。一个事物的准确定义是讨论这个事物的前提以及是后续对这个事物采取行动的基础. 正如上面所说，微服务没有被严格的定义。所以这里不能采取学院派的手法来讨论微服务。</p>
+<p>现在假设有个用户服务，这个用户服务支持：添加，删除，修改和查询用户。用户的信息包括姓名，电话，性别，职位，地址等等.<br>那这个用户服务是不是微服务， 至少现在它看来是微服务。但这还不够，它还需要支持</p>
+<ul>
+<li>从实现的角度来看，代码在物理上是隔离的.<ul>
+<li>如果代码不是物理上隔离的，这就会导致用户服务，地址服务，订单服务在同一个 jar文件里，这样服务就不能扩展了。 所以代码必须是物理上隔离的，这才有动态扩展的可能行。动态扩展了多个实例之后，也就有了容错性。</li>
+</ul>
+</li>
+<li>从设计上来说，微服务职责是有边界的。如果想从用户服务获取用户的工作单位呢？不好意思，没有，请去地址服务里拿。怎么确定这个边界呢？这是另外一个大的话题.</li>
+</ul>
+<p>上面这两点是我认为微服务必须具备的。这两点其实隐含了一些前提和衍生了一些必然的结论. 比如，代码库是隔离的，意味着用Java语言写的微服务可以被用Js写的微服务替代. 如果一个服务职责边界清晰且足够小的话，那们意味着这个服务是可以被组合的。</p>
+<p>应该不会有比用户服务更简单的服务， 但不是说所有微服务都应该像用户服务这么简单。</p>
+<p><img src="/images/2020/restraunt.png" alt><br>一家饭店有一个厨房，两个服务员.<br>厨师的主要职责是：烧菜。<br>服务员的主要职责：切菜，上菜，收拾桌子。<br>如果以后客流量激增，那么可以再招一个厨师和三个服务员, 很显然如果上面的职责集中到一个人身上，是无法做到细力度的控制的.<br>这里有个问题，切菜应该服务员负责还是厨师负责？没有标准答案，这个需要领域专家从统计学上给出建议. 这也大概是软件设计的魅力吧</p>
+<h2 id="为什么是微服务？"><a href="#为什么是微服务？" class="headerlink" title="为什么是微服务？"></a>为什么是微服务？</h2><p>因为微服务的本质就是拆分一个系统，系统拆解的越小，这一小部分就更容易被理解和控制。 分解的具体讨论可参考博文《分解》</p>
+<h2 id="要实现一个微服务，它应该具备哪些行为和特征？"><a href="#要实现一个微服务，它应该具备哪些行为和特征？" class="headerlink" title="要实现一个微服务，它应该具备哪些行为和特征？"></a>要实现一个微服务，它应该具备哪些行为和特征？</h2><p>理想的情况应该是：</p>
+<ul>
+<li><p>弹性扩展<br>量变引起质变。 当用户的数量上升到一定的规模之后，只需要增加相应的机器实例就可以解决问题，这是最理想的解决方案。</p>
+<ul>
+<li>如何让一个服务可以有多个一模一样的实例? - docker或者虚拟机 </li>
+<li>请求一个服务的时候，如何选择某一个服务实例？- 负载均衡</li>
+<li>不同的请求如何对应到不同的服务实例？ - 路由</li>
+<li>一些服务会有各种各样不同的参数，比如JVM参数，数据库连接字符串，如何管理这些参数？- 配置中心</li>
+<li>这些服务的网络地址是动态变化的，如何管理动态变化的网络地址？ - 服务注册中心.</li>
+<li>一个用户进来，哪些服务他可以访问，哪些服务他不可以访问 - 鉴权</li>
+<li>用户的请求很多，如何限制用户的请求？ - 限流</li>
+<li>如果一个服务因为某种原因不可用了，即使增加实例也没用，那么就应当让请求不要继续这个服务了 - 熔断</li>
+<li>服务A调用服务B，然后调用服务C， 如何知道这个调用链？ - 监控</li>
+</ul>
+</li>
+<li><p>业务演化<br>业务的改变大体有两个</p>
+<ul>
+<li>维护现有系统</li>
+<li>开发新的功能</li>
+</ul>
+<p>但无论是维护现有还是开发新的功能，我们不希望看到下面场景</p>
+<ul>
+<li>开发一个新的功能很难，不知道怎么和现有系统集成。</li>
+<li>维护一个功能很难， 就好像拆炸弹一样，生怕碰到不该碰的东西，一碰就爆炸，就是这个系统太脆弱了。</li>
+</ul>
+</li>
+</ul>
+<h2 id="微服务的未来"><a href="#微服务的未来" class="headerlink" title="微服务的未来"></a>微服务的未来</h2><ul>
+<li>从分解的角度来说，基本上不可能拆的更小了，再拆连裤子都拆没了。上面提到的用户服务可以算是最小的微服务.</li>
+<li>从规范的角度来说，对鉴权，限流，网关，负载均衡,配置中心等等形成一个标准。每个实现都遵循相同标准的时候，可以有效地降低开发者的认知成本，符合开发者的心智模型.<ul>
+<li>正例：Java对依赖注入有JSR330的规范，这样不同的依赖注入框架可以遵守相同的标准</li>
+<li>反例：JS模块化方案AMD和CMD. </li>
+</ul>
+</li>
+<li>一切可以自动化都应该自动化或者必将自动化。当然，这个结论不仅仅适用于微服务。</li>
+<li>更好的性能. 比如性能更高的传输协议。</li>
+</ul>
+<h2 id="微服务带来的副作用"><a href="#微服务带来的副作用" class="headerlink" title="微服务带来的副作用"></a>微服务带来的副作用</h2><p>当大家沉浸在微服务真香的状态中，不要忘记微服务是有代价的.</p>
+<ul>
+<li>网络之间的通信。比如服务A调用服务B的时延是50ms, 如果调用链是A, B, C, D，那么这个时延就更长了，只要有网络之间通信，就存在不确定性.</li>
+<li>当微服务数量很多，且有不同团队维护的时候，这个沟通成本和维护成本是非线性的.</li>
+<li>需要一个掌握全貌的人，如果不能掌握业务全貌，出了问题都不知道根源在哪里. 根据鸡蛋不能放在一个篮子的原则，掌握全貌的人最好多于一个.</li>
+<li>相比于传统MVC开发团队，微服务对开发者的要求要高些.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/架构/" rel="tag"># 架构</a>
+              <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/14/redux-design/" rel="prev" title="Redux设计及相关">
+      <i class="fa fa-chevron-left"></i> Redux设计及相关
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/15/DDD/" rel="next" title="浮浮沉沉 - DDD">
+      浮浮沉沉 - DDD <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务大概是什么？"><span class="nav-number">1.</span> <span class="nav-text">微服务大概是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是微服务？"><span class="nav-number">2.</span> <span class="nav-text">为什么是微服务？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要实现一个微服务，它应该具备哪些行为和特征？"><span class="nav-number">3.</span> <span class="nav-text">要实现一个微服务，它应该具备哪些行为和特征？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务的未来"><span class="nav-number">4.</span> <span class="nav-text">微服务的未来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务带来的副作用"><span class="nav-number">5.</span> <span class="nav-text">微服务带来的副作用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">52 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

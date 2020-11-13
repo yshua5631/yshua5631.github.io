@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在  CPU - CPU缓存 操作系统 - Page Cache 数据库 - 数据库缓存 浏览器 - 浏览器缓存  这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题  缓存概述 Redis历史 什么是Redis 为什么是Redis Redis是如何实现的 Redis实践 Redis的未来">
+<meta name="keywords" content="缓存,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java之效率管家 - Redis">
+<meta property="og:url" content="http://yoursite.com/2020/10/15/cache/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在  CPU - CPU缓存 操作系统 - Page Cache 数据库 - 数据库缓存 浏览器 - 浏览器缓存  这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题  缓存概述 Redis历史 什么是Redis 为什么是Redis Redis是如何实现的 Redis实践 Redis的未来">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.186Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java之效率管家 - Redis">
+<meta name="twitter:description" content="计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在  CPU - CPU缓存 操作系统 - Page Cache 数据库 - 数据库缓存 浏览器 - 浏览器缓存  这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题  缓存概述 Redis历史 什么是Redis 为什么是Redis Redis是如何实现的 Redis实践 Redis的未来">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/15/cache/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java之效率管家 - Redis | 迷途书童</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迷途书童</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/15/cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java之效率管家 - Redis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-15 11:09:13" itemprop="dateCreated datePublished" datetime="2020-10-15T11:09:13+08:00">2020-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index"><span itemprop="name">缓存</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/15/cache/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/15/cache/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
+<ul>
+<li>CPU - CPU缓存</li>
+<li>操作系统 - Page Cache</li>
+<li>数据库 - 数据库缓存</li>
+<li>浏览器 - 浏览器缓存</li>
+</ul>
+<p>这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题</p>
+<ul>
+<li>缓存概述</li>
+<li>Redis历史</li>
+<li>什么是Redis</li>
+<li>为什么是Redis</li>
+<li>Redis是如何实现的</li>
+<li>Redis实践</li>
+<li>Redis的未来</li>
+</ul>
+<a id="more"></a>
+<h2 id="缓存概述"><a href="#缓存概述" class="headerlink" title="缓存概述"></a>缓存概述</h2><h3 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h3><p>  没有看到缓存的通用定义，这里尝试定义一下. 我们有系统X, C, D，这三个系统有如下特征</p>
+<ul>
+<li><p>系统X可以从C和D拿到同样的数据</p>
+</li>
+<li><p>系统X从C拿到的数据比从D拿到的数据更快</p>
+</li>
+<li><p>系统C的数据是来自于D</p>
+<p>如果上述三个条件满足，那么系统C可以称做为D的缓存.</p>
+<h3 id="为什么需要缓存"><a href="#为什么需要缓存" class="headerlink" title="为什么需要缓存"></a>为什么需要缓存</h3><p>如果系统D满足不了单位时间内多次请求，那么系统C一定是存在的. 原因是</p>
+</li>
+<li><p>系统C比系统D更快，那么可以提供更好的用户体验.</p>
+<h3 id="实现一个缓存会遇到什么问题？"><a href="#实现一个缓存会遇到什么问题？" class="headerlink" title="实现一个缓存会遇到什么问题？"></a>实现一个缓存会遇到什么问题？</h3><ul>
+<li>缓存更新策略<ul>
+<li>Cache Aside Pattern</li>
+<li>Write / Read Through Pattern</li>
+<li>Write Behind Caching Pattern</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis历史"><a href="#Redis历史" class="headerlink" title="Redis历史"></a>Redis历史</h2><p>2008年，一家意大利公司Merzia推出了一个几个基于Mysql的实时统计系统，但是该公司的创始人Salvatore Sanfilippo对这套系统感到失望，于是自己对这套系统量身定做了一个数据库，且在2009年开发完成, 这就是Redis. 所以这就是比较典型的思路：有了一个痛点，然后才有了一个技术。 而现在不少公司的思路是反的：不管有没有痛点，先用高大上的技术再说.<br>2010年VMware公司赞助Redis, Salvatore Sanfilippo和另外一位开发者加入了VMware公司，全职开发Redis. 所以也是当时的一个痛点问题，改变了作者的人生之路.</p>
+<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>我看看官网上Redis的定义:</p>
+<blockquote>
+<p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker</p>
+</blockquote>
+<p>在我们的印象中，数据库是指MySql, Sql Server，或者Oracle. 所以从这里看得出Redis的定位是多种多样的，可以做缓存，数据库或者消息队列.<br>但有点事实可以确定</p>
+<ul>
+<li>相比于Kafka, Redis的消息队列没那么专业</li>
+</ul>
+<p>从核心行为的角度来看：Redis是一个支持Key, value的存储系统. 换句话说, Redis的灵魂在于Key,Value.</p>
+<h2 id="为什么是Redis"><a href="#为什么是Redis" class="headerlink" title="为什么是Redis"></a>为什么是Redis</h2><h2 id="Redis是如何实现的"><a href="#Redis是如何实现的" class="headerlink" title="Redis是如何实现的"></a>Redis是如何实现的</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><ul>
+<li><p>如何又快又好的实现一个Key, Value存储？</p>
+<p>所以可以设想一个最简单的Key, Value的存储， 它应该支持</p>
+</li>
+<li><p>支持数据的增删改查</p>
+</li>
+<li><p>数据类型多样</p>
+</li>
+<li><p>最好支持集群功能 - 或者说任何的框架都应该支持集群功能</p>
+<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><p>N/A</p>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p>Redis也是基于Reactor模式来实现的，这一点和Netty类似.</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3></li>
+<li><p>高性能视角 - 对应快这个指标</p>
+</li>
+<li><p>高可用视角 - 对应好这个指标</p>
+<ul>
+<li>分布式维度<ul>
+<li>主从库模式<ul>
+<li>全量复制</li>
+<li>基于长连接的命令传播</li>
+<li>增量复制 </li>
+</ul>
+</li>
+<li>哨兵机制</li>
+<li>集群</li>
+</ul>
+</li>
+<li>容错维度<ul>
+<li>AOF日志 - 先更新缓存，然后再更新日志，这样可以得出一个结论：只有日志里有记录，就一定有执行过缓存的命令 。<ul>
+<li>优点</li>
+<li>缺点</li>
+</ul>
+</li>
+<li>内存快照 -  RDB 文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>可扩展视角 - 对应好这个指标</p>
+<ul>
+<li>数据分片</li>
+<li>负载均衡</li>
+</ul>
+</li>
+<li><p>Redis API</p>
+<h3 id="Redis用到的数据结构"><a href="#Redis用到的数据结构" class="headerlink" title="Redis用到的数据结构"></a>Redis用到的数据结构</h3></li>
+<li><p>跳表</p>
+</li>
+<li><p>布隆过滤器</p>
+</li>
+<li><p>位图</p>
+</li>
+<li><p>延时队列</p>
+<h3 id="Redis用到的算法"><a href="#Redis用到的算法" class="headerlink" title="Redis用到的算法"></a>Redis用到的算法</h3></li>
+<li><p>限流算法</p>
+</li>
+<li><p>GeoHash</p>
+</li>
+</ul>
+<h2 id="Redis的实践"><a href="#Redis的实践" class="headerlink" title="Redis的实践"></a>Redis的实践</h2><ul>
+<li>Redis做消息队列，业界有日活百万的案例.</li>
+<li>Redis所在的宿主机挂了之后怎么办？</li>
+</ul>
+<h2 id="Redis的未来"><a href="#Redis的未来" class="headerlink" title="Redis的未来"></a>Redis的未来</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/缓存/" rel="tag"># 缓存</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/12/netty/" rel="prev" title="Java之飞鸽传书 - Netty">
+      <i class="fa fa-chevron-left"></i> Java之飞鸽传书 - Netty
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/18/B-plus-tree/" rel="next" title="数据结构之B+树">
+      数据结构之B+树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存概述"><span class="nav-number">1.</span> <span class="nav-text">缓存概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是缓存"><span class="nav-number">1.1.</span> <span class="nav-text">什么是缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要缓存"><span class="nav-number">1.2.</span> <span class="nav-text">为什么需要缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现一个缓存会遇到什么问题？"><span class="nav-number">1.3.</span> <span class="nav-text">实现一个缓存会遇到什么问题？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis历史"><span class="nav-number">2.</span> <span class="nav-text">Redis历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Redis"><span class="nav-number">3.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是Redis"><span class="nav-number">4.</span> <span class="nav-text">为什么是Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis是如何实现的"><span class="nav-number">5.</span> <span class="nav-text">Redis是如何实现的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体设计目标"><span class="nav-number">5.1.</span> <span class="nav-text">整体设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原则"><span class="nav-number">5.2.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式"><span class="nav-number">5.3.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">5.4.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis用到的数据结构"><span class="nav-number">5.5.</span> <span class="nav-text">Redis用到的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis用到的算法"><span class="nav-number">5.6.</span> <span class="nav-text">Redis用到的算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的实践"><span class="nav-number">6.</span> <span class="nav-text">Redis的实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的未来"><span class="nav-number">7.</span> <span class="nav-text">Redis的未来</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">52 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
