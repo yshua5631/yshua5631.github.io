@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2020/saml-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/oauth-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/OIDC-workflow.jpg">
-<meta property="og:updated_time" content="2020-11-26T14:46:26.284Z">
+<meta property="og:updated_time" content="2020-11-26T15:55:48.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="系统行为之警卫局 - 登录和授权">
 <meta name="twitter:description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-26 22:46:26" itemprop="dateModified" datetime="2020-11-26T22:46:26+08:00">2020-11-26</time>
+                <time title="修改时间：2020-11-26 23:55:48" itemprop="dateModified" datetime="2020-11-26T23:55:48+08:00">2020-11-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,14 +217,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -374,7 +374,53 @@
 <p><img src="/images/2020/OIDC-workflow.jpg" alt></p>
 <h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4><h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4><h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4></li>
 </ul>
-<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><h2 id="登录和授权的未来"><a href="#登录和授权的未来" class="headerlink" title="登录和授权的未来"></a>登录和授权的未来</h2><p>  无论是SAML, OAuth 还是 OpenId Connect, 我希望将来只有一种认证和授权协议, 姑且命名为XAuth.<br>  它有如下特征</p>
+<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>  这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>  所以权限设计是为了解决这样一个终极问题</p>
+<ul>
+<li><p>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</p>
+<p>一些权限模型</p>
+</li>
+<li><p>ACL - 基本的思路是：对一个文件A需要配置张三读写权限，文件B李四需要配置写权限</p>
+<ul>
+<li>这种配置是符合直觉的，但是随着用户量的增加，需要一个一个的配，很繁琐.</li>
+</ul>
+</li>
+<li><p>DAC (Discretionary access control) - 是基于 ACL的扩展。 它引入了组和给其他主体授权的概念</p>
+<ul>
+<li>张三可以具有对文件A读写的权限，张三属于销售组，所以销售组也可以对文件具有读的权限</li>
+<li>文件A的拥有者张三同时也可以将文件A读的权限赋给李四，这样是自主的核心要义。</li>
+<li>Windows和Linux权限是基于DAC的。<ul>
+<li>Windows的权限设计不够灵活，比如说“读取和执行”是一个权限，但其实是微软将读取和执行两个权限打包在一起了，然后让用户选择允许和拒绝</li>
+<li>Linux的的权限设计充分体现了细粒度，互斥的组合的思想。比如说权限只有三种，读，写，执行，一个文件有三大类用户: 拥有者，所属组，其他人。每大类用户有7中权限，所以总的权限组合是7<em>7</em>7</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MAC (Mandatory access control) - 相比于DAC, MAC强调的是更安全。张三和李四同属于销售组，但是张三是经理，李四是员工，所以张三和李四对文件A是有不同对访问权限的，这个问题DAC就解决不了. MAC引入了信息敏感度这个概念, 也就是引入了一个新的维度.</p>
+<ul>
+<li>要配置资源的信息等级</li>
+<li>要配置用户主体的信息等级</li>
+<li>核心的财务文件只有经理级别的财务人员才能查看，但是经理级别的销售人员就不能查看.</li>
+</ul>
+</li>
+<li><p>RBAC (Role based access control) - RBAC的核心概念是：主体，角色，资源</p>
+<ul>
+<li>一个销售角色有很多权限，比如查看合同，创建客户，删除客户等等，只要一个人是销售，它就具有这些权限</li>
+<li>角色是权限的集合，而组是用户的集合</li>
+</ul>
+</li>
+<li><p>ABAC (Attribute base access control) - ABAC相比于其他模型是它的表达力是最强的. 如果要表达张三上午可以对文件进行读取操作，那么上述所有模型都无能为力。ABAC可以表述为: X在Y条件对Z执行A操作, 这里的X,Y,Z,A都是可以自定义的.</p>
+<ul>
+<li>来自北京的张三在上午10点钟可以读取服务器上80端口的内容。 这段表述够复杂了吧，ABAC就可以干这事情。已经有点声明式编程的味道了.</li>
+</ul>
+<h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><ul>
+<li>LDAP</li>
+<li>Active Directory</li>
+<li>ADFS</li>
+<li>Azure AD</li>
+</ul>
+</li>
+</ul>
+<h2 id="登录和授权的未来"><a href="#登录和授权的未来" class="headerlink" title="登录和授权的未来"></a>登录和授权的未来</h2><p>  无论是SAML, OAuth 还是 OpenId Connect, 我希望将来只有一种认证和授权协议, 姑且命名为XAuth.<br>  它有如下特征</p>
 <ul>
 <li><p>生成和解析token是简单的</p>
 </li>
@@ -473,7 +519,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是登录和授权"><span class="nav-number">2.</span> <span class="nav-text">什么是登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是登录"><span class="nav-number">2.1.</span> <span class="nav-text">什么是登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是授权"><span class="nav-number">2.2.</span> <span class="nav-text">什么是授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行登录和授权"><span class="nav-number">3.</span> <span class="nav-text">如何进行登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单系统的登录和授权"><span class="nav-number">3.1.</span> <span class="nav-text">单系统的登录和授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多系统登录和授权相关规范"><span class="nav-number">3.2.</span> <span class="nav-text">多系统登录和授权相关规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAML"><span class="nav-number">3.2.1.</span> <span class="nav-text">SAML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OAuth"><span class="nav-number">3.2.2.</span> <span class="nav-text">OAuth</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenId-Connect-OIDC"><span class="nav-number">3.2.3.</span> <span class="nav-text">OpenId Connect(OIDC)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关框架"><span class="nav-number">3.3.</span> <span class="nav-text">相关框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Security"><span class="nav-number">3.3.1.</span> <span class="nav-text">Spring Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Shiro"><span class="nav-number">3.3.2.</span> <span class="nav-text">Spring Shiro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KeyCloak"><span class="nav-number">3.3.3.</span> <span class="nav-text">KeyCloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的相关实践"><span class="nav-number">4.</span> <span class="nav-text">登录和授权的相关实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何设计一个权限系统"><span class="nav-number">4.1.</span> <span class="nav-text">如何设计一个权限系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的未来"><span class="nav-number">5.</span> <span class="nav-text">登录和授权的未来</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是登录和授权"><span class="nav-number">2.</span> <span class="nav-text">什么是登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是登录"><span class="nav-number">2.1.</span> <span class="nav-text">什么是登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是授权"><span class="nav-number">2.2.</span> <span class="nav-text">什么是授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行登录和授权"><span class="nav-number">3.</span> <span class="nav-text">如何进行登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单系统的登录和授权"><span class="nav-number">3.1.</span> <span class="nav-text">单系统的登录和授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多系统登录和授权相关规范"><span class="nav-number">3.2.</span> <span class="nav-text">多系统登录和授权相关规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAML"><span class="nav-number">3.2.1.</span> <span class="nav-text">SAML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OAuth"><span class="nav-number">3.2.2.</span> <span class="nav-text">OAuth</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenId-Connect-OIDC"><span class="nav-number">3.2.3.</span> <span class="nav-text">OpenId Connect(OIDC)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关框架"><span class="nav-number">3.3.</span> <span class="nav-text">相关框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Security"><span class="nav-number">3.3.1.</span> <span class="nav-text">Spring Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Shiro"><span class="nav-number">3.3.2.</span> <span class="nav-text">Spring Shiro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KeyCloak"><span class="nav-number">3.3.3.</span> <span class="nav-text">KeyCloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的相关实践"><span class="nav-number">4.</span> <span class="nav-text">登录和授权的相关实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何设计一个权限系统"><span class="nav-number">4.1.</span> <span class="nav-text">如何设计一个权限系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作系统是如何存储用户信息的？"><span class="nav-number">4.2.</span> <span class="nav-text">操作系统是如何存储用户信息的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的未来"><span class="nav-number">5.</span> <span class="nav-text">登录和授权的未来</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -534,12 +580,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">62k</span>
+    <span title="站点总字数">63k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">57 分钟</span>
+    <span title="站点阅读时长">58 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
