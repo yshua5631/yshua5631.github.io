@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2020/saml-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/oauth-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/OIDC-workflow.jpg">
-<meta property="og:updated_time" content="2020-11-26T15:55:48.569Z">
+<meta property="og:updated_time" content="2020-11-27T04:02:09.833Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="系统行为之警卫局 - 登录和授权">
 <meta name="twitter:description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-26 23:55:48" itemprop="dateModified" datetime="2020-11-26T23:55:48+08:00">2020-11-26</time>
+                <time title="修改时间：2020-11-27 12:02:09" itemprop="dateModified" datetime="2020-11-27T12:02:09+08:00">2020-11-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +217,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -413,10 +413,30 @@
 <li>来自北京的张三在上午10点钟可以读取服务器上80端口的内容。 这段表述够复杂了吧，ABAC就可以干这事情。已经有点声明式编程的味道了.</li>
 </ul>
 <h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><ul>
-<li>LDAP</li>
-<li>Active Directory</li>
-<li>ADFS</li>
-<li>Azure AD</li>
+<li>协议<ul>
+<li>X.500 - X.500是基于OSI的目录访问服务，众所周知，OSI现在已经被淘汰.</li>
+<li>LDAP（Lightweight Directory Access Protocol） - LDAP是一个基于X.500的目录访问的协议，但它更简单，而且支持TCP/IP，这对互联网访问非常重要.</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>Active Directory - 这是LDAP在windows上的实现，它的层次结构依次是：域(Domain) -&gt; 组织单位(Orgnization Unit) -&gt; 群组(Group) -&gt; 用户(User)<ul>
+<li>一般来说，AD适合在内网中的C/S架构</li>
+</ul>
+</li>
+<li>OpenLDAP</li>
+<li>ADFS - ADFS是一种跨网络的身份认证方案，也就是用户账户和应用程序位于不同的网络.<ul>
+<li>相比于传统的AD, ADFS可以穿透不同的网络.</li>
+</ul>
+</li>
+<li>Azure AD - 是基于云上的身份认证和授权方案。<ul>
+<li>它支持Rest风格. 具体一点就是通过api可以拿到access token和id token, 这是开发者最关心的信息.</li>
+<li>它支持多重身份验证</li>
+<li>它支持多租户，租户和租户之间的数据是彻底隔离的</li>
+<li>它不是主域控制器</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -580,7 +600,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">63k</span>
+    <span title="站点总字数">64k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
