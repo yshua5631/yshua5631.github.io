@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2020/saml-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/oauth-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/OIDC-workflow.jpg">
-<meta property="og:updated_time" content="2020-11-27T04:02:09.833Z">
+<meta property="og:updated_time" content="2020-12-16T16:14:13.742Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="系统行为之警卫局 - 登录和授权">
 <meta name="twitter:description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 12:02:09" itemprop="dateModified" datetime="2020-11-27T12:02:09+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-17 00:14:13" itemprop="dateModified" datetime="2020-12-17T00:14:13+08:00">2020-12-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,10 +372,13 @@
 </li>
 <li><p>RP 获得用户的信息</p>
 <p><img src="/images/2020/OIDC-workflow.jpg" alt></p>
-<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4><h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4><h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4></li>
-</ul>
-<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>  这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>  所以权限设计是为了解决这样一个终极问题</p>
-<ul>
+<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4><!--TODO SpringSecurity的设计初衷和目的以及核心功能和概念 -->
+<h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4><!--TODO SpringShiro的设计初衷和目的以及核心功能和概念 -->
+<h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4><!--TODO KeyCloak的设计初衷和目的以及核心功能和概念 -->
+<!--TODO 这三个框架共同表达了什么主题？ -->
+<!--TODO 这三个框架有哪些优秀的设计原则和思路？ -->
+<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>所以权限设计是为了解决这样一个终极问题</p>
+</li>
 <li><p>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</p>
 <p>一些权限模型</p>
 </li>
