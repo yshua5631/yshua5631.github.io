@@ -29,7 +29,7 @@
 <meta property="og:description" content="安全，这件事情无处不在。我们不希望自己的个人信息被泄漏。我们不希望自己的银行卡密码被盗取。我们不希望自己的一言一行被监控，我们希望能有个人的隐私.作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.  背景 什么是Https Https的机制是什么？ 安全和Https拾遗">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/https.png">
-<meta property="og:updated_time" content="2020-11-26T14:48:47.849Z">
+<meta property="og:updated_time" content="2021-05-14T06:03:47.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络协议之保密局 - Https">
 <meta name="twitter:description" content="安全，这件事情无处不在。我们不希望自己的个人信息被泄漏。我们不希望自己的银行卡密码被盗取。我们不希望自己的一言一行被监控，我们希望能有个人的隐私.作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.  背景 什么是Https Https的机制是什么？ 安全和Https拾遗">
@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-26 22:48:47" itemprop="dateModified" datetime="2020-11-26T22:48:47+08:00">2020-11-26</time>
+                <time title="修改时间：2021-05-14 14:03:47" itemprop="dateModified" datetime="2021-05-14T14:03:47+08:00">2021-05-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,7 @@
 <h2 id="Https的机制是什么"><a href="#Https的机制是什么" class="headerlink" title="Https的机制是什么"></a>Https的机制是什么</h2><p>在讨论Https的原理和机制之前，先确定几个大的前提</p>
 <ul>
 <li>操作系统是正常的 - 不要使用盗版操作系统</li>
-<li>浏览器是正常的 - 下载被改造过的浏览器</li>
+<li>浏览器是正常的 - 不要下载被改造过的浏览器</li>
 <li>CA中心是正常的 - 就好比一个市政府不能是假的.</li>
 <li>人是有可能犯错的 - 有时候脑子短路，会有误操作.</li>
 <li>服务端的私钥是不会被窃取的</li>
@@ -291,7 +291,7 @@
 </ul>
 <p>在基于上面提到的几大前提的基础上，要防止中间人攻击的问题就变为：</p>
 <ul>
-<li>如果让客户端知道这个证书是正常的？</li>
+<li>如何让客户端知道这个证书是正常的？</li>
 </ul>
 <p>客户端如何验证证书的有效性的？</p>
 <ul>
