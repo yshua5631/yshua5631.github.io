@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Spring源码系列 - IOC和DI]]></title>
     <url>%2F2021%2F06%2F20%2Fspring-ioc%2F</url>
-    <content type="text"><![CDATA[dffdsf 背景 IOC DI 背景IOCDI未来]]></content>
+    <content type="text"><![CDATA[对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了. 背景 IOC DI 背景为什么需要读源码？读源码的姿势IOCIOC 时序图DIDI 时序图未来]]></content>
       <categories>
         <category>Spring</category>
       </categories>

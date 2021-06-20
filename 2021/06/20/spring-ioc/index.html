@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="dffdsf  背景 IOC DI  背景IOCDI未来">
+  <meta name="description" content="对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.  背景 IOC DI  背景为什么需要读源码？读源码的姿势IOCIOC 时序图DIDI 时序图未来">
 <meta name="keywords" content="Spring,源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring源码系列 - IOC和DI">
 <meta property="og:url" content="http://yoursite.com/2021/06/20/spring-ioc/index.html">
 <meta property="og:site_name" content="迷途书童">
-<meta property="og:description" content="dffdsf  背景 IOC DI  背景IOCDI未来">
+<meta property="og:description" content="对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.  背景 IOC DI  背景为什么需要读源码？读源码的姿势IOCIOC 时序图DIDI 时序图未来">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-06-20T15:58:01.466Z">
+<meta property="og:updated_time" content="2021-06-20T16:06:33.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring源码系列 - IOC和DI">
-<meta name="twitter:description" content="dffdsf  背景 IOC DI  背景IOCDI未来">
+<meta name="twitter:description" content="对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.  背景 IOC DI  背景为什么需要读源码？读源码的姿势IOCIOC 时序图DIDI 时序图未来">
 
 <link rel="canonical" href="http://yoursite.com/2021/06/20/spring-ioc/">
 
@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-20 23:53:16 / 修改时间：23:58:01" itemprop="dateCreated datePublished" datetime="2021-06-20T23:53:16+08:00">2021-06-20</time>
+              <time title="创建时间：2021-06-20 23:53:16" itemprop="dateCreated datePublished" datetime="2021-06-20T23:53:16+08:00">2021-06-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-21 00:06:33" itemprop="dateModified" datetime="2021-06-21T00:06:33+08:00">2021-06-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -207,7 +213,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>22</span>
+              <span>127</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -226,13 +232,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>dffdsf</p>
+        <p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
 <ul>
 <li>背景</li>
 <li>IOC</li>
 <li>DI</li>
 </ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么需要读源码？"><a href="#为什么需要读源码？" class="headerlink" title="为什么需要读源码？"></a>为什么需要读源码？</h3><h3 id="读源码的姿势"><a href="#读源码的姿势" class="headerlink" title="读源码的姿势"></a>读源码的姿势</h3><h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>
     </div>
 
     
@@ -314,7 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要读源码？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要读源码？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读源码的姿势"><span class="nav-number">1.2.</span> <span class="nav-text">读源码的姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC-时序图"><span class="nav-number">2.1.</span> <span class="nav-text">IOC 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DI-时序图"><span class="nav-number">3.1.</span> <span class="nav-text">DI 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
