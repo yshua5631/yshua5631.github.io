@@ -215,7 +215,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
+              <span>1.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -279,9 +279,15 @@
 <h2 id="React是如何实现的？"><a href="#React是如何实现的？" class="headerlink" title="React是如何实现的？"></a>React是如何实现的？</h2><p>  这里不打算讨论非常细的东西，比如组件的生命周期，如何更新组件的状态等等。<br>  从宏观角度来看，在React实现上有两个绕不过去的概念</p>
 <ul>
 <li><p>JSX</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">HelloMessage</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        <span class="type">Hello</span> &#123;<span class="keyword">this</span>.props.name&#125;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看return里面的内容，是不是很熟悉？不就是模板么？对，如果非要说成模版也没错。 但在React这里可不可能这么叫，咱得换个说法，不然怎么显示出React和别人不一样呢？<br>从语法层面，这个叫JSX.<br>从抽象的角度来说，这个叫组件.<br>从实现的角度来说这个叫Virtual DOM<br>传通的UI设计是要分离CSS, Html和JS的， 这种分类的维度是基于技术层面的划分. JSX认为一段CSS, 一段Html, 一段JS组合在一起才算是一个完整意义上的实体，是可以单独交付出去的。所以这里带来了前端思维方式的变化。</p>
+<pre><code>class HelloMessage extends React.Component {
+render() {
+  return (
+    &lt;div&gt;
+      Hello {this.props.name}
+    &lt;/div&gt;
+  );
+}
+}</code></pre><p>看return里面的内容，是不是很熟悉？不就是模板么？对，如果非要说成模版也没错。 但在React这里可不可能这么叫，咱得换个说法，不然怎么显示出React和别人不一样呢？<br>从语法层面，这个叫JSX.<br>从抽象的角度来说，这个叫组件.<br>从实现的角度来说这个叫Virtual DOM<br>传通的UI设计是要分离CSS, Html和JS的， 这种分类的维度是基于技术层面的划分. JSX认为一段CSS, 一段Html, 一段JS组合在一起才算是一个完整意义上的实体，是可以单独交付出去的。所以这里带来了前端思维方式的变化。</p>
 </li>
 <li><p>Diff算法<br>上面说过，React对开发者是抹去了Dom的概念，但Web的展示还是基于Dom的，所以要将Virual DOM转为 真实DOM。 如何以一种更快更好的方式将Virtual DOM转为真实 DOM呢? 以后有时间单独讨论.</p>
 </li>
