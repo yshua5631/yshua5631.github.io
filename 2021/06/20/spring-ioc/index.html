@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/spring/ioc.jpg">
 <meta property="og:image" content="http://yoursite.com/images/spring/di.jpg">
-<meta property="og:updated_time" content="2021-06-22T15:29:41.523Z">
+<meta property="og:updated_time" content="2021-06-22T15:32:57.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring源码系列 - IOC和DI">
 <meta name="twitter:description" content="对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.  背景 IOC DI">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-22 23:29:41" itemprop="dateModified" datetime="2021-06-22T23:29:41+08:00">2021-06-22</time>
+                <time title="修改时间：2021-06-22 23:32:57" itemprop="dateModified" datetime="2021-06-22T23:32:57+08:00">2021-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,7 +216,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -297,9 +297,11 @@
 <li>Spring算一个 - Spring提供了很多功能，我们可以只使用其中的IOC功能</li>
 <li>.net的Autofac</li>
 <li>HK2 - 轻量级的IOC框架，</li>
-<li>如果没有上述框架，只能手写了<h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><img src="/images/spring/ioc.jpg" alt="avatar"><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><img src="/images/spring/di.jpg" alt="avatar"><h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2></li>
+<li>如果没有上述框架，只能手写了<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3>要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。</li>
 </ul>
-
+<h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><p> <img src="/images/spring/ioc.jpg" alt="avatar"></p>
+<h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
+<h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>
     </div>
 
     
@@ -401,7 +403,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要读源码？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要读源码？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读源码的姿势"><span class="nav-number">1.2.</span> <span class="nav-text">读源码的姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC想要讲的故事"><span class="nav-number">2.1.</span> <span class="nav-text">IOC想要讲的故事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有哪些框架支持IOC功能？"><span class="nav-number">2.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC-时序图"><span class="nav-number">2.3.</span> <span class="nav-text">IOC 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DI-时序图"><span class="nav-number">3.1.</span> <span class="nav-text">DI 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要读源码？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要读源码？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读源码的姿势"><span class="nav-number">1.2.</span> <span class="nav-text">读源码的姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC想要讲的故事"><span class="nav-number">2.1.</span> <span class="nav-text">IOC想要讲的故事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有哪些框架支持IOC功能？"><span class="nav-number">2.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#研究Spring-IOC的切入点"><span class="nav-number">2.3.</span> <span class="nav-text">研究Spring IOC的切入点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC-时序图"><span class="nav-number">2.4.</span> <span class="nav-text">IOC 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DI-时序图"><span class="nav-number">3.1.</span> <span class="nav-text">DI 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
