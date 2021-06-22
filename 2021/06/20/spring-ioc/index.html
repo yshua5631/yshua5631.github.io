@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/spring/ioc.jpg">
 <meta property="og:image" content="http://yoursite.com/images/spring/di.jpg">
-<meta property="og:updated_time" content="2021-06-22T15:40:34.455Z">
+<meta property="og:updated_time" content="2021-06-22T15:42:32.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring源码系列 - IOC和DI">
 <meta name="twitter:description" content="对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.  背景 IOC DI">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-22 23:40:34" itemprop="dateModified" datetime="2021-06-22T23:40:34+08:00">2021-06-22</time>
+                <time title="修改时间：2021-06-22 23:42:32" itemprop="dateModified" datetime="2021-06-22T23:42:32+08:00">2021-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,7 +216,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -299,7 +299,7 @@
 <li>HK2 - 轻量级的IOC框架，</li>
 <li>如果没有上述框架，只能手写了</li>
 </ul>
-<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。</p>
+<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。<br>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClassPathXmlApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"defaultconstruct/user.xml"</span>);</span><br><span class="line">User user = (User) context.getBean(<span class="string">"user"</span>);</span><br></pre></td></tr></table></figure></p>
 <h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><p> <img src="/images/spring/ioc.jpg" alt="avatar"></p>
 <h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
 <h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>
