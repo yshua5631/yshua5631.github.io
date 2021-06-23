@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,21 @@
   </script>
 
   <meta name="description" content="K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？  背景 什么是k8s? 为什么是它？ k8s底层是如何实现的？ k8s生态及相关">
-<meta name="keywords" content="容器,PaaS,基础设施">
 <meta property="og:type" content="article">
 <meta property="og:title" content="尘埃落定-k8s">
 <meta property="og:url" content="http://yoursite.com/2020/09/24/k8s/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？  背景 什么是k8s? 为什么是它？ k8s底层是如何实现的？ k8s生态及相关">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/huashan.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/orchestration.jpg">
-<meta property="og:updated_time" content="2020-11-13T15:05:29.188Z">
+<meta property="article:published_time" content="2020-09-24T03:33:40.000Z">
+<meta property="article:modified_time" content="2020-11-13T15:05:29.188Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="容器">
+<meta property="article:tag" content="PaaS">
+<meta property="article:tag" content="基础设施">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="尘埃落定-k8s">
-<meta name="twitter:description" content="K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？  背景 什么是k8s? 为什么是它？ k8s底层是如何实现的？ k8s生态及相关">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/huashan.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/24/k8s/">
@@ -192,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/基础设施/" itemprop="url" rel="index"><span itemprop="name">基础设施</span></a>
+                  <a href="/categories/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/" itemprop="url" rel="index"><span itemprop="name">基础设施</span></a>
                 </span>
             </span>
 
@@ -243,8 +245,8 @@
 <li>k8s底层是如何实现的？</li>
 <li>k8s生态及相关</li>
 </ul>
-<a id="more"></a>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png" alt><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png"><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
 <h3 id="Cloud-Foundry"><a href="#Cloud-Foundry" class="headerlink" title="Cloud Foundry"></a>Cloud Foundry</h3><p>  随着Cloud Foundry的出现，部署的方式稍微有点变化，对于用户来说，只需要将程序打包成它规定的格式，上传上去就好了，Cloud Foundry会调度一个虚拟机来执行这个程序。这个时候会遇到一种情况，如果这个虚拟机执行很多程序会不会导致程序之间会有冲突？不会，Cloud Foundry会为每个应用创建隔离环境. 这一切听起来不错.</p>
 <h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>  再后来Docker出现了，现在我们知道，Docker也是为应用创建隔离环境，看上去Docker不必Cloud Foundry高明多少啊。但Docker杀手锏是镜像，镜像意味着无论什么应用都遵循统一的格式和规范, 更关键的是镜像包含了应用所有的依赖，而Cloud Foundry则需要为不同的应用生产不同格式的包，比较繁琐. 在这个时候, Cloud Foundry并没有拥抱Docker作为自己打包的标准，失去了一次战略先机.<br>  Docker虽然可以提供标准格式的包，但它没有部署复杂应用的能力，因为Docker本质还是一个工具.于是在2014年底, Docker公司推出了自己的容器集群管理工具Swarm，打造一套以容器为核心的Paas, 并形成Docker自己的生态.</p>
 <h3 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a>Mesos</h3><p>  Docker此时有个竞争对手叫Mesos, Mesos有个独特的杀手锏就是超大规模的集群管理能力，有超过10000个节点成功案例，而且支持Docker容器部署。<br>  现在看起来，两强相争似乎成了基本盘。</p>
@@ -258,7 +260,7 @@
 <li>融合Docker和Mesos的优点</li>
 <li>单独开创一个局面<br>K8s选择的是单独开创一个局面：容器编排，并且要在这个领域取得压倒性的优势，并形成降维打击.</li>
 </ul>
-<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg" alt></p>
+<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg"></p>
 <h3 id="k8s是什么？"><a href="#k8s是什么？" class="headerlink" title="k8s是什么？"></a>k8s是什么？</h3><p>正如背景里面所描述的，k8s是一个容器编排的工具. 所以</p>
 <ul>
 <li>它本质是个工具</li>
@@ -355,9 +357,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/容器/" rel="tag"># 容器</a>
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"># 容器</a>
               <a href="/tags/PaaS/" rel="tag"># PaaS</a>
-              <a href="/tags/基础设施/" rel="tag"># 基础设施</a>
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/" rel="tag"># 基础设施</a>
           </div>
 
         
@@ -432,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloud-Foundry"><span class="nav-number">1.1.</span> <span class="nav-text">Cloud Foundry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">1.2.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesos"><span class="nav-number">1.3.</span> <span class="nav-text">Mesos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes"><span class="nav-number">1.4.</span> <span class="nav-text">Kubernetes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s面临的困境"><span class="nav-number">1.5.</span> <span class="nav-text">k8s面临的困境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s的突围之道"><span class="nav-number">1.6.</span> <span class="nav-text">k8s的突围之道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是k8s"><span class="nav-number">2.</span> <span class="nav-text">什么是k8s?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">k8s是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切入k8s的一种角度"><span class="nav-number">2.2.</span> <span class="nav-text">切入k8s的一种角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s的核心概念"><span class="nav-number">2.3.</span> <span class="nav-text">k8s的核心概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是它？"><span class="nav-number">3.</span> <span class="nav-text">为什么是它？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s底层是如何实现的？"><span class="nav-number">4.</span> <span class="nav-text">k8s底层是如何实现的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s生态及相关"><span class="nav-number">5.</span> <span class="nav-text">k8s生态及相关</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloud-Foundry"><span class="nav-number">1.1.</span> <span class="nav-text">Cloud Foundry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">1.2.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesos"><span class="nav-number">1.3.</span> <span class="nav-text">Mesos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes"><span class="nav-number">1.4.</span> <span class="nav-text">Kubernetes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s%E9%9D%A2%E4%B8%B4%E7%9A%84%E5%9B%B0%E5%A2%83"><span class="nav-number">1.5.</span> <span class="nav-text">k8s面临的困境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s%E7%9A%84%E7%AA%81%E5%9B%B4%E4%B9%8B%E9%81%93"><span class="nav-number">1.6.</span> <span class="nav-text">k8s的突围之道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFk8s"><span class="nav-number">2.</span> <span class="nav-text">什么是k8s?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">k8s是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E5%85%A5k8s%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%92%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">切入k8s的一种角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.</span> <span class="nav-text">k8s的核心概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%83%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">为什么是它？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s%E5%BA%95%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">k8s底层是如何实现的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s%E7%94%9F%E6%80%81%E5%8F%8A%E7%9B%B8%E5%85%B3"><span class="nav-number">5.</span> <span class="nav-text">k8s生态及相关</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -493,14 +495,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">66k</span>
+    <span title="站点总字数">67k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -520,9 +522,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

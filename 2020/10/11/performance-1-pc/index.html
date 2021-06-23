@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,19 @@
   </script>
 
   <meta name="description" content="要提高服务器的性能，正常的思路是  单机堆硬件 - 加内存，换CPU 多个单机组成集群">
-<meta name="keywords" content="高性能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="挑战个体极限 - 如何提高一台服务器的性能?">
 <meta property="og:url" content="http://yoursite.com/2020/10/11/performance-1-pc/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="要提高服务器的性能，正常的思路是  单机堆硬件 - 加内存，换CPU 多个单机组成集群">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/jump.jpeg">
 <meta property="og:image" content="http://yoursite.com/images/2020/tpc.png">
-<meta property="og:updated_time" content="2020-11-13T15:05:29.190Z">
+<meta property="article:published_time" content="2020-10-11T15:11:07.000Z">
+<meta property="article:modified_time" content="2020-11-13T15:05:29.190Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="高性能">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="挑战个体极限 - 如何提高一台服务器的性能?">
-<meta name="twitter:description" content="要提高服务器的性能，正常的思路是  单机堆硬件 - 加内存，换CPU 多个单机组成集群">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/jump.jpeg">
 
 <link rel="canonical" href="http://yoursite.com/2020/10/11/performance-1-pc/">
@@ -192,7 +192,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/高性能/" itemprop="url" rel="index"><span itemprop="name">高性能</span></a>
+                  <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">高性能</span></a>
                 </span>
             </span>
 
@@ -240,7 +240,7 @@
 <li>单机堆硬件 - 加内存，换CPU</li>
 <li>多个单机组成集群</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 <p>以上两种思路都是从硬件层面出发的。 我们这里讨论的当有大量请求过来的时候，不从硬件出发，而是从方法论出发，看看有哪些策略可以提升服务器的性能。</p>
 <ul>
 <li>两种维度</li>
@@ -249,7 +249,7 @@
 <li>Reactor</li>
 <li>Proactor</li>
 </ul>
-<p><img src="/images/2020/jump.jpeg" alt></p>
+<p><img src="/images/2020/jump.jpeg"></p>
 <h2 id="两种维度组合的场景"><a href="#两种维度组合的场景" class="headerlink" title="两种维度组合的场景"></a>两种维度组合的场景</h2><ul>
 <li>连接数量多，请求数量多<ul>
 <li>秒杀，双十一之类的业务，这类业务一定走分布式这条路</li>
@@ -273,7 +273,7 @@
 <li>Fork进程是有代价的</li>
 <li>父子进程通信比较复杂</li>
 </ul>
-<h2 id="TPC"><a href="#TPC" class="headerlink" title="TPC"></a>TPC</h2><p><img src="/images/2020/tpc.png" alt><br>TPC (Thread Per Connection) 就是一个连接一个线程. 这种模式可以说是PPC的加强版. 它不需要fork进程，也没有父子进程通信复杂的情况. 但它来来额外的副作用. 这也属于BIO</p>
+<h2 id="TPC"><a href="#TPC" class="headerlink" title="TPC"></a>TPC</h2><p><img src="/images/2020/tpc.png"><br>TPC (Thread Per Connection) 就是一个连接一个线程. 这种模式可以说是PPC的加强版. 它不需要fork进程，也没有父子进程通信复杂的情况. 但它来来额外的副作用. 这也属于BIO</p>
 <ul>
 <li>线程切换是需要代价的</li>
 <li>线程之间协作不当就有可能出现死锁</li>
@@ -314,7 +314,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/高性能/" rel="tag"># 高性能</a>
+              <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD/" rel="tag"># 高性能</a>
           </div>
 
         
@@ -389,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#两种维度组合的场景"><span class="nav-number">1.</span> <span class="nav-text">两种维度组合的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPC"><span class="nav-number">2.</span> <span class="nav-text">PPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TPC"><span class="nav-number">3.</span> <span class="nav-text">TPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor"><span class="nav-number">4.</span> <span class="nav-text">Reactor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proactor"><span class="nav-number">5.</span> <span class="nav-text">Proactor</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E7%BB%B4%E5%BA%A6%E7%BB%84%E5%90%88%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">两种维度组合的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPC"><span class="nav-number">2.</span> <span class="nav-text">PPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TPC"><span class="nav-number">3.</span> <span class="nav-text">TPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor"><span class="nav-number">4.</span> <span class="nav-text">Reactor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proactor"><span class="nav-number">5.</span> <span class="nav-text">Proactor</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -450,14 +450,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">66k</span>
+    <span title="站点总字数">67k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -477,9 +477,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
