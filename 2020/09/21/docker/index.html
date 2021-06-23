@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="从第一次接触Docker到现在大概也有两年多了, 基本上停留在用的层面.现在是时候回顾一下这项革命式的技术了.  什么是Docker? 为什么是Docker? Docker是如何实现的？ Docker的实践 Docker的未来">
@@ -332,12 +332,12 @@
 </li>
 </ul>
 <h2 id="Docker的实践"><a href="#Docker的实践" class="headerlink" title="Docker的实践"></a>Docker的实践</h2><h3 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h3><ul>
-<li>构建镜像 - 前提是有Dockerfile存在<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>docker build -t ricky:0.0.1 .</code></pre></li>
-<li>查看镜像<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>docker image list
+<li>构建镜像 - 前提是有Dockerfile存在<pre><code>docker build -t ricky:0.0.1 .</code></pre></li>
+<li>查看镜像<pre><code>docker image list
 或
 docker images</code></pre></li>
-<li>启动镜像<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>docker run -t -i ricky:0.0.1 /bin/bash</code></pre></li>
-<li>查看Container<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>运行中的容器
+<li>启动镜像<pre><code>docker run -t -i ricky:0.0.1 /bin/bash</code></pre></li>
+<li>查看Container<pre><code>运行中的容器
 docker ps
 或
 docker container ls
@@ -348,26 +348,6 @@ docker container ls -a</code></pre></li>
 </ul>
 <h2 id="Docker的未来"><a href="#Docker的未来" class="headerlink" title="Docker的未来"></a>Docker的未来</h2><p>Docker的启动速度接近于本地进程了，所以在启动速度这块未来不可能有大的进展了.<br>Docker需要做的是规范公用镜像，让公用镜像更小，更安全。<br>Docker如果运行在物理机，如何保证Docker内部的东西不暴露给外界，且不侵害到物理机呢？<br>Docker需要强大它的生态圈</p>
 
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -533,7 +513,7 @@ docker container ls -a</code></pre></li>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

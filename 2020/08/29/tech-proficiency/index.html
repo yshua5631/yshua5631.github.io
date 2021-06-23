@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?现在姑且从三个大的角度对技术的熟练度进行划分  应用 简单场景的应用 复杂场景的应用   设计 框架设计的初衷 框架的核心概念 框架的">
@@ -256,26 +256,6 @@
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
 <h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -437,7 +417,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
