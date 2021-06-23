@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,18 +21,19 @@
   </script>
 
   <meta name="description" content="一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.  什么是JVM JVM主要解决了哪些问题？ JVM点滴">
-<meta name="keywords" content="Java,JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java之黑暗森林 - JVM">
 <meta property="og:url" content="http://yoursite.com/2020/09/30/jvm/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.  什么是JVM JVM主要解决了哪些问题？ JVM点滴">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/jvm-memory.png">
-<meta property="og:updated_time" content="2020-12-29T15:33:17.190Z">
+<meta property="article:published_time" content="2020-09-30T02:25:43.000Z">
+<meta property="article:modified_time" content="2020-12-29T15:33:17.190Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java之黑暗森林 - JVM">
-<meta name="twitter:description" content="一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.  什么是JVM JVM主要解决了哪些问题？ JVM点滴">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/jvm-memory.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/30/jvm/">
@@ -240,7 +241,7 @@
 <li>JVM主要解决了哪些问题？</li>
 <li>JVM点滴</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
 <ul>
 <li>JVM规范</li>
@@ -253,7 +254,7 @@
 </ul>
 <p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
 <h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
-<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png" alt><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
+<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
 <ul>
 <li>线程共享<ul>
 <li>堆<ul>
@@ -405,7 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是JVM"><span class="nav-number">1.</span> <span class="nav-text">什么是JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM主要解决了哪些问题"><span class="nav-number">2.</span> <span class="nav-text">JVM主要解决了哪些问题?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存的分配"><span class="nav-number">2.1.</span> <span class="nav-text">内存的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存的回收"><span class="nav-number">2.2.</span> <span class="nav-text">内存的回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁"><span class="nav-number">2.3.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类文件是如何加载的"><span class="nav-number">2.4.</span> <span class="nav-text">类文件是如何加载的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-点滴"><span class="nav-number">3.</span> <span class="nav-text">JVM 点滴</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJVM"><span class="nav-number">1.</span> <span class="nav-text">什么是JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BA%86%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">JVM主要解决了哪些问题?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E9%85%8D"><span class="nav-number">2.1.</span> <span class="nav-text">内存的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%9B%9E%E6%94%B6"><span class="nav-number">2.2.</span> <span class="nav-text">内存的回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E6%96%87%E4%BB%B6%E6%98%AF%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E7%9A%84"><span class="nav-number">2.4.</span> <span class="nav-text">类文件是如何加载的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-%E7%82%B9%E6%BB%B4"><span class="nav-number">3.</span> <span class="nav-text">JVM 点滴</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -466,14 +467,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">66k</span>
+    <span title="站点总字数">67k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -493,9 +494,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
