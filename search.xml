@@ -811,19 +811,6 @@
       </tags>
   </entry>
   <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>数据，信息，知识和智慧</title>
     <url>/2020/09/10/data-knowledge/</url>
     <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
@@ -905,6 +892,19 @@
       <tags>
         <tag>认知</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
   </entry>
   <entry>
     <title>人多力量大 - 分布式导言</title>
@@ -2355,67 +2355,6 @@ docker container ls -a
 ]]></content>
   </entry>
   <entry>
-    <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
-    <url>/2020/10/11/performance-1-pc/</url>
-    <content><![CDATA[<p>要提高服务器的性能，正常的思路是</p>
-<ul>
-<li>单机堆硬件 - 加内存，换CPU</li>
-<li>多个单机组成集群</li>
-</ul>
-<span id="more"></span>
-<p>以上两种思路都是从硬件层面出发的。 我们这里讨论的当有大量请求过来的时候，不从硬件出发，而是从方法论出发，看看有哪些策略可以提升服务器的性能。</p>
-<ul>
-<li>两种维度</li>
-<li>PPC</li>
-<li>TPC</li>
-<li>Reactor</li>
-<li>Proactor</li>
-</ul>
-<p><img src="/images/2020/jump.jpeg"></p>
-<h2 id="两种维度组合的场景"><a href="#两种维度组合的场景" class="headerlink" title="两种维度组合的场景"></a>两种维度组合的场景</h2><ul>
-<li>连接数量多，请求数量多<ul>
-<li>秒杀，双十一之类的业务，这类业务一定走分布式这条路</li>
-</ul>
-</li>
-<li>连接数量多，请求数量少<ul>
-<li>企业的官网</li>
-</ul>
-</li>
-<li>连接数量少，请求数量多<ul>
-<li>一些中间件，比如数据库连接池，一个数据库连接，是执行SQL的请求可能有几百个</li>
-</ul>
-</li>
-<li>连接数量少，请求数量少<ul>
-<li>企业的内部系统，比如我司创建学生账号的工具，查看学生学习情况的报表系统.</li>
-</ul>
-</li>
-</ul>
-<h2 id="PPC"><a href="#PPC" class="headerlink" title="PPC"></a>PPC</h2><p>PPC（Process Per Connection) 顾名思义就是一个连接一个进程。这种模式适合连接数不是特别的情况，比如数据库连接数.<br>缺点是</p>
-<ul>
-<li>Fork进程是有代价的</li>
-<li>父子进程通信比较复杂</li>
-</ul>
-<h2 id="TPC"><a href="#TPC" class="headerlink" title="TPC"></a>TPC</h2><p><img src="/images/2020/tpc.png"><br>TPC (Thread Per Connection) 就是一个连接一个线程. 这种模式可以说是PPC的加强版. 它不需要fork进程，也没有父子进程通信复杂的情况. 但它来来额外的副作用. 这也属于BIO</p>
-<ul>
-<li>线程切换是需要代价的</li>
-<li>线程之间协作不当就有可能出现死锁</li>
-</ul>
-<p>所以这是典型的发明了一个方案，然后制造了一个问题啊.</p>
-<h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>Reactor在前面的博文有隐约提到过，它主要干了两件事</p>
-<ul>
-<li>将线程分为两类，一类主线程专门用来接受socket的请求，一类工作线程专门用来处理socket请求</li>
-<li>主线程通过某种方式(事件驱动)将请求传给工作线程 - 好莱坞原则</li>
-</ul>
-<p>Reactor本质上是同步阻塞I/O</p>
-<h2 id="Proactor"><a href="#Proactor" class="headerlink" title="Proactor"></a>Proactor</h2>]]></content>
-      <categories>
-        <category>高性能</category>
-      </categories>
-      <tags>
-        <tag>高性能</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>编程语言概述</title>
     <url>/2020/10/31/programming-language/</url>
     <content><![CDATA[<p>众所周知, 计算机这个行业是不断发展的。 编程语言就是其中之一，要么是出现新的语言，要么是出现这个语言的特性升级。 其他领域，比如法律和医学， 知识更新迭代的速度远比不上编程领域.<br>让我来沏一杯茶，闲聊一下编程语言这个老生常谈的话题.</p>
@@ -2656,6 +2595,67 @@ docker container ls -a
       </categories>
       <tags>
         <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
+    <url>/2020/10/11/performance-1-pc/</url>
+    <content><![CDATA[<p>要提高服务器的性能，正常的思路是</p>
+<ul>
+<li>单机堆硬件 - 加内存，换CPU</li>
+<li>多个单机组成集群</li>
+</ul>
+<span id="more"></span>
+<p>以上两种思路都是从硬件层面出发的。 我们这里讨论的当有大量请求过来的时候，不从硬件出发，而是从方法论出发，看看有哪些策略可以提升服务器的性能。</p>
+<ul>
+<li>两种维度</li>
+<li>PPC</li>
+<li>TPC</li>
+<li>Reactor</li>
+<li>Proactor</li>
+</ul>
+<p><img src="/images/2020/jump.jpeg"></p>
+<h2 id="两种维度组合的场景"><a href="#两种维度组合的场景" class="headerlink" title="两种维度组合的场景"></a>两种维度组合的场景</h2><ul>
+<li>连接数量多，请求数量多<ul>
+<li>秒杀，双十一之类的业务，这类业务一定走分布式这条路</li>
+</ul>
+</li>
+<li>连接数量多，请求数量少<ul>
+<li>企业的官网</li>
+</ul>
+</li>
+<li>连接数量少，请求数量多<ul>
+<li>一些中间件，比如数据库连接池，一个数据库连接，是执行SQL的请求可能有几百个</li>
+</ul>
+</li>
+<li>连接数量少，请求数量少<ul>
+<li>企业的内部系统，比如我司创建学生账号的工具，查看学生学习情况的报表系统.</li>
+</ul>
+</li>
+</ul>
+<h2 id="PPC"><a href="#PPC" class="headerlink" title="PPC"></a>PPC</h2><p>PPC（Process Per Connection) 顾名思义就是一个连接一个进程。这种模式适合连接数不是特别的情况，比如数据库连接数.<br>缺点是</p>
+<ul>
+<li>Fork进程是有代价的</li>
+<li>父子进程通信比较复杂</li>
+</ul>
+<h2 id="TPC"><a href="#TPC" class="headerlink" title="TPC"></a>TPC</h2><p><img src="/images/2020/tpc.png"><br>TPC (Thread Per Connection) 就是一个连接一个线程. 这种模式可以说是PPC的加强版. 它不需要fork进程，也没有父子进程通信复杂的情况. 但它来来额外的副作用. 这也属于BIO</p>
+<ul>
+<li>线程切换是需要代价的</li>
+<li>线程之间协作不当就有可能出现死锁</li>
+</ul>
+<p>所以这是典型的发明了一个方案，然后制造了一个问题啊.</p>
+<h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>Reactor在前面的博文有隐约提到过，它主要干了两件事</p>
+<ul>
+<li>将线程分为两类，一类主线程专门用来接受socket的请求，一类工作线程专门用来处理socket请求</li>
+<li>主线程通过某种方式(事件驱动)将请求传给工作线程 - 好莱坞原则</li>
+</ul>
+<p>Reactor本质上是同步阻塞I/O</p>
+<h2 id="Proactor"><a href="#Proactor" class="headerlink" title="Proactor"></a>Proactor</h2>]]></content>
+      <categories>
+        <category>高性能</category>
+      </categories>
+      <tags>
+        <tag>高性能</tag>
       </tags>
   </entry>
   <entry>
