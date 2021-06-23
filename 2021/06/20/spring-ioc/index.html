@@ -299,7 +299,11 @@
 <li>HK2 - 轻量级的IOC框架，</li>
 <li>如果没有上述框架，只能手写了</li>
 </ul>
-<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。<br>   一个比较简单的例子:<br>   <figure class="highlight java"><table><tr><td class="gutter"><pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><span class="line"><span class="comment">// 定位，加载和解析</span></span><br><span class="line">ClassPathXmlApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"defaultconstruct/user.xml"</span>);</span><br><span class="line"><span class="comment">// 实例化Bean,包含依赖注入的过程</span></span><br><span class="line">User user = (User) context.getBean(<span class="string">"user"</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。<br>   一个比较简单的例子:</p>
+<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code class="java">      // 定位，加载和解析
+      ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(&quot;defaultconstruct/user.xml&quot;);
+      // 实例化Bean,包含依赖注入的过程
+      User user = (User) context.getBean(&quot;user&quot;);</code></pre>
 <p>  Spring IOC启动的大体过程</p>
 <ul>
 <li>定位 - 找到相应的BeanDefinition文件. 这是起点. 其中Refresh是核心方法.</li>
@@ -491,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
