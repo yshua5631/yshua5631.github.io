@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。 以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：  这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，">
@@ -229,26 +229,6 @@
 <li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
 </ul>
 
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -409,7 +389,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

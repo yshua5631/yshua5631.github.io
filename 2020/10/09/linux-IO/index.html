@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I/O多路复用  异步非阻塞I/O 其他 总结">
@@ -340,26 +340,6 @@
 <li>让CPU尽可能的充分利用</li>
 </ul>
 
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -526,7 +506,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。在这里， 我将软件设计原则分为三类。  总的原则 通用的原则 特殊的原则">
@@ -231,26 +231,6 @@
 <a id="more"></a>
 <h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
 
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -412,7 +392,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="一个系统如果足够稳定，而且客户对它也很满意，我们一般没有去优化它的必要，但如果随着用户量增加，系统变的缓慢，我们就有优化它的必要性了. 借用我前面博文《一种可以衡量事物的指标-快和好》，一个系统追求的目标之一是快，但快的前提的是好，也就是稳，否则步伐太大了就容易扯着蛋了. 优化系统是大的话题，这里只讨论其中的一个小领域-高并发.任何一个计算机的问题，都能从现实中找到雏形和模型，高并发也不例外。高并">
@@ -363,26 +363,6 @@
 <h2 id="并发的身影"><a href="#并发的身影" class="headerlink" title="并发的身影"></a>并发的身影</h2><h2 id="并发的未来"><a href="#并发的未来" class="headerlink" title="并发的未来"></a>并发的未来</h2></li>
 </ul>
 
-        <script>
-            document.querySelectorAll("pre button").forEach(function(button) {
-                button.hidden = false
-                button.addEventListener("click", function(e) {
-                    var range = document.createRange()
-                    range.selectNode(e.target.nextElementSibling)
-                    window.getSelection().removeAllRanges()
-                    window.getSelection().addRange(range)
-                    document.execCommand("copy")
-                    window.getSelection().removeAllRanges()
-
-                    button.innerText = 'Copied!'
-
-                    setTimeout(function() {
-                        button.innerText = 'Copy'
-                    }, 1500)
-                })          
-            })
-        </script>
-    
     </div>
 
     
@@ -549,7 +529,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
