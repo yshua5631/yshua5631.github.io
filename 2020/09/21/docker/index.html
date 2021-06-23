@@ -220,6 +220,20 @@
     </span>
 
   
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/21/docker/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/21/docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -337,10 +351,19 @@
 </ul>
 <p>  <img src="/images/2020/dance.png"><br>  限制这个理念也正是我之前提到的系统的约束，戴着脚镣跳舞才能守规矩.</p>
 <h2 id="Docker的实践"><a href="#Docker的实践" class="headerlink" title="Docker的实践"></a>Docker的实践</h2><h3 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h3><ul>
-<li>构建镜像 - 前提是有Dockerfile存在<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ricky:0.0.1 .</span><br></pre></td></tr></table></figure></li>
-<li>查看镜像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker image list</span><br><span class="line">或</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure></li>
-<li>启动镜像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -t -i ricky:0.0.1 /bin/bash</span><br></pre></td></tr></table></figure></li>
-<li>查看Container<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">运行中的容器</span><br><span class="line">docker ps</span><br><span class="line">或</span><br><span class="line">docker container ls</span><br><span class="line">所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">或</span><br><span class="line">docker container ls -a</span><br></pre></td></tr></table></figure></li>
+<li>构建镜像 - 前提是有Dockerfile存在<pre class="line-numbers language-none"><code class="language-none">docker build -t ricky:0.0.1 .<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>查看镜像<pre class="line-numbers language-none"><code class="language-none">docker image list
+或
+docker images<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li>启动镜像<pre class="line-numbers language-none"><code class="language-none">docker run -t -i ricky:0.0.1 &#x2F;bin&#x2F;bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>查看Container<pre class="line-numbers language-none"><code class="language-none">运行中的容器
+docker ps
+或
+docker container ls
+所有容器
+docker ps -a
+或
+docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h2 id="Docker的未来"><a href="#Docker的未来" class="headerlink" title="Docker的未来"></a>Docker的未来</h2><p>Docker的启动速度接近于本地进程了，所以在启动速度这块未来不可能有大的进展了.<br>Docker需要做的是规范公用镜像，让公用镜像更小，更安全。<br>Docker如果运行在物理机，如何保证Docker内部的东西不暴露给外界，且不侵害到物理机呢？<br>Docker需要强大它的生态圈</p>
 
@@ -397,6 +420,7 @@
 
 
 
+    <div class="comments" id="valine-comments"></div>
 </div>
   </main>
 
@@ -448,6 +472,35 @@
 
 
 
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
