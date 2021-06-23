@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 3.9.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,18 +21,17 @@
   </script>
 
   <meta name="description" content="网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？下面，开始我们的探索之旅.  什么是TCP TCP要解决什么问题 TCP是如何解决这些问题的 拾遗">
+<meta name="keywords" content="协议,网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络协议之靠谱邮差 - TCP">
 <meta property="og:url" content="http://yoursite.com/2020/11/03/TCP/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？下面，开始我们的探索之旅.  什么是TCP TCP要解决什么问题 TCP是如何解决这些问题的 拾遗">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-03T15:31:20.000Z">
-<meta property="article:modified_time" content="2020-11-13T15:05:29.185Z">
-<meta property="article:author" content="迷途书童">
-<meta property="article:tag" content="协议">
-<meta property="article:tag" content="网络">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.185Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络协议之靠谱邮差 - TCP">
+<meta name="twitter:description" content="网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？下面，开始我们的探索之旅.  什么是TCP TCP要解决什么问题 TCP是如何解决这些问题的 拾遗">
 
 <link rel="canonical" href="http://yoursite.com/2020/11/03/TCP/">
 
@@ -190,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                  <a href="/categories/网络/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
                 </span>
             </span>
 
@@ -240,7 +239,7 @@
 <li>TCP是如何解决这些问题的</li>
 <li>拾遗</li>
 </ul>
-<span id="more"></span>
+<a id="more"></a>
 <h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
 <h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
 <ul>
@@ -271,23 +270,25 @@
 <p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
 <h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
 <ul>
-<li>什么时候进行包重传？</li>
-<li>重传哪些包？</li>
-<li>如何进行重转</li>
-</ul>
-<p>  服务端返回 ACK 包的机制</p>
+<li><p>什么时候进行包重传？</p>
+</li>
+<li><p>重传哪些包？</p>
+</li>
+<li><p>如何进行重转</p>
+<p>服务端返回 ACK 包的机制</p>
+</li>
+<li><p>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</p>
+<p>假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
+</li>
+<li><p>超时重传</p>
 <ul>
-<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
-</ul>
-<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
-<ul>
-<li>超时重传<ul>
 <li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
 <li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
 <li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
 </ul>
 </li>
-<li>快速重传<ul>
+<li><p>快速重传</p>
+<ul>
 <li>快速重传的思路是从多次发送包的响应值中找规律。</li>
 <li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
 <li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
@@ -298,13 +299,15 @@
 <li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
 </ul>
 </li>
-<li>SACK - Selective Acknowledgment<ul>
+<li><p>SACK - Selective Acknowledgment</p>
+<ul>
 <li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
 <li>SACK需要客户端和服务端同时支持</li>
 <li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
 </ul>
 </li>
-<li>D-SACK - Duplicate SACK<ul>
+<li><p>D-SACK - Duplicate SACK</p>
+<ul>
 <li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
 <li>通过D-SACK, 我们可以知道<ul>
 <li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
@@ -359,30 +362,34 @@
 </ul>
 <p>网络拥塞发生的时候，有如下策略</p>
 <ul>
-<li>慢启动<ul>
+<li><p>慢启动</p>
+<ul>
 <li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
 <li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
 </ul>
 </li>
-<li>拥塞避免<ul>
+<li><p>拥塞避免</p>
+<ul>
 <li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
 </ul>
 </li>
-<li>拥塞发生<ul>
+<li><p>拥塞发生</p>
+<ul>
 <li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
 <li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
 <li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
 </ul>
 </li>
-<li>快速恢复<ul>
+<li><p>快速恢复</p>
+<ul>
 <li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
 </ul>
-</li>
-</ul>
-<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
+<p>至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
 <ul>
 <li>尽量的发包，而不是不发.</li>
 <li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
+</ul>
+</li>
 </ul>
 <h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
 <h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
@@ -419,8 +426,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%8D%8F%E8%AE%AE/" rel="tag"># 协议</a>
-              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/协议/" rel="tag"># 协议</a>
+              <a href="/tags/网络/" rel="tag"># 网络</a>
           </div>
 
         
@@ -495,7 +502,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFTCP"><span class="nav-number">1.</span> <span class="nav-text">什么是TCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">TCP要解决什么问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">TCP是如何解决这些问题的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">3.1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.</span> <span class="nav-text">建立连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B6%E5%8F%91%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.</span> <span class="nav-text">收发数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%99%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%8C%85%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%8C%85%E4%B8%A2%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">3.3.1.</span> <span class="nav-text">客户端给服务端的发送数据包，数据包丢了怎么办？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%99%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%8C%85%E6%98%AF%E6%8C%89%E9%A1%BA%E5%BA%8F%E5%8F%91%E9%80%81%E7%9A%84%EF%BC%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%8B%BF%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%8C%85%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84%EF%BC%9F"><span class="nav-number">3.3.2.</span> <span class="nav-text">客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%99%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E5%8C%85%E7%9A%84%E8%BF%87%E5%BF%AB%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">3.3.3.</span> <span class="nav-text">客户端给服务端发送数据包的过快怎么办？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.4.</span> <span class="nav-text">关闭连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%B8%AA%E7%BD%91%E7%BB%9C%E5%8F%91%E7%94%9F%E4%BA%86%E9%98%BB%E5%A1%9E%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">3.5.</span> <span class="nav-text">整个网络发生了阻塞怎么办？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BE%E9%81%97"><span class="nav-number">4.</span> <span class="nav-text">拾遗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%E7%B2%98%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">TCP粘包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">TCP存在的问题</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是TCP"><span class="nav-number">1.</span> <span class="nav-text">什么是TCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP要解决什么问题"><span class="nav-number">2.</span> <span class="nav-text">TCP要解决什么问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP是如何解决这些问题的"><span class="nav-number">3.</span> <span class="nav-text">TCP是如何解决这些问题的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前置知识"><span class="nav-number">3.1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立连接"><span class="nav-number">3.2.</span> <span class="nav-text">建立连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收发数据"><span class="nav-number">3.3.</span> <span class="nav-text">收发数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端给服务端的发送数据包，数据包丢了怎么办？"><span class="nav-number">3.3.1.</span> <span class="nav-text">客户端给服务端的发送数据包，数据包丢了怎么办？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><span class="nav-number">3.3.2.</span> <span class="nav-text">客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端给服务端发送数据包的过快怎么办？"><span class="nav-number">3.3.3.</span> <span class="nav-text">客户端给服务端发送数据包的过快怎么办？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭连接"><span class="nav-number">3.4.</span> <span class="nav-text">关闭连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整个网络发生了阻塞怎么办？"><span class="nav-number">3.5.</span> <span class="nav-text">整个网络发生了阻塞怎么办？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拾遗"><span class="nav-number">4.</span> <span class="nav-text">拾遗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP粘包"><span class="nav-number">4.1.</span> <span class="nav-text">TCP粘包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP存在的问题"><span class="nav-number">4.2.</span> <span class="nav-text">TCP存在的问题</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -556,14 +563,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -583,17 +590,9 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
-
-
 <script src="/js/next-boot.js"></script>
-
 
 
 

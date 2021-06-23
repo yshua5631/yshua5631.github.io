@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 3.9.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,18 @@
   </script>
 
   <meta name="description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
+<meta name="keywords" content="树,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构之B+树">
 <meta property="og:url" content="http://yoursite.com/2020/10/18/B-plus-tree/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/bplus-tree.png">
-<meta property="article:published_time" content="2020-10-18T08:50:25.000Z">
-<meta property="article:modified_time" content="2020-11-13T15:05:29.185Z">
-<meta property="article:author" content="迷途书童">
-<meta property="article:tag" content="树">
-<meta property="article:tag" content="数据结构">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.185Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之B+树">
+<meta name="twitter:description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/bplus-tree.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/10/18/B-plus-tree/">
@@ -192,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
                 </span>
             </span>
 
@@ -243,13 +242,13 @@
 <li>拾遗</li>
 </ul>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
-<span id="more"></span>
+<a id="more"></a>
 <h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
 <ul>
 <li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
 <li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
 <li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
-<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
+<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png" alt></li>
 </ul>
 <h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
 <li><p>一些基本事实</p>
@@ -310,8 +309,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%A0%91/" rel="tag"># 树</a>
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/树/" rel="tag"># 树</a>
+              <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           </div>
 
         
@@ -386,7 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFB-%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">什么是B+树?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%A0%91%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">B+树实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-%E6%A0%91%E4%B8%8EMysql%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8EInnoDB"><span class="nav-number">3.1.</span> <span class="nav-text">B+树与Mysql存储引擎InnoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BE%E9%81%97"><span class="nav-number">4.</span> <span class="nav-text">拾遗</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是B-树"><span class="nav-number">2.</span> <span class="nav-text">什么是B+树?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树实践"><span class="nav-number">3.</span> <span class="nav-text">B+树实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-树与Mysql存储引擎InnoDB"><span class="nav-number">3.1.</span> <span class="nav-text">B+树与Mysql存储引擎InnoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拾遗"><span class="nav-number">4.</span> <span class="nav-text">拾遗</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -447,14 +446,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -474,17 +473,9 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
-
-
 <script src="/js/next-boot.js"></script>
-
 
 
 

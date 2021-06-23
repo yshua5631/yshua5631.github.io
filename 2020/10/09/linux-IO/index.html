@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 3.9.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="I&#x2F;O顾名思义就是输入输出，I&#x2F;O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I&#x2F;O专门指网络设备.之前也看过不少专门讲I&#x2F;O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I&#x2F;O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I&#x2F;O多路复用  异步非阻塞I&#x2F;O 其他 总结">
+  <meta name="description" content="I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I/O多路复用  异步非阻塞I/O 其他 总结">
+<meta name="keywords" content="网络,I&#x2F;O,操作系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux的I&#x2F;O模型">
 <meta property="og:url" content="http://yoursite.com/2020/10/09/linux-IO/index.html">
 <meta property="og:site_name" content="迷途书童">
-<meta property="og:description" content="I&#x2F;O顾名思义就是输入输出，I&#x2F;O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I&#x2F;O专门指网络设备.之前也看过不少专门讲I&#x2F;O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I&#x2F;O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I&#x2F;O多路复用  异步非阻塞I&#x2F;O 其他 总结">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:description" content="I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I/O多路复用  异步非阻塞I/O 其他 总结">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/io.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/reactor.jpg">
-<meta property="article:published_time" content="2020-10-09T14:01:51.000Z">
-<meta property="article:modified_time" content="2020-11-13T15:05:29.188Z">
-<meta property="article:author" content="迷途书童">
-<meta property="article:tag" content="网络">
-<meta property="article:tag" content="I&#x2F;O">
-<meta property="article:tag" content="操作系统">
+<meta property="og:updated_time" content="2020-11-13T15:05:29.188Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux的I&#x2F;O模型">
+<meta name="twitter:description" content="I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。  背景 一些预备知识 同步阻塞 同步非阻塞 I/O多路复用  异步非阻塞I/O 其他 总结">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/io.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/10/09/linux-IO/">
@@ -239,7 +237,7 @@
 <li>其他</li>
 <li>总结</li>
 </ul>
-<span id="more"></span>
+<a id="more"></a>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>既然是模型，说明为了解决一个特定的问题. 那么I/O模型是为了解决什么问题呢？首先排除网络传输问题，那么只能是网卡接受到数据之后，如何给程序消费这个问题了。<br>程序A想要请求网络数据，程序B也要请求网络数据，以此类推，很有很多程序干类似的事情。</p>
 <p>一个程序请求网络数据，会牵涉到四方:</p>
 <ul>
@@ -249,21 +247,23 @@
 <li>内存</li>
 </ul>
 <p>根据之前提到的”又快又好”的指标，如果这四方都能在程序请求网络数据的过程中，让自身的效率达到最有，那么I/O模型的目的就达到了<br>是的，这也是I/O模型的终结目的.</p>
-<p><img src="/images/2020/io.png"></p>
+<p><img src="/images/2020/io.png" alt></p>
 <h2 id="一些预备知识"><a href="#一些预备知识" class="headerlink" title="一些预备知识"></a>一些预备知识</h2><h3 id="用户空间和内核空间"><a href="#用户空间和内核空间" class="headerlink" title="用户空间和内核空间"></a>用户空间和内核空间</h3><p>  为了保证内核数据的安全，操作系统将寻址空间分为内核空间和用户空间.可以想象一下，一家公司组织去看文艺演出，前排坐的都是领导，后排坐的都是员工，前排的区域是核心区域.</p>
 <h3 id="进程的阻塞"><a href="#进程的阻塞" class="headerlink" title="进程的阻塞"></a>进程的阻塞</h3><p>  一个进程在执行的过程中，需要等待某件事情的发生，才能继续执行，那么进程有两种选择</p>
 <ul>
-<li>占用CPU</li>
-<li>不占用CPU</li>
+<li><p>占用CPU</p>
+</li>
+<li><p>不占用CPU</p>
+<p>如果进程选择不占用CPU, 那么意味着进程被阻塞了，进入等待状态。<br>如果进程自己等待某件事情的发生，又不释放CPU的使用权，那么这个进程是自私的。</p>
+<h3 id="页缓存-Page-Cache"><a href="#页缓存-Page-Cache" class="headerlink" title="页缓存 - Page Cache"></a>页缓存 - Page Cache</h3><p>Linux内核为文件提供了一个缓存，换言之， 从网卡进来的数据，先放到内核的缓存区。接下来的事情就很自然：数据会在在某个场合下拷贝到应用程序的地址空间.</p>
+<h3 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h3><p>要区分同步和异步，就选取一个好的视角，这个视角就是应用程序. 现在一个程序A, 程序B, 网络请求接口getUser，这个接口执行的时间耗时不确定.</p>
+</li>
+<li><p>程序A 调用 getUser, 等待了t时间之后，得到了结果，然后继续执行剩下的逻辑, 这就是同步调用.</p>
+</li>
+<li><p>程序B 调用 getUser，继续执行剩下的逻辑，过t时间之后，以某种方式(回调函数)拿到了结果，这就是异步调用.</p>
+<p>在这里，没有操作系统的概念，没有CPU的概念，没有内存的概念，可以看到这是一种调用方式，这种调用方式可以被框架来实现。<br>而且可以看得出，同步调用符合开发者的认知习惯，因为代码的书写顺序就是代码的执行顺序，所以同步更人性化。默认情况下，我们写的代码就是同步的.</p>
+</li>
 </ul>
-<p>  如果进程选择不占用CPU, 那么意味着进程被阻塞了，进入等待状态。<br>  如果进程自己等待某件事情的发生，又不释放CPU的使用权，那么这个进程是自私的。</p>
-<h3 id="页缓存-Page-Cache"><a href="#页缓存-Page-Cache" class="headerlink" title="页缓存 - Page Cache"></a>页缓存 - Page Cache</h3><p>  Linux内核为文件提供了一个缓存，换言之， 从网卡进来的数据，先放到内核的缓存区。接下来的事情就很自然：数据会在在某个场合下拷贝到应用程序的地址空间.</p>
-<h3 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h3><p>  要区分同步和异步，就选取一个好的视角，这个视角就是应用程序. 现在一个程序A, 程序B, 网络请求接口getUser，这个接口执行的时间耗时不确定.</p>
-<ul>
-<li>程序A 调用 getUser, 等待了t时间之后，得到了结果，然后继续执行剩下的逻辑, 这就是同步调用.</li>
-<li>程序B 调用 getUser，继续执行剩下的逻辑，过t时间之后，以某种方式(回调函数)拿到了结果，这就是异步调用.</li>
-</ul>
-<p>  在这里，没有操作系统的概念，没有CPU的概念，没有内存的概念，可以看到这是一种调用方式，这种调用方式可以被框架来实现。<br>  而且可以看得出，同步调用符合开发者的认知习惯，因为代码的书写顺序就是代码的执行顺序，所以同步更人性化。默认情况下，我们写的代码就是同步的.</p>
 <h2 id="同步阻塞"><a href="#同步阻塞" class="headerlink" title="同步阻塞"></a>同步阻塞</h2><p>同步阻塞就是一个进程在等待某件事情发生的时候，让自己进入等待状态，让出CPU的使用权，待数据</p>
 <ul>
 <li>从网卡到内核区</li>
@@ -329,7 +329,7 @@
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="windows-IOCP"><a href="#windows-IOCP" class="headerlink" title="windows IOCP"></a>windows IOCP</h3><h3 id="libevent"><a href="#libevent" class="headerlink" title="libevent"></a>libevent</h3><p>  libevent 是一个基于事件驱动的异步I/O库</p>
 <h3 id="libuv"><a href="#libuv" class="headerlink" title="libuv"></a>libuv</h3><p>  libuv也是一个基于事件驱动的异步I/O库，主要用在node.js上.<br>  在linux上, libuv是基于epoll.<br>  在windows上, libuv是基于IOCP</p>
-<h3 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h3><p><img src="/images/2020/reactor.jpg"><br>Reactor的英文原意是核反应堆，一个核反应堆可以提供很强的能量.<br>Reactor是一种这样的模式，它要求主线程负责监听文件描述符是否有事件发生，有的话就将事情发送给工作线程. 所以这里可以看到几个特点:</p>
+<h3 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h3><p><img src="/images/2020/reactor.jpg" alt><br>Reactor的英文原意是核反应堆，一个核反应堆可以提供很强的能量.<br>Reactor是一种这样的模式，它要求主线程负责监听文件描述符是否有事件发生，有的话就将事情发送给工作线程. 所以这里可以看到几个特点:</p>
 <ul>
 <li>将线程分为两大职责，一种是管理者，一种工作者</li>
 <li>管理者负责信息的收集，然后将信息分发给工作者。从实现的角度，体现了事件驱动。从原则的角度，体现了好莱坞原则.<h3 id="Proactor-模式"><a href="#Proactor-模式" class="headerlink" title="Proactor 模式"></a>Proactor 模式</h3></li>
@@ -368,9 +368,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/网络/" rel="tag"># 网络</a>
               <a href="/tags/I-O/" rel="tag"># I/O</a>
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+              <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           </div>
 
         
@@ -445,7 +445,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">一些预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">用户空间和内核空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%98%BB%E5%A1%9E"><span class="nav-number">2.2.</span> <span class="nav-text">进程的阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E7%BC%93%E5%AD%98-Page-Cache"><span class="nav-number">2.3.</span> <span class="nav-text">页缓存 - Page Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.4.</span> <span class="nav-text">同步和异步的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E9%98%BB%E5%A1%9E"><span class="nav-number">3.</span> <span class="nav-text">同步阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="nav-number">4.</span> <span class="nav-text">同步非阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">I&#x2F;O多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9EI-O"><span class="nav-number">6.</span> <span class="nav-text">异步非阻塞I&#x2F;O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">7.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#windows-IOCP"><span class="nav-number">7.1.</span> <span class="nav-text">windows IOCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libevent"><span class="nav-number">7.2.</span> <span class="nav-text">libevent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libuv"><span class="nav-number">7.3.</span> <span class="nav-text">libuv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.4.</span> <span class="nav-text">Reactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.5.</span> <span class="nav-text">Proactor 模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些预备知识"><span class="nav-number">2.</span> <span class="nav-text">一些预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户空间和内核空间"><span class="nav-number">2.1.</span> <span class="nav-text">用户空间和内核空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的阻塞"><span class="nav-number">2.2.</span> <span class="nav-text">进程的阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页缓存-Page-Cache"><span class="nav-number">2.3.</span> <span class="nav-text">页缓存 - Page Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步和异步的区别"><span class="nav-number">2.4.</span> <span class="nav-text">同步和异步的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步阻塞"><span class="nav-number">3.</span> <span class="nav-text">同步阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步非阻塞"><span class="nav-number">4.</span> <span class="nav-text">同步非阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O多路复用"><span class="nav-number">5.</span> <span class="nav-text">I/O多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步非阻塞I-O"><span class="nav-number">6.</span> <span class="nav-text">异步非阻塞I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">7.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#windows-IOCP"><span class="nav-number">7.1.</span> <span class="nav-text">windows IOCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libevent"><span class="nav-number">7.2.</span> <span class="nav-text">libevent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libuv"><span class="nav-number">7.3.</span> <span class="nav-text">libuv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-模式"><span class="nav-number">7.4.</span> <span class="nav-text">Reactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor-模式"><span class="nav-number">7.5.</span> <span class="nav-text">Proactor 模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -506,14 +506,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -533,17 +533,9 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
-
-
 <script src="/js/next-boot.js"></script>
-
 
 
 

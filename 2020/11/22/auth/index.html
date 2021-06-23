@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 3.9.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,21 +21,20 @@
   </script>
 
   <meta name="description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
+<meta name="keywords" content="安全,系统设计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="系统行为之警卫局 - 登录和授权">
 <meta property="og:url" content="http://yoursite.com/2020/11/22/auth/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/saml-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/oauth-workflow.png">
 <meta property="og:image" content="http://yoursite.com/images/2020/OIDC-workflow.jpg">
-<meta property="article:published_time" content="2020-11-22T14:27:09.000Z">
-<meta property="article:modified_time" content="2020-12-16T16:14:13.742Z">
-<meta property="article:author" content="迷途书童">
-<meta property="article:tag" content="安全">
-<meta property="article:tag" content="系统设计">
+<meta property="og:updated_time" content="2020-12-16T16:14:13.742Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="系统行为之警卫局 - 登录和授权">
+<meta name="twitter:description" content="在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。  背景 什么是登录和授权 如何进行登录和授权 登录和授权相关的实践 登录和授权的未来">
 <meta name="twitter:image" content="http://yoursite.com/images/2020/saml-workflow.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/11/22/auth/">
@@ -194,7 +193,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">安全</span></a>
+                  <a href="/categories/安全/" itemprop="url" rel="index"><span itemprop="name">安全</span></a>
                 </span>
             </span>
 
@@ -245,7 +244,7 @@
 <li>登录和授权相关的实践</li>
 <li>登录和授权的未来</li>
 </ul>
-<span id="more"></span>
+<a id="more"></a>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>登录和授权是一个软件系统里最常见的行为。<br>还记得在第一家公司使用过一个ERP系统，登录进去只能看到自己所属的模块.<br>如今应用多了，一个企业内部，可能有专门的财务软件，也有可能有外部购买的软件，基于时间就是金钱，效率就是生命的原则，在一家公司内部，如何统一管理用户的账号，在一个地方登录了系统A, 在另外一个地方可以直接登录系统B，成为一个企业必须解决的问题（SSO）.<br>我要登录极客时间，有好几种方式，但最省时的方式肯定的是第三方登录，点击微信图标， 唰唰几步就完成了登录，而不是重新注册一个账号，输入电话，电子邮件。这也体现了用户至上的设计理念。 换句话说，没有人喜欢复杂和繁琐的东西。简单，简单，还是简单.</p>
 <h2 id="什么是登录和授权"><a href="#什么是登录和授权" class="headerlink" title="什么是登录和授权"></a>什么是登录和授权</h2><p>登录和授权是两件事，要分开说.</p>
 <h3 id="什么是登录"><a href="#什么是登录" class="headerlink" title="什么是登录"></a>什么是登录</h3><p>登录是指一个主体可以进入系统S的行为. 这里的主体可以是人或者是一个物体，系统S可以是软件，也可以是指一个组织<br>以下是一些登录的例子</p>
@@ -270,110 +269,126 @@
 <p>授权这个行为表明了主体在系统S里面基于特定的约束，只能做特定的事情.</p>
 <h2 id="如何进行登录和授权"><a href="#如何进行登录和授权" class="headerlink" title="如何进行登录和授权"></a>如何进行登录和授权</h2><h3 id="单系统的登录和授权"><a href="#单系统的登录和授权" class="headerlink" title="单系统的登录和授权"></a>单系统的登录和授权</h3><p>  单系统登录设计原则</p>
 <ul>
-<li>密码需要设计复杂度</li>
-<li>存在数据里的密码需要加密</li>
-<li>最好加一些额外的验证 - 比如验证码</li>
-<li>能以最小的成本平滑的过渡到SSO</li>
-</ul>
-<p>  单系统授权设计原则</p>
-<ul>
-<li>权限表能很好的添加或者删除权限</li>
-<li>有专门的工具来维护权限的添加和删除</li>
-</ul>
-<h3 id="多系统登录和授权相关规范"><a href="#多系统登录和授权相关规范" class="headerlink" title="多系统登录和授权相关规范"></a>多系统登录和授权相关规范</h3><p>  下面是一些有关登录和授权的规范，我之所以称它们为规范是为了便于方便讨论。 因为地方会称这些规范是个协议，或者是个框架，或者从字面上看是个语言，这样概念太多，会让人迷糊不清。<br>  规范本质上是一种约束。 它描述了</p>
-<ul>
-<li>一个系统可以做什么</li>
-<li>一个系统不可以做什么</li>
-<li>一个系统如何做某件事</li>
-</ul>
-<h4 id="SAML"><a href="#SAML" class="headerlink" title="SAML"></a>SAML</h4><p>  SAML（Security Assertion MarkUp Language）顾名思义是一个与安全和断言有关的规范。 下面引用了维基百科的定义</p>
+<li><p>密码需要设计复杂度</p>
+</li>
+<li><p>存在数据里的密码需要加密</p>
+</li>
+<li><p>最好加一些额外的验证 - 比如验证码</p>
+</li>
+<li><p>能以最小的成本平滑的过渡到SSO</p>
+<p>单系统授权设计原则</p>
+</li>
+<li><p>权限表能很好的添加或者删除权限</p>
+</li>
+<li><p>有专门的工具来维护权限的添加和删除</p>
+<h3 id="多系统登录和授权相关规范"><a href="#多系统登录和授权相关规范" class="headerlink" title="多系统登录和授权相关规范"></a>多系统登录和授权相关规范</h3><p>下面是一些有关登录和授权的规范，我之所以称它们为规范是为了便于方便讨论。 因为地方会称这些规范是个协议，或者是个框架，或者从字面上看是个语言，这样概念太多，会让人迷糊不清。<br>规范本质上是一种约束。 它描述了</p>
+</li>
+<li><p>一个系统可以做什么</p>
+</li>
+<li><p>一个系统不可以做什么</p>
+</li>
+<li><p>一个系统如何做某件事</p>
+<h4 id="SAML"><a href="#SAML" class="headerlink" title="SAML"></a>SAML</h4><p>SAML（Security Assertion MarkUp Language）顾名思义是一个与安全和断言有关的规范。 下面引用了维基百科的定义</p>
 <blockquote>
 <p>SAML is an open standard for exchanging authentication and authorization data between parties, in particular, between an identity provider and a service provider. SAML is an XML-based markup language for security assertions (statements that service providers use to make access-control decisions).</p>
 </blockquote>
-<p>  维基百科回答的大体还是准确，但一会说这是个标准，一会又说这是一个语言，所以很乱。<br>  从这里也可以看出, SAML主要解决这样一个问题: 如何在IDP和SP之间交换验证和授权的信息？<br>  SAML有三个角色</p>
+<p>维基百科回答的大体还是准确，但一会说这是个标准，一会又说这是一个语言，所以很乱。<br>从这里也可以看出, SAML主要解决这样一个问题: 如何在IDP和SP之间交换验证和授权的信息？<br>SAML有三个角色</p>
+</li>
+<li><p>Client - 张三</p>
+</li>
+<li><p>Identity Provider - 微信</p>
+</li>
+<li><p>Service Provider - 极客时间</p>
+<p><img src="/images/2020/saml-workflow.png" alt><br>基于上面三个角色， SAML大体的workflow是</p>
+</li>
+<li><p>Client 访问 Service</p>
+</li>
+<li><p>Service 将 Client 导向到 IDP</p>
 <ul>
-<li>Client - 张三</li>
-<li>Identity Provider - 微信</li>
-<li>Service Provider - 极客时间</li>
-</ul>
-<p>  <img src="/images/2020/saml-workflow.png"><br>  基于上面三个角色， SAML大体的workflow是</p>
-<ul>
-<li>Client 访问 Service</li>
-<li>Service 将 Client 导向到 IDP<ul>
 <li>Client 登录成功</li>
 </ul>
 </li>
-<li>IPD将Client导向到 Service<ul>
+<li><p>IPD将Client导向到 Service</p>
+<ul>
 <li>Service验证用户登录成功</li>
 </ul>
 </li>
-<li>Client在浏览器上可以正常访问资源</li>
-</ul>
-<h4 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h4><p>  OAuth是一个关于授权的标准，它不做验证。</p>
+<li><p>Client在浏览器上可以正常访问资源</p>
+<h4 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h4><p>OAuth是一个关于授权的标准，它不做验证。</p>
 <blockquote>
 <p>OAuth 2.0 is the industry-standard protocol for authorization. OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications, desktop applications, mobile phones, and living room devices</p>
 </blockquote>
-<p>  OAuth的的角色</p>
-<ul>
-<li>Resource Server - 资源，比如房子</li>
-<li>Resource Owner - 资源的拥有者，比如这个房子是属于张三的</li>
-<li>Authorization Server - 有个组织负责给张三配房子的临时钥匙</li>
-<li>Client - 李四</li>
-</ul>
-<p>  <img src="/images/2020/oauth-workflow.png"></p>
-<p>  OAuth的故事大概是这样的：<br>  张三有一家公司，李四想去张三的公司仓库里取货，但张三不能把真正的钥匙给李四，只能委托一个机构给李四一把临时的钥匙，这把临时的钥匙只能去仓库，不能去财务室. 这把临时钥匙是不记名的，换句话说，如果王五抢劫到这把临时钥匙，也是可以去仓库取东西的.</p>
-<p>  更技术一点就是说</p>
-<ul>
-<li>授权服务器如何采取一种简单又安全的方式给Client生成access token? </li>
-</ul>
-<p>  OAuth的花式生成access token的方式</p>
-<ul>
-<li>授权码</li>
-<li>简化模式</li>
-<li>密码模式</li>
-<li>客户端模式</li>
-</ul>
-<h4 id="OpenId-Connect-OIDC"><a href="#OpenId-Connect-OIDC" class="headerlink" title="OpenId Connect(OIDC)"></a>OpenId Connect(OIDC)</h4><p>  OpenId Connect是一个专注于身份验证的规范.</p>
+<p>OAuth的的角色</p>
+</li>
+<li><p>Resource Server - 资源，比如房子</p>
+</li>
+<li><p>Resource Owner - 资源的拥有者，比如这个房子是属于张三的</p>
+</li>
+<li><p>Authorization Server - 有个组织负责给张三配房子的临时钥匙</p>
+</li>
+<li><p>Client - 李四</p>
+<p><img src="/images/2020/oauth-workflow.png" alt></p>
+<p>OAuth的故事大概是这样的：<br>张三有一家公司，李四想去张三的公司仓库里取货，但张三不能把真正的钥匙给李四，只能委托一个机构给李四一把临时的钥匙，这把临时的钥匙只能去仓库，不能去财务室. 这把临时钥匙是不记名的，换句话说，如果王五抢劫到这把临时钥匙，也是可以去仓库取东西的.</p>
+<p>更技术一点就是说</p>
+</li>
+<li><p>授权服务器如何采取一种简单又安全的方式给Client生成access token? </p>
+<p>OAuth的花式生成access token的方式</p>
+</li>
+<li><p>授权码</p>
+</li>
+<li><p>简化模式</p>
+</li>
+<li><p>密码模式</p>
+</li>
+<li><p>客户端模式</p>
+<h4 id="OpenId-Connect-OIDC"><a href="#OpenId-Connect-OIDC" class="headerlink" title="OpenId Connect(OIDC)"></a>OpenId Connect(OIDC)</h4><p>OpenId Connect是一个专注于身份验证的规范.</p>
 <blockquote>
 <p>OpenID Connect is an interoperable authentication protocol based on the OAuth 2.0 family of specifications. It uses straightforward REST/JSON message flows with a design goal of “making simple things simple and complicated things possible”. It’s uniquely easy for developers to integrate, compared to any preceding Identity protocol.</p>
 </blockquote>
-<p>  从上面的描述可以知道 OIDC也包含授权功能，因为它是基于OAuth2.0, 但我们要记住OIDC的主业是认证，认证是它的价值主张, 授权只是它的副业.<br>  如果说授权最终的产出是access token, 那么验证最终的产出就是id token. 基本上，只要拿到了这两种token, 就可以在各个软件系统中为所欲为的横着走了.</p>
-<p>  OIDC的角色</p>
+<p>从上面的描述可以知道 OIDC也包含授权功能，因为它是基于OAuth2.0, 但我们要记住OIDC的主业是认证，认证是它的价值主张, 授权只是它的副业.<br>如果说授权最终的产出是access token, 那么验证最终的产出就是id token. 基本上，只要拿到了这两种token, 就可以在各个软件系统中为所欲为的横着走了.</p>
+<p>OIDC的角色</p>
+</li>
+<li><p>End User - 张三</p>
+</li>
+<li><p>Relying Party - 相当于OAuth的Resource Server。 比如极客时间</p>
+</li>
+<li><p>OpenID Provider - 身份认证服务，类似于SAML中的IDP。 比如微信</p>
+</li>
+<li><p>ID-Token - 包含身份认证信息的JWT</p>
+</li>
+<li><p>UserInfo Endpoint - 获取用户的昵称和头像等信息</p>
+<p>OIDC的大体的WorkFlow是这样的</p>
+</li>
+<li><p>RP 发送认证请求给 OP</p>
+</li>
+<li><p>OP 让用户来验证 </p>
 <ul>
-<li>End User - 张三</li>
-<li>Relying Party - 相当于OAuth的Resource Server。 比如极客时间</li>
-<li>OpenID Provider - 身份认证服务，类似于SAML中的IDP。 比如微信</li>
-<li>ID-Token - 包含身份认证信息的JWT</li>
-<li>UserInfo Endpoint - 获取用户的昵称和头像等信息</li>
-</ul>
-<p>  OIDC的大体的WorkFlow是这样的</p>
-<ul>
-<li>RP 发送认证请求给 OP</li>
-<li>OP 让用户来验证 <ul>
 <li>用户提供正确的身份验证</li>
 </ul>
 </li>
-<li>OP 生成 id token 和 access token给RP</li>
-<li>RP 根据 access token 发送一个获取用户信息的请求.</li>
-<li>RP 获得用户的信息</li>
-</ul>
-<p>  <img src="/images/2020/OIDC-workflow.jpg"></p>
-<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4>  <!--TODO SpringSecurity的设计初衷和目的以及核心功能和概念 -->
-<h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4>  <!--TODO SpringShiro的设计初衷和目的以及核心功能和概念 -->
-<h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4>  <!--TODO KeyCloak的设计初衷和目的以及核心功能和概念 -->
-  <!--TODO 这三个框架共同表达了什么主题？ -->
-  <!--TODO 这三个框架有哪些优秀的设计原则和思路？ -->
-<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>  这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>  所以权限设计是为了解决这样一个终极问题</p>
+<li><p>OP 生成 id token 和 access token给RP</p>
+</li>
+<li><p>RP 根据 access token 发送一个获取用户信息的请求.</p>
+</li>
+<li><p>RP 获得用户的信息</p>
+<p><img src="/images/2020/OIDC-workflow.jpg" alt></p>
+<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4><!--TODO SpringSecurity的设计初衷和目的以及核心功能和概念 -->
+<h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4><!--TODO SpringShiro的设计初衷和目的以及核心功能和概念 -->
+<h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4><!--TODO KeyCloak的设计初衷和目的以及核心功能和概念 -->
+<!--TODO 这三个框架共同表达了什么主题？ -->
+<!--TODO 这三个框架有哪些优秀的设计原则和思路？ -->
+<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>所以权限设计是为了解决这样一个终极问题</p>
+</li>
+<li><p>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</p>
+<p>一些权限模型</p>
+</li>
+<li><p>ACL - 基本的思路是：对一个文件A需要配置张三读写权限，文件B李四需要配置写权限</p>
 <ul>
-<li>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</li>
-</ul>
-<p>  一些权限模型</p>
-<ul>
-<li>ACL - 基本的思路是：对一个文件A需要配置张三读写权限，文件B李四需要配置写权限<ul>
 <li>这种配置是符合直觉的，但是随着用户量的增加，需要一个一个的配，很繁琐.</li>
 </ul>
 </li>
-<li>DAC (Discretionary access control) - 是基于 ACL的扩展。 它引入了组和给其他主体授权的概念<ul>
+<li><p>DAC (Discretionary access control) - 是基于 ACL的扩展。 它引入了组和给其他主体授权的概念</p>
+<ul>
 <li>张三可以具有对文件A读写的权限，张三属于销售组，所以销售组也可以对文件具有读的权限</li>
 <li>文件A的拥有者张三同时也可以将文件A读的权限赋给李四，这样是自主的核心要义。</li>
 <li>Windows和Linux权限是基于DAC的。<ul>
@@ -383,50 +398,68 @@
 </li>
 </ul>
 </li>
-<li>MAC (Mandatory access control) - 相比于DAC, MAC强调的是更安全。张三和李四同属于销售组，但是张三是经理，李四是员工，所以张三和李四对文件A是有不同对访问权限的，这个问题DAC就解决不了. MAC引入了信息敏感度这个概念, 也就是引入了一个新的维度.<ul>
+<li><p>MAC (Mandatory access control) - 相比于DAC, MAC强调的是更安全。张三和李四同属于销售组，但是张三是经理，李四是员工，所以张三和李四对文件A是有不同对访问权限的，这个问题DAC就解决不了. MAC引入了信息敏感度这个概念, 也就是引入了一个新的维度.</p>
+<ul>
 <li>要配置资源的信息等级</li>
 <li>要配置用户主体的信息等级</li>
 <li>核心的财务文件只有经理级别的财务人员才能查看，但是经理级别的销售人员就不能查看.</li>
 </ul>
 </li>
-<li>RBAC (Role based access control) - RBAC的核心概念是：主体，角色，资源<ul>
+<li><p>RBAC (Role based access control) - RBAC的核心概念是：主体，角色，资源</p>
+<ul>
 <li>一个销售角色有很多权限，比如查看合同，创建客户，删除客户等等，只要一个人是销售，它就具有这些权限</li>
 <li>角色是权限的集合，而组是用户的集合</li>
 </ul>
 </li>
-<li>ABAC (Attribute base access control) - ABAC相比于其他模型是它的表达力是最强的. 如果要表达张三上午可以对文件进行读取操作，那么上述所有模型都无能为力。ABAC可以表述为: X在Y条件对Z执行A操作, 这里的X,Y,Z,A都是可以自定义的.<ul>
+<li><p>ABAC (Attribute base access control) - ABAC相比于其他模型是它的表达力是最强的. 如果要表达张三上午可以对文件进行读取操作，那么上述所有模型都无能为力。ABAC可以表述为: X在Y条件对Z执行A操作, 这里的X,Y,Z,A都是可以自定义的.</p>
+<ul>
 <li>来自北京的张三在上午10点钟可以读取服务器上80端口的内容。 这段表述够复杂了吧，ABAC就可以干这事情。已经有点声明式编程的味道了.</li>
+</ul>
+<h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><ul>
+<li>协议<ul>
+<li>X.500 - X.500是基于OSI的目录访问服务，众所周知，OSI现在已经被淘汰.</li>
+<li>LDAP（Lightweight Directory Access Protocol） - LDAP是一个基于X.500的目录访问的协议，但它更简单，而且支持TCP/IP，这对互联网访问非常重要.</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>Active Directory - 这是LDAP在windows上的实现，它的层次结构依次是：域(Domain) -&gt; 组织单位(Orgnization Unit) -&gt; 群组(Group) -&gt; 用户(User)<ul>
+<li>一般来说，AD适合在内网中的C/S架构</li>
+</ul>
+</li>
+<li>OpenLDAP</li>
+<li>ADFS - ADFS是一种跨网络的身份认证方案，也就是用户账户和应用程序位于不同的网络.<ul>
+<li>相比于传统的AD, ADFS可以穿透不同的网络.</li>
+</ul>
+</li>
+<li>Azure AD - 是基于云上的身份认证和授权方案。<ul>
+<li>它支持Rest风格. 具体一点就是通过api可以拿到access token和id token, 这是开发者最关心的信息.</li>
+<li>它支持多重身份验证</li>
+<li>它支持多租户，租户和租户之间的数据是彻底隔离的</li>
+<li>它不是主域控制器</li>
 </ul>
 </li>
 </ul>
-<h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><pre><code>* 协议
-  * X.500 - X.500是基于OSI的目录访问服务，众所周知，OSI现在已经被淘汰.
-  * LDAP（Lightweight Directory Access Protocol） - LDAP是一个基于X.500的目录访问的协议，但它更简单，而且支持TCP/IP，这对互联网访问非常重要.
-* 实现
-  * Active Directory - 这是LDAP在windows上的实现，它的层次结构依次是：域(Domain) -&gt; 组织单位(Orgnization Unit) -&gt; 群组(Group) -&gt; 用户(User)
-    * 一般来说，AD适合在内网中的C/S架构
-  * OpenLDAP
-  * ADFS - ADFS是一种跨网络的身份认证方案，也就是用户账户和应用程序位于不同的网络.
-    * 相比于传统的AD, ADFS可以穿透不同的网络.
-  * Azure AD - 是基于云上的身份认证和授权方案。
-    * 它支持Rest风格. 具体一点就是通过api可以拿到access token和id token, 这是开发者最关心的信息.
-    * 它支持多重身份验证
-    * 它支持多租户，租户和租户之间的数据是彻底隔离的
-    * 它不是主域控制器
-</code></pre>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="登录和授权的未来"><a href="#登录和授权的未来" class="headerlink" title="登录和授权的未来"></a>登录和授权的未来</h2><p>  无论是SAML, OAuth 还是 OpenId Connect, 我希望将来只有一种认证和授权协议, 姑且命名为XAuth.<br>  它有如下特征</p>
 <ul>
-<li>生成和解析token是简单的</li>
-<li>token是安全的</li>
-<li>形成规范</li>
-<li>.net, java以及前端有成熟框架和社区支持，且这些框架被大多数公司所使用.</li>
+<li><p>生成和解析token是简单的</p>
+</li>
+<li><p>token是安全的</p>
+</li>
+<li><p>形成规范</p>
+</li>
+<li><p>.net, java以及前端有成熟框架和社区支持，且这些框架被大多数公司所使用.</p>
+<p>所有技术无论是原则，模式，还是方式，统一是大趋势。 我们不想要两个或者多个。<br>可以看到一些例子</p>
+</li>
+<li><p>前些日子, .net5发布了，统一了.net core, mono.</p>
+</li>
+<li><p>Spring Cloud想统一解决分布式领域内的所有问题，并形成规范.</p>
+<p>这也就是为什么我对认证和授权协议会有统一的构想的原因。</p>
+</li>
 </ul>
-<p>  所有技术无论是原则，模式，还是方式，统一是大趋势。 我们不想要两个或者多个。<br>  可以看到一些例子</p>
-<ul>
-<li>前些日子, .net5发布了，统一了.net core, mono.</li>
-<li>Spring Cloud想统一解决分布式领域内的所有问题，并形成规范.</li>
-</ul>
-<p>  这也就是为什么我对认证和授权协议会有统一的构想的原因。</p>
 
     </div>
 
@@ -456,8 +489,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-              <a href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" rel="tag"># 系统设计</a>
+              <a href="/tags/安全/" rel="tag"># 安全</a>
+              <a href="/tags/系统设计/" rel="tag"># 系统设计</a>
           </div>
 
         
@@ -532,7 +565,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83"><span class="nav-number">2.</span> <span class="nav-text">什么是登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%99%BB%E5%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text">什么是登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%88%E6%9D%83"><span class="nav-number">2.2.</span> <span class="nav-text">什么是授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83"><span class="nav-number">3.</span> <span class="nav-text">如何进行登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83"><span class="nav-number">3.1.</span> <span class="nav-text">单系统的登录和授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83%E7%9B%B8%E5%85%B3%E8%A7%84%E8%8C%83"><span class="nav-number">3.2.</span> <span class="nav-text">多系统登录和授权相关规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAML"><span class="nav-number">3.2.1.</span> <span class="nav-text">SAML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OAuth"><span class="nav-number">3.2.2.</span> <span class="nav-text">OAuth</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenId-Connect-OIDC"><span class="nav-number">3.2.3.</span> <span class="nav-text">OpenId Connect(OIDC)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A1%86%E6%9E%B6"><span class="nav-number">3.3.</span> <span class="nav-text">相关框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Security"><span class="nav-number">3.3.1.</span> <span class="nav-text">Spring Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Shiro"><span class="nav-number">3.3.2.</span> <span class="nav-text">Spring Shiro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KeyCloak"><span class="nav-number">3.3.3.</span> <span class="nav-text">KeyCloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83%E7%9A%84%E7%9B%B8%E5%85%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">4.</span> <span class="nav-text">登录和授权的相关实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.1.</span> <span class="nav-text">如何设计一个权限系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E4%BD%95%E5%AD%98%E5%82%A8%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9A%84%EF%BC%9F"><span class="nav-number">4.2.</span> <span class="nav-text">操作系统是如何存储用户信息的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E5%92%8C%E6%8E%88%E6%9D%83%E7%9A%84%E6%9C%AA%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">登录和授权的未来</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是登录和授权"><span class="nav-number">2.</span> <span class="nav-text">什么是登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是登录"><span class="nav-number">2.1.</span> <span class="nav-text">什么是登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是授权"><span class="nav-number">2.2.</span> <span class="nav-text">什么是授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行登录和授权"><span class="nav-number">3.</span> <span class="nav-text">如何进行登录和授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单系统的登录和授权"><span class="nav-number">3.1.</span> <span class="nav-text">单系统的登录和授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多系统登录和授权相关规范"><span class="nav-number">3.2.</span> <span class="nav-text">多系统登录和授权相关规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAML"><span class="nav-number">3.2.1.</span> <span class="nav-text">SAML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OAuth"><span class="nav-number">3.2.2.</span> <span class="nav-text">OAuth</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenId-Connect-OIDC"><span class="nav-number">3.2.3.</span> <span class="nav-text">OpenId Connect(OIDC)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关框架"><span class="nav-number">3.3.</span> <span class="nav-text">相关框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Security"><span class="nav-number">3.3.1.</span> <span class="nav-text">Spring Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Shiro"><span class="nav-number">3.3.2.</span> <span class="nav-text">Spring Shiro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KeyCloak"><span class="nav-number">3.3.3.</span> <span class="nav-text">KeyCloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的相关实践"><span class="nav-number">4.</span> <span class="nav-text">登录和授权的相关实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何设计一个权限系统"><span class="nav-number">4.1.</span> <span class="nav-text">如何设计一个权限系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作系统是如何存储用户信息的？"><span class="nav-number">4.2.</span> <span class="nav-text">操作系统是如何存储用户信息的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录和授权的未来"><span class="nav-number">5.</span> <span class="nav-text">登录和授权的未来</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -593,14 +626,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">1:01</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -620,17 +653,9 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
-
-
 <script src="/js/next-boot.js"></script>
-
 
 
 
