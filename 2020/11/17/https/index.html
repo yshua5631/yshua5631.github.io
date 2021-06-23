@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;yoursite.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script><script src="/js/config.js"></script>
+<meta name="description" content="安全，这件事情无处不在。我们不希望自己的个人信息被泄漏。我们不希望自己的银行卡密码被盗取。我们不希望自己的一言一行被监控，我们希望能有个人的隐私.作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.  背景 什么是Https Https的机制是什么？ 安全和Https拾遗">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络协议之保密局 - Https">
+<meta property="og:url" content="http://yoursite.com/2020/11/17/https/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="安全，这件事情无处不在。我们不希望自己的个人信息被泄漏。我们不希望自己的银行卡密码被盗取。我们不希望自己的一言一行被监控，我们希望能有个人的隐私.作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.  背景 什么是Https Https的机制是什么？ 安全和Https拾遗">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/https.png">
+<meta property="article:published_time" content="2020-11-17T15:35:44.000Z">
+<meta property="article:modified_time" content="2021-05-14T06:03:47.607Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="安全">
+<meta property="article:tag" content="网络协议">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/https.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/11/17/https/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;11&#x2F;17&#x2F;https&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;11&#x2F;17&#x2F;https&#x2F;&quot;,&quot;title&quot;:&quot;网络协议之保密局 - Https&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>网络协议之保密局 - Https | 迷途书童</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">迷途书童</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFHttps"><span class="nav-number">2.</span> <span class="nav-text">什么是Https</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Https%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.</span> <span class="nav-text">Https的机制是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Https%E6%9C%BA%E5%88%B6%E7%9A%84%E6%A0%B8%E5%BF%83%E7%90%86%E5%BF%B5"><span class="nav-number">3.1.</span> <span class="nav-text">Https机制的核心理念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Https%E7%9A%84%E4%B8%A4%E5%A4%A7%E9%98%B6%E6%AE%B5"><span class="nav-number">3.2.</span> <span class="nav-text">Https的两大阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB-Man-In-The-Middle"><span class="nav-number">3.3.</span> <span class="nav-text">中间人攻击 - Man In The Middle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%92%8CHttps%E6%8B%BE%E9%81%97"><span class="nav-number">4.</span> <span class="nav-text">安全和Https拾遗</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/17/https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络协议之保密局 - Https
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-17 23:35:44" itemprop="dateCreated datePublished" datetime="2020-11-17T23:35:44+08:00">2020-11-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-14 14:03:47" itemprop="dateModified" datetime="2021-05-14T14:03:47+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index"><span itemprop="name">网络协议</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/17/https/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/17/https/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>安全，这件事情无处不在。<br>我们不希望自己的个人信息被泄漏。<br>我们不希望自己的银行卡密码被盗取。<br>我们不希望自己的一言一行被监控，我们希望能有个人的隐私.<br>作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.</p>
+<ul>
+<li>背景</li>
+<li>什么是Https</li>
+<li>Https的机制是什么？</li>
+<li>安全和Https拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>1994年，网景公司在TCP/IP协议栈上创建了一个传输加密层: SSL(Secure Socket Layer), 这是一个原始规范，但没有发布。<br>1995年2月，修订了规范，并发布了SSL 2.0.<br>1996年，SSL 3.0发布, 得到大规模应用.<br>IETF 觉得SSL有硬伤，只能加密HTTP，为什么不能加密所有的应用层协议呢？<br>IETF在SSL 3.0的基础上， 重新命名和设计了这个协议，取名为TLS。<br>1999年1月, TLS 1.0 发布.<br>2006年4月, TLS 1.1 发布.<br>2008年8月, TLS 1.2 发布.<br>2018年3月, TLS 1.3 发布.</p>
+<h2 id="什么是Https"><a href="#什么是Https" class="headerlink" title="什么是Https"></a>什么是Https</h2><p>Https是一种网络协议, Https = Http + SSL/TLS. HTTPS是为了</p>
+<ul>
+<li>身份验证 - 张三给李四发消息，如何保证李四知道这个消息是张三发送的？</li>
+<li>信息泄漏 - 张三给李四发消息，如何保证信息不泄漏给王五？</li>
+<li>信息篡改 - 张三给李四发消息，王五拿到信息进行了篡改，李四如何知道这个信息有没有被篡改？</li>
+</ul>
+<p>以上三个问题可以规约成一个问题：</p>
+<ul>
+<li>A给B发消息，如果保证只有通信双方知道消息的内容？</li>
+</ul>
+<h2 id="Https的机制是什么"><a href="#Https的机制是什么" class="headerlink" title="Https的机制是什么"></a>Https的机制是什么</h2><p>在讨论Https的原理和机制之前，先确定几个大的前提</p>
+<ul>
+<li>操作系统是正常的 - 不要使用盗版操作系统</li>
+<li>浏览器是正常的 - 不要下载被改造过的浏览器</li>
+<li>CA中心是正常的 - 就好比一个市政府不能是假的.</li>
+<li>人是有可能犯错的 - 有时候脑子短路，会有误操作.</li>
+<li>服务端的私钥是不会被窃取的</li>
+</ul>
+<p>引入这些大前提的目的是</p>
+<ul>
+<li>方便讨论问题，否则会钻进一些牛角尖。</li>
+<li>说明没有绝对的安全。</li>
+</ul>
+<h3 id="Https机制的核心理念"><a href="#Https机制的核心理念" class="headerlink" title="Https机制的核心理念"></a>Https机制的核心理念</h3><ul>
+<li>非对称加密实现证书的传输</li>
+<li>对称加密进行数据的传输</li>
+</ul>
+<h3 id="Https的两大阶段"><a href="#Https的两大阶段" class="headerlink" title="Https的两大阶段"></a>Https的两大阶段</h3><ul>
+<li>证书验证<ul>
+<li>客户端发起连接请求</li>
+<li>服务端返回证书</li>
+<li>客户端验证证书是否合法，如果不合法则给予警告和提示</li>
+</ul>
+</li>
+<li>数据传输<ul>
+<li>证书验证合法之后，客户端生产随机数，用服务端的公钥加密随机数</li>
+<li>将随机数发送给服务端， 服务端根据随机数选择对称加密算法。</li>
+<li>服务端对要返回的内容进行加密</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/2020/https.png"></p>
+<h3 id="中间人攻击-Man-In-The-Middle"><a href="#中间人攻击-Man-In-The-Middle" class="headerlink" title="中间人攻击 - Man In The Middle"></a>中间人攻击 - Man In The Middle</h3><p>中间人攻击是客户端和服务端在通信的时候，通信被第三方劫持，而客户端和服务端都意识不到第三方的存在。<br>一个基本事实:</p>
+<ul>
+<li>证书只有服务端能拥有.</li>
+</ul>
+<p>在基于上面提到的几大前提的基础上，要防止中间人攻击的问题就变为：</p>
+<ul>
+<li>如何让客户端知道这个证书是正常的？</li>
+</ul>
+<p>客户端如何验证证书的有效性的？</p>
+<ul>
+<li>验证域名, 有效期</li>
+<li>验证根证书来源是否合法</li>
+<li>验证证书是否被篡改</li>
+<li>验证证书是否被吊销<ul>
+<li>黑名单方式 - 定期从CA下载名单列表，效率高，但不实时.</li>
+<li>OCSP方式 - 在线验证。效率低，但实时性高.</li>
+</ul>
+</li>
+</ul>
+<p>证书的三种类型</p>
+<ul>
+<li>DV - 验证域名</li>
+<li>OV - 验证域名，企业信息</li>
+<li>EV - 验证域名，企业信息，律师函等等.</li>
+</ul>
+<h2 id="安全和Https拾遗"><a href="#安全和Https拾遗" class="headerlink" title="安全和Https拾遗"></a>安全和Https拾遗</h2><p>下面是近些年遇到的一些与安全相关的话题</p>
+<ul>
+<li>大概4年前左右的样子，公司将全部站点升级为Https.</li>
+<li>以前数据库密码是明文保存的，现在已经改成密文了.</li>
+<li>代码库里不同的branch有不同的权限.</li>
+<li>一些数据库连接字符串在github仓库里是密文保存的，下载到本地之后是明文.</li>
+<li>网站有段时间账号攻击，加了验证码作为第一道关卡。</li>
+<li>GDPR - 对于欧洲的用户，用户同意之后，数据才能保存到Salesforce里</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请我喝杯☕️吧。您的支持将鼓励我继续创作！</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="迷途书童 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="迷途书童 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag"># 网络协议</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/09/http/" rel="prev" title="网络协议之万维网摇篮 - Http">
+                  <i class="fa fa-chevron-left"></i> 网络协议之万维网摇篮 - Http
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/22/auth/" rel="next" title="系统行为之警卫局 - 登录和授权">
+                  系统行为之警卫局 - 登录和授权 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

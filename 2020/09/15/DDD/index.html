@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;yoursite.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script><script src="/js/config.js"></script>
+<meta name="description" content="现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.  DDD是什么？ DDD设计的一些原则? 如何基于DDD实现一个服务? DDD的反面是什么？  DDD 是什么？    DDD(Domain Driven Design)是一种设计方法论，它提供了一种拆解知识和问题的方式. DDD的背景  2004年Eric Evans 出版了《领域驱动设计》。微服务发迹于201">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浮浮沉沉 - DDD">
+<meta property="og:url" content="http://yoursite.com/2020/09/15/DDD/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.  DDD是什么？ DDD设计的一些原则? 如何基于DDD实现一个服务? DDD的反面是什么？  DDD 是什么？    DDD(Domain Driven Design)是一种设计方法论，它提供了一种拆解知识和问题的方式. DDD的背景  2004年Eric Evans 出版了《领域驱动设计》。微服务发迹于201">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/cow.png">
+<meta property="article:published_time" content="2020-09-15T15:51:27.000Z">
+<meta property="article:modified_time" content="2020-11-13T15:05:29.185Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="软件设计方法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/cow.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/09/15/DDD/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;09&#x2F;15&#x2F;DDD&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;09&#x2F;15&#x2F;DDD&#x2F;&quot;,&quot;title&quot;:&quot;浮浮沉沉 - DDD&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>浮浮沉沉 - DDD | 迷途书童</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">迷途书童</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DDD-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">DDD 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD%E7%9A%84%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">DDD的背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDD%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">DDD的核心概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDD%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8E%9F%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">DDD设计的一些原则?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8EDDD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">如何基于DDD实现一个服务?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%A2%E6%88%90DDD%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">形成DDD的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84DDD%E4%BE%8B%E5%AD%90"><span class="nav-number">3.2.</span> <span class="nav-text">一个简单的DDD例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDD%E7%9A%84%E5%8F%8D%E9%9D%A2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">DDD的反面是什么？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/15/DDD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浮浮沉沉 - DDD
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-15 23:51:27" itemprop="dateCreated datePublished" datetime="2020-09-15T23:51:27+08:00">2020-09-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">软件设计方法</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/15/DDD/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/15/DDD/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
+<ul>
+<li>DDD是什么？</li>
+<li>DDD设计的一些原则?</li>
+<li>如何基于DDD实现一个服务?</li>
+<li>DDD的反面是什么？</li>
+</ul>
+<h2 id="DDD-是什么？"><a href="#DDD-是什么？" class="headerlink" title="DDD 是什么？"></a>DDD 是什么？</h2><p>  <img src="/images/2020/cow.png"><br>  DDD(Domain Driven Design)是一种设计方法论，它提供了一种拆解知识和问题的方式.</p>
+<h3 id="DDD的背景"><a href="#DDD的背景" class="headerlink" title="DDD的背景"></a>DDD的背景</h3><p>  2004年Eric Evans 出版了《领域驱动设计》。微服务发迹于2014年。但这10年间DDD可以说是默默无闻，就好像一个妃子被打入冷宫一样，直到微服务出现，两者才喜结良缘，很难说谁成就了谁，两者是如此的契合.</p>
+  <span id="more"></span>
+<h3 id="DDD的核心概念"><a href="#DDD的核心概念" class="headerlink" title="DDD的核心概念"></a>DDD的核心概念</h3><p>  DDD有将近10个左右的概念。这些概念都是为了搞清楚一件事：业务的边界是什么？什么样的东西应该放在这个业务里？什么样的东西不应该放在这个业务里？</p>
+<p>  人世间的争论大多数是名词之争。以前看《李敖有话说》，李敖提到了这样一个故事</p>
+<blockquote>
+<p>我想起《展望》（The Outlook）总编辑艾勃特（Lyman Abbott）自传中记他父亲的谈话：“自古以来，凡在哲学上和神学上的争论，十分之九都是名词之争。”艾勃特接着说：“我父亲的话是对的。但我年纪愈大，愈感到他老人家的算术还有点儿小错。——剩下的那十分之一，其实也是名词之争。”</p>
+</blockquote>
+<p>  一个人叫张三，无论它到世界任何角落，他还是张三，这是“实”。在公司里，张三是员工。在家里张三是父亲，父亲和员工是“形”；<br>  一瓶酒在仓库里叫库存，在运输的过程中叫货物。</p>
+<p>  知识也是类似的。知识可以有不同的分类，可以按照规模大小来分，也可以按照重点和非重点分(二八法则)，所以大概有四种类型:</p>
+<ul>
+<li>总的知识</li>
+<li>细分的知识</li>
+<li>重点知识</li>
+<li>非重点知识。</li>
+</ul>
+<p>   但不管是哪种知识，都属于知识，具有知识的共性：知识表达了一系列的事实，行为，最核心的组成成分是名词和动词。所以一系列的的名词和动词构成了一个完整的知识.</p>
+<ul>
+<li>领域 - 总的知识</li>
+<li>子域 - 细分的知识</li>
+<li>核心域 - 重点知识</li>
+<li>支撑域 - 非重点知识</li>
+<li>通用域 - 非重点知识</li>
+<li>聚合 - 一系列名词和动词的集合。</li>
+<li>聚合根 - 一系列名词和动词的集合，就像一个组织一样，得有一个老大负责对内对外的沟通.</li>
+<li>实体 - 名词 + 动词，是一种充血模型，以DO的的形式存在.</li>
+<li>值对象 - 名词</li>
+</ul>
+<h2 id="DDD设计的一些原则"><a href="#DDD设计的一些原则" class="headerlink" title="DDD设计的一些原则?"></a>DDD设计的一些原则?</h2><ul>
+<li>应用层实现跨聚合的调用。</li>
+<li>聚合之间的逻辑满足最终一致性。</li>
+<li>领域层实现跨实体的调用</li>
+<li>聚合内的逻辑满足强一致性</li>
+<li>要访问聚合，先找到聚合根</li>
+</ul>
+<h2 id="如何基于DDD实现一个服务"><a href="#如何基于DDD实现一个服务" class="headerlink" title="如何基于DDD实现一个服务?"></a>如何基于DDD实现一个服务?</h2><h3 id="形成DDD的过程"><a href="#形成DDD的过程" class="headerlink" title="形成DDD的过程"></a>形成DDD的过程</h3><pre><code>* 收集信息
+  * 项目负责人收集尽可能多的信息
+  * 召集大家一起开会，分析一个领域内有多少User case
+* 形成领域模型
+  * 对所有的User case进行名词提取，汇总出有多少核心名词
+  * 提取这些名词的核心行为
+* 实现
+  * 基于上面的名词设计实体和值对象
+</code></pre>
+<h3 id="一个简单的DDD例子"><a href="#一个简单的DDD例子" class="headerlink" title="一个简单的DDD例子"></a>一个简单的DDD例子</h3><h2 id="DDD的反面是什么？"><a href="#DDD的反面是什么？" class="headerlink" title="DDD的反面是什么？"></a>DDD的反面是什么？</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请我喝杯☕️吧。您的支持将鼓励我继续创作！</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="迷途书童 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="迷途书童 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/" rel="tag"># 软件设计方法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/14/micro-services/" rel="prev" title="闻香识微服务">
+                  <i class="fa fa-chevron-left"></i> 闻香识微服务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/18/system-restrain-power/" rel="next" title="系统的约束和动力">
+                  系统的约束和动力 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;yoursite.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script><script src="/js/config.js"></script>
+<meta name="description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之B+树">
+<meta property="og:url" content="http://yoursite.com/2020/10/18/B-plus-tree/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/2020/bplus-tree.png">
+<meta property="article:published_time" content="2020-10-18T08:50:25.000Z">
+<meta property="article:modified_time" content="2020-11-13T15:05:29.185Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="树">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/2020/bplus-tree.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/18/B-plus-tree/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;10&#x2F;18&#x2F;B-plus-tree&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;10&#x2F;18&#x2F;B-plus-tree&#x2F;&quot;,&quot;title&quot;:&quot;数据结构之B+树&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>数据结构之B+树 | 迷途书童</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">迷途书童</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFB-%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">什么是B+树?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%A0%91%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">B+树实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-%E6%A0%91%E4%B8%8EMysql%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8EInnoDB"><span class="nav-number">3.1.</span> <span class="nav-text">B+树与Mysql存储引擎InnoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BE%E9%81%97"><span class="nav-number">4.</span> <span class="nav-text">拾遗</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/18/B-plus-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构之B+树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-18 16:50:25" itemprop="dateCreated datePublished" datetime="2020-10-18T16:50:25+08:00">2020-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-13 23:05:29" itemprop="dateModified" datetime="2020-11-13T23:05:29+08:00">2020-11-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/18/B-plus-tree/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/18/B-plus-tree/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。<br>所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.<br>这篇文章主要是浅谈一下我记忆中的B+树.</p>
+<ul>
+<li>背景</li>
+<li>什么是B+树？</li>
+<li>B+树实践</li>
+<li>拾遗</li>
+</ul>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
+<span id="more"></span>
+<h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
+<ul>
+<li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
+<li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
+<li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
+<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
+</ul>
+<h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
+<li><p>一些基本事实</p>
+<ul>
+<li>数据库读取数据是以页(一般而言是4k)为单位将磁盘文件加载到内存（为了方便讨论，一个页上存储一个结点）</li>
+<li>普通磁盘加载一个页的数据大概需要10ms(旋转，寻道等操作)</li>
+<li>磁盘的顺序读取I/O比随机读取I/O要快10万个量级</li>
+<li>内存的读取速度(纳秒级别)和磁盘的顺序读取读取大约是一个量级</li>
+<li>查询优化的核心是减少I/O的访问次数</li>
+</ul>
+</li>
+<li><p>为什么不选择B树？<br>B树的最大特点是是数据分布在所有的结点中，所有在进行范围查找时候，加载多个页的时候，会很耗时</p>
+</li>
+<li><p>B+树的优势<br>B+树存储数据的特点</p>
+<ul>
+<li>叶子节点存放了行数据</li>
+<li>所有的叶子结点都在同一层</li>
+<li>所有的叶子结点可以形成一个双向链表</li>
+<li>叶子结点所在的页分布在不同的磁盘块上</li>
+<li>非叶子结点不存储行数据，仅仅为了存储更多的索引键</li>
+</ul>
+<p>通过上面的特点，我们可以知道</p>
+<ul>
+<li>B+树相比B树很明显的一个特点是树的高度降低了，这样I/O访问就少了.</li>
+<li>存储和索引被隔离开来，软件设计的一个原则就是分离关注点<br>回头再看看上面那个B+树的图，它有点像什么？对，像跳表. 跳表的核心思想是让链表具有二分查找能力.<br>所以跳表和B+树的源头思想是一致的.</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><ul>
+<li>由于B+树的读写会导致逻辑上相邻的数据实际在物理上相聚很远，LSM树(日志结构合并树)是对B+树的改进</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>如果觉得我的文章对您有用，请我喝杯☕️吧。您的支持将鼓励我继续创作！</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="迷途书童 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="迷途书童 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91/" rel="tag"># 树</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/15/cache/" rel="prev" title="Java之效率管家 - Redis">
+                  <i class="fa fa-chevron-left"></i> Java之效率管家 - Redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/20/spring/" rel="next" title="Java之武林盟主 - Spring">
+                  Java之武林盟主 - Spring <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷途书童</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '3dvI219MpYxxlcV1cmk5OHK0-gzGzoHsz',
+      appKey     : 'XQD07RfAq60Si3aIUs7VmzSp',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
