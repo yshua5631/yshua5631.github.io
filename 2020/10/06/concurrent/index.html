@@ -363,6 +363,26 @@
 <h2 id="并发的身影"><a href="#并发的身影" class="headerlink" title="并发的身影"></a>并发的身影</h2><h2 id="并发的未来"><a href="#并发的未来" class="headerlink" title="并发的未来"></a>并发的未来</h2></li>
 </ul>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

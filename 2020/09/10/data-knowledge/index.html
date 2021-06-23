@@ -334,6 +334,26 @@
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

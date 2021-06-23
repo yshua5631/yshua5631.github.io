@@ -287,7 +287,7 @@
 <li>聚合内的逻辑满足强一致性</li>
 <li>要访问聚合，先找到聚合根</li>
 </ul>
-<h2 id="如何基于DDD实现一个服务"><a href="#如何基于DDD实现一个服务" class="headerlink" title="如何基于DDD实现一个服务?"></a>如何基于DDD实现一个服务?</h2><h3 id="形成DDD的过程"><a href="#形成DDD的过程" class="headerlink" title="形成DDD的过程"></a>形成DDD的过程</h3><pre><code>* 收集信息
+<h2 id="如何基于DDD实现一个服务"><a href="#如何基于DDD实现一个服务" class="headerlink" title="如何基于DDD实现一个服务?"></a>如何基于DDD实现一个服务?</h2><h3 id="形成DDD的过程"><a href="#形成DDD的过程" class="headerlink" title="形成DDD的过程"></a>形成DDD的过程</h3><pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>* 收集信息
   * 项目负责人收集尽可能多的信息
   * 召集大家一起开会，分析一个领域内有多少User case
 * 形成领域模型
@@ -295,6 +295,26 @@
   * 提取这些名词的核心行为
 * 实现
   * 基于上面的名词设计实体和值对象</code></pre><h3 id="一个简单的DDD例子"><a href="#一个简单的DDD例子" class="headerlink" title="一个简单的DDD例子"></a>一个简单的DDD例子</h3><h2 id="DDD的反面是什么？"><a href="#DDD的反面是什么？" class="headerlink" title="DDD的反面是什么？"></a>DDD的反面是什么？</h2>
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

@@ -272,6 +272,26 @@
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适应和适合可能会让人感觉差不多, 但适应是一个过程, 适合是适应的结果. 比如张三一开始不能适应这个职位, 但经过一段时间的调整, 最终适应了, 也就是和这个职位匹配了.<br>适度代表了平衡， 适应代表了代表了动态， 所以适度 + 适应代表了动态的平衡.<br>三是一个神奇的数字，一生二， 二生三，三生万物， 我喜欢三.</p>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

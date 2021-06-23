@@ -306,6 +306,26 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  分解是无处不在的思想， 具体落实到每个实际领域的时候，需要找到这个领域的层次和维度.</p>
 <p>  分解给我们的带来的一个启示是：<br>  如果一个系统是可被分解的，那么它一定是可以被理解的。<br>  如果一个系统是可以被理解的，那么它一定是可以寻求最优解的。</p>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

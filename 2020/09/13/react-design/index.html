@@ -279,7 +279,7 @@
 <h2 id="React是如何实现的？"><a href="#React是如何实现的？" class="headerlink" title="React是如何实现的？"></a>React是如何实现的？</h2><p>  这里不打算讨论非常细的东西，比如组件的生命周期，如何更新组件的状态等等。<br>  从宏观角度来看，在React实现上有两个绕不过去的概念</p>
 <ul>
 <li><p>JSX</p>
-<pre><code>class HelloMessage extends React.Component {
+<pre><button hidden tabindex="-1" aria-hidden="true">Copy</button><code>class HelloMessage extends React.Component {
 render() {
   return (
     &lt;div&gt;
@@ -298,6 +298,26 @@ render() {
 <li>React的许可协议将来会不会有变数？</li>
 </ul>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

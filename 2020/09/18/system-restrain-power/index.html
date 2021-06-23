@@ -274,6 +274,26 @@
 <h2 id="约束和动力之间的关系"><a href="#约束和动力之间的关系" class="headerlink" title="约束和动力之间的关系"></a>约束和动力之间的关系</h2><p>没有约束，系统就要失去控制。<br>没有动力，系统就不会发展。<br>约束是保证系统更快更好的发展，达到一种平衡的状态。<br>一个人如果没有约束，最终会越来越堕落。<br>一个组织如果没有约束，最终会人心向背，分崩离析。<br>一个国家如果没有约束，最终会陷入混乱状态。</p>
 <p>一个小孩在成长的过程中，需要家长和老师的教育，才能成为一个有健全人格的人。<br>一个项目从立项到完成，再到维护，如果没有建立一个很好的流程规范，项目的会变得很难维护。如果一个项目存在了10年左右的时间，那么肯定有好多人修改过，每个人都有自己的风格，如果修改代码的时候不遵循一定的规范，项目最终会变成脆弱的系统。</p>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

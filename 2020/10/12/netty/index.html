@@ -339,6 +339,26 @@
 </li>
 </ul>
 <h2 id="Netty的实践"><a href="#Netty的实践" class="headerlink" title="Netty的实践"></a>Netty的实践</h2><h2 id="网络编程框架的未来"><a href="#网络编程框架的未来" class="headerlink" title="网络编程框架的未来"></a>网络编程框架的未来</h2>
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

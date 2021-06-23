@@ -256,6 +256,26 @@
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
 <h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

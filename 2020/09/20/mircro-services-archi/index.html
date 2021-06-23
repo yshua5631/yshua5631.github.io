@@ -342,6 +342,26 @@
 <h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png" alt></p>
 <h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png" alt></p>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

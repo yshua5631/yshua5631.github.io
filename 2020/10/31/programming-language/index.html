@@ -475,6 +475,26 @@
 </ul>
 <h3 id="编程语言和架构是什么关系？"><a href="#编程语言和架构是什么关系？" class="headerlink" title="编程语言和架构是什么关系？"></a>编程语言和架构是什么关系？</h3><p>编程语言和架构不是一个层次上的事物。<br>从设计重要性的角度来看， 架构的选择 &gt; 编程语言的选择. 编程语言不会决定架构的选择，但是会对架构的选择产生一些影响。 当选择一门编程语言的时候，选择的往往不是这门编程语言本身，而是选择的基于这门语言的框架和生态. 就好比，张三娶了李四，娶的不仅仅是李四，还包括李四的家庭</p>
 <h2 id="编程语言的未来"><a href="#编程语言的未来" class="headerlink" title="编程语言的未来"></a>编程语言的未来</h2>
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     

@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Hello, Welcome to Ricky World!">
+  <meta name="description" content="Hello, Welcome to Ricky World!                        document.querySelectorAll(&quot;pre button&quot;).forEach(function(button) {                 button.hidden = false                 button.addEventListener(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Welcome">
 <meta property="og:url" content="http://yoursite.com/2019/07/02/welcome/index.html">
 <meta property="og:site_name" content="迷途书童">
-<meta property="og:description" content="Hello, Welcome to Ricky World!">
+<meta property="og:description" content="Hello, Welcome to Ricky World!                        document.querySelectorAll(&quot;pre button&quot;).forEach(function(button) {                 button.hidden = false                 button.addEventListener(">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-11-13T15:05:29.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Welcome">
-<meta name="twitter:description" content="Hello, Welcome to Ricky World!">
+<meta name="twitter:description" content="Hello, Welcome to Ricky World!                        document.querySelectorAll(&quot;pre button&quot;).forEach(function(button) {                 button.hidden = false                 button.addEventListener(">
 
 <link rel="canonical" href="http://yoursite.com/2019/07/02/welcome/">
 
@@ -226,6 +226,26 @@
 <li>Hello, Welcome to Ricky World!</li>
 </ul>
 
+        <script>
+            document.querySelectorAll("pre button").forEach(function(button) {
+                button.hidden = false
+                button.addEventListener("click", function(e) {
+                    var range = document.createRange()
+                    range.selectNode(e.target.nextElementSibling)
+                    window.getSelection().removeAllRanges()
+                    window.getSelection().addRange(range)
+                    document.execCommand("copy")
+                    window.getSelection().removeAllRanges()
+
+                    button.innerText = 'Copied!'
+
+                    setTimeout(function() {
+                        button.innerText = 'Copy'
+                    }, 1500)
+                })          
+            })
+        </script>
+    
     </div>
 
     
