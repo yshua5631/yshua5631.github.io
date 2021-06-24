@@ -393,7 +393,13 @@ NexT.utils = {
       return this.loadComments(selector).then(legacyCallback);
     }
     return new Promise((resolve) => {
-      const element = document.querySelector(selector);
+      let element = null;
+      try {
+        element = document.querySelector(selector);
+      }catch{
+
+      }
+
       if (!CONFIG.comments.lazyload || !element) {
         resolve();
         return;
