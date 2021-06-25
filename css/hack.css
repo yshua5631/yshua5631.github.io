@@ -7,12 +7,12 @@
     margin-bottom: 0.22em !important;
   }
 }
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: portrait) {
   .line-numbers-rows > span {
     margin-bottom: 0.22em !important;
   }
 }
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: landscape) {
   .line-numbers-rows > span {
     margin-bottom: 0.22em !important;
   }
