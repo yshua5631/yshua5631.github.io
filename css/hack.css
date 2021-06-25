@@ -1,11 +1,20 @@
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 1) {
+.line-numbers-rows > span {
+/* 设备像素比为 1 */
+  margin-bottom: 0.42em !important;
+}
+@media only screen and (device-width: 768px) {
   .line-numbers-rows > span {
     margin-bottom: 0.2em !important;
   }
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 1), only screen and (min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
   .line-numbers-rows > span {
-    margin-bottom: 0.4em !important;
+    margin-bottom: 0.2em !important;
+  }
+}
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .line-numbers-rows > span {
+    margin-bottom: 0.2em !important;
   }
 }
 pre[class*="language-"].line-numbers {
