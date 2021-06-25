@@ -1625,84 +1625,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>Java之黑暗森林 - JVM</title>
-    <url>/2020/09/30/jvm/</url>
-    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
-<ul>
-<li>什么是JVM</li>
-<li>JVM主要解决了哪些问题？</li>
-<li>JVM点滴</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
-<ul>
-<li>JVM规范</li>
-<li>JVM实现</li>
-</ul>
-<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
-<ul>
-<li>将Java文件转为Class文件</li>
-<li>将Class文件转为机器码</li>
-</ul>
-<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
-<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
-<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
-<ul>
-<li>线程共享<ul>
-<li>堆<ul>
-<li>存放new出来的对象</li>
-<li>数组</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>类信息<ul>
-<li>class文件常量池</li>
-</ul>
-</li>
-<li>静态变量</li>
-<li>常量信息</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>线程不共享<ul>
-<li>程序计数器<ul>
-<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
-<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
-</ul>
-</li>
-<li>虚拟机栈<ul>
-<li>符合栈的特性：先进后出</li>
-<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
-<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
-</ul>
-</li>
-<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
-<li>没有栈帧的概念</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
-<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
-
-<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
-
-<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
-<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
-
-
-<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>尘埃落定-k8s</title>
     <url>/2020/09/24/k8s/</url>
     <content><![CDATA[<p>K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？</p>
@@ -2110,114 +2032,81 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>网络协议大观园</title>
-    <url>/2020/10/27/network-protocol/</url>
-    <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
+    <title>Java之黑暗森林 - JVM</title>
+    <url>/2020/09/30/jvm/</url>
+    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
+<ul>
+<li>什么是JVM</li>
+<li>JVM主要解决了哪些问题？</li>
+<li>JVM点滴</li>
+</ul>
 <span id="more"></span>
-<p>人和人之间说话是通过某种语言来沟通的，比如英语或者汉语。计算机和计算机之间通信也不例外，也需要语言，但这个语言和人类说话的语言稍微不一样，计算机和计算机之间会有不同的功能，不同的功能需要不同的语言，这里的语言往往称为协议.</p>
+<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
 <ul>
-<li>背景</li>
-<li>什么是网络协议?</li>
-<li>如何设计网络协议</li>
-<li>有哪些网络协议</li>
+<li>JVM规范</li>
+<li>JVM实现</li>
 </ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>试想一下，如今的互联网由哪些因素组成? 我们大概会想到</p>
+<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
 <ul>
-<li>线缆</li>
-<li>网络设备 - 交换机，路由器，网卡</li>
-<li>运营商 - 比如中国电信</li>
-<li>防火墙</li>
-<li>终端设备 - 可以是PC, 手机或者任何的智能设备</li>
-<li>终端设备上的操作系统和应用软件</li>
+<li>将Java文件转为Class文件</li>
+<li>将Class文件转为机器码</li>
 </ul>
-<p>上面有提到计算机和计算机通信需要协议，那么这个协议到底存在什么地方呢？ 答案是操作系统.<br>网络协议的数量有很多，这里聊聊一些常用的的协议.</p>
-<h2 id="什么是网络协议"><a href="#什么是网络协议" class="headerlink" title="什么是网络协议"></a>什么是网络协议</h2><p>网络协议是计算机和计算机之间为来完成特定功能进行通信的某种约定.<br>现在我们知道谈到网络协议有两个概念必须要讨论： OSI和TCP/IP</p>
-<p>先说说OSI, OSI是ISO组织制定的一个模型，用来指导网络协议设计. 很明显这个模型是分层的，至于为什么要分层？这个问题本质上和软件要分层是一样的，之前有专门讨论“分解”这个话题. OSI模型的大概分为七层</p>
+<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
+<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
+<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
 <ul>
-<li>应用层 - 用户直接接触到的，比如电子邮件客户端</li>
-<li>表示层 - 电子邮件有特定的格式，怎么转换成标准的传输格式呢？</li>
-<li>会话层 - 发送端什么时候建立连接，什么时候释放连接？</li>
-<li>传输层 - 这一层只关心数据包如何可靠达到目的地，比如这个包是不是完整的</li>
-<li>网络层 - 这一层负责认路，比如有几条路，如何更快达到目的地</li>
-<li>数据链路层 - 将数据帧转换为0/1比特流</li>
-<li>物理层 - 将0/1比特流转为高低电平</li>
-</ul>
-<p>这个模型很难说它是基于哪一个维度进行拆分的。我们对人进行分类，可以基于性别分类：男人和女人，也可以基于地域分类：南方人和北方人， 这很符合直觉。 但我也从中隐约看出了两条线索</p>
-<ul>
-<li>信息是如何变成高低电平？“Hello World” -&gt; 统一的字符编码 -&gt; 二进制 -&gt; 高低电平</li>
-<li>信息是如何又快又好的达到目的地?</li>
-</ul>
-<p>正如我们所知, OSI并没有称为主流协议，为什么？不实用，或者说不接地气.</p>
-<p>后来的事情，大家都知道了, TCP/IP成为主流.<br>TCP/IP这个名字顾名思义是TCP协议和IP协议，但这个是错觉, TCP/IP是一个协议大家族，是互联网协议的统称, 我们知道的Telnet, ICMP，SSH都属于TCP/IP协议.<br>但我们更想知道为什么TCP/IP协议胜出了？或者说TCP/IP协议做对了哪些事情？ 有以下几个因素</p>
-<ul>
-<li>开放性 - TCP/IP是由IETF讨论决定的，IETF是一个任何人都可以加入讨论的组织，这充分证明了群众的力量是强大的.</li>
-<li>实用性 - TCP/IP先有实现，然后才有规范。也就是规范发布出来的时候，已经有操作系统实现了这个协议。而不是像OSI整天在天上飘</li>
-</ul>
-<p>TCP/IP 也是基于分层的</p>
-<ul>
-<li>应用层</li>
-<li>传输层</li>
-<li>网络层</li>
-<li>数据链路层</li>
-</ul>
-<h2 id="如何设计一个网络协议"><a href="#如何设计一个网络协议" class="headerlink" title="如何设计一个网络协议"></a>如何设计一个网络协议</h2><p>网络协议不可能从天而将，所以需要人来制定，既然是一种沟通工具，那么自然这个工具要符合又快又好的标准了.</p>
-<ul>
-<li>快<ul>
-<li>让网络的传输变快</li>
+<li>线程共享<ul>
+<li>堆<ul>
+<li>存放new出来的对象</li>
+<li>数组</li>
 </ul>
 </li>
-<li>好<ul>
-<li>安全</li>
-<li>最好一种协议能解决多个问题，如果不能解决多个问题，那么就聚焦于一个问题</li>
-<li>简单</li>
-<li>可以扩展</li>
+<li>方法区<ul>
+<li>类信息<ul>
+<li>class文件常量池</li>
+</ul>
+</li>
+<li>静态变量</li>
+<li>常量信息</li>
 </ul>
 </li>
 </ul>
-<h2 id="有哪些网络协议"><a href="#有哪些网络协议" class="headerlink" title="有哪些网络协议"></a>有哪些网络协议</h2><ul>
-<li><p>应用层协议</p>
-<ul>
-<li><p>HTTP</p>
 </li>
-<li><p>DNS</p>
-</li>
-<li><p>Ping<br>PING是应用层直接使用网络层ICMP的一个例子，它没有通过运输层的TCP或UDP. 一个系统允许Ping取决于两个因素，任意一个被禁止就不能被Ping</p>
-<ul>
-<li>内核参数</li>
-<li>防火墙<br>如果Ping被禁用，我又想知道远程主机是否还可以连接，那怎么办？ 可以通过tcping这个工具来测试某个端口是否开放.</li>
+<li>线程不共享<ul>
+<li>程序计数器<ul>
+<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
+<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
 </ul>
 </li>
-<li><p>nslookup - 用来测试域名是否可以正常解析</p>
+<li>虚拟机栈<ul>
+<li>符合栈的特性：先进后出</li>
+<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
+<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
+</ul>
 </li>
-<li><p>Telnet - 用来进行远程登录</p>
-</li>
-<li><p>SSH - 安全版的Telnet</p>
+<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
+<li>没有栈帧的概念</li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>传输层协议</p>
-<ul>
-<li>TCP - 让数据可以可靠达到目的地</li>
-<li>UDP - 牺牲正确性换取效率的协议</li>
 </ul>
-</li>
-<li><p>网络层协议</p>
-<ul>
-<li>ICMP</li>
-<li>traceroute</li>
-<li>ARP</li>
-</ul>
-</li>
-<li><p>数据链路层协议</p>
-</li>
-</ul>
-]]></content>
+<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
+<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
+
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
+
+<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
+<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
+
+
+<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
       <categories>
-        <category>网络</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>协议</tag>
-        <tag>网络</tag>
+        <tag>Java</tag>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -2333,6 +2222,117 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>高性能</tag>
         <tag>框架</tag>
         <tag>Netty</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络协议大观园</title>
+    <url>/2020/10/27/network-protocol/</url>
+    <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
+<span id="more"></span>
+<p>人和人之间说话是通过某种语言来沟通的，比如英语或者汉语。计算机和计算机之间通信也不例外，也需要语言，但这个语言和人类说话的语言稍微不一样，计算机和计算机之间会有不同的功能，不同的功能需要不同的语言，这里的语言往往称为协议.</p>
+<ul>
+<li>背景</li>
+<li>什么是网络协议?</li>
+<li>如何设计网络协议</li>
+<li>有哪些网络协议</li>
+</ul>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>试想一下，如今的互联网由哪些因素组成? 我们大概会想到</p>
+<ul>
+<li>线缆</li>
+<li>网络设备 - 交换机，路由器，网卡</li>
+<li>运营商 - 比如中国电信</li>
+<li>防火墙</li>
+<li>终端设备 - 可以是PC, 手机或者任何的智能设备</li>
+<li>终端设备上的操作系统和应用软件</li>
+</ul>
+<p>上面有提到计算机和计算机通信需要协议，那么这个协议到底存在什么地方呢？ 答案是操作系统.<br>网络协议的数量有很多，这里聊聊一些常用的的协议.</p>
+<h2 id="什么是网络协议"><a href="#什么是网络协议" class="headerlink" title="什么是网络协议"></a>什么是网络协议</h2><p>网络协议是计算机和计算机之间为来完成特定功能进行通信的某种约定.<br>现在我们知道谈到网络协议有两个概念必须要讨论： OSI和TCP/IP</p>
+<p>先说说OSI, OSI是ISO组织制定的一个模型，用来指导网络协议设计. 很明显这个模型是分层的，至于为什么要分层？这个问题本质上和软件要分层是一样的，之前有专门讨论“分解”这个话题. OSI模型的大概分为七层</p>
+<ul>
+<li>应用层 - 用户直接接触到的，比如电子邮件客户端</li>
+<li>表示层 - 电子邮件有特定的格式，怎么转换成标准的传输格式呢？</li>
+<li>会话层 - 发送端什么时候建立连接，什么时候释放连接？</li>
+<li>传输层 - 这一层只关心数据包如何可靠达到目的地，比如这个包是不是完整的</li>
+<li>网络层 - 这一层负责认路，比如有几条路，如何更快达到目的地</li>
+<li>数据链路层 - 将数据帧转换为0/1比特流</li>
+<li>物理层 - 将0/1比特流转为高低电平</li>
+</ul>
+<p>这个模型很难说它是基于哪一个维度进行拆分的。我们对人进行分类，可以基于性别分类：男人和女人，也可以基于地域分类：南方人和北方人， 这很符合直觉。 但我也从中隐约看出了两条线索</p>
+<ul>
+<li>信息是如何变成高低电平？“Hello World” -&gt; 统一的字符编码 -&gt; 二进制 -&gt; 高低电平</li>
+<li>信息是如何又快又好的达到目的地?</li>
+</ul>
+<p>正如我们所知, OSI并没有称为主流协议，为什么？不实用，或者说不接地气.</p>
+<p>后来的事情，大家都知道了, TCP/IP成为主流.<br>TCP/IP这个名字顾名思义是TCP协议和IP协议，但这个是错觉, TCP/IP是一个协议大家族，是互联网协议的统称, 我们知道的Telnet, ICMP，SSH都属于TCP/IP协议.<br>但我们更想知道为什么TCP/IP协议胜出了？或者说TCP/IP协议做对了哪些事情？ 有以下几个因素</p>
+<ul>
+<li>开放性 - TCP/IP是由IETF讨论决定的，IETF是一个任何人都可以加入讨论的组织，这充分证明了群众的力量是强大的.</li>
+<li>实用性 - TCP/IP先有实现，然后才有规范。也就是规范发布出来的时候，已经有操作系统实现了这个协议。而不是像OSI整天在天上飘</li>
+</ul>
+<p>TCP/IP 也是基于分层的</p>
+<ul>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>数据链路层</li>
+</ul>
+<h2 id="如何设计一个网络协议"><a href="#如何设计一个网络协议" class="headerlink" title="如何设计一个网络协议"></a>如何设计一个网络协议</h2><p>网络协议不可能从天而将，所以需要人来制定，既然是一种沟通工具，那么自然这个工具要符合又快又好的标准了.</p>
+<ul>
+<li>快<ul>
+<li>让网络的传输变快</li>
+</ul>
+</li>
+<li>好<ul>
+<li>安全</li>
+<li>最好一种协议能解决多个问题，如果不能解决多个问题，那么就聚焦于一个问题</li>
+<li>简单</li>
+<li>可以扩展</li>
+</ul>
+</li>
+</ul>
+<h2 id="有哪些网络协议"><a href="#有哪些网络协议" class="headerlink" title="有哪些网络协议"></a>有哪些网络协议</h2><ul>
+<li><p>应用层协议</p>
+<ul>
+<li><p>HTTP</p>
+</li>
+<li><p>DNS</p>
+</li>
+<li><p>Ping<br>PING是应用层直接使用网络层ICMP的一个例子，它没有通过运输层的TCP或UDP. 一个系统允许Ping取决于两个因素，任意一个被禁止就不能被Ping</p>
+<ul>
+<li>内核参数</li>
+<li>防火墙<br>如果Ping被禁用，我又想知道远程主机是否还可以连接，那怎么办？ 可以通过tcping这个工具来测试某个端口是否开放.</li>
+</ul>
+</li>
+<li><p>nslookup - 用来测试域名是否可以正常解析</p>
+</li>
+<li><p>Telnet - 用来进行远程登录</p>
+</li>
+<li><p>SSH - 安全版的Telnet</p>
+</li>
+</ul>
+</li>
+<li><p>传输层协议</p>
+<ul>
+<li>TCP - 让数据可以可靠达到目的地</li>
+<li>UDP - 牺牲正确性换取效率的协议</li>
+</ul>
+</li>
+<li><p>网络层协议</p>
+<ul>
+<li>ICMP</li>
+<li>traceroute</li>
+<li>ARP</li>
+</ul>
+</li>
+<li><p>数据链路层协议</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>协议</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2784,97 +2784,7 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
   <entry>
     <title>Spring源码系列 - IOC和DI</title>
     <url>/2021/06/20/spring-ioc/</url>
-    <content><![CDATA[<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>security<span class="token punctuation">.</span>client<span class="token punctuation">.</span>accesscontrol</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>eflabs<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>jwt<span class="token punctuation">.</span></span><span class="token class-name">EFJwtIssuer</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>eflabs<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>logging<span class="token punctuation">.</span></span><span class="token class-name">Logger</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>eflabs<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>logging<span class="token punctuation">.</span></span><span class="token class-name">LoggerFactory</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>promises<span class="token punctuation">.</span></span><span class="token class-name">Promise</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>promises<span class="token punctuation">.</span></span><span class="token class-name">When</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>promises<span class="token punctuation">.</span></span><span class="token class-name">RequestOptions</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>promises<span class="token punctuation">.</span></span><span class="token class-name">WhenHttpClient</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>security<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">BuJwtAwareClient</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>security<span class="token punctuation">.</span>client<span class="token punctuation">.</span>cache<span class="token punctuation">.</span></span><span class="token class-name">TokenCache</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>englishtown<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>security<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span><span class="token class-name">AccessTokenInfo</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span></span><span class="token class-name">Vertx</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpClient</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpClientOptions</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpClientResponse</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpMethod</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>vertx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>json<span class="token punctuation">.</span></span><span class="token class-name">JsonObject</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>inject<span class="token punctuation">.</span></span><span class="token class-name">Inject</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>time<span class="token punctuation">.</span></span><span class="token class-name">Instant</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Objects</span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AccessControlClient</span> <span class="token keyword">extends</span> <span class="token class-name">BuJwtAwareClient</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AccessControlConfig</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_ISSUED_TO <span class="token operator">=</span> <span class="token string">"issuedTo"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_IDENTITY_ID <span class="token operator">=</span> <span class="token string">"identityId"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_IDENTITY_PROVIDER <span class="token operator">=</span> <span class="token string">"identityProvider"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_TOKEN <span class="token operator">=</span> <span class="token string">"token"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_EXPIRATION_DATE <span class="token operator">=</span> <span class="token string">"expirationDate"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> FIELD_GROUP <span class="token operator">=</span> <span class="token string">"group"</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> LOG <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">AccessControlClient</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">HttpClient</span> accessControlClient<span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@Inject</span>
-    <span class="token keyword">public</span> <span class="token class-name">AccessControlClient</span><span class="token punctuation">(</span><span class="token class-name">Vertx</span> vertx<span class="token punctuation">,</span> <span class="token class-name">When</span> when<span class="token punctuation">,</span> <span class="token class-name">WhenHttpClient</span> whenHttpClient<span class="token punctuation">,</span> <span class="token class-name">EFJwtIssuer</span> jwtIssuer<span class="token punctuation">,</span> <span class="token class-name">TokenCache</span> tokenCache<span class="token punctuation">,</span> <span class="token class-name">AccessControlConfig</span> config<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>vertx<span class="token punctuation">,</span> when<span class="token punctuation">,</span> whenHttpClient<span class="token punctuation">,</span> jwtIssuer<span class="token punctuation">,</span> tokenCache<span class="token punctuation">,</span> config<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>accessControlClient <span class="token operator">=</span> vertx<span class="token punctuation">.</span><span class="token function">createHttpClient</span><span class="token punctuation">(</span><span class="token function">buildClientOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">Promise</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AccessTokenInfo</span><span class="token punctuation">></span></span> <span class="token function">getTokenInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> accessToken<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">requireNonNull</span><span class="token punctuation">(</span>accessToken<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token function">buildRequestOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>rOptions <span class="token operator">-></span> <span class="token function">retrieveTokenInfo</span><span class="token punctuation">(</span>accessToken<span class="token punctuation">,</span> rOptions<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">protected</span> <span class="token class-name">Promise</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RequestOptions</span><span class="token punctuation">></span></span> <span class="token function">buildRequestOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">buildRequestOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>rOptions <span class="token operator">-></span> when<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>rOptions<span class="token punctuation">.</span><span class="token function">setClient</span><span class="token punctuation">(</span>accessControlClient<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Promise</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AccessTokenInfo</span><span class="token punctuation">></span></span> <span class="token function">retrieveTokenInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> accessToken<span class="token punctuation">,</span> <span class="token class-name">RequestOptions</span> rOptions<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> whenHttpClient<span class="token punctuation">.</span><span class="token function">requestAndReadBody</span><span class="token punctuation">(</span><span class="token class-name">HttpMethod</span><span class="token punctuation">.</span>GET<span class="token punctuation">,</span> config<span class="token punctuation">.</span><span class="token function">getTokenInfoUrl</span><span class="token punctuation">(</span>accessToken<span class="token punctuation">)</span><span class="token punctuation">,</span> rOptions<span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>responseAndBody <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
-                    <span class="token class-name">HttpClientResponse</span> response <span class="token operator">=</span> responseAndBody<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isSuccessStatus</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                        LOG<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"TokenInfo cannot be retrieved for access token &#123;&#125;. Response status &#123;&#125;. Response Payload &#123;&#125; "</span><span class="token punctuation">,</span> accessToken<span class="token punctuation">,</span> response<span class="token punctuation">.</span><span class="token function">statusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> responseAndBody<span class="token punctuation">.</span><span class="token function">getBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token keyword">return</span> when<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">IllegalStateException</span><span class="token punctuation">(</span><span class="token string">"Can't retrieve access_token_info"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">&#125;</span>
-
-                    <span class="token class-name">JsonObject</span> tokenJson <span class="token operator">=</span> responseAndBody<span class="token punctuation">.</span><span class="token function">getBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toJsonObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token class-name">AccessTokenInfo</span> tokenInfo <span class="token operator">=</span> <span class="token function">toTokenInfo</span><span class="token punctuation">(</span>tokenJson<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">return</span> when<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>tokenInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">HttpClientOptions</span> <span class="token function">buildClientOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">HttpClientOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">setSsl</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">setDefaultHost</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token function">getAccessControlHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">setDefaultPort</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token function">getAccessControlPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">AccessTokenInfo</span> <span class="token function">toTokenInfo</span><span class="token punctuation">(</span><span class="token class-name">JsonObject</span> json<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token class-name">AccessTokenInfo</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">identityId</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_IDENTITY_ID<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">identityProvider</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_IDENTITY_PROVIDER<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">issuedTo</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_ISSUED_TO<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">token</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_TOKEN<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">expirationDate</span><span class="token punctuation">(</span><span class="token function">toInstant</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_EXPIRATION_DATE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span>json<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>FIELD_GROUP<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Instant</span> <span class="token function">toInstant</span><span class="token punctuation">(</span><span class="token class-name">String</span> expirationDate<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token class-name">Instant</span><span class="token punctuation">.</span><span class="token function">ofEpochMilli</span><span class="token punctuation">(</span><span class="token class-name">Long</span><span class="token punctuation">.</span><span class="token function">parseLong</span><span class="token punctuation">(</span>expirationDate<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
+    <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
 <ul>
 <li>背景</li>
 <li>IOC</li>
