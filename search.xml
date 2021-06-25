@@ -121,175 +121,6 @@
       </tags>
   </entry>
   <entry>
-    <title>网络协议之靠谱邮差 - TCP</title>
-    <url>/2020/11/03/TCP/</url>
-    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
-<ul>
-<li>什么是TCP</li>
-<li>TCP要解决什么问题</li>
-<li>TCP是如何解决这些问题的</li>
-<li>拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
-<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
-<ul>
-<li>可靠<ul>
-<li>如果发送的包丢了，应该如何处理？</li>
-<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
-</ul>
-</li>
-<li>有效<ul>
-<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
-</ul>
-</li>
-</ul>
-<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
-<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
-<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
-<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
-<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
-<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
-<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
-</ul>
-<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
-<ul>
-<li>客户端知道自己和对方有接受和发送的能力</li>
-<li>服务端知道自己和对方有接受和发送的能力</li>
-</ul>
-<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
-<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
-<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
-<ul>
-<li>什么时候进行包重传？</li>
-<li>重传哪些包？</li>
-<li>如何进行重转</li>
-</ul>
-<p>  服务端返回 ACK 包的机制</p>
-<ul>
-<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
-</ul>
-<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
-<ul>
-<li>超时重传<ul>
-<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
-<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
-<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
-</ul>
-</li>
-<li>快速重传<ul>
-<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
-<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
-<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
-<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
-<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
-</ul>
-</li>
-<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
-</ul>
-</li>
-<li>SACK - Selective Acknowledgment<ul>
-<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
-<li>SACK需要客户端和服务端同时支持</li>
-<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
-</ul>
-</li>
-<li>D-SACK - Duplicate SACK<ul>
-<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
-<li>通过D-SACK, 我们可以知道<ul>
-<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
-<li>先发的包后到的情况.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
-<ul>
-<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
-<li>网卡接受到的数据会放到内核缓冲区</li>
-<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
-<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
-<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
-<li>将发送窗口的数据挪到内核缓冲区</li>
-<li>内核缓冲区的数据从网卡发送出去</li>
-</ul>
-<p>拾遗</p>
-<ul>
-<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
-<li>TCP头里有一个字段叫 Window代表窗口大小</li>
-<li>窗口的大小是有接受方的窗口大小决定的.</li>
-<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
-<li>窗口为0会引起死锁</li>
-<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
-<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
-<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
-<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
-</ul>
-</li>
-<li>流量控制和用塞控制的区别是什么？<ul>
-<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
-<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
-<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
-</ul>
-</li>
-</ul>
-<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
-<ul>
-<li>客户端发送FIN，代表要释放发送通道</li>
-<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
-<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
-<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
-</ul>
-<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
-<ul>
-<li>车主上高速的时候，收费站限流，只开几个闸口</li>
-<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
-<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
-</ul>
-<p>网络拥塞发生的时候，有如下策略</p>
-<ul>
-<li>慢启动<ul>
-<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
-<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
-</ul>
-</li>
-<li>拥塞避免<ul>
-<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
-</ul>
-</li>
-<li>拥塞发生<ul>
-<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
-<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
-<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
-</ul>
-</li>
-<li>快速恢复<ul>
-<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
-</ul>
-</li>
-</ul>
-<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
-<ul>
-<li>尽量的发包，而不是不发.</li>
-<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
-<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
-<ul>
-<li>移动基站的弱网环境</li>
-<li>防火墙针对性的丢包</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>协议</tag>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统行为之警卫局 - 登录和授权</title>
     <url>/2020/11/22/auth/</url>
     <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
@@ -492,6 +323,175 @@
       </tags>
   </entry>
   <entry>
+    <title>网络协议之靠谱邮差 - TCP</title>
+    <url>/2020/11/03/TCP/</url>
+    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
+<ul>
+<li>什么是TCP</li>
+<li>TCP要解决什么问题</li>
+<li>TCP是如何解决这些问题的</li>
+<li>拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
+<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
+<ul>
+<li>可靠<ul>
+<li>如果发送的包丢了，应该如何处理？</li>
+<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
+</ul>
+</li>
+<li>有效<ul>
+<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
+</ul>
+</li>
+</ul>
+<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
+<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
+<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
+<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
+<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
+<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
+</ul>
+<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
+<ul>
+<li>客户端知道自己和对方有接受和发送的能力</li>
+<li>服务端知道自己和对方有接受和发送的能力</li>
+</ul>
+<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
+<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
+<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
+<ul>
+<li>什么时候进行包重传？</li>
+<li>重传哪些包？</li>
+<li>如何进行重转</li>
+</ul>
+<p>  服务端返回 ACK 包的机制</p>
+<ul>
+<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
+</ul>
+<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
+<ul>
+<li>超时重传<ul>
+<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
+<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
+<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
+</ul>
+</li>
+<li>快速重传<ul>
+<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
+<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
+<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
+<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
+<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
+</ul>
+</li>
+<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
+</ul>
+</li>
+<li>SACK - Selective Acknowledgment<ul>
+<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
+<li>SACK需要客户端和服务端同时支持</li>
+<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
+</ul>
+</li>
+<li>D-SACK - Duplicate SACK<ul>
+<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
+<li>通过D-SACK, 我们可以知道<ul>
+<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
+<li>先发的包后到的情况.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
+<ul>
+<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
+<li>网卡接受到的数据会放到内核缓冲区</li>
+<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
+<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
+<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
+<li>将发送窗口的数据挪到内核缓冲区</li>
+<li>内核缓冲区的数据从网卡发送出去</li>
+</ul>
+<p>拾遗</p>
+<ul>
+<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
+<li>TCP头里有一个字段叫 Window代表窗口大小</li>
+<li>窗口的大小是有接受方的窗口大小决定的.</li>
+<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
+<li>窗口为0会引起死锁</li>
+<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
+<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
+<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
+<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
+</ul>
+</li>
+<li>流量控制和用塞控制的区别是什么？<ul>
+<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
+<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
+<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
+</ul>
+</li>
+</ul>
+<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
+<ul>
+<li>客户端发送FIN，代表要释放发送通道</li>
+<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
+<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
+<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
+</ul>
+<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
+<ul>
+<li>车主上高速的时候，收费站限流，只开几个闸口</li>
+<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
+<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
+</ul>
+<p>网络拥塞发生的时候，有如下策略</p>
+<ul>
+<li>慢启动<ul>
+<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
+<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
+</ul>
+</li>
+<li>拥塞避免<ul>
+<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
+</ul>
+</li>
+<li>拥塞发生<ul>
+<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
+<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
+<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
+</ul>
+</li>
+<li>快速恢复<ul>
+<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
+</ul>
+</li>
+</ul>
+<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
+<ul>
+<li>尽量的发包，而不是不发.</li>
+<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
+<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
+<ul>
+<li>移动基站的弱网环境</li>
+<li>防火墙针对性的丢包</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>协议</tag>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分解</title>
     <url>/2020/09/12/break-down/</url>
     <content><![CDATA[<p>分解是解决问题的一种有效方式之一。分解这两个字是如此的显而易见，小学生一听都知道分解是什么意思， 以至于不需要解释太多。<br>这篇文章主要探讨三方面内容</p>
@@ -678,6 +678,102 @@
       </tags>
   </entry>
   <entry>
+    <title>数据，信息，知识和智慧</title>
+    <url>/2020/09/10/data-knowledge/</url>
+    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
+<p>下面简单的谈谈我对这幅图片的个人理解.</p>
+<ul>
+<li>数据</li>
+<li>信息</li>
+<li>知识</li>
+<li>智慧</li>
+</ul>
+<span id="more"></span>
+<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
+<ul>
+<li>程序的日志</li>
+<li>每天的步行记录</li>
+<li>太阳升起了</li>
+</ul>
+<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
+<ul>
+<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
+<li>菜谱</li>
+<li>两人之间日常的交流</li>
+<li>软件的安装手册</li>
+<li>新闻报道</li>
+<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
+<li>一个谣言或者情报</li>
+<li>代码库</li>
+</ul>
+<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
+<p>  特点</p>
+<ul>
+<li>适合解决某个具体的问题。</li>
+<li>结果是可以量化的和感知的。</li>
+<li>不具备通用型.</li>
+</ul>
+<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
+<ul>
+<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
+<li>牛顿的三大定律</li>
+<li>各个学科的模型</li>
+<li>做事的套路或者最佳实践</li>
+<li>思维框架</li>
+</ul>
+<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
+<ul>
+<li>《设计模式》</li>
+<li>《模型思维》</li>
+</ul>
+<p>  特点 </p>
+<ul>
+<li>适合解决某一类问题</li>
+<li>往往要结合上下文具体情况具体分析</li>
+</ul>
+<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
+<ul>
+<li>哲学。</li>
+<li>否极泰来</li>
+<li>塞翁失马，焉知非福</li>
+<li>以人为本</li>
+</ul>
+<p>  代表性的书籍</p>
+<ul>
+<li>《程序员修炼之道》</li>
+<li>《周易》</li>
+</ul>
+<p>  特点</p>
+<ul>
+<li>适用于时间跨度长的事情</li>
+<li>适用于规模比较大的组织</li>
+<li>比较灵活</li>
+<li>效果很能被直接感知和量化</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Java之离弦之箭 - 高并发</title>
     <url>/2020/10/06/concurrent/</url>
     <content><![CDATA[<p>一个系统如果足够稳定，而且客户对它也很满意，我们一般没有去优化它的必要，但如果随着用户量增加，系统变的缓慢，我们就有优化它的必要性了. 借用我前面博文《一种可以衡量事物的指标-快和好》，一个系统追求的目标之一是快，但快的前提的是<br>好，也就是稳，否则步伐太大了就容易扯着蛋了. 优化系统是大的话题，这里只讨论其中的一个小领域-高并发.<br>任何一个计算机的问题，都能从现实中找到雏形和模型，高并发也不例外。高并发的内容还是比较多的，所以不同类型的高并发问题需要不同的角度，就好像作战的时候，战斗机需要在高空1万米，也需要突然下降到高空1千米，也有可能是潜艇下沉到水下几千米配合作战. 这种思维模型我给它取了个名字叫“海陆空”模型.</p>
@@ -809,102 +905,6 @@
         <tag>高并发</tag>
         <tag>高性能</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>数据，信息，知识和智慧</title>
-    <url>/2020/09/10/data-knowledge/</url>
-    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
-<p>下面简单的谈谈我对这幅图片的个人理解.</p>
-<ul>
-<li>数据</li>
-<li>信息</li>
-<li>知识</li>
-<li>智慧</li>
-</ul>
-<span id="more"></span>
-<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
-<ul>
-<li>程序的日志</li>
-<li>每天的步行记录</li>
-<li>太阳升起了</li>
-</ul>
-<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
-<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
-<ul>
-<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
-<li>菜谱</li>
-<li>两人之间日常的交流</li>
-<li>软件的安装手册</li>
-<li>新闻报道</li>
-<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
-<li>一个谣言或者情报</li>
-<li>代码库</li>
-</ul>
-<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
-<p>  特点</p>
-<ul>
-<li>适合解决某个具体的问题。</li>
-<li>结果是可以量化的和感知的。</li>
-<li>不具备通用型.</li>
-</ul>
-<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
-<ul>
-<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
-<li>牛顿的三大定律</li>
-<li>各个学科的模型</li>
-<li>做事的套路或者最佳实践</li>
-<li>思维框架</li>
-</ul>
-<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
-<ul>
-<li>《设计模式》</li>
-<li>《模型思维》</li>
-</ul>
-<p>  特点 </p>
-<ul>
-<li>适合解决某一类问题</li>
-<li>往往要结合上下文具体情况具体分析</li>
-</ul>
-<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
-<ul>
-<li>哲学。</li>
-<li>否极泰来</li>
-<li>塞翁失马，焉知非福</li>
-<li>以人为本</li>
-</ul>
-<p>  代表性的书籍</p>
-<ul>
-<li>《程序员修炼之道》</li>
-<li>《周易》</li>
-</ul>
-<p>  特点</p>
-<ul>
-<li>适用于时间跨度长的事情</li>
-<li>适用于规模比较大的组织</li>
-<li>比较灵活</li>
-<li>效果很能被直接感知和量化</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
-]]></content>
-      <categories>
-        <category>认知</category>
-      </categories>
-      <tags>
-        <tag>认知</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
   </entry>
   <entry>
     <title>人多力量大 - 分布式导言</title>
@@ -2110,6 +2110,121 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Java之飞鸽传书 - Netty</title>
+    <url>/2020/10/12/netty/</url>
+    <content><![CDATA[<p>万物互联是现在乃至未来的趋势. 只要互联就需要网络，不管是无线还是有线。只要牵涉到联网，就牵涉到两台机器上的应用程序之间的通信。 只要是通信，我们就需要又快又好的进行通信。那么应该有一个事物来做这样基础的事情，这样开发者可以专注于写业务逻辑.<br>这个事物就是Netty. 当然Netty不是进行Java进行网络通信的唯一选择，我们自己也可以写一个网络编程框架,但在此刻，它是网络通信框架领域那颗最耀眼的明星,这就是影响力，必须承认它的人气。当我们讨论Java网络编程框架的时候，Netty是一个绕不过去的话题. 让我来沏一杯茶，闲言碎语几句.</p>
+<ul>
+<li>背景</li>
+<li>什么是Netty?</li>
+<li>为什么是Netty?</li>
+<li>Netty是如何实现的？</li>
+<li>Netty的实践</li>
+<li>网络编程框架的将来</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Netty是2004年由韩国人trustin lee开发出来的，同时他也是mina的作者. Netty到现在为止已经由16年的历史，我有理由相信它会继续存活16年</p>
+<h2 id="什么是Netty"><a href="#什么是Netty" class="headerlink" title="什么是Netty?"></a>什么是Netty?</h2><p>Netty是</p>
+<ul>
+<li>网络编程框架 - Netty解决问题的领域是网络，非网络的它不关心.</li>
+<li>异步和基于事件驱动的</li>
+<li>容易使用，性能好 - 开发者视角</li>
+<li>开发服务器和客户端 - 意味着Netty的使用场景不是单机</li>
+</ul>
+<p><img src="/images/2020/pigeon.png"></p>
+<h2 id="为什么是Netty"><a href="#为什么是Netty" class="headerlink" title="为什么是Netty?"></a>为什么是Netty?</h2><p>截止当前这个时间点，github上还有406个问题是open的, 关闭了4810问题, 如果除以16，那么就是1年300个问题，一天一个问题。这也能说明一个问题，网络编程领域的炸弹和坑有很多，不要掉以轻心.</p>
+<h3 id="为什么不是JDK-NIO"><a href="#为什么不是JDK-NIO" class="headerlink" title="为什么不是JDK NIO?"></a>为什么不是JDK NIO?</h3><p>Netty的技能包比JDK NIO多</p>
+<ul>
+<li>支持多种传输层协议</li>
+<li>解决了粘包，半包现象</li>
+<li>流量控制，黑白名单</li>
+<li>处理各种个样的异常，比如断连，异常<ul>
+<li>这让我想起了Jquery, Jquery屏蔽了各种浏览器的差异，提供了一个统一的接口给用户操作DOM.</li>
+</ul>
+</li>
+</ul>
+<p>JDK NIO 本身有很多bug, 约为5000个左右.<br>这里说明了两个问题：</p>
+<ul>
+<li>开发者直接使用JDK NIO是不明智的选择</li>
+<li>开发者开发一个网络编程框架也是一个不明智的选择</li>
+</ul>
+<h2 id="Netty是如何实现的？"><a href="#Netty是如何实现的？" class="headerlink" title="Netty是如何实现的？"></a>Netty是如何实现的？</h2><ul>
+<li><p>Netty设计哲学</p>
+<ul>
+<li>API让人用起来舒服, 这个是针对使用者的 - 这种舒服应该符合用户的感性和直觉，就好像做西红柿炒蛋的时候，放好鸡蛋之后接着放西红柿。</li>
+<li>实现让人舒服 - 这个是针对维护者的.<blockquote>
+<p>The answer is the philosophy it is built on. Netty is designed to give you the most comfortable experience both in terms of the API and the implementation from the day one. It is not something tangible but you will realize that this philosophy will make your life much easier as you read this guide and play with Netty.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Netty是基于Reactor模式实现的</p>
+<ul>
+<li>单Reactor单线程</li>
+<li>单Reactor多线程</li>
+<li>主从Reactor多线程</li>
+</ul>
+</li>
+<li><p>Netty用到的设计模式</p>
+<ul>
+<li>单例 - ReadTimeOutException#INSTANCE</li>
+<li>工厂 - ReflectiveChannelFatory</li>
+<li>策略 - EventExcutorChooser</li>
+<li>装饰 - WrappedByteBuf</li>
+<li>模板 - AbstracTrafficShapingHandler</li>
+<li>职责链 - ChannelPipeline</li>
+<li>构造者 - WebSocketServerProtocolConfig.Builder</li>
+<li>观察者 - ChannelFuture#AddListener</li>
+</ul>
+</li>
+<li><p>从框架设计角度，Netty的核心概念是</p>
+<ul>
+<li>Channel - 可以理解为任意两点之间的连接. </li>
+<li>EventLoop - Channel和EventLoop是多对一的关系，EventLoop和线程是一对一的关系，也就是一个Chanenel接连对应一个稳定的线程, 这样的好处是事件处理是单线程，避免并发问题. Channel通过事件的方式给EventLoop发送消息.</li>
+<li>EventLoopGroup - 对EventLoop从功能的角度进行分类<ul>
+<li>bossGroup - 专门用来处理连接<ul>
+<li>bossGroup连接处理完成之后，要将连接交给workGroup，这到底选择哪个EventLoop呢？Netty使用的是轮询算法.</li>
+</ul>
+</li>
+<li>workerGroup - 专门用来处理读和写</li>
+</ul>
+</li>
+<li>ServerBootStrap</li>
+<li>ChannelHandler和ChannelPipeline<ul>
+<li>ChannelHandler - 事件的处理者，比如做一些业务代码处理</li>
+<li>ChannelPipeline - 指定事件的处理顺序，先处理第一件事情，然后处理第二件事件, 换言之就是管理秩序.</li>
+<li>ChannelHandlerContext - 用于ChannelHandler和ChannelPipeline之间的交互.</li>
+</ul>
+</li>
+<li>ChannelFuture</li>
+</ul>
+</li>
+<li><p>Netty的执行流程 - 这个流程的步数是奇数，首尾对称.</p>
+<ul>
+<li>启动服务</li>
+<li>打开连接</li>
+<li>接受数据</li>
+<li>数据处理</li>
+<li>发送数据</li>
+<li>关闭连接</li>
+<li>关闭服务</li>
+</ul>
+</li>
+<li><p>Netty逻辑架构图<br><img src="/images/2020/netty-logic-diagram.png"></p>
+</li>
+<li><p>Netty功能图<br><img src="/images/2020/netty-function-diagram.png"></p>
+</li>
+</ul>
+<h2 id="Netty的实践"><a href="#Netty的实践" class="headerlink" title="Netty的实践"></a>Netty的实践</h2><h2 id="网络编程框架的未来"><a href="#网络编程框架的未来" class="headerlink" title="网络编程框架的未来"></a>网络编程框架的未来</h2>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>高性能</tag>
+        <tag>框架</tag>
+        <tag>Netty</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议大观园</title>
     <url>/2020/10/27/network-protocol/</url>
     <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
@@ -2230,121 +2345,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Java之飞鸽传书 - Netty</title>
-    <url>/2020/10/12/netty/</url>
-    <content><![CDATA[<p>万物互联是现在乃至未来的趋势. 只要互联就需要网络，不管是无线还是有线。只要牵涉到联网，就牵涉到两台机器上的应用程序之间的通信。 只要是通信，我们就需要又快又好的进行通信。那么应该有一个事物来做这样基础的事情，这样开发者可以专注于写业务逻辑.<br>这个事物就是Netty. 当然Netty不是进行Java进行网络通信的唯一选择，我们自己也可以写一个网络编程框架,但在此刻，它是网络通信框架领域那颗最耀眼的明星,这就是影响力，必须承认它的人气。当我们讨论Java网络编程框架的时候，Netty是一个绕不过去的话题. 让我来沏一杯茶，闲言碎语几句.</p>
-<ul>
-<li>背景</li>
-<li>什么是Netty?</li>
-<li>为什么是Netty?</li>
-<li>Netty是如何实现的？</li>
-<li>Netty的实践</li>
-<li>网络编程框架的将来</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Netty是2004年由韩国人trustin lee开发出来的，同时他也是mina的作者. Netty到现在为止已经由16年的历史，我有理由相信它会继续存活16年</p>
-<h2 id="什么是Netty"><a href="#什么是Netty" class="headerlink" title="什么是Netty?"></a>什么是Netty?</h2><p>Netty是</p>
-<ul>
-<li>网络编程框架 - Netty解决问题的领域是网络，非网络的它不关心.</li>
-<li>异步和基于事件驱动的</li>
-<li>容易使用，性能好 - 开发者视角</li>
-<li>开发服务器和客户端 - 意味着Netty的使用场景不是单机</li>
-</ul>
-<p><img src="/images/2020/pigeon.png"></p>
-<h2 id="为什么是Netty"><a href="#为什么是Netty" class="headerlink" title="为什么是Netty?"></a>为什么是Netty?</h2><p>截止当前这个时间点，github上还有406个问题是open的, 关闭了4810问题, 如果除以16，那么就是1年300个问题，一天一个问题。这也能说明一个问题，网络编程领域的炸弹和坑有很多，不要掉以轻心.</p>
-<h3 id="为什么不是JDK-NIO"><a href="#为什么不是JDK-NIO" class="headerlink" title="为什么不是JDK NIO?"></a>为什么不是JDK NIO?</h3><p>Netty的技能包比JDK NIO多</p>
-<ul>
-<li>支持多种传输层协议</li>
-<li>解决了粘包，半包现象</li>
-<li>流量控制，黑白名单</li>
-<li>处理各种个样的异常，比如断连，异常<ul>
-<li>这让我想起了Jquery, Jquery屏蔽了各种浏览器的差异，提供了一个统一的接口给用户操作DOM.</li>
-</ul>
-</li>
-</ul>
-<p>JDK NIO 本身有很多bug, 约为5000个左右.<br>这里说明了两个问题：</p>
-<ul>
-<li>开发者直接使用JDK NIO是不明智的选择</li>
-<li>开发者开发一个网络编程框架也是一个不明智的选择</li>
-</ul>
-<h2 id="Netty是如何实现的？"><a href="#Netty是如何实现的？" class="headerlink" title="Netty是如何实现的？"></a>Netty是如何实现的？</h2><ul>
-<li><p>Netty设计哲学</p>
-<ul>
-<li>API让人用起来舒服, 这个是针对使用者的 - 这种舒服应该符合用户的感性和直觉，就好像做西红柿炒蛋的时候，放好鸡蛋之后接着放西红柿。</li>
-<li>实现让人舒服 - 这个是针对维护者的.<blockquote>
-<p>The answer is the philosophy it is built on. Netty is designed to give you the most comfortable experience both in terms of the API and the implementation from the day one. It is not something tangible but you will realize that this philosophy will make your life much easier as you read this guide and play with Netty.</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>Netty是基于Reactor模式实现的</p>
-<ul>
-<li>单Reactor单线程</li>
-<li>单Reactor多线程</li>
-<li>主从Reactor多线程</li>
-</ul>
-</li>
-<li><p>Netty用到的设计模式</p>
-<ul>
-<li>单例 - ReadTimeOutException#INSTANCE</li>
-<li>工厂 - ReflectiveChannelFatory</li>
-<li>策略 - EventExcutorChooser</li>
-<li>装饰 - WrappedByteBuf</li>
-<li>模板 - AbstracTrafficShapingHandler</li>
-<li>职责链 - ChannelPipeline</li>
-<li>构造者 - WebSocketServerProtocolConfig.Builder</li>
-<li>观察者 - ChannelFuture#AddListener</li>
-</ul>
-</li>
-<li><p>从框架设计角度，Netty的核心概念是</p>
-<ul>
-<li>Channel - 可以理解为任意两点之间的连接. </li>
-<li>EventLoop - Channel和EventLoop是多对一的关系，EventLoop和线程是一对一的关系，也就是一个Chanenel接连对应一个稳定的线程, 这样的好处是事件处理是单线程，避免并发问题. Channel通过事件的方式给EventLoop发送消息.</li>
-<li>EventLoopGroup - 对EventLoop从功能的角度进行分类<ul>
-<li>bossGroup - 专门用来处理连接<ul>
-<li>bossGroup连接处理完成之后，要将连接交给workGroup，这到底选择哪个EventLoop呢？Netty使用的是轮询算法.</li>
-</ul>
-</li>
-<li>workerGroup - 专门用来处理读和写</li>
-</ul>
-</li>
-<li>ServerBootStrap</li>
-<li>ChannelHandler和ChannelPipeline<ul>
-<li>ChannelHandler - 事件的处理者，比如做一些业务代码处理</li>
-<li>ChannelPipeline - 指定事件的处理顺序，先处理第一件事情，然后处理第二件事件, 换言之就是管理秩序.</li>
-<li>ChannelHandlerContext - 用于ChannelHandler和ChannelPipeline之间的交互.</li>
-</ul>
-</li>
-<li>ChannelFuture</li>
-</ul>
-</li>
-<li><p>Netty的执行流程 - 这个流程的步数是奇数，首尾对称.</p>
-<ul>
-<li>启动服务</li>
-<li>打开连接</li>
-<li>接受数据</li>
-<li>数据处理</li>
-<li>发送数据</li>
-<li>关闭连接</li>
-<li>关闭服务</li>
-</ul>
-</li>
-<li><p>Netty逻辑架构图<br><img src="/images/2020/netty-logic-diagram.png"></p>
-</li>
-<li><p>Netty功能图<br><img src="/images/2020/netty-function-diagram.png"></p>
-</li>
-</ul>
-<h2 id="Netty的实践"><a href="#Netty的实践" class="headerlink" title="Netty的实践"></a>Netty的实践</h2><h2 id="网络编程框架的未来"><a href="#网络编程框架的未来" class="headerlink" title="网络编程框架的未来"></a>网络编程框架的未来</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>高性能</tag>
-        <tag>框架</tag>
-        <tag>Netty</tag>
-      </tags>
   </entry>
   <entry>
     <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
