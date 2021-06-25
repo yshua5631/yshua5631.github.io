@@ -2678,7 +2678,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #cb9e6b;
+  background: #520e25;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3522,6 +3522,11 @@ div.code-toolbar:hover > .toolbar {
 }
 .token.space {
   visibility: hidden;
+}
+pre .caption {
+  background: transparent !important;
+  font-weight: 700;
+  margin-top: 10px;
 }
 code[class*="language-"],
 pre[class*="language-"] {

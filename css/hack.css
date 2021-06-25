@@ -46,3 +46,8 @@ div.code-toolbar:hover > .toolbar {
 .token.space {
   visibility: hidden;
 }
+pre .caption {
+  background: transparent !important;
+  font-weight: 700;
+  margin-top: 10px;
+}
