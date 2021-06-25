@@ -2698,7 +2698,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #ec6fff;
+  background: #45bfcc;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2861,17 +2861,17 @@ pre[class*="language-"] {
 }
 @media only screen and (device-width: 768px) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 0.22em !important;
   }
 }
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 0.22em !important;
   }
 }
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 0.22em !important;
   }
 }
 pre[class*="language-"].line-numbers {
