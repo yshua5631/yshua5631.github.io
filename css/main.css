@@ -2698,7 +2698,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #854aab;
+  background: #88b8ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2856,7 +2856,7 @@ pre[class*="language-"] {
   color: #e8eaf6;
 }
 .line-numbers-rows > span {
-  margin-bottom: 0.4em !important;
+  margin-bottom: 6px !important;
 }
 pre[class*="language-"].line-numbers {
   box-shadow: 0 10px 30px 0 #000;
