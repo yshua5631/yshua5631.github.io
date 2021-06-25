@@ -1,0 +1,8 @@
+.line-numbers-rows > span {
+  margin-bottom: 0.4em !important;
+}
+pre[class*="language-"].line-numbers {
+  box-shadow: 0 10px 30px 0 #000;
+  padding-bottom: 2.4em;
+  padding-top: 1.4em;
+}
