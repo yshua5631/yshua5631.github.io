@@ -1,20 +1,20 @@
 .line-numbers-rows > span {
 /* 设备像素比为 1 */
-  margin-bottom: 0.42em !important;
+  margin-bottom: 6px !important;
 }
 @media only screen and (device-width: 768px) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 3px !important;
   }
 }
 @media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: portrait) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 3px !important;
   }
 }
 @media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: landscape) {
   .line-numbers-rows > span {
-    margin-bottom: 0.2em !important;
+    margin-bottom: 3px !important;
   }
 }
 pre[class*="language-"].line-numbers {
