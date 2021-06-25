@@ -678,6 +678,102 @@
       </tags>
   </entry>
   <entry>
+    <title>数据，信息，知识和智慧</title>
+    <url>/2020/09/10/data-knowledge/</url>
+    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
+<p>下面简单的谈谈我对这幅图片的个人理解.</p>
+<ul>
+<li>数据</li>
+<li>信息</li>
+<li>知识</li>
+<li>智慧</li>
+</ul>
+<span id="more"></span>
+<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
+<ul>
+<li>程序的日志</li>
+<li>每天的步行记录</li>
+<li>太阳升起了</li>
+</ul>
+<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
+<ul>
+<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
+<li>菜谱</li>
+<li>两人之间日常的交流</li>
+<li>软件的安装手册</li>
+<li>新闻报道</li>
+<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
+<li>一个谣言或者情报</li>
+<li>代码库</li>
+</ul>
+<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
+<p>  特点</p>
+<ul>
+<li>适合解决某个具体的问题。</li>
+<li>结果是可以量化的和感知的。</li>
+<li>不具备通用型.</li>
+</ul>
+<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
+<ul>
+<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
+<li>牛顿的三大定律</li>
+<li>各个学科的模型</li>
+<li>做事的套路或者最佳实践</li>
+<li>思维框架</li>
+</ul>
+<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
+<ul>
+<li>《设计模式》</li>
+<li>《模型思维》</li>
+</ul>
+<p>  特点 </p>
+<ul>
+<li>适合解决某一类问题</li>
+<li>往往要结合上下文具体情况具体分析</li>
+</ul>
+<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
+<ul>
+<li>哲学。</li>
+<li>否极泰来</li>
+<li>塞翁失马，焉知非福</li>
+<li>以人为本</li>
+</ul>
+<p>  代表性的书籍</p>
+<ul>
+<li>《程序员修炼之道》</li>
+<li>《周易》</li>
+</ul>
+<p>  特点</p>
+<ul>
+<li>适用于时间跨度长的事情</li>
+<li>适用于规模比较大的组织</li>
+<li>比较灵活</li>
+<li>效果很能被直接感知和量化</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Java之离弦之箭 - 高并发</title>
     <url>/2020/10/06/concurrent/</url>
     <content><![CDATA[<p>一个系统如果足够稳定，而且客户对它也很满意，我们一般没有去优化它的必要，但如果随着用户量增加，系统变的缓慢，我们就有优化它的必要性了. 借用我前面博文《一种可以衡量事物的指标-快和好》，一个系统追求的目标之一是快，但快的前提的是<br>好，也就是稳，否则步伐太大了就容易扯着蛋了. 优化系统是大的话题，这里只讨论其中的一个小领域-高并发.<br>任何一个计算机的问题，都能从现实中找到雏形和模型，高并发也不例外。高并发的内容还是比较多的，所以不同类型的高并发问题需要不同的角度，就好像作战的时候，战斗机需要在高空1万米，也需要突然下降到高空1千米，也有可能是潜艇下沉到水下几千米配合作战. 这种思维模型我给它取了个名字叫“海陆空”模型.</p>
@@ -809,102 +905,6 @@
         <tag>高并发</tag>
         <tag>高性能</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>数据，信息，知识和智慧</title>
-    <url>/2020/09/10/data-knowledge/</url>
-    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
-<p>下面简单的谈谈我对这幅图片的个人理解.</p>
-<ul>
-<li>数据</li>
-<li>信息</li>
-<li>知识</li>
-<li>智慧</li>
-</ul>
-<span id="more"></span>
-<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
-<ul>
-<li>程序的日志</li>
-<li>每天的步行记录</li>
-<li>太阳升起了</li>
-</ul>
-<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
-<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
-<ul>
-<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
-<li>菜谱</li>
-<li>两人之间日常的交流</li>
-<li>软件的安装手册</li>
-<li>新闻报道</li>
-<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
-<li>一个谣言或者情报</li>
-<li>代码库</li>
-</ul>
-<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
-<p>  特点</p>
-<ul>
-<li>适合解决某个具体的问题。</li>
-<li>结果是可以量化的和感知的。</li>
-<li>不具备通用型.</li>
-</ul>
-<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
-<ul>
-<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
-<li>牛顿的三大定律</li>
-<li>各个学科的模型</li>
-<li>做事的套路或者最佳实践</li>
-<li>思维框架</li>
-</ul>
-<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
-<ul>
-<li>《设计模式》</li>
-<li>《模型思维》</li>
-</ul>
-<p>  特点 </p>
-<ul>
-<li>适合解决某一类问题</li>
-<li>往往要结合上下文具体情况具体分析</li>
-</ul>
-<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
-<ul>
-<li>哲学。</li>
-<li>否极泰来</li>
-<li>塞翁失马，焉知非福</li>
-<li>以人为本</li>
-</ul>
-<p>  代表性的书籍</p>
-<ul>
-<li>《程序员修炼之道》</li>
-<li>《周易》</li>
-</ul>
-<p>  特点</p>
-<ul>
-<li>适用于时间跨度长的事情</li>
-<li>适用于规模比较大的组织</li>
-<li>比较灵活</li>
-<li>效果很能被直接感知和量化</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
-]]></content>
-      <categories>
-        <category>认知</category>
-      </categories>
-      <tags>
-        <tag>认知</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
   </entry>
   <entry>
     <title>人多力量大 - 分布式导言</title>
@@ -1095,6 +1095,24 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2019/07/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>一种可以衡量事物的指标-快和好</title>
     <url>/2020/08/30/good-quick/</url>
     <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
@@ -1143,24 +1161,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>思维</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/07/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>前端发展史</title>
@@ -1528,6 +1528,103 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>网络协议之保密局 - Https</title>
+    <url>/2020/11/17/https/</url>
+    <content><![CDATA[<p>安全，这件事情无处不在。<br>我们不希望自己的个人信息被泄漏。<br>我们不希望自己的银行卡密码被盗取。<br>我们不希望自己的一言一行被监控，我们希望能有个人的隐私.<br>作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.</p>
+<ul>
+<li>背景</li>
+<li>什么是Https</li>
+<li>Https的机制是什么？</li>
+<li>安全和Https拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>1994年，网景公司在TCP/IP协议栈上创建了一个传输加密层: SSL(Secure Socket Layer), 这是一个原始规范，但没有发布。<br>1995年2月，修订了规范，并发布了SSL 2.0.<br>1996年，SSL 3.0发布, 得到大规模应用.<br>IETF 觉得SSL有硬伤，只能加密HTTP，为什么不能加密所有的应用层协议呢？<br>IETF在SSL 3.0的基础上， 重新命名和设计了这个协议，取名为TLS。<br>1999年1月, TLS 1.0 发布.<br>2006年4月, TLS 1.1 发布.<br>2008年8月, TLS 1.2 发布.<br>2018年3月, TLS 1.3 发布.</p>
+<h2 id="什么是Https"><a href="#什么是Https" class="headerlink" title="什么是Https"></a>什么是Https</h2><p>Https是一种网络协议, Https = Http + SSL/TLS. HTTPS是为了</p>
+<ul>
+<li>身份验证 - 张三给李四发消息，如何保证李四知道这个消息是张三发送的？</li>
+<li>信息泄漏 - 张三给李四发消息，如何保证信息不泄漏给王五？</li>
+<li>信息篡改 - 张三给李四发消息，王五拿到信息进行了篡改，李四如何知道这个信息有没有被篡改？</li>
+</ul>
+<p>以上三个问题可以规约成一个问题：</p>
+<ul>
+<li>A给B发消息，如果保证只有通信双方知道消息的内容？</li>
+</ul>
+<h2 id="Https的机制是什么"><a href="#Https的机制是什么" class="headerlink" title="Https的机制是什么"></a>Https的机制是什么</h2><p>在讨论Https的原理和机制之前，先确定几个大的前提</p>
+<ul>
+<li>操作系统是正常的 - 不要使用盗版操作系统</li>
+<li>浏览器是正常的 - 不要下载被改造过的浏览器</li>
+<li>CA中心是正常的 - 就好比一个市政府不能是假的.</li>
+<li>人是有可能犯错的 - 有时候脑子短路，会有误操作.</li>
+<li>服务端的私钥是不会被窃取的</li>
+</ul>
+<p>引入这些大前提的目的是</p>
+<ul>
+<li>方便讨论问题，否则会钻进一些牛角尖。</li>
+<li>说明没有绝对的安全。</li>
+</ul>
+<h3 id="Https机制的核心理念"><a href="#Https机制的核心理念" class="headerlink" title="Https机制的核心理念"></a>Https机制的核心理念</h3><ul>
+<li>非对称加密实现证书的传输</li>
+<li>对称加密进行数据的传输</li>
+</ul>
+<h3 id="Https的两大阶段"><a href="#Https的两大阶段" class="headerlink" title="Https的两大阶段"></a>Https的两大阶段</h3><ul>
+<li>证书验证<ul>
+<li>客户端发起连接请求</li>
+<li>服务端返回证书</li>
+<li>客户端验证证书是否合法，如果不合法则给予警告和提示</li>
+</ul>
+</li>
+<li>数据传输<ul>
+<li>证书验证合法之后，客户端生产随机数，用服务端的公钥加密随机数</li>
+<li>将随机数发送给服务端， 服务端根据随机数选择对称加密算法。</li>
+<li>服务端对要返回的内容进行加密</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/2020/https.png"></p>
+<h3 id="中间人攻击-Man-In-The-Middle"><a href="#中间人攻击-Man-In-The-Middle" class="headerlink" title="中间人攻击 - Man In The Middle"></a>中间人攻击 - Man In The Middle</h3><p>中间人攻击是客户端和服务端在通信的时候，通信被第三方劫持，而客户端和服务端都意识不到第三方的存在。<br>一个基本事实:</p>
+<ul>
+<li>证书只有服务端能拥有.</li>
+</ul>
+<p>在基于上面提到的几大前提的基础上，要防止中间人攻击的问题就变为：</p>
+<ul>
+<li>如何让客户端知道这个证书是正常的？</li>
+</ul>
+<p>客户端如何验证证书的有效性的？</p>
+<ul>
+<li>验证域名, 有效期</li>
+<li>验证根证书来源是否合法</li>
+<li>验证证书是否被篡改</li>
+<li>验证证书是否被吊销<ul>
+<li>黑名单方式 - 定期从CA下载名单列表，效率高，但不实时.</li>
+<li>OCSP方式 - 在线验证。效率低，但实时性高.</li>
+</ul>
+</li>
+</ul>
+<p>证书的三种类型</p>
+<ul>
+<li>DV - 验证域名</li>
+<li>OV - 验证域名，企业信息</li>
+<li>EV - 验证域名，企业信息，律师函等等.</li>
+</ul>
+<h2 id="安全和Https拾遗"><a href="#安全和Https拾遗" class="headerlink" title="安全和Https拾遗"></a>安全和Https拾遗</h2><p>下面是近些年遇到的一些与安全相关的话题</p>
+<ul>
+<li>大概4年前左右的样子，公司将全部站点升级为Https.</li>
+<li>以前数据库密码是明文保存的，现在已经改成密文了.</li>
+<li>代码库里不同的branch有不同的权限.</li>
+<li>一些数据库连接字符串在github仓库里是密文保存的，下载到本地之后是明文.</li>
+<li>网站有段时间账号攻击，加了验证码作为第一道关卡。</li>
+<li>GDPR - 对于欧洲的用户，用户同意之后，数据才能保存到Salesforce里</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络协议</category>
+      </categories>
+      <tags>
+        <tag>安全</tag>
+        <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java之黑暗森林 - JVM</title>
     <url>/2020/09/30/jvm/</url>
     <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
@@ -1710,224 +1807,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>网络协议之保密局 - Https</title>
-    <url>/2020/11/17/https/</url>
-    <content><![CDATA[<p>安全，这件事情无处不在。<br>我们不希望自己的个人信息被泄漏。<br>我们不希望自己的银行卡密码被盗取。<br>我们不希望自己的一言一行被监控，我们希望能有个人的隐私.<br>作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.</p>
-<ul>
-<li>背景</li>
-<li>什么是Https</li>
-<li>Https的机制是什么？</li>
-<li>安全和Https拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>1994年，网景公司在TCP/IP协议栈上创建了一个传输加密层: SSL(Secure Socket Layer), 这是一个原始规范，但没有发布。<br>1995年2月，修订了规范，并发布了SSL 2.0.<br>1996年，SSL 3.0发布, 得到大规模应用.<br>IETF 觉得SSL有硬伤，只能加密HTTP，为什么不能加密所有的应用层协议呢？<br>IETF在SSL 3.0的基础上， 重新命名和设计了这个协议，取名为TLS。<br>1999年1月, TLS 1.0 发布.<br>2006年4月, TLS 1.1 发布.<br>2008年8月, TLS 1.2 发布.<br>2018年3月, TLS 1.3 发布.</p>
-<h2 id="什么是Https"><a href="#什么是Https" class="headerlink" title="什么是Https"></a>什么是Https</h2><p>Https是一种网络协议, Https = Http + SSL/TLS. HTTPS是为了</p>
-<ul>
-<li>身份验证 - 张三给李四发消息，如何保证李四知道这个消息是张三发送的？</li>
-<li>信息泄漏 - 张三给李四发消息，如何保证信息不泄漏给王五？</li>
-<li>信息篡改 - 张三给李四发消息，王五拿到信息进行了篡改，李四如何知道这个信息有没有被篡改？</li>
-</ul>
-<p>以上三个问题可以规约成一个问题：</p>
-<ul>
-<li>A给B发消息，如果保证只有通信双方知道消息的内容？</li>
-</ul>
-<h2 id="Https的机制是什么"><a href="#Https的机制是什么" class="headerlink" title="Https的机制是什么"></a>Https的机制是什么</h2><p>在讨论Https的原理和机制之前，先确定几个大的前提</p>
-<ul>
-<li>操作系统是正常的 - 不要使用盗版操作系统</li>
-<li>浏览器是正常的 - 不要下载被改造过的浏览器</li>
-<li>CA中心是正常的 - 就好比一个市政府不能是假的.</li>
-<li>人是有可能犯错的 - 有时候脑子短路，会有误操作.</li>
-<li>服务端的私钥是不会被窃取的</li>
-</ul>
-<p>引入这些大前提的目的是</p>
-<ul>
-<li>方便讨论问题，否则会钻进一些牛角尖。</li>
-<li>说明没有绝对的安全。</li>
-</ul>
-<h3 id="Https机制的核心理念"><a href="#Https机制的核心理念" class="headerlink" title="Https机制的核心理念"></a>Https机制的核心理念</h3><ul>
-<li>非对称加密实现证书的传输</li>
-<li>对称加密进行数据的传输</li>
-</ul>
-<h3 id="Https的两大阶段"><a href="#Https的两大阶段" class="headerlink" title="Https的两大阶段"></a>Https的两大阶段</h3><ul>
-<li>证书验证<ul>
-<li>客户端发起连接请求</li>
-<li>服务端返回证书</li>
-<li>客户端验证证书是否合法，如果不合法则给予警告和提示</li>
-</ul>
-</li>
-<li>数据传输<ul>
-<li>证书验证合法之后，客户端生产随机数，用服务端的公钥加密随机数</li>
-<li>将随机数发送给服务端， 服务端根据随机数选择对称加密算法。</li>
-<li>服务端对要返回的内容进行加密</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/2020/https.png"></p>
-<h3 id="中间人攻击-Man-In-The-Middle"><a href="#中间人攻击-Man-In-The-Middle" class="headerlink" title="中间人攻击 - Man In The Middle"></a>中间人攻击 - Man In The Middle</h3><p>中间人攻击是客户端和服务端在通信的时候，通信被第三方劫持，而客户端和服务端都意识不到第三方的存在。<br>一个基本事实:</p>
-<ul>
-<li>证书只有服务端能拥有.</li>
-</ul>
-<p>在基于上面提到的几大前提的基础上，要防止中间人攻击的问题就变为：</p>
-<ul>
-<li>如何让客户端知道这个证书是正常的？</li>
-</ul>
-<p>客户端如何验证证书的有效性的？</p>
-<ul>
-<li>验证域名, 有效期</li>
-<li>验证根证书来源是否合法</li>
-<li>验证证书是否被篡改</li>
-<li>验证证书是否被吊销<ul>
-<li>黑名单方式 - 定期从CA下载名单列表，效率高，但不实时.</li>
-<li>OCSP方式 - 在线验证。效率低，但实时性高.</li>
-</ul>
-</li>
-</ul>
-<p>证书的三种类型</p>
-<ul>
-<li>DV - 验证域名</li>
-<li>OV - 验证域名，企业信息</li>
-<li>EV - 验证域名，企业信息，律师函等等.</li>
-</ul>
-<h2 id="安全和Https拾遗"><a href="#安全和Https拾遗" class="headerlink" title="安全和Https拾遗"></a>安全和Https拾遗</h2><p>下面是近些年遇到的一些与安全相关的话题</p>
-<ul>
-<li>大概4年前左右的样子，公司将全部站点升级为Https.</li>
-<li>以前数据库密码是明文保存的，现在已经改成密文了.</li>
-<li>代码库里不同的branch有不同的权限.</li>
-<li>一些数据库连接字符串在github仓库里是密文保存的，下载到本地之后是明文.</li>
-<li>网站有段时间账号攻击，加了验证码作为第一道关卡。</li>
-<li>GDPR - 对于欧洲的用户，用户同意之后，数据才能保存到Salesforce里</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络协议</category>
-      </categories>
-      <tags>
-        <tag>安全</tag>
-        <tag>网络协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux的I/O模型</title>
-    <url>/2020/10/09/linux-IO/</url>
-    <content><![CDATA[<p>I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.<br>之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。</p>
-<ul>
-<li>背景</li>
-<li>一些预备知识</li>
-<li>同步阻塞</li>
-<li>同步非阻塞</li>
-<li>I/O多路复用 </li>
-<li>异步非阻塞I/O</li>
-<li>其他</li>
-<li>总结</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>既然是模型，说明为了解决一个特定的问题. 那么I/O模型是为了解决什么问题呢？首先排除网络传输问题，那么只能是网卡接受到数据之后，如何给程序消费这个问题了。<br>程序A想要请求网络数据，程序B也要请求网络数据，以此类推，很有很多程序干类似的事情。</p>
-<p>一个程序请求网络数据，会牵涉到四方:</p>
-<ul>
-<li>程序本身</li>
-<li>CPU</li>
-<li>操作系统</li>
-<li>内存</li>
-</ul>
-<p>根据之前提到的”又快又好”的指标，如果这四方都能在程序请求网络数据的过程中，让自身的效率达到最有，那么I/O模型的目的就达到了<br>是的，这也是I/O模型的终结目的.</p>
-<p><img src="/images/2020/io.png"></p>
-<h2 id="一些预备知识"><a href="#一些预备知识" class="headerlink" title="一些预备知识"></a>一些预备知识</h2><h3 id="用户空间和内核空间"><a href="#用户空间和内核空间" class="headerlink" title="用户空间和内核空间"></a>用户空间和内核空间</h3><p>  为了保证内核数据的安全，操作系统将寻址空间分为内核空间和用户空间.可以想象一下，一家公司组织去看文艺演出，前排坐的都是领导，后排坐的都是员工，前排的区域是核心区域.</p>
-<h3 id="进程的阻塞"><a href="#进程的阻塞" class="headerlink" title="进程的阻塞"></a>进程的阻塞</h3><p>  一个进程在执行的过程中，需要等待某件事情的发生，才能继续执行，那么进程有两种选择</p>
-<ul>
-<li>占用CPU</li>
-<li>不占用CPU</li>
-</ul>
-<p>  如果进程选择不占用CPU, 那么意味着进程被阻塞了，进入等待状态。<br>  如果进程自己等待某件事情的发生，又不释放CPU的使用权，那么这个进程是自私的。</p>
-<h3 id="页缓存-Page-Cache"><a href="#页缓存-Page-Cache" class="headerlink" title="页缓存 - Page Cache"></a>页缓存 - Page Cache</h3><p>  Linux内核为文件提供了一个缓存，换言之， 从网卡进来的数据，先放到内核的缓存区。接下来的事情就很自然：数据会在在某个场合下拷贝到应用程序的地址空间.</p>
-<h3 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h3><p>  要区分同步和异步，就选取一个好的视角，这个视角就是应用程序. 现在一个程序A, 程序B, 网络请求接口getUser，这个接口执行的时间耗时不确定.</p>
-<ul>
-<li>程序A 调用 getUser, 等待了t时间之后，得到了结果，然后继续执行剩下的逻辑, 这就是同步调用.</li>
-<li>程序B 调用 getUser，继续执行剩下的逻辑，过t时间之后，以某种方式(回调函数)拿到了结果，这就是异步调用.</li>
-</ul>
-<p>  在这里，没有操作系统的概念，没有CPU的概念，没有内存的概念，可以看到这是一种调用方式，这种调用方式可以被框架来实现。<br>  而且可以看得出，同步调用符合开发者的认知习惯，因为代码的书写顺序就是代码的执行顺序，所以同步更人性化。默认情况下，我们写的代码就是同步的.</p>
-<h2 id="同步阻塞"><a href="#同步阻塞" class="headerlink" title="同步阻塞"></a>同步阻塞</h2><p>同步阻塞就是一个进程在等待某件事情发生的时候，让自己进入等待状态，让出CPU的使用权，待数据</p>
-<ul>
-<li>从网卡到内核区</li>
-<li>然后从内核区和程序地址空间<br>再唤醒进程。在这里可以看到进程做了两件事情</li>
-<li>干等</li>
-<li>让出了CPU<br>所以可以看到进程还是让自己充实点的，在等的期间可以干点别的事情。</li>
-</ul>
-<p>同步阻塞的优点 </p>
-<blockquote>
-<p>实时性好.符合用户的认知模型.</p>
-</blockquote>
-<p>同步阻塞的缺点 </p>
-<blockquote>
-<p>效率不高</p>
-</blockquote>
-<h2 id="同步非阻塞"><a href="#同步非阻塞" class="headerlink" title="同步非阻塞"></a>同步非阻塞</h2><p>同步非阻塞是同步阻塞的优化，也就是进程别干等了，干点别的事情. 但程序需要每隔一段时间轮训数据有没有达到内核区域，如果达到了内核区域，就将内核区域的数据拷贝到应用程序地址空间，在这拷贝的过程中，进程是被阻塞的.<br>所以非阻塞强调的是数据从网卡达到内核区这个过程.<br>同步非阻塞的优点</p>
-<blockquote>
-<p>进程不是纯粹干等了，可以去干点别的事情.</p>
-</blockquote>
-<p>同步非阻塞的缺点</p>
-<blockquote>
-<p>实时性差。因为需要通过轮询才能拿到数据，因为数据有可能在两次轮询间隔期间已经准备就绪了。轮询是有代价的，也需要消耗CPU</p>
-</blockquote>
-<h2 id="I-O多路复用"><a href="#I-O多路复用" class="headerlink" title="I/O多路复用"></a>I/O多路复用</h2><p>上面提到了同步非阻塞的缺点就是需要轮询CPU拿到结果，轮询是有代价的.<br>有两个进程采用同步非阻塞，那么两个进程都需要轮询，如果有n个进程呢？那么n个进程都需要轮询，这种效率是低下的。 如何改进这种效率呢？<br>一个可行的思路是让一个东西（暂且称为X）统一管理轮询。<br>统一管理是一种哲学，比如线程池是统一管理线程，连接池是统一管理连接.<br>Unix下面的select, poll, epoll就是做类似的事情的。</p>
-<ul>
-<li>select<ul>
-<li>POSIX规定的</li>
-<li>调用select函数之前需要将文件描述符从用户态拷贝到内核态.</li>
-<li>调用过程是: 应用程序 -&gt; select(轮询) -&gt; I/O数据，在应用程序拿到I/O数据之前，应用程序一直是被select阻塞的，就这样看来，它不比同步阻塞调用高明.</li>
-<li>切换一个角度：如果有好多应用程序，那么这个优势就很明显，读取数据由select统一管理. 所以select的特长是处理更多的连接.</li>
-</ul>
-</li>
-<li>poll<ul>
-<li>本质上和select是一样的，但是select的加强版</li>
-<li>select的文件描述符列表是有限制的，而poll是没有限制的</li>
-</ul>
-</li>
-<li>epoll - Linux特有的, 在Linux 2.6 引入.<ul>
-<li>文件描述符放在内核的一个事件表中，这个事件表是基于红黑树的实现的.</li>
-<li>基于事件驱动的I/O机制，只关注有I/O事情发生的文件描述符</li>
-<li>相比与select/poll, epoll性能更高</li>
-<li>epoll的实现是基于Reactor模式</li>
-</ul>
-</li>
-</ul>
-<p>观察select, poll和epoll, 会有这样一条线索</p>
-<ul>
-<li>如何又快又好的管理文件描述符<ul>
-<li>用一种高效的数据结构 - 红黑树</li>
-<li>避免文件描述符在用户态和内核态之间的移动 </li>
-<li>不主动去监控文件描述的变化，而是文件描述符有变化的时候，主动通知消费方 - 好莱坞原则</li>
-</ul>
-</li>
-</ul>
-<h2 id="异步非阻塞I-O"><a href="#异步非阻塞I-O" class="headerlink" title="异步非阻塞I/O"></a>异步非阻塞I/O</h2><p>回头来看看同步非阻塞I/O的缺点</p>
-<ul>
-<li>进程需要轮询才能拿到结果</li>
-<li>数据内核区拷贝到程序地址空间的过程中程序被阻塞了</li>
-</ul>
-<p>如果能避免上面那两个问题是不是就完美了？ 是的.<br>异步I/O的宏观视角：</p>
-<ul>
-<li>程序A 调用 getUser， 继续执行剩下的逻辑, t时间之后，以某种方式（通常是回调）获取结果。</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="windows-IOCP"><a href="#windows-IOCP" class="headerlink" title="windows IOCP"></a>windows IOCP</h3><h3 id="libevent"><a href="#libevent" class="headerlink" title="libevent"></a>libevent</h3><p>  libevent 是一个基于事件驱动的异步I/O库</p>
-<h3 id="libuv"><a href="#libuv" class="headerlink" title="libuv"></a>libuv</h3><p>  libuv也是一个基于事件驱动的异步I/O库，主要用在node.js上.<br>  在linux上, libuv是基于epoll.<br>  在windows上, libuv是基于IOCP</p>
-<h3 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h3><p><img src="/images/2020/reactor.jpg"><br>Reactor的英文原意是核反应堆，一个核反应堆可以提供很强的能量.<br>Reactor是一种这样的模式，它要求主线程负责监听文件描述符是否有事件发生，有的话就将事情发送给工作线程. 所以这里可以看到几个特点:</p>
-<ul>
-<li>将线程分为两大职责，一种是管理者，一种工作者</li>
-<li>管理者负责信息的收集，然后将信息分发给工作者。从实现的角度，体现了事件驱动。从原则的角度，体现了好莱坞原则.<h3 id="Proactor-模式"><a href="#Proactor-模式" class="headerlink" title="Proactor 模式"></a>Proactor 模式</h3></li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>同步和异步是类库，框架或者语言层面的事物，比如张三开发了一个类库对I/O多路复用进行了封装，那么我们可以说这个类库支持异步I/O.<br>阻塞和非阻塞是操作系统进程层面的事物。<br>Linux I/O模型的发展历程围绕了两个要素</p>
-<ul>
-<li>让应用程序尽可能的多做事情</li>
-<li>让CPU尽可能的充分利用</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络</tag>
-        <tag>I/O</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>闻香识微服务</title>
     <url>/2020/09/14/micro-services/</url>
     <content><![CDATA[<p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
@@ -2107,6 +1986,127 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>架构</tag>
         <tag>微服务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux的I/O模型</title>
+    <url>/2020/10/09/linux-IO/</url>
+    <content><![CDATA[<p>I/O顾名思义就是输入输出，I/O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I/O专门指网络设备.<br>之前也看过不少专门讲I/O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I/O模型的冲动。</p>
+<ul>
+<li>背景</li>
+<li>一些预备知识</li>
+<li>同步阻塞</li>
+<li>同步非阻塞</li>
+<li>I/O多路复用 </li>
+<li>异步非阻塞I/O</li>
+<li>其他</li>
+<li>总结</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>既然是模型，说明为了解决一个特定的问题. 那么I/O模型是为了解决什么问题呢？首先排除网络传输问题，那么只能是网卡接受到数据之后，如何给程序消费这个问题了。<br>程序A想要请求网络数据，程序B也要请求网络数据，以此类推，很有很多程序干类似的事情。</p>
+<p>一个程序请求网络数据，会牵涉到四方:</p>
+<ul>
+<li>程序本身</li>
+<li>CPU</li>
+<li>操作系统</li>
+<li>内存</li>
+</ul>
+<p>根据之前提到的”又快又好”的指标，如果这四方都能在程序请求网络数据的过程中，让自身的效率达到最有，那么I/O模型的目的就达到了<br>是的，这也是I/O模型的终结目的.</p>
+<p><img src="/images/2020/io.png"></p>
+<h2 id="一些预备知识"><a href="#一些预备知识" class="headerlink" title="一些预备知识"></a>一些预备知识</h2><h3 id="用户空间和内核空间"><a href="#用户空间和内核空间" class="headerlink" title="用户空间和内核空间"></a>用户空间和内核空间</h3><p>  为了保证内核数据的安全，操作系统将寻址空间分为内核空间和用户空间.可以想象一下，一家公司组织去看文艺演出，前排坐的都是领导，后排坐的都是员工，前排的区域是核心区域.</p>
+<h3 id="进程的阻塞"><a href="#进程的阻塞" class="headerlink" title="进程的阻塞"></a>进程的阻塞</h3><p>  一个进程在执行的过程中，需要等待某件事情的发生，才能继续执行，那么进程有两种选择</p>
+<ul>
+<li>占用CPU</li>
+<li>不占用CPU</li>
+</ul>
+<p>  如果进程选择不占用CPU, 那么意味着进程被阻塞了，进入等待状态。<br>  如果进程自己等待某件事情的发生，又不释放CPU的使用权，那么这个进程是自私的。</p>
+<h3 id="页缓存-Page-Cache"><a href="#页缓存-Page-Cache" class="headerlink" title="页缓存 - Page Cache"></a>页缓存 - Page Cache</h3><p>  Linux内核为文件提供了一个缓存，换言之， 从网卡进来的数据，先放到内核的缓存区。接下来的事情就很自然：数据会在在某个场合下拷贝到应用程序的地址空间.</p>
+<h3 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h3><p>  要区分同步和异步，就选取一个好的视角，这个视角就是应用程序. 现在一个程序A, 程序B, 网络请求接口getUser，这个接口执行的时间耗时不确定.</p>
+<ul>
+<li>程序A 调用 getUser, 等待了t时间之后，得到了结果，然后继续执行剩下的逻辑, 这就是同步调用.</li>
+<li>程序B 调用 getUser，继续执行剩下的逻辑，过t时间之后，以某种方式(回调函数)拿到了结果，这就是异步调用.</li>
+</ul>
+<p>  在这里，没有操作系统的概念，没有CPU的概念，没有内存的概念，可以看到这是一种调用方式，这种调用方式可以被框架来实现。<br>  而且可以看得出，同步调用符合开发者的认知习惯，因为代码的书写顺序就是代码的执行顺序，所以同步更人性化。默认情况下，我们写的代码就是同步的.</p>
+<h2 id="同步阻塞"><a href="#同步阻塞" class="headerlink" title="同步阻塞"></a>同步阻塞</h2><p>同步阻塞就是一个进程在等待某件事情发生的时候，让自己进入等待状态，让出CPU的使用权，待数据</p>
+<ul>
+<li>从网卡到内核区</li>
+<li>然后从内核区和程序地址空间<br>再唤醒进程。在这里可以看到进程做了两件事情</li>
+<li>干等</li>
+<li>让出了CPU<br>所以可以看到进程还是让自己充实点的，在等的期间可以干点别的事情。</li>
+</ul>
+<p>同步阻塞的优点 </p>
+<blockquote>
+<p>实时性好.符合用户的认知模型.</p>
+</blockquote>
+<p>同步阻塞的缺点 </p>
+<blockquote>
+<p>效率不高</p>
+</blockquote>
+<h2 id="同步非阻塞"><a href="#同步非阻塞" class="headerlink" title="同步非阻塞"></a>同步非阻塞</h2><p>同步非阻塞是同步阻塞的优化，也就是进程别干等了，干点别的事情. 但程序需要每隔一段时间轮训数据有没有达到内核区域，如果达到了内核区域，就将内核区域的数据拷贝到应用程序地址空间，在这拷贝的过程中，进程是被阻塞的.<br>所以非阻塞强调的是数据从网卡达到内核区这个过程.<br>同步非阻塞的优点</p>
+<blockquote>
+<p>进程不是纯粹干等了，可以去干点别的事情.</p>
+</blockquote>
+<p>同步非阻塞的缺点</p>
+<blockquote>
+<p>实时性差。因为需要通过轮询才能拿到数据，因为数据有可能在两次轮询间隔期间已经准备就绪了。轮询是有代价的，也需要消耗CPU</p>
+</blockquote>
+<h2 id="I-O多路复用"><a href="#I-O多路复用" class="headerlink" title="I/O多路复用"></a>I/O多路复用</h2><p>上面提到了同步非阻塞的缺点就是需要轮询CPU拿到结果，轮询是有代价的.<br>有两个进程采用同步非阻塞，那么两个进程都需要轮询，如果有n个进程呢？那么n个进程都需要轮询，这种效率是低下的。 如何改进这种效率呢？<br>一个可行的思路是让一个东西（暂且称为X）统一管理轮询。<br>统一管理是一种哲学，比如线程池是统一管理线程，连接池是统一管理连接.<br>Unix下面的select, poll, epoll就是做类似的事情的。</p>
+<ul>
+<li>select<ul>
+<li>POSIX规定的</li>
+<li>调用select函数之前需要将文件描述符从用户态拷贝到内核态.</li>
+<li>调用过程是: 应用程序 -&gt; select(轮询) -&gt; I/O数据，在应用程序拿到I/O数据之前，应用程序一直是被select阻塞的，就这样看来，它不比同步阻塞调用高明.</li>
+<li>切换一个角度：如果有好多应用程序，那么这个优势就很明显，读取数据由select统一管理. 所以select的特长是处理更多的连接.</li>
+</ul>
+</li>
+<li>poll<ul>
+<li>本质上和select是一样的，但是select的加强版</li>
+<li>select的文件描述符列表是有限制的，而poll是没有限制的</li>
+</ul>
+</li>
+<li>epoll - Linux特有的, 在Linux 2.6 引入.<ul>
+<li>文件描述符放在内核的一个事件表中，这个事件表是基于红黑树的实现的.</li>
+<li>基于事件驱动的I/O机制，只关注有I/O事情发生的文件描述符</li>
+<li>相比与select/poll, epoll性能更高</li>
+<li>epoll的实现是基于Reactor模式</li>
+</ul>
+</li>
+</ul>
+<p>观察select, poll和epoll, 会有这样一条线索</p>
+<ul>
+<li>如何又快又好的管理文件描述符<ul>
+<li>用一种高效的数据结构 - 红黑树</li>
+<li>避免文件描述符在用户态和内核态之间的移动 </li>
+<li>不主动去监控文件描述的变化，而是文件描述符有变化的时候，主动通知消费方 - 好莱坞原则</li>
+</ul>
+</li>
+</ul>
+<h2 id="异步非阻塞I-O"><a href="#异步非阻塞I-O" class="headerlink" title="异步非阻塞I/O"></a>异步非阻塞I/O</h2><p>回头来看看同步非阻塞I/O的缺点</p>
+<ul>
+<li>进程需要轮询才能拿到结果</li>
+<li>数据内核区拷贝到程序地址空间的过程中程序被阻塞了</li>
+</ul>
+<p>如果能避免上面那两个问题是不是就完美了？ 是的.<br>异步I/O的宏观视角：</p>
+<ul>
+<li>程序A 调用 getUser， 继续执行剩下的逻辑, t时间之后，以某种方式（通常是回调）获取结果。</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="windows-IOCP"><a href="#windows-IOCP" class="headerlink" title="windows IOCP"></a>windows IOCP</h3><h3 id="libevent"><a href="#libevent" class="headerlink" title="libevent"></a>libevent</h3><p>  libevent 是一个基于事件驱动的异步I/O库</p>
+<h3 id="libuv"><a href="#libuv" class="headerlink" title="libuv"></a>libuv</h3><p>  libuv也是一个基于事件驱动的异步I/O库，主要用在node.js上.<br>  在linux上, libuv是基于epoll.<br>  在windows上, libuv是基于IOCP</p>
+<h3 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h3><p><img src="/images/2020/reactor.jpg"><br>Reactor的英文原意是核反应堆，一个核反应堆可以提供很强的能量.<br>Reactor是一种这样的模式，它要求主线程负责监听文件描述符是否有事件发生，有的话就将事情发送给工作线程. 所以这里可以看到几个特点:</p>
+<ul>
+<li>将线程分为两大职责，一种是管理者，一种工作者</li>
+<li>管理者负责信息的收集，然后将信息分发给工作者。从实现的角度，体现了事件驱动。从原则的角度，体现了好莱坞原则.<h3 id="Proactor-模式"><a href="#Proactor-模式" class="headerlink" title="Proactor 模式"></a>Proactor 模式</h3></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>同步和异步是类库，框架或者语言层面的事物，比如张三开发了一个类库对I/O多路复用进行了封装，那么我们可以说这个类库支持异步I/O.<br>阻塞和非阻塞是操作系统进程层面的事物。<br>Linux I/O模型的发展历程围绕了两个要素</p>
+<ul>
+<li>让应用程序尽可能的多做事情</li>
+<li>让CPU尽可能的充分利用</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+        <tag>I/O</tag>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2336,17 +2336,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>牛刀小试</title>
-    <url>/2019/07/04/new-place/</url>
-    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
-<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
-<ul>
-<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
-<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
     <url>/2020/10/11/performance-1-pc/</url>
     <content><![CDATA[<p>要提高服务器的性能，正常的思路是</p>
@@ -2406,6 +2395,17 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>高性能</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>牛刀小试</title>
+    <url>/2019/07/04/new-place/</url>
+    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
+<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
+<ul>
+<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
+<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>编程语言概述</title>
@@ -2725,147 +2725,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>Redux设计及相关</title>
-    <url>/2020/09/14/redux-design/</url>
-    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
-<ul>
-<li>什么是Redux?</li>
-<li>为什么是Redux?</li>
-<li>React和Redux的关系是什么？</li>
-<li>Redux的未来</li>
-</ul>
-<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
-<ul>
-<li>数据有哪些实体？</li>
-<li>数据的实体有哪些行为？ 增，删，改，查。</li>
-<li>有哪些方式能获得这些数据？</li>
-<li>如何避免不同的实体有相同的冗余数据？<span id="more"></span>
-对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</li>
-</ul>
-<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
-<ul>
-<li>store</li>
-<li>action</li>
-<li>reducer</li>
-</ul>
-<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
-<li>单一数据源</li>
-<li>数据是只读的</li>
-<li>单向数据流</li>
-</ul>
-<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
-<ul>
-<li>Flux</li>
-<li>Redux</li>
-<li>Mbox </li>
-</ul>
-<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
-<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
-<ul>
-<li>项目比较简单，所有的状态保存在React组件里</li>
-<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
-<li>用户不需要好的的UI体验</li>
-</ul>
-<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
-<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
-<ul>
-<li>如何更好的规范数据实体之间的关系</li>
-<li>如何提供api更好的操作数据</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring源码系列 - IOC和DI</title>
-    <url>/2021/06/20/spring-ioc/</url>
-    <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
-<ul>
-<li>背景</li>
-<li>IOC</li>
-<li>DI</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么需要读源码？"><a href="#为什么需要读源码？" class="headerlink" title="为什么需要读源码？"></a>为什么需要读源码？</h3><p>  搞清楚目的和动机，往往比做什么和怎么做更重要.<br>  先说结论</p>
-<ul>
-<li>对于我们大多数人来说，不需要读源码或者说读了没什么用. 换言之，我们在读任何源码之前，要问一个问题，为什么要读它?</li>
-</ul>
-<p>  如果我们需要读源码，基本上就是下面两个大的理由</p>
-<ul>
-<li>为了源码而源码<ul>
-<li>因为别人看了，我们也要看</li>
-<li>为了装X或面试</li>
-<li>….</li>
-</ul>
-</li>
-<li>为了解决某个问题<ul>
-<li>代码运行的时候遇到报错，需要跟踪源码，这种情况很少见，如果出现这种情况，只能说明这个框架是做的还是不够好.</li>
-<li>吸取源码的一些思想和设计思路，应用到自己的项目中</li>
-</ul>
-</li>
-</ul>
-<h3 id="读源码的姿势"><a href="#读源码的姿势" class="headerlink" title="读源码的姿势"></a>读源码的姿势</h3><p> 读源码和读一本武侠小说或者宏观经济学没有大的区别，因为源码和书本质上都是信息，读源码就是萃取信息的过程。<br> 不同的阅读目的，需要用不同的姿势。这里的目的就预设为：吸取源码的一些思想和设计思路，应用到自己的项目中</p>
-<ul>
-<li><p>小说的主题和源码的初衷<br>一本书肯定有一个或者某几个主题，比如歌颂爱情，追求真理。 框架的源码也是的，就Spring来说是为了简化Java开发 - 说起来是简单的，但实现起来并不简单。</p>
-</li>
-<li><p>小说的线索和源码的设计原则和策略<br>就拿天龙八部来说，它的主线可以是侠义，恩仇，爱情。然后爱情这块就分为三个主人公的分线。Spring源码也可以认为有几条主线:IOC，AOP，POJO, 模版. 这些是Spring的起点和基石，贯穿了Spring的方方面面.</p>
-</li>
-<li><p>小说的结构和源码的的模块设计<br>小说可以分为几个章节，每个章节大概讲了什么，每个章节的编排顺序是什么。同理，源码可以分为几个模块，模块之间的关系是什么？</p>
-</li>
-<li><p>小说的细节和代码的细节<br>里面会有一些观点，然后为了证明这些观点会有事实和逻辑。同理，源码模块里的一些方法会有一些技术细节，比如if,else, try, catch, synchronized, 某个数据结构，或者某个事件的的触发. 所以在这里我们可以得出一个结论：如果读源码二话不说闷着头就跳进入到方法的细节里，这是不对的，是错误的方向.</p>
-</li>
-<li><p>看书读后感和看源码读后感<br>小时候记得往往要写个什么观后感，现在想想这个事还是挺重要的。看一本书，可以看到作者传递的思想和价值主张(value proposal),得到某个启发，某个思维模型或框架，或者某个精彩的案例和论证,或者优雅的遣词造句，这些是对写作文有帮助的. 看源码也是，举个命名方面的例子，Spring在定位Bean的过程中涉及到AbstractRefreshableConfigAplicationContext类， 这个类名就很长，由5个单词组成, 一般而言，项目中很少取这么长名字来给类命名. 所以Spring的作者传递了这样一个思想：能清楚的表达设计意图是最重要的，其次才是长不长的问题。</p>
-</li>
-<li><p>心态<br>如果用大口吃烤串的心态去看书和读源码，很显然是没有效果和收益的。现在大多数人比较浮躁，看东西讲究快和多，讲究快本身没有问题，但快了之后，质量就会下降。所以看经典框架的核心模块，要以喝茶的心态来看，也就是《思考，快与慢》里提到的”系统2”.</p>
-</li>
-<li><p>重要的的东西<br>根据二八法则，一本书里只有20%的东西是重要的，看书不是越多越好，而是看少而精的书，那么源码也不例外，不需要阅读很多框架的源码，也不需要阅读一个框架的所有源码，那如何找到这20%？这是另外一个话题</p>
-</li>
-</ul>
-<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC想要讲的故事"><a href="#IOC想要讲的故事" class="headerlink" title="IOC想要讲的故事"></a>IOC想要讲的故事</h3><p> IOC - Inversion of Control, 中文是控制反转， 不管是中文还是英文，从字面上很难理解它的意思, 这与我随便说个词语”依赖变换“没什么区别。<br> 让我们切换一个角度，看看在代码层面IOC意味着什么. 现在有类A和类B，传统的做法是类A依赖于类B，IOC的做法是，A不要依赖于B, 要依赖于B的抽象AbstractB. 比较一下前后的变化</p>
-<ul>
-<li>A -&gt; 具体的B</li>
-<li>A -&gt; AbstractB -&gt; (某种方式指向) 具体B</li>
-</ul>
-<p> 这种变化让人想到了什么？AbstractB像是一个中介，隔离了A和具体的B. AbstractB侧重描述做什么，具体的B侧重于描述怎么做。<br> 所以可以得出一个结论: IOC真正的内涵是将做什么(what)和怎么做(how)隔离开了, 可以认为<strong>做什么</strong> 是某个企业几十年不会变的核心概念和流程, <strong>怎么做</strong> 为了达成某件事的手段是多样的，现在世界本身也是如此，付款的方式有现金和手机支付。所以如果一个复杂的系统没有基于IOC, 那么这个系统没有未来，如果一个系统基于IOC，这个复杂的系统才有演化的可能.</p>
-<p>对于IOC，我们有这样的肖像刻画</p>
-<ul>
-<li>将做什么和怎么做<strong>隔离</strong>出来了 - 总感觉做开发的天天无脑的念叨<strong>隔离</strong>就可以了….</li>
-<li>符合依赖倒置原则</li>
-<li>符合好莱坞原则 - 体现在对象实例化的过程中</li>
-</ul>
-<p>对于开发者来说，IOC在框架层面是标配，就好比汽车有个ABS系统一样，如果现在买辆车，如果没有防抱死系统，那真的是很奇怪.</p>
-<h3 id="有哪些框架支持IOC功能？"><a href="#有哪些框架支持IOC功能？" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h3><ul>
-<li>Spring算一个 - Spring提供了很多功能，我们可以只使用其中的IOC功能</li>
-<li>.net的Autofac</li>
-<li>HK2 - 轻量级的IOC框架，</li>
-<li>如果没有上述框架，只能手写了</li>
-</ul>
-<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。<br>   一个比较简单的例子:<br>   <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 定位，加载和解析</span>
-<span class="token class-name">ClassPathXmlApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"defaultconstruct/user.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 实例化Bean,包含依赖注入的过程</span>
-<span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>  Spring IOC启动的大体过程</p>
-<ul>
-<li>定位 - 找到相应的BeanDefinition文件. 这是起点. 其中Refresh是核心方法.</li>
-<li>加载 - 加载BeanDefinition文件.</li>
-<li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
-</ul>
-<h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><p> <img src="/images/spring/ioc.jpg" alt="avatar"></p>
-<h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
-<h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之武林盟主 - Spring</title>
     <url>/2020/10/20/spring/</url>
     <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
@@ -3086,6 +2945,147 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>思维</tag>
         <tag>系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring源码系列 - IOC和DI</title>
+    <url>/2021/06/20/spring-ioc/</url>
+    <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
+<ul>
+<li>背景</li>
+<li>IOC</li>
+<li>DI</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么需要读源码？"><a href="#为什么需要读源码？" class="headerlink" title="为什么需要读源码？"></a>为什么需要读源码？</h3><p>  搞清楚目的和动机，往往比做什么和怎么做更重要.<br>  先说结论</p>
+<ul>
+<li>对于我们大多数人来说，不需要读源码或者说读了没什么用. 换言之，我们在读任何源码之前，要问一个问题，为什么要读它?</li>
+</ul>
+<p>  如果我们需要读源码，基本上就是下面两个大的理由</p>
+<ul>
+<li>为了源码而源码<ul>
+<li>因为别人看了，我们也要看</li>
+<li>为了装X或面试</li>
+<li>….</li>
+</ul>
+</li>
+<li>为了解决某个问题<ul>
+<li>代码运行的时候遇到报错，需要跟踪源码，这种情况很少见，如果出现这种情况，只能说明这个框架是做的还是不够好.</li>
+<li>吸取源码的一些思想和设计思路，应用到自己的项目中</li>
+</ul>
+</li>
+</ul>
+<h3 id="读源码的姿势"><a href="#读源码的姿势" class="headerlink" title="读源码的姿势"></a>读源码的姿势</h3><p> 读源码和读一本武侠小说或者宏观经济学没有大的区别，因为源码和书本质上都是信息，读源码就是萃取信息的过程。<br> 不同的阅读目的，需要用不同的姿势。这里的目的就预设为：吸取源码的一些思想和设计思路，应用到自己的项目中</p>
+<ul>
+<li><p>小说的主题和源码的初衷<br>一本书肯定有一个或者某几个主题，比如歌颂爱情，追求真理。 框架的源码也是的，就Spring来说是为了简化Java开发 - 说起来是简单的，但实现起来并不简单。</p>
+</li>
+<li><p>小说的线索和源码的设计原则和策略<br>就拿天龙八部来说，它的主线可以是侠义，恩仇，爱情。然后爱情这块就分为三个主人公的分线。Spring源码也可以认为有几条主线:IOC，AOP，POJO, 模版. 这些是Spring的起点和基石，贯穿了Spring的方方面面.</p>
+</li>
+<li><p>小说的结构和源码的的模块设计<br>小说可以分为几个章节，每个章节大概讲了什么，每个章节的编排顺序是什么。同理，源码可以分为几个模块，模块之间的关系是什么？</p>
+</li>
+<li><p>小说的细节和代码的细节<br>里面会有一些观点，然后为了证明这些观点会有事实和逻辑。同理，源码模块里的一些方法会有一些技术细节，比如if,else, try, catch, synchronized, 某个数据结构，或者某个事件的的触发. 所以在这里我们可以得出一个结论：如果读源码二话不说闷着头就跳进入到方法的细节里，这是不对的，是错误的方向.</p>
+</li>
+<li><p>看书读后感和看源码读后感<br>小时候记得往往要写个什么观后感，现在想想这个事还是挺重要的。看一本书，可以看到作者传递的思想和价值主张(value proposal),得到某个启发，某个思维模型或框架，或者某个精彩的案例和论证,或者优雅的遣词造句，这些是对写作文有帮助的. 看源码也是，举个命名方面的例子，Spring在定位Bean的过程中涉及到AbstractRefreshableConfigAplicationContext类， 这个类名就很长，由5个单词组成, 一般而言，项目中很少取这么长名字来给类命名. 所以Spring的作者传递了这样一个思想：能清楚的表达设计意图是最重要的，其次才是长不长的问题。</p>
+</li>
+<li><p>心态<br>如果用大口吃烤串的心态去看书和读源码，很显然是没有效果和收益的。现在大多数人比较浮躁，看东西讲究快和多，讲究快本身没有问题，但快了之后，质量就会下降。所以看经典框架的核心模块，要以喝茶的心态来看，也就是《思考，快与慢》里提到的”系统2”.</p>
+</li>
+<li><p>重要的的东西<br>根据二八法则，一本书里只有20%的东西是重要的，看书不是越多越好，而是看少而精的书，那么源码也不例外，不需要阅读很多框架的源码，也不需要阅读一个框架的所有源码，那如何找到这20%？这是另外一个话题</p>
+</li>
+</ul>
+<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC想要讲的故事"><a href="#IOC想要讲的故事" class="headerlink" title="IOC想要讲的故事"></a>IOC想要讲的故事</h3><p> IOC - Inversion of Control, 中文是控制反转， 不管是中文还是英文，从字面上很难理解它的意思, 这与我随便说个词语”依赖变换“没什么区别。<br> 让我们切换一个角度，看看在代码层面IOC意味着什么. 现在有类A和类B，传统的做法是类A依赖于类B，IOC的做法是，A不要依赖于B, 要依赖于B的抽象AbstractB. 比较一下前后的变化</p>
+<ul>
+<li>A -&gt; 具体的B</li>
+<li>A -&gt; AbstractB -&gt; (某种方式指向) 具体B</li>
+</ul>
+<p> 这种变化让人想到了什么？AbstractB像是一个中介，隔离了A和具体的B. AbstractB侧重描述做什么，具体的B侧重于描述怎么做。<br> 所以可以得出一个结论: IOC真正的内涵是将做什么(what)和怎么做(how)隔离开了, 可以认为<strong>做什么</strong> 是某个企业几十年不会变的核心概念和流程, <strong>怎么做</strong> 为了达成某件事的手段是多样的，现在世界本身也是如此，付款的方式有现金和手机支付。所以如果一个复杂的系统没有基于IOC, 那么这个系统没有未来，如果一个系统基于IOC，这个复杂的系统才有演化的可能.</p>
+<p>对于IOC，我们有这样的肖像刻画</p>
+<ul>
+<li>将做什么和怎么做<strong>隔离</strong>出来了 - 总感觉做开发的天天无脑的念叨<strong>隔离</strong>就可以了….</li>
+<li>符合依赖倒置原则</li>
+<li>符合好莱坞原则 - 体现在对象实例化的过程中</li>
+</ul>
+<p>对于开发者来说，IOC在框架层面是标配，就好比汽车有个ABS系统一样，如果现在买辆车，如果没有防抱死系统，那真的是很奇怪.</p>
+<h3 id="有哪些框架支持IOC功能？"><a href="#有哪些框架支持IOC功能？" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h3><ul>
+<li>Spring算一个 - Spring提供了很多功能，我们可以只使用其中的IOC功能</li>
+<li>.net的Autofac</li>
+<li>HK2 - 轻量级的IOC框架，</li>
+<li>如果没有上述框架，只能手写了</li>
+</ul>
+<h3 id="研究Spring-IOC的切入点"><a href="#研究Spring-IOC的切入点" class="headerlink" title="研究Spring IOC的切入点"></a>研究Spring IOC的切入点</h3><p>   要研究一个东西，可以有很多角度，但最好是遵循简单这个原则。<br>   一个比较简单的例子:<br>   <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 定位，加载和解析</span>
+<span class="token class-name">ClassPathXmlApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"defaultconstruct/user.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 实例化Bean,包含依赖注入的过程</span>
+<span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>  Spring IOC启动的大体过程</p>
+<ul>
+<li>定位 - 找到相应的BeanDefinition文件. 这是起点. 其中Refresh是核心方法.</li>
+<li>加载 - 加载BeanDefinition文件.</li>
+<li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
+</ul>
+<h3 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h3><p> <img src="/images/spring/ioc.jpg" alt="avatar"></p>
+<h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
+<h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redux设计及相关</title>
+    <url>/2020/09/14/redux-design/</url>
+    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
+<ul>
+<li>什么是Redux?</li>
+<li>为什么是Redux?</li>
+<li>React和Redux的关系是什么？</li>
+<li>Redux的未来</li>
+</ul>
+<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
+<ul>
+<li>数据有哪些实体？</li>
+<li>数据的实体有哪些行为？ 增，删，改，查。</li>
+<li>有哪些方式能获得这些数据？</li>
+<li>如何避免不同的实体有相同的冗余数据？<span id="more"></span>
+对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</li>
+</ul>
+<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
+<ul>
+<li>store</li>
+<li>action</li>
+<li>reducer</li>
+</ul>
+<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
+<li>单一数据源</li>
+<li>数据是只读的</li>
+<li>单向数据流</li>
+</ul>
+<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
+<ul>
+<li>Flux</li>
+<li>Redux</li>
+<li>Mbox </li>
+</ul>
+<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
+<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
+<ul>
+<li>项目比较简单，所有的状态保存在React组件里</li>
+<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
+<li>用户不需要好的的UI体验</li>
+</ul>
+<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
+<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
+<ul>
+<li>如何更好的规范数据实体之间的关系</li>
+<li>如何提供api更好的操作数据</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
