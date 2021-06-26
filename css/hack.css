@@ -43,11 +43,19 @@ div.code-toolbar:hover > .toolbar {
 .token.lf {
   visibility: hidden;
 }
-.token.space {
-  visibility: hidden;
+.token.space::before {
+  color: #282a36;
 }
 pre .caption {
   background: transparent !important;
   font-weight: 700;
   margin-top: 10px;
+}
+::selection {
+  background: #4398f6;
+  color: #f7f7f7;
+}
+::-moz-selection {
+  background: #4398f6;
+  color: #f7f7f7;
 }
