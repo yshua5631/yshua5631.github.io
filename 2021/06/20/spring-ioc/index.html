@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://yoursite.com/images/spring/ioc.jpg">
 <meta property="og:image" content="http://yoursite.com/images/spring/di.jpg">
 <meta property="article:published_time" content="2021-06-20T15:53:16.000Z">
-<meta property="article:modified_time" content="2021-06-27T16:54:03.343Z">
+<meta property="article:modified_time" content="2021-06-29T16:26:31.773Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%AF%BB%E6%BA%90%E7%A0%81%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要读源码？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.</span> <span class="nav-text">读框架源码的基本策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E6%BA%90%E7%A0%81%E5%92%8C%E8%AF%BB%E4%B9%A6%E7%9A%84%E7%B1%BB%E4%BC%BC"><span class="nav-number">1.3.</span> <span class="nav-text">读源码和读书的类似</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC%E6%83%B3%E8%A6%81%E8%AE%B2%E7%9A%84%E6%95%85%E4%BA%8B"><span class="nav-number">2.1.</span> <span class="nav-text">IOC想要讲的故事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A1%86%E6%9E%B6%E6%94%AF%E6%8C%81IOC%E5%8A%9F%E8%83%BD%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="nav-number">2.3.</span> <span class="nav-text">使用者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A1%86%E6%9E%B6%E6%94%AF%E6%8C%81IOC%E5%8A%9F%E8%83%BD%EF%BC%9F-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="nav-number">2.4.</span> <span class="nav-text">开发者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-IOC%E5%90%AF%E5%8A%A8%E7%9A%84%E5%A4%A7%E4%BD%93%E8%BF%87%E7%A8%8B%EF%BC%88%E7%BB%86%E8%8A%82%E5%8F%AF%E8%A7%81IOC%E6%97%B6%E5%BA%8F%E5%9B%BE%EF%BC%89"><span class="nav-number">2.4.1.</span> <span class="nav-text">Spring IOC启动的大体过程（细节可见IOC时序图）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC-%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">2.4.2.</span> <span class="nav-text">IOC 时序图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">2.5.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6-1"><span class="nav-number">3.1.</span> <span class="nav-text">使用者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89Bean"><span class="nav-number">3.1.1.</span> <span class="nav-text">定义Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5Bean"><span class="nav-number">3.1.2.</span> <span class="nav-text">注入Bean</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6-1"><span class="nav-number">3.2.</span> <span class="nav-text">开发者的角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DI-%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">3.3.</span> <span class="nav-text">DI 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%AF%BB%E6%BA%90%E7%A0%81%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要读源码？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.</span> <span class="nav-text">读框架源码的基本策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E6%BA%90%E7%A0%81%E5%92%8C%E8%AF%BB%E4%B9%A6%E7%9A%84%E7%B1%BB%E4%BC%BC"><span class="nav-number">1.3.</span> <span class="nav-text">读源码和读书的类似</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">2.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC%E6%83%B3%E8%A6%81%E8%AE%B2%E7%9A%84%E6%95%85%E4%BA%8B"><span class="nav-number">2.1.</span> <span class="nav-text">IOC想要讲的故事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A1%86%E6%9E%B6%E6%94%AF%E6%8C%81IOC%E5%8A%9F%E8%83%BD%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="nav-number">2.3.</span> <span class="nav-text">使用者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A1%86%E6%9E%B6%E6%94%AF%E6%8C%81IOC%E5%8A%9F%E8%83%BD%EF%BC%9F-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">有哪些框架支持IOC功能？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="nav-number">2.4.</span> <span class="nav-text">开发者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-IOC%E5%90%AF%E5%8A%A8%E7%9A%84%E5%A4%A7%E4%BD%93%E8%BF%87%E7%A8%8B%EF%BC%88%E7%BB%86%E8%8A%82%E5%8F%AF%E8%A7%81IOC%E6%97%B6%E5%BA%8F%E5%9B%BE%EF%BC%89"><span class="nav-number">2.4.1.</span> <span class="nav-text">Spring IOC启动的大体过程（细节可见IOC时序图）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC-%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">2.4.2.</span> <span class="nav-text">IOC 时序图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">2.5.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI"><span class="nav-number">3.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6-1"><span class="nav-number">3.1.</span> <span class="nav-text">使用者的角度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#warmup-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.1.</span> <span class="nav-text">warmup: 一个简单的依赖注入例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">依赖注入的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%A2%9D%E5%A4%96%E5%8F%91%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.3.</span> <span class="nav-text">一些额外发现的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.1.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6-1"><span class="nav-number">3.2.</span> <span class="nav-text">开发者的角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DI-%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-number">3.3.</span> <span class="nav-text">DI 时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5"><span class="nav-number">4.</span> <span class="nav-text">未来</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -221,7 +221,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-28 00:54:03" itemprop="dateModified" datetime="2021-06-28T00:54:03+08:00">2021-06-28</time>
+        <time title="修改时间：2021-06-30 00:26:31" itemprop="dateModified" datetime="2021-06-30T00:26:31+08:00">2021-06-30</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,14 +255,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.3k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -372,7 +372,9 @@
 <li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
 </ul>
 <h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="使用者的角度-1"><a href="#使用者的角度-1" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="定义Bean"><a href="#定义Bean" class="headerlink" title="定义Bean"></a>定义Bean</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="使用者的角度-1"><a href="#使用者的角度-1" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="warmup-一个简单的依赖注入例子"><a href="#warmup-一个简单的依赖注入例子" class="headerlink" title="warmup: 一个简单的依赖注入例子"></a>warmup: 一个简单的依赖注入例子</h4><ul>
+<li><p>定义Bean</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedisConfig</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Primary</span> <span class="token comment">/* 在装配的时候，可能会匹配多个Bean, Primary代表了这个Bean会被优先选择 */</span>
     <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"redisTemplate"</span><span class="token punctuation">)</span>
@@ -380,9 +382,9 @@
         <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> template <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> template<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="注入Bean"><a href="#注入Bean" class="headerlink" title="注入Bean"></a>注入Bean</h4> <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>注入Bean</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
 <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">AppRedisCacheManager</span> <span class="token keyword">implements</span> <span class="token class-name">IGlobalCache</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> redisTemplate<span class="token punctuation">;</span>
 
@@ -392,8 +394,58 @@
     <span class="token keyword">public</span> <span class="token class-name">AppRedisCacheManager</span><span class="token punctuation">(</span><span class="token class-name">RedisTemplate</span> redisTemplate<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate <span class="token operator">=</span> redisTemplate<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> 
-
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>   上面的例子是典型的基于注解的自动注入。我看过不少介绍依赖注入的文章，有说有三种，有的说有五种. 按照我自己的理解，依赖注入有两大方式</p>
+<ul>
+<li>手动注入 - 必须显示的指定实例A的引用是B,一般是在XML里面定义或者JavaConfig里定义。</li>
+<li>自动注入 - 不需要显示的指定实例A的引用是是B, 典型的形式是基于注解。 自动注入更加通用的内涵是：如果基于不同的条件，加载不同的Bean<ul>
+<li>有哪些注解可以加载Bean?<ul>
+<li>@Autowired - Spring特有的注解，默认按类型查找，如果找不到，按照名字查找.<ul>
+<li>Autowire加载Bean可能失败的原因<ul>
+<li>被加载的Bean没有加上@Service相关的注解</li>
+<li>加了@Service的注解,但没有被@ComponentScan扫描。<div class="note info"><p>在Springboot中, @<mark class="label danger">SpringBootApplication</mark> 注解包含了@<mark class="label danger">ComponentScan， 这就是为什么在Spring Boot应用中看不到ComponentScan注解的原因</mark>
+              </p>
+</div></li>
+<li>Spring MVC 的filter不能加载某个Bean, 因为在这个时候Bean还没有被初始化. 解决的办法是拿到<mark class="label danger">ApplycationContext</mark> 然后调用<mark class="label danger">getBean</mark>方法.</li>
+<li>循环依赖</li>
+</ul>
+</li>
+<li>Autowired可以注入到构造器，字段，属性，参数</li>
+</ul>
+</li>
+<li>@Resouce - Spring特有的注解，默认按名字查找，找不到，按类型查找，如果按类型找到多个，再按照@Qualifier筛选</li>
+<li>@Inject - 非Spring特有的注解,</li>
+</ul>
+</li>
+<li>有哪些注解可以让Bean被加载?<ul>
+<li>@Component - 作用在类上, 用来描述通用的Bean, 业务内涵不是特别强.</li>
+<li>@Controller - 作用在类上，与Spring mvc强相关，不能用别的注解替换， 内部会包含路由等信息</li>
+<li>@Service - 作用在类上, 一般情况下从Repository拿数据然后提供数据给Controller消费，</li>
+<li>@Repository - 作用在类上， 语义上来说与持久化相关，对应DAO, 不能用别的注解替换, 内部会包含SQL语句的信息.</li>
+<li>@Bean - Spring 3.0引入，和@Configuration一起工作. 如果存在第三方插件，很显然无法使用@Component注解的，所以可以在某个方法A上使用Bean注解，然后在方法A的内部返回实例.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="一些额外发现的问题"><a href="#一些额外发现的问题" class="headerlink" title="一些额外发现的问题"></a>一些额外发现的问题</h4><ul>
+<li>ApplycationContext的getBean和@Autowired的区别是什么？</li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li>依赖查找是什么？</li>
+<li>规范<ul>
+<li><a href="https://jcp.org/en/jsr/detail?id=330" title="" target="">JSR-330</a>
+<ul>
+<li>Spring 从3.0开始支持JSR-330规范</li>
+<li>@Inject和Spring的@Autowired等价</li>
+<li>@Named和Spring的@Component等价</li>
+</ul>
+</li>
+<li><a href="https://jcp.org/en/jsr/detail?id=250" title="" target="">JSR-250</a></li>
+</ul>
+</li>
+</ul>
 <h3 id="开发者的角度-1"><a href="#开发者的角度-1" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
 <h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>
     </div>
@@ -467,13 +519,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">67k</span>
+    <span title="站点总字数">69k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:01</span>
+    <span title="站点阅读时长">1:02</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
