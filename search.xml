@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>数据结构之B+树</title>
+    <url>/2020/10/18/B-plus-tree/</url>
+    <content><![CDATA[<p>做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。<br>所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.<br>这篇文章主要是浅谈一下我记忆中的B+树.</p>
+<ul>
+<li>背景</li>
+<li>什么是B+树？</li>
+<li>B+树实践</li>
+<li>拾遗</li>
+</ul>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
+<span id="more"></span>
+<h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
+<ul>
+<li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
+<li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
+<li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
+<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
+</ul>
+<h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
+<li><p>一些基本事实</p>
+<ul>
+<li>数据库读取数据是以页(一般而言是4k)为单位将磁盘文件加载到内存（为了方便讨论，一个页上存储一个结点）</li>
+<li>普通磁盘加载一个页的数据大概需要10ms(旋转，寻道等操作)</li>
+<li>磁盘的顺序读取I/O比随机读取I/O要快10万个量级</li>
+<li>内存的读取速度(纳秒级别)和磁盘的顺序读取读取大约是一个量级</li>
+<li>查询优化的核心是减少I/O的访问次数</li>
+</ul>
+</li>
+<li><p>为什么不选择B树？<br>B树的最大特点是是数据分布在所有的结点中，所有在进行范围查找时候，加载多个页的时候，会很耗时</p>
+</li>
+<li><p>B+树的优势<br>B+树存储数据的特点</p>
+<ul>
+<li>叶子节点存放了行数据</li>
+<li>所有的叶子结点都在同一层</li>
+<li>所有的叶子结点可以形成一个双向链表</li>
+<li>叶子结点所在的页分布在不同的磁盘块上</li>
+<li>非叶子结点不存储行数据，仅仅为了存储更多的索引键</li>
+</ul>
+<p>通过上面的特点，我们可以知道</p>
+<ul>
+<li>B+树相比B树很明显的一个特点是树的高度降低了，这样I/O访问就少了.</li>
+<li>存储和索引被隔离开来，软件设计的一个原则就是分离关注点<br>回头再看看上面那个B+树的图，它有点像什么？对，像跳表. 跳表的核心思想是让链表具有二分查找能力.<br>所以跳表和B+树的源头思想是一致的.</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><ul>
+<li>由于B+树的读写会导致逻辑上相邻的数据实际在物理上相聚很远，LSM树(日志结构合并树)是对B+树的改进</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>树</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浮浮沉沉 - DDD</title>
     <url>/2020/09/15/DDD/</url>
     <content><![CDATA[<p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
@@ -506,64 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>数据结构之B+树</title>
-    <url>/2020/10/18/B-plus-tree/</url>
-    <content><![CDATA[<p>做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。<br>所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.<br>这篇文章主要是浅谈一下我记忆中的B+树.</p>
-<ul>
-<li>背景</li>
-<li>什么是B+树？</li>
-<li>B+树实践</li>
-<li>拾遗</li>
-</ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
-<span id="more"></span>
-<h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
-<ul>
-<li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
-<li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
-<li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
-<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
-</ul>
-<h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
-<li><p>一些基本事实</p>
-<ul>
-<li>数据库读取数据是以页(一般而言是4k)为单位将磁盘文件加载到内存（为了方便讨论，一个页上存储一个结点）</li>
-<li>普通磁盘加载一个页的数据大概需要10ms(旋转，寻道等操作)</li>
-<li>磁盘的顺序读取I/O比随机读取I/O要快10万个量级</li>
-<li>内存的读取速度(纳秒级别)和磁盘的顺序读取读取大约是一个量级</li>
-<li>查询优化的核心是减少I/O的访问次数</li>
-</ul>
-</li>
-<li><p>为什么不选择B树？<br>B树的最大特点是是数据分布在所有的结点中，所有在进行范围查找时候，加载多个页的时候，会很耗时</p>
-</li>
-<li><p>B+树的优势<br>B+树存储数据的特点</p>
-<ul>
-<li>叶子节点存放了行数据</li>
-<li>所有的叶子结点都在同一层</li>
-<li>所有的叶子结点可以形成一个双向链表</li>
-<li>叶子结点所在的页分布在不同的磁盘块上</li>
-<li>非叶子结点不存储行数据，仅仅为了存储更多的索引键</li>
-</ul>
-<p>通过上面的特点，我们可以知道</p>
-<ul>
-<li>B+树相比B树很明显的一个特点是树的高度降低了，这样I/O访问就少了.</li>
-<li>存储和索引被隔离开来，软件设计的一个原则就是分离关注点<br>回头再看看上面那个B+树的图，它有点像什么？对，像跳表. 跳表的核心思想是让链表具有二分查找能力.<br>所以跳表和B+树的源头思想是一致的.</li>
-</ul>
-</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><ul>
-<li>由于B+树的读写会导致逻辑上相邻的数据实际在物理上相聚很远，LSM树(日志结构合并树)是对B+树的改进</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>树</tag>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之效率管家 - Redis</title>
     <url>/2020/10/15/cache/</url>
     <content><![CDATA[<p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
@@ -676,6 +676,19 @@
         <tag>缓存</tag>
         <tag>Redis</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
   </entry>
   <entry>
     <title>Java之离弦之箭 - 高并发</title>
@@ -894,19 +907,6 @@
       </tags>
   </entry>
   <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>人多力量大 - 分布式导言</title>
     <url>/2020/10/11/distributed-system/</url>
     <content><![CDATA[<p>一个人抗一个木头会很重，如果两个人一起抗木头，两个人承担的分量会少点，如果三个人呢？那么三个人承担的分量会更少. 换言之，如果从整体上看，三个人的力量要大于两个人<br>现在的应用的数据变得越来越大，业务的流量越来越多了，分布式成为了一个不可避免的趋势。<br>这篇文章主要谈谈</p>
@@ -974,6 +974,74 @@
       <tags>
         <tag>分布式</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>一种可以衡量事物的指标-快和好</title>
+    <url>/2020/08/30/good-quick/</url>
+    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
+<ul>
+<li>好</li>
+<li>快</li>
+</ul>
+<span id="more"></span>
+<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
+<ul>
+<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
+<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
+<li>好在架构层面可以理解为高可用，可扩展</li>
+<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
+<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
+</ul>
+<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
+<ul>
+<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
+<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
+<li>多<ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
+</ul>
+</li>
+<li>省 <ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
+</ul>
+</li>
+</ul>
+<p>具体的一些例子</p>
+<ul>
+<li>快在架构层面可以理解为高性能</li>
+</ul>
+<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本/收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本/收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
+<ul>
+<li>代码能跑起来是不是意味着好?</li>
+<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
+<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
+</ul>
+<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
+]]></content>
+      <categories>
+        <category>思维</category>
+      </categories>
+      <tags>
+        <tag>思维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/07/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Docker初回忆</title>
@@ -1095,71 +1163,46 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>一种可以衡量事物的指标-快和好</title>
-    <url>/2020/08/30/good-quick/</url>
-    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
+    <title>前端发展史</title>
+    <url>/2020/09/07/history-of-frontend-development/</url>
+    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
 <ul>
-<li>好</li>
-<li>快</li>
+<li>农耕时期</li>
+<li>工业化时期</li>
+<li>信息化时期</li>
+<li>智能时期</li>
 </ul>
 <span id="more"></span>
-<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
+<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
+<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
 <ul>
-<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
-<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
-<li>好在架构层面可以理解为高可用，可扩展</li>
-<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
-<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
-</ul>
-<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
-<ul>
-<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
-<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
-<li>多<ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
+<li>2005年左右Ajax</li>
+<li>2006年左右Jquery</li>
+<li>模块化<ul>
+<li>requirejs</li>
+<li>commonjs</li>
 </ul>
 </li>
-<li>省 <ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
+<li>node 2009年</li>
+</ul>
+<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
+<ul>
+<li>规范化<ul>
+<li>es6</li>
+<li>html5</li>
+</ul>
+</li>
+<li>组件化<ul>
+<li>webcomponent</li>
+</ul>
+</li>
+<li>工程化<ul>
+<li>webpack</li>
+<li>TypeScript</li>
 </ul>
 </li>
 </ul>
-<p>具体的一些例子</p>
-<ul>
-<li>快在架构层面可以理解为高性能</li>
-</ul>
-<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本/收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本/收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
-<ul>
-<li>代码能跑起来是不是意味着好?</li>
-<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
-<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
-</ul>
-<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
-]]></content>
-      <categories>
-        <category>思维</category>
-      </categories>
-      <tags>
-        <tag>思维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/07/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
 ]]></content>
   </entry>
   <entry>
@@ -1885,49 +1928,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>前端发展史</title>
-    <url>/2020/09/07/history-of-frontend-development/</url>
-    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
-<ul>
-<li>农耕时期</li>
-<li>工业化时期</li>
-<li>信息化时期</li>
-<li>智能时期</li>
-</ul>
-<span id="more"></span>
-<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
-<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
-<ul>
-<li>2005年左右Ajax</li>
-<li>2006年左右Jquery</li>
-<li>模块化<ul>
-<li>requirejs</li>
-<li>commonjs</li>
-</ul>
-</li>
-<li>node 2009年</li>
-</ul>
-<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
-<ul>
-<li>规范化<ul>
-<li>es6</li>
-<li>html5</li>
-</ul>
-</li>
-<li>组件化<ul>
-<li>webcomponent</li>
-</ul>
-</li>
-<li>工程化<ul>
-<li>webpack</li>
-<li>TypeScript</li>
-</ul>
-</li>
-</ul>
-<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>闻香识微服务</title>
     <url>/2020/09/14/micro-services/</url>
     <content><![CDATA[<p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
@@ -2336,6 +2336,17 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>牛刀小试</title>
+    <url>/2019/07/04/new-place/</url>
+    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
+<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
+<ul>
+<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
+<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
     <url>/2020/10/11/performance-1-pc/</url>
     <content><![CDATA[<p>要提高服务器的性能，正常的思路是</p>
@@ -2395,17 +2406,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>高性能</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>牛刀小试</title>
-    <url>/2019/07/04/new-place/</url>
-    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
-<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
-<ul>
-<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
-<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>编程语言概述</title>
@@ -2651,6 +2651,63 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Redux设计及相关</title>
+    <url>/2020/09/14/redux-design/</url>
+    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
+<ul>
+<li>什么是Redux?</li>
+<li>为什么是Redux?</li>
+<li>React和Redux的关系是什么？</li>
+<li>Redux的未来</li>
+</ul>
+<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
+<ul>
+<li>数据有哪些实体？</li>
+<li>数据的实体有哪些行为？ 增，删，改，查。</li>
+<li>有哪些方式能获得这些数据？</li>
+<li>如何避免不同的实体有相同的冗余数据？<span id="more"></span>
+对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</li>
+</ul>
+<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
+<ul>
+<li>store</li>
+<li>action</li>
+<li>reducer</li>
+</ul>
+<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
+<li>单一数据源</li>
+<li>数据是只读的</li>
+<li>单向数据流</li>
+</ul>
+<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
+<ul>
+<li>Flux</li>
+<li>Redux</li>
+<li>Mbox </li>
+</ul>
+<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
+<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
+<ul>
+<li>项目比较简单，所有的状态保存在React组件里</li>
+<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
+<li>用户不需要好的的UI体验</li>
+</ul>
+<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
+<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
+<ul>
+<li>如何更好的规范数据实体之间的关系</li>
+<li>如何提供api更好的操作数据</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>React设计思路</title>
     <url>/2020/09/13/react-design/</url>
     <content><![CDATA[<p>React作为前端主流的UI库，逐渐占据了前端的大半壁江山。所以哪个前端如果不知道React， 那基本上可以算是大大的落伍了.<br>在这里，主要聊聊</p>
@@ -2722,63 +2779,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>框架</tag>
         <tag>前端</tag>
         <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redux设计及相关</title>
-    <url>/2020/09/14/redux-design/</url>
-    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
-<ul>
-<li>什么是Redux?</li>
-<li>为什么是Redux?</li>
-<li>React和Redux的关系是什么？</li>
-<li>Redux的未来</li>
-</ul>
-<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
-<ul>
-<li>数据有哪些实体？</li>
-<li>数据的实体有哪些行为？ 增，删，改，查。</li>
-<li>有哪些方式能获得这些数据？</li>
-<li>如何避免不同的实体有相同的冗余数据？<span id="more"></span>
-对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</li>
-</ul>
-<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
-<ul>
-<li>store</li>
-<li>action</li>
-<li>reducer</li>
-</ul>
-<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
-<li>单一数据源</li>
-<li>数据是只读的</li>
-<li>单向数据流</li>
-</ul>
-<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
-<ul>
-<li>Flux</li>
-<li>Redux</li>
-<li>Mbox </li>
-</ul>
-<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
-<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
-<ul>
-<li>项目比较简单，所有的状态保存在React组件里</li>
-<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
-<li>用户不需要好的的UI体验</li>
-</ul>
-<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
-<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
-<ul>
-<li>如何更好的规范数据实体之间的关系</li>
-<li>如何提供api更好的操作数据</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
-        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -2880,7 +2880,9 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <h3 id="开发者的角度"><a href="#开发者的角度" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h4 id="Spring-IOC容器创建的大体过程（细节可见IOC时序图）"><a href="#Spring-IOC容器创建的大体过程（细节可见IOC时序图）" class="headerlink" title="Spring IOC容器创建的大体过程（细节可见IOC时序图）"></a>Spring IOC容器创建的大体过程（细节可见IOC时序图）</h4><ul>
 <li>定位 - 设置Bean的路径，创建BeanFactory.</li>
 <li>加载 - 读取BeanDefinition文件.</li>
-<li>注册 - 解析BeanDefinition,并放入IOC容器当中.<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4></li>
+<li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
+</ul>
+<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4><ul>
 <li><a href="https://github.com/yshua5631/spring-framework/blob/master/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550" title="" target="">Refresh</a></li>
 </ul>
 <h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
