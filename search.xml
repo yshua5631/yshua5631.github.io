@@ -1,64 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>数据结构之B+树</title>
-    <url>/2020/10/18/B-plus-tree/</url>
-    <content><![CDATA[<p>做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。<br>所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.<br>这篇文章主要是浅谈一下我记忆中的B+树.</p>
-<ul>
-<li>背景</li>
-<li>什么是B+树？</li>
-<li>B+树实践</li>
-<li>拾遗</li>
-</ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
-<span id="more"></span>
-<h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
-<ul>
-<li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
-<li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
-<li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
-<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
-</ul>
-<h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
-<li><p>一些基本事实</p>
-<ul>
-<li>数据库读取数据是以页(一般而言是4k)为单位将磁盘文件加载到内存（为了方便讨论，一个页上存储一个结点）</li>
-<li>普通磁盘加载一个页的数据大概需要10ms(旋转，寻道等操作)</li>
-<li>磁盘的顺序读取I/O比随机读取I/O要快10万个量级</li>
-<li>内存的读取速度(纳秒级别)和磁盘的顺序读取读取大约是一个量级</li>
-<li>查询优化的核心是减少I/O的访问次数</li>
-</ul>
-</li>
-<li><p>为什么不选择B树？<br>B树的最大特点是是数据分布在所有的结点中，所有在进行范围查找时候，加载多个页的时候，会很耗时</p>
-</li>
-<li><p>B+树的优势<br>B+树存储数据的特点</p>
-<ul>
-<li>叶子节点存放了行数据</li>
-<li>所有的叶子结点都在同一层</li>
-<li>所有的叶子结点可以形成一个双向链表</li>
-<li>叶子结点所在的页分布在不同的磁盘块上</li>
-<li>非叶子结点不存储行数据，仅仅为了存储更多的索引键</li>
-</ul>
-<p>通过上面的特点，我们可以知道</p>
-<ul>
-<li>B+树相比B树很明显的一个特点是树的高度降低了，这样I/O访问就少了.</li>
-<li>存储和索引被隔离开来，软件设计的一个原则就是分离关注点<br>回头再看看上面那个B+树的图，它有点像什么？对，像跳表. 跳表的核心思想是让链表具有二分查找能力.<br>所以跳表和B+树的源头思想是一致的.</li>
-</ul>
-</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><ul>
-<li>由于B+树的读写会导致逻辑上相邻的数据实际在物理上相聚很远，LSM树(日志结构合并树)是对B+树的改进</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>树</tag>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>浮浮沉沉 - DDD</title>
     <url>/2020/09/15/DDD/</url>
     <content><![CDATA[<p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
@@ -290,192 +232,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java之效率管家 - Redis</title>
-    <url>/2020/10/15/cache/</url>
-    <content><![CDATA[<p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
-<ul>
-<li>CPU - CPU缓存</li>
-<li>操作系统 - Page Cache</li>
-<li>数据库 - 数据库缓存</li>
-<li>浏览器 - 浏览器缓存</li>
-</ul>
-<p>这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题</p>
-<ul>
-<li>缓存概述</li>
-<li>Redis历史</li>
-<li>什么是Redis</li>
-<li>为什么是Redis</li>
-<li>Redis是如何实现的</li>
-<li>Redis实践</li>
-<li>Redis的未来</li>
-</ul>
-<span id="more"></span>
-<h2 id="缓存概述"><a href="#缓存概述" class="headerlink" title="缓存概述"></a>缓存概述</h2><h3 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h3><p>  没有看到缓存的通用定义，这里尝试定义一下. 我们有系统X, C, D，这三个系统有如下特征</p>
-<ul>
-<li>系统X可以从C和D拿到同样的数据</li>
-<li>系统X从C拿到的数据比从D拿到的数据更快</li>
-<li>系统C的数据是来自于D</li>
-</ul>
-<p>  如果上述三个条件满足，那么系统C可以称做为D的缓存.</p>
-<h3 id="为什么需要缓存"><a href="#为什么需要缓存" class="headerlink" title="为什么需要缓存"></a>为什么需要缓存</h3><p>  如果系统D满足不了单位时间内多次请求，那么系统C一定是存在的. 原因是</p>
-<ul>
-<li>系统C比系统D更快，那么可以提供更好的用户体验.</li>
-</ul>
-<h3 id="实现一个缓存会遇到什么问题？"><a href="#实现一个缓存会遇到什么问题？" class="headerlink" title="实现一个缓存会遇到什么问题？"></a>实现一个缓存会遇到什么问题？</h3><pre><code>* 缓存更新策略
-  * Cache Aside Pattern
-  * Write / Read Through Pattern
-  * Write Behind Caching Pattern
-</code></pre>
-<h2 id="Redis历史"><a href="#Redis历史" class="headerlink" title="Redis历史"></a>Redis历史</h2><p>2008年，一家意大利公司Merzia推出了一个几个基于Mysql的实时统计系统，但是该公司的创始人Salvatore Sanfilippo对这套系统感到失望，于是自己对这套系统量身定做了一个数据库，且在2009年开发完成, 这就是Redis. 所以这就是比较典型的思路：有了一个痛点，然后才有了一个技术。 而现在不少公司的思路是反的：不管有没有痛点，先用高大上的技术再说.<br>2010年VMware公司赞助Redis, Salvatore Sanfilippo和另外一位开发者加入了VMware公司，全职开发Redis. 所以也是当时的一个痛点问题，改变了作者的人生之路.</p>
-<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>我看看官网上Redis的定义:</p>
-<blockquote>
-<p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker</p>
-</blockquote>
-<p>在我们的印象中，数据库是指MySql, Sql Server，或者Oracle. 所以从这里看得出Redis的定位是多种多样的，可以做缓存，数据库或者消息队列.<br>但有点事实可以确定</p>
-<ul>
-<li>相比于Kafka, Redis的消息队列没那么专业</li>
-</ul>
-<p>从核心行为的角度来看：Redis是一个支持Key, value的存储系统. 换句话说, Redis的灵魂在于Key,Value.</p>
-<h2 id="为什么是Redis"><a href="#为什么是Redis" class="headerlink" title="为什么是Redis"></a>为什么是Redis</h2><h2 id="Redis是如何实现的"><a href="#Redis是如何实现的" class="headerlink" title="Redis是如何实现的"></a>Redis是如何实现的</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><ul>
-<li>如何又快又好的实现一个Key, Value存储？</li>
-</ul>
-<p>  所以可以设想一个最简单的Key, Value的存储， 它应该支持</p>
-<ul>
-<li>支持数据的增删改查</li>
-<li>数据类型多样</li>
-<li>最好支持集群功能 - 或者说任何的框架都应该支持集群功能</li>
-</ul>
-<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><pre><code>N/A
-</code></pre>
-<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p>  Redis也是基于Reactor模式来实现的，这一点和Netty类似.</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
-<li>高性能视角 - 对应快这个指标</li>
-<li>高可用视角 - 对应好这个指标<ul>
-<li>分布式维度<ul>
-<li>主从库模式<ul>
-<li>全量复制</li>
-<li>基于长连接的命令传播</li>
-<li>增量复制 </li>
-</ul>
-</li>
-<li>哨兵机制</li>
-<li>集群</li>
-</ul>
-</li>
-<li>容错维度<ul>
-<li>AOF日志 - 先更新缓存，然后再更新日志，这样可以得出一个结论：只有日志里有记录，就一定有执行过缓存的命令 。<ul>
-<li>优点</li>
-<li>缺点</li>
-</ul>
-</li>
-<li>内存快照 -  RDB 文件</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>可扩展视角 - 对应好这个指标<ul>
-<li>数据分片</li>
-<li>负载均衡</li>
-</ul>
-</li>
-<li>Redis API</li>
-</ul>
-<h3 id="Redis用到的数据结构"><a href="#Redis用到的数据结构" class="headerlink" title="Redis用到的数据结构"></a>Redis用到的数据结构</h3><ul>
-<li>跳表</li>
-<li>布隆过滤器</li>
-<li>位图</li>
-<li>延时队列</li>
-</ul>
-<h3 id="Redis用到的算法"><a href="#Redis用到的算法" class="headerlink" title="Redis用到的算法"></a>Redis用到的算法</h3><ul>
-<li>限流算法</li>
-<li>GeoHash</li>
-</ul>
-<h2 id="Redis的实践"><a href="#Redis的实践" class="headerlink" title="Redis的实践"></a>Redis的实践</h2><ul>
-<li>Redis做消息队列，业界有日活百万的案例.</li>
-<li>Redis所在的宿主机挂了之后怎么办？</li>
-</ul>
-<h2 id="Redis的未来"><a href="#Redis的未来" class="headerlink" title="Redis的未来"></a>Redis的未来</h2>]]></content>
-      <categories>
-        <category>缓存</category>
-      </categories>
-      <tags>
-        <tag>缓存</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分解</title>
-    <url>/2020/09/12/break-down/</url>
-    <content><![CDATA[<p>分解是解决问题的一种有效方式之一。分解这两个字是如此的显而易见，小学生一听都知道分解是什么意思， 以至于不需要解释太多。<br>这篇文章主要探讨三方面内容</p>
-<ul>
-<li>什么是分解？</li>
-<li>为什么要分解？</li>
-<li>如何分解一个系统？</li>
-</ul>
-<h2 id="什么是分解？"><a href="#什么是分解？" class="headerlink" title="什么是分解？"></a>什么是分解？</h2><p>  <img src="/images/2020/organization.png"><br>  将一个事物按层次拆成层次1， 层次2，每个层次可以拆成要素1， 要素2，这就是分解。<br>  <span id="more"></span><br>  一些具体的例子</p>
-<ul>
-<li>公司的组织架构。老板下面有很多经理， 经理下面有很多项目组长.</li>
-<li>公司的目标。 长期目标(愿景)，中期目标，短期目标.</li>
-<li>社会大分工</li>
-<li>软件架构的分层。</li>
-<li>微服务的拆分。</li>
-<li>分布式</li>
-<li>算法分而治之的设计思想</li>
-<li>分子可以拆分成原子，原子可以拆分为质子和电子。</li>
-<li>经济研究可以分为宏观和微观。</li>
-<li>新产业可以分解为现有产业和新技术的组合。</li>
-</ul>
-<p>  简而言之， 分解是无处不在。</p>
-<h2 id="为什么要分解？"><a href="#为什么要分解？" class="headerlink" title="为什么要分解？"></a>为什么要分解？</h2><p>  一个系统被分解之后， 它是：</p>
-<ul>
-<li>容易理解的</li>
-<li>容易解决的</li>
-</ul>
-<p>  一些具体的例子</p>
-<ul>
-<li>一个很复杂的任务，被分解为任务1, 任务2。。。，每一项任务只需要简单执行就能得到预期结果，以至于简单到不可能失败。这个例子很简单的，简单的会让人感觉“不过如此，这个没什么啊”。任务分解是职场里最有效的工作方式之一。 它的表现形式是如此的简单，以致于人们意识不到这种方法论的重要性。去观察一个团队的领导或者成员有没有搞清楚任务，一个重要的指标就是这个任务有没有拆解得很清楚。 换句话说，能不能将任务拆解得很清楚是团队成熟和稳定的标志之一. 为什么这么说？<ul>
-<li>想明白 - 做事的前提就是想明白，搞清楚为什么。 如果一个任务能拆解的很细，说明这件任务是想明白了。</li>
-<li>可执行 - 可执行意味着能不能落地。人是天生讨论复杂和不确定的东西，任务分解的结果就是简单和确定的东西。 简单和确定意味着风险可控，结果可预期, 在规定时间内可以拿到结果。结果本质上是一种反馈和奖励机制，长期的反馈和奖励机制会形成良性循环.</li>
-</ul>
-</li>
-</ul>
-<p>  并不是所有的系统都是可以拆解的，有些系统是非线性的，不遵守还原论.</p>
-<h2 id="如何分解一个系统？"><a href="#如何分解一个系统？" class="headerlink" title="如何分解一个系统？"></a>如何分解一个系统？</h2><ul>
-<li>识别系统的要素<ul>
-<li>不同的层次<ul>
-<li>一个组织有领导层和执行层，领导层决定了执行层。</li>
-<li>一个软件有一个根本设计目标和设计原则，模式和方法。</li>
-<li>我们知道人的生命是基于碳基的，但是我们要是收集一拖拉机碳基物质，能不能创造出人类，当然是不能。碳基物质 -&gt; 细胞 -&gt; 器官，这是一个比较简单的描述人的物质组成图，很明显，每一层都不是下一层简单的堆砌就可以形成的，而是量变引起了质变，这种现象就称为层展现象.</li>
-</ul>
-</li>
-<li>同一层次的不同维度<ul>
-<li>如何证明美国比中国比美国强？可以从政治，经济，军事，文化，教育。。等角度出发， 这些维度是平等的。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>识别要素之间的关系<ul>
-<li>比如在一个学校里，教师是管理学生的，而不是学生管理老师，如果是这样的话，那么系统的性质就发生变化了.</li>
-</ul>
-</li>
-<li>识别系统的目的。<ul>
-<li>系统有一个目的或者初衷。比如学校的目的是教书育人而不是从事商业化活动.</li>
-<li>有些系统的目的不是很明显。比如一个生态，它的目的就是活下来。</li>
-</ul>
-</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  分解是无处不在的思想， 具体落实到每个实际领域的时候，需要找到这个领域的层次和维度.</p>
-<p>  分解给我们的带来的一个启示是：<br>  如果一个系统是可被分解的，那么它一定是可以被理解的。<br>  如果一个系统是可以被理解的，那么它一定是可以寻求最优解的。</p>
-]]></content>
-      <categories>
-        <category>认知</category>
-      </categories>
-      <tags>
-        <tag>认知</tag>
-        <tag>思维</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统行为之警卫局 - 登录和授权</title>
     <url>/2020/11/22/auth/</url>
     <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
@@ -675,6 +431,250 @@
       <tags>
         <tag>安全</tag>
         <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分解</title>
+    <url>/2020/09/12/break-down/</url>
+    <content><![CDATA[<p>分解是解决问题的一种有效方式之一。分解这两个字是如此的显而易见，小学生一听都知道分解是什么意思， 以至于不需要解释太多。<br>这篇文章主要探讨三方面内容</p>
+<ul>
+<li>什么是分解？</li>
+<li>为什么要分解？</li>
+<li>如何分解一个系统？</li>
+</ul>
+<h2 id="什么是分解？"><a href="#什么是分解？" class="headerlink" title="什么是分解？"></a>什么是分解？</h2><p>  <img src="/images/2020/organization.png"><br>  将一个事物按层次拆成层次1， 层次2，每个层次可以拆成要素1， 要素2，这就是分解。<br>  <span id="more"></span><br>  一些具体的例子</p>
+<ul>
+<li>公司的组织架构。老板下面有很多经理， 经理下面有很多项目组长.</li>
+<li>公司的目标。 长期目标(愿景)，中期目标，短期目标.</li>
+<li>社会大分工</li>
+<li>软件架构的分层。</li>
+<li>微服务的拆分。</li>
+<li>分布式</li>
+<li>算法分而治之的设计思想</li>
+<li>分子可以拆分成原子，原子可以拆分为质子和电子。</li>
+<li>经济研究可以分为宏观和微观。</li>
+<li>新产业可以分解为现有产业和新技术的组合。</li>
+</ul>
+<p>  简而言之， 分解是无处不在。</p>
+<h2 id="为什么要分解？"><a href="#为什么要分解？" class="headerlink" title="为什么要分解？"></a>为什么要分解？</h2><p>  一个系统被分解之后， 它是：</p>
+<ul>
+<li>容易理解的</li>
+<li>容易解决的</li>
+</ul>
+<p>  一些具体的例子</p>
+<ul>
+<li>一个很复杂的任务，被分解为任务1, 任务2。。。，每一项任务只需要简单执行就能得到预期结果，以至于简单到不可能失败。这个例子很简单的，简单的会让人感觉“不过如此，这个没什么啊”。任务分解是职场里最有效的工作方式之一。 它的表现形式是如此的简单，以致于人们意识不到这种方法论的重要性。去观察一个团队的领导或者成员有没有搞清楚任务，一个重要的指标就是这个任务有没有拆解得很清楚。 换句话说，能不能将任务拆解得很清楚是团队成熟和稳定的标志之一. 为什么这么说？<ul>
+<li>想明白 - 做事的前提就是想明白，搞清楚为什么。 如果一个任务能拆解的很细，说明这件任务是想明白了。</li>
+<li>可执行 - 可执行意味着能不能落地。人是天生讨论复杂和不确定的东西，任务分解的结果就是简单和确定的东西。 简单和确定意味着风险可控，结果可预期, 在规定时间内可以拿到结果。结果本质上是一种反馈和奖励机制，长期的反馈和奖励机制会形成良性循环.</li>
+</ul>
+</li>
+</ul>
+<p>  并不是所有的系统都是可以拆解的，有些系统是非线性的，不遵守还原论.</p>
+<h2 id="如何分解一个系统？"><a href="#如何分解一个系统？" class="headerlink" title="如何分解一个系统？"></a>如何分解一个系统？</h2><ul>
+<li>识别系统的要素<ul>
+<li>不同的层次<ul>
+<li>一个组织有领导层和执行层，领导层决定了执行层。</li>
+<li>一个软件有一个根本设计目标和设计原则，模式和方法。</li>
+<li>我们知道人的生命是基于碳基的，但是我们要是收集一拖拉机碳基物质，能不能创造出人类，当然是不能。碳基物质 -&gt; 细胞 -&gt; 器官，这是一个比较简单的描述人的物质组成图，很明显，每一层都不是下一层简单的堆砌就可以形成的，而是量变引起了质变，这种现象就称为层展现象.</li>
+</ul>
+</li>
+<li>同一层次的不同维度<ul>
+<li>如何证明美国比中国比美国强？可以从政治，经济，军事，文化，教育。。等角度出发， 这些维度是平等的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>识别要素之间的关系<ul>
+<li>比如在一个学校里，教师是管理学生的，而不是学生管理老师，如果是这样的话，那么系统的性质就发生变化了.</li>
+</ul>
+</li>
+<li>识别系统的目的。<ul>
+<li>系统有一个目的或者初衷。比如学校的目的是教书育人而不是从事商业化活动.</li>
+<li>有些系统的目的不是很明显。比如一个生态，它的目的就是活下来。</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  分解是无处不在的思想， 具体落实到每个实际领域的时候，需要找到这个领域的层次和维度.</p>
+<p>  分解给我们的带来的一个启示是：<br>  如果一个系统是可被分解的，那么它一定是可以被理解的。<br>  如果一个系统是可以被理解的，那么它一定是可以寻求最优解的。</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+        <tag>思维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构之B+树</title>
+    <url>/2020/10/18/B-plus-tree/</url>
+    <content><![CDATA[<p>做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。<br>所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.<br>这篇文章主要是浅谈一下我记忆中的B+树.</p>
+<ul>
+<li>背景</li>
+<li>什么是B+树？</li>
+<li>B+树实践</li>
+<li>拾遗</li>
+</ul>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>要了解B+树先得说说B树, 1972年Bayer和mccreight发明了B树，但并没有说明B是什么意思, B可能代表Balance, Bayer或者Boeing,在这里就不深究B的具体含义了. B树首先它是一棵树，然后它是一颗平衡树，所有的结点都能存储数据。<br>B+树和B树的关系，大体上看就是iPhone6 plus和 iPhone6之间的关系.<br>注意：不存在B-树，这个“-”其实是个连接符，但会让人误解为是减号，如果出现B-tree其实就是B树.</p>
+<span id="more"></span>
+<h2 id="什么是B-树"><a href="#什么是B-树" class="headerlink" title="什么是B+树?"></a>什么是B+树?</h2><p>在讨论B+树之前，我们先要讨论一个阶的概念，就好比有些团队是大团队，有些团队是小团队，阶定义了B+树的规模。<br>满足如下条件的树，是一颗m阶的B+树</p>
+<ul>
+<li>根结点的数量在 [2, m] - 大Boss的下属数量范围</li>
+<li>正常结点的子结点数量范围是[2/m, m] - 中层骨干的下属范围</li>
+<li>一个结点的关键字数量和指针的数量是一致的，一个关键字代表了子结点的极值 - 老板眼里只有核心员工 </li>
+<li>所有叶子结点都在同一层，叶子结点有指针指向兄弟结点 - 真正干活的只有底层，且底层团结一致<br><img src="/images/2020/bplus-tree.png"></li>
+</ul>
+<h2 id="B-树实践"><a href="#B-树实践" class="headerlink" title="B+树实践"></a>B+树实践</h2><h3 id="B-树与Mysql存储引擎InnoDB"><a href="#B-树与Mysql存储引擎InnoDB" class="headerlink" title="B+树与Mysql存储引擎InnoDB"></a>B+树与Mysql存储引擎InnoDB</h3><ul>
+<li><p>一些基本事实</p>
+<ul>
+<li>数据库读取数据是以页(一般而言是4k)为单位将磁盘文件加载到内存（为了方便讨论，一个页上存储一个结点）</li>
+<li>普通磁盘加载一个页的数据大概需要10ms(旋转，寻道等操作)</li>
+<li>磁盘的顺序读取I/O比随机读取I/O要快10万个量级</li>
+<li>内存的读取速度(纳秒级别)和磁盘的顺序读取读取大约是一个量级</li>
+<li>查询优化的核心是减少I/O的访问次数</li>
+</ul>
+</li>
+<li><p>为什么不选择B树？<br>B树的最大特点是是数据分布在所有的结点中，所有在进行范围查找时候，加载多个页的时候，会很耗时</p>
+</li>
+<li><p>B+树的优势<br>B+树存储数据的特点</p>
+<ul>
+<li>叶子节点存放了行数据</li>
+<li>所有的叶子结点都在同一层</li>
+<li>所有的叶子结点可以形成一个双向链表</li>
+<li>叶子结点所在的页分布在不同的磁盘块上</li>
+<li>非叶子结点不存储行数据，仅仅为了存储更多的索引键</li>
+</ul>
+<p>通过上面的特点，我们可以知道</p>
+<ul>
+<li>B+树相比B树很明显的一个特点是树的高度降低了，这样I/O访问就少了.</li>
+<li>存储和索引被隔离开来，软件设计的一个原则就是分离关注点<br>回头再看看上面那个B+树的图，它有点像什么？对，像跳表. 跳表的核心思想是让链表具有二分查找能力.<br>所以跳表和B+树的源头思想是一致的.</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><ul>
+<li>由于B+树的读写会导致逻辑上相邻的数据实际在物理上相聚很远，LSM树(日志结构合并树)是对B+树的改进</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>树</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java之效率管家 - Redis</title>
+    <url>/2020/10/15/cache/</url>
+    <content><![CDATA[<p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
+<ul>
+<li>CPU - CPU缓存</li>
+<li>操作系统 - Page Cache</li>
+<li>数据库 - 数据库缓存</li>
+<li>浏览器 - 浏览器缓存</li>
+</ul>
+<p>这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题</p>
+<ul>
+<li>缓存概述</li>
+<li>Redis历史</li>
+<li>什么是Redis</li>
+<li>为什么是Redis</li>
+<li>Redis是如何实现的</li>
+<li>Redis实践</li>
+<li>Redis的未来</li>
+</ul>
+<span id="more"></span>
+<h2 id="缓存概述"><a href="#缓存概述" class="headerlink" title="缓存概述"></a>缓存概述</h2><h3 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h3><p>  没有看到缓存的通用定义，这里尝试定义一下. 我们有系统X, C, D，这三个系统有如下特征</p>
+<ul>
+<li>系统X可以从C和D拿到同样的数据</li>
+<li>系统X从C拿到的数据比从D拿到的数据更快</li>
+<li>系统C的数据是来自于D</li>
+</ul>
+<p>  如果上述三个条件满足，那么系统C可以称做为D的缓存.</p>
+<h3 id="为什么需要缓存"><a href="#为什么需要缓存" class="headerlink" title="为什么需要缓存"></a>为什么需要缓存</h3><p>  如果系统D满足不了单位时间内多次请求，那么系统C一定是存在的. 原因是</p>
+<ul>
+<li>系统C比系统D更快，那么可以提供更好的用户体验.</li>
+</ul>
+<h3 id="实现一个缓存会遇到什么问题？"><a href="#实现一个缓存会遇到什么问题？" class="headerlink" title="实现一个缓存会遇到什么问题？"></a>实现一个缓存会遇到什么问题？</h3><pre><code>* 缓存更新策略
+  * Cache Aside Pattern
+  * Write / Read Through Pattern
+  * Write Behind Caching Pattern
+</code></pre>
+<h2 id="Redis历史"><a href="#Redis历史" class="headerlink" title="Redis历史"></a>Redis历史</h2><p>2008年，一家意大利公司Merzia推出了一个几个基于Mysql的实时统计系统，但是该公司的创始人Salvatore Sanfilippo对这套系统感到失望，于是自己对这套系统量身定做了一个数据库，且在2009年开发完成, 这就是Redis. 所以这就是比较典型的思路：有了一个痛点，然后才有了一个技术。 而现在不少公司的思路是反的：不管有没有痛点，先用高大上的技术再说.<br>2010年VMware公司赞助Redis, Salvatore Sanfilippo和另外一位开发者加入了VMware公司，全职开发Redis. 所以也是当时的一个痛点问题，改变了作者的人生之路.</p>
+<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>我看看官网上Redis的定义:</p>
+<blockquote>
+<p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker</p>
+</blockquote>
+<p>在我们的印象中，数据库是指MySql, Sql Server，或者Oracle. 所以从这里看得出Redis的定位是多种多样的，可以做缓存，数据库或者消息队列.<br>但有点事实可以确定</p>
+<ul>
+<li>相比于Kafka, Redis的消息队列没那么专业</li>
+</ul>
+<p>从核心行为的角度来看：Redis是一个支持Key, value的存储系统. 换句话说, Redis的灵魂在于Key,Value.</p>
+<h2 id="为什么是Redis"><a href="#为什么是Redis" class="headerlink" title="为什么是Redis"></a>为什么是Redis</h2><h2 id="Redis是如何实现的"><a href="#Redis是如何实现的" class="headerlink" title="Redis是如何实现的"></a>Redis是如何实现的</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><ul>
+<li>如何又快又好的实现一个Key, Value存储？</li>
+</ul>
+<p>  所以可以设想一个最简单的Key, Value的存储， 它应该支持</p>
+<ul>
+<li>支持数据的增删改查</li>
+<li>数据类型多样</li>
+<li>最好支持集群功能 - 或者说任何的框架都应该支持集群功能</li>
+</ul>
+<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><pre><code>N/A
+</code></pre>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p>  Redis也是基于Reactor模式来实现的，这一点和Netty类似.</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
+<li>高性能视角 - 对应快这个指标</li>
+<li>高可用视角 - 对应好这个指标<ul>
+<li>分布式维度<ul>
+<li>主从库模式<ul>
+<li>全量复制</li>
+<li>基于长连接的命令传播</li>
+<li>增量复制 </li>
+</ul>
+</li>
+<li>哨兵机制</li>
+<li>集群</li>
+</ul>
+</li>
+<li>容错维度<ul>
+<li>AOF日志 - 先更新缓存，然后再更新日志，这样可以得出一个结论：只有日志里有记录，就一定有执行过缓存的命令 。<ul>
+<li>优点</li>
+<li>缺点</li>
+</ul>
+</li>
+<li>内存快照 -  RDB 文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可扩展视角 - 对应好这个指标<ul>
+<li>数据分片</li>
+<li>负载均衡</li>
+</ul>
+</li>
+<li>Redis API</li>
+</ul>
+<h3 id="Redis用到的数据结构"><a href="#Redis用到的数据结构" class="headerlink" title="Redis用到的数据结构"></a>Redis用到的数据结构</h3><ul>
+<li>跳表</li>
+<li>布隆过滤器</li>
+<li>位图</li>
+<li>延时队列</li>
+</ul>
+<h3 id="Redis用到的算法"><a href="#Redis用到的算法" class="headerlink" title="Redis用到的算法"></a>Redis用到的算法</h3><ul>
+<li>限流算法</li>
+<li>GeoHash</li>
+</ul>
+<h2 id="Redis的实践"><a href="#Redis的实践" class="headerlink" title="Redis的实践"></a>Redis的实践</h2><ul>
+<li>Redis做消息队列，业界有日活百万的案例.</li>
+<li>Redis所在的宿主机挂了之后怎么办？</li>
+</ul>
+<h2 id="Redis的未来"><a href="#Redis的未来" class="headerlink" title="Redis的未来"></a>Redis的未来</h2>]]></content>
+      <categories>
+        <category>缓存</category>
+      </categories>
+      <tags>
+        <tag>缓存</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1160,49 +1160,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>前端发展史</title>
-    <url>/2020/09/07/history-of-frontend-development/</url>
-    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
-<ul>
-<li>农耕时期</li>
-<li>工业化时期</li>
-<li>信息化时期</li>
-<li>智能时期</li>
-</ul>
-<span id="more"></span>
-<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
-<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
-<ul>
-<li>2005年左右Ajax</li>
-<li>2006年左右Jquery</li>
-<li>模块化<ul>
-<li>requirejs</li>
-<li>commonjs</li>
-</ul>
-</li>
-<li>node 2009年</li>
-</ul>
-<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
-<ul>
-<li>规范化<ul>
-<li>es6</li>
-<li>html5</li>
-</ul>
-</li>
-<li>组件化<ul>
-<li>webcomponent</li>
-</ul>
-</li>
-<li>工程化<ul>
-<li>webpack</li>
-<li>TypeScript</li>
-</ul>
-</li>
-</ul>
-<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
 ]]></content>
   </entry>
   <entry>
@@ -1928,6 +1885,49 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>前端发展史</title>
+    <url>/2020/09/07/history-of-frontend-development/</url>
+    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
+<ul>
+<li>农耕时期</li>
+<li>工业化时期</li>
+<li>信息化时期</li>
+<li>智能时期</li>
+</ul>
+<span id="more"></span>
+<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
+<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
+<ul>
+<li>2005年左右Ajax</li>
+<li>2006年左右Jquery</li>
+<li>模块化<ul>
+<li>requirejs</li>
+<li>commonjs</li>
+</ul>
+</li>
+<li>node 2009年</li>
+</ul>
+<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
+<ul>
+<li>规范化<ul>
+<li>es6</li>
+<li>html5</li>
+</ul>
+</li>
+<li>组件化<ul>
+<li>webcomponent</li>
+</ul>
+</li>
+<li>工程化<ul>
+<li>webpack</li>
+<li>TypeScript</li>
+</ul>
+</li>
+</ul>
+<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>闻香识微服务</title>
     <url>/2020/09/14/micro-services/</url>
     <content><![CDATA[<p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
@@ -1995,6 +1995,111 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>需要一个掌握全貌的人，如果不能掌握业务全貌，出了问题都不知道根源在哪里. 根据鸡蛋不能放在一个篮子的原则，掌握全貌的人最好多于一个.</li>
 <li>相比于传统MVC开发团队，微服务对开发者的要求要高些.</li>
 </ul>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>架构</tag>
+        <tag>微服务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微服务架构二三事</title>
+    <url>/2020/09/20/mircro-services-archi/</url>
+    <content><![CDATA[<p>就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。<br>这篇文章聚焦于传统的架构应该如何过渡到微服务架构。</p>
+<ul>
+<li>传统三层架构</li>
+<li>传统的DDD分层架构</li>
+<li>依赖倒置的DDD分层架构</li>
+<li>DDD 五层架构</li>
+<li>DDD 六层架构</li>
+<li>六边形架构</li>
+<li>整洁架构-洋葱模型</li>
+</ul>
+<span id="more"></span>
+<h2 id="传统的三层架构"><a href="#传统的三层架构" class="headerlink" title="传统的三层架构"></a>传统的三层架构</h2><p><img src="/images/2020/3-layers.png"><br>人往往会忽视简单和习以为常的东西，就比如“好好学习”这句话。<br>三层架构是所有架构的基石和鼻祖，当若干年之后人们再会想架构的时候，首先想到的应该是三层架构。我们应当向三层架构致敬.<br>正如我前面的提到的《分解》，软件开发的核心原则是分解。今天是这个分解，明天是那个分解，分解和分解之间的不同是维度的不同</p>
+<p>根据奥卡姆剃刀原则，如果一个问题有两个模型可以解释，那么肯定选择最简单的那个模型。<br>想到霍金提到的一个例子</p>
+<blockquote>
+<p>两者都是正确的宇宙模型，人们既可以假定地球静止，也可以假定太阳静止来解释星球的运转，只是哥白尼的日心说具有比较简洁的优势，可以用简单的运动方程来解释太阳系行星的运转。因为用地心说来描述星球的运行将非常复杂，不但要考虑天体的旋转，还要考虑地球的自转，因此托勒密虽然制作了以地球为中心的模型，很多现象依然无法解释，不得不用偏心圆和小轮体系来进行修正.</p>
+</blockquote>
+<p>简而言之，地心说本身没有问题，只是在解释宇宙的时候更复杂，不如日心说那么简单. 这个道理通用适用于三层架构模型。</p>
+<p>三层架构不考虑实现，仅仅从概念上来说是完美的。</p>
+<ul>
+<li>数据库 - 代表了信息存储的地方，也代表了事实，可以作为企业决策的依据。</li>
+<li>数据访问层 - 这一层主要用来获取数据库信息。</li>
+<li>业务逻辑层 - 世界上一切行为都可以看作是业务逻辑，这一层主要是加工（分解和组合）信息。</li>
+<li>用户界面层 - 用来显示给用户显示信息。</li>
+</ul>
+<p>三层模型从概念上是抽象度极高的，抽象度高意味着在落地时候还需要做很多工作.</p>
+<p>基本上，在三层模型里，对任意一层，可以有如下处理</p>
+<ul>
+<li>将这一层根据需要拆解成n层</li>
+<li>将这一层和其他层合并</li>
+<li>这一层和其他层之间增加新的一层</li>
+</ul>
+<p><img src="/images/2020/rubik.jpg"><br>我个人很感兴趣的一件事情：</p>
+<ul>
+<li>三层架构模型能不能像魔方一样经过几次变换然后变成其他架构模型呢？</li>
+</ul>
+<h2 id="传统的DDD分层架构"><a href="#传统的DDD分层架构" class="headerlink" title="传统的DDD分层架构"></a>传统的DDD分层架构</h2><p>  <img src="/images/2020/ddd-traditional4-layers.png"><br>  从概念上来说, 传统的DDD4层模型可以由三层模型稍加改进得来.</p>
+<ul>
+<li>用户接口层， 这层对应三层当中的用户界面层. 可以有两者解读<ul>
+<li>广义上是指UI，API</li>
+<li>狭义上是指API</li>
+</ul>
+</li>
+<li>应用层，组合领域层和调用其他应用层。 这层可以看成是由业务逻辑层拆解而来。</li>
+<li>领域层，这是整个系统的重点，也是兵家必争之地。领域层要确保在整个系统的复用性.这层可以看成是由业务逻辑层拆解而来。这层包括<ul>
+<li>领域服务的定义</li>
+<li>领域对象的定义</li>
+<li>领域事件的发布</li>
+</ul>
+</li>
+<li>基础设施层，包括缓存，队列，网关，数据库，可以对应三层的数据层.</li>
+</ul>
+<p>  这里的特点是任何一层都可以访问基础设施层。 就好像一个组织里，大领导可以过问下层的工作细节，下层可以越级汇报给上层。</p>
+<h2 id="依赖倒置的DDD分层架构"><a href="#依赖倒置的DDD分层架构" class="headerlink" title="依赖倒置的DDD分层架构"></a>依赖倒置的DDD分层架构</h2><p>  <img src="/images/2020/ddd-4-layers.png"><br>   相比于传统的DDD的分层，依赖倒置的分层一点点反直觉。<br>   传统的DDD分层，层和层之间的箭头流向代表着</p>
+<ul>
+<li>调用关系-RPC调用或者发布一个事件</li>
+</ul>
+<p>  但是依赖倒置的DDD分层的箭头带来的确实含义完全不一样的理解</p>
+<ul>
+<li>绿色的箭头代表的不是调用关系，因为很明显技术设施层怎么可能调用用户接口层呢？这是最明显反直觉的一点。所以这里(A-&gt;B)的绿色箭头代表着，B比A要重要，A的任何改动不会影响B,B的变化会影响A.</li>
+<li>黑色的箭头代表着正常的调用。</li>
+<li>这幅图最大的问题在于一个箭头有两种完全不同的语义.</li>
+</ul>
+<h3 id="绿色思考帽"><a href="#绿色思考帽" class="headerlink" title="绿色思考帽"></a>绿色思考帽</h3><p>   想象一个人在飞机上，有四个包裹分别为用户接口层，应用层，领域层，基础设施层，这个四个包裹的重量一样，但价值不一样。现在飞机动力不足了，我们要扔掉包裹，才能让飞机有动力继续飞行. 我们会怎么扔？</p>
+<ul>
+<li>扔第一个包裹。扔掉基础设施层，因为落地之后，换一个基础设施层就好了</li>
+<li>扔第二个包裹。扔掉用户接口层，相比于其他层，用户接口层没那么重要.</li>
+<li>扔第三个包裹。扔掉应用层，相比于领域层，应用层没那么重要.</li>
+</ul>
+<p>  所以我们可以看到领域层是最重要，只要领域层在，一个业务的灵魂就在。正如我们听到的紧紧围绕在XX同志为代表的领导下，开发业务的时候同样如此，要紧密团结在领域层周围做事情.</p>
+<h2 id="DDD-五层架构"><a href="#DDD-五层架构" class="headerlink" title="DDD 五层架构"></a>DDD 五层架构</h2><p>  <img src="/images/2020/ddd-5-layers.png"></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>  一个人在公司里是员工，可以完成上级的任务，在家里就是父亲，可以教育子女. 如何用从代码层面描述这两种场景，而且符合开发者的心智模型？</p>
+<ul>
+<li>张三 + 场景 (公司) -&gt; 完成上级任务</li>
+<li>张三 + 场景（家里）-&gt; 教育子女</li>
+</ul>
+<p>  一个可行的的公式：谁(Who)什么时候(When)在什么地方(where)用什么方式(How)完成了某件事(What)？基本上这个公式可以描述很多场景的行为，这样能保证描述不具备歧义性。比如：我上午骑车去超市买了瓶可乐。</p>
+<h3 id="什么是五层架构？"><a href="#什么是五层架构？" class="headerlink" title="什么是五层架构？"></a>什么是五层架构？</h3><p>  五层架构也叫DCI(Data + Context + Interactive)架构，是2009年由James O. Coplien和Trygve Reenskaug共同提出.<br>  DDD五层是对DDD四层的改进</p>
+<ul>
+<li>Context层 - 由四层的domain拆解而来<ul>
+<li>负责将领域对象变成Role</li>
+</ul>
+</li>
+<li>Domain层 - 由四层的domain拆解而来<ul>
+<li>object - 描述对象的关系</li>
+<li>role - 用来给对象创建一个 role, 员工或父亲。 这个Role可能以后会带来歧义，因为一些权限验证框架里面也由Role这个概念.</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么时候应该用五层架构？"><a href="#什么时候应该用五层架构？" class="headerlink" title="什么时候应该用五层架构？"></a>什么时候应该用五层架构？</h3><ul>
+<li>梳理完整个业务之后，如果一个实体在业务中有多个不同的称呼，这个时候就应当用五层架构模型，如果实体在业务中的称呼是唯一的，那们就四层模型就够了。可能有朋友要问了，如果用四层模型，现在业务实体的称呼只有一个，那将来实体要是有多个称呼可怎么办呢？那就演化到五层。</li>
+</ul>
+<h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png"></p>
+<h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png"></p>
 ]]></content>
       <categories>
         <category>架构</category>
@@ -2120,111 +2225,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>微服务架构二三事</title>
-    <url>/2020/09/20/mircro-services-archi/</url>
-    <content><![CDATA[<p>就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。<br>这篇文章聚焦于传统的架构应该如何过渡到微服务架构。</p>
-<ul>
-<li>传统三层架构</li>
-<li>传统的DDD分层架构</li>
-<li>依赖倒置的DDD分层架构</li>
-<li>DDD 五层架构</li>
-<li>DDD 六层架构</li>
-<li>六边形架构</li>
-<li>整洁架构-洋葱模型</li>
-</ul>
-<span id="more"></span>
-<h2 id="传统的三层架构"><a href="#传统的三层架构" class="headerlink" title="传统的三层架构"></a>传统的三层架构</h2><p><img src="/images/2020/3-layers.png"><br>人往往会忽视简单和习以为常的东西，就比如“好好学习”这句话。<br>三层架构是所有架构的基石和鼻祖，当若干年之后人们再会想架构的时候，首先想到的应该是三层架构。我们应当向三层架构致敬.<br>正如我前面的提到的《分解》，软件开发的核心原则是分解。今天是这个分解，明天是那个分解，分解和分解之间的不同是维度的不同</p>
-<p>根据奥卡姆剃刀原则，如果一个问题有两个模型可以解释，那么肯定选择最简单的那个模型。<br>想到霍金提到的一个例子</p>
-<blockquote>
-<p>两者都是正确的宇宙模型，人们既可以假定地球静止，也可以假定太阳静止来解释星球的运转，只是哥白尼的日心说具有比较简洁的优势，可以用简单的运动方程来解释太阳系行星的运转。因为用地心说来描述星球的运行将非常复杂，不但要考虑天体的旋转，还要考虑地球的自转，因此托勒密虽然制作了以地球为中心的模型，很多现象依然无法解释，不得不用偏心圆和小轮体系来进行修正.</p>
-</blockquote>
-<p>简而言之，地心说本身没有问题，只是在解释宇宙的时候更复杂，不如日心说那么简单. 这个道理通用适用于三层架构模型。</p>
-<p>三层架构不考虑实现，仅仅从概念上来说是完美的。</p>
-<ul>
-<li>数据库 - 代表了信息存储的地方，也代表了事实，可以作为企业决策的依据。</li>
-<li>数据访问层 - 这一层主要用来获取数据库信息。</li>
-<li>业务逻辑层 - 世界上一切行为都可以看作是业务逻辑，这一层主要是加工（分解和组合）信息。</li>
-<li>用户界面层 - 用来显示给用户显示信息。</li>
-</ul>
-<p>三层模型从概念上是抽象度极高的，抽象度高意味着在落地时候还需要做很多工作.</p>
-<p>基本上，在三层模型里，对任意一层，可以有如下处理</p>
-<ul>
-<li>将这一层根据需要拆解成n层</li>
-<li>将这一层和其他层合并</li>
-<li>这一层和其他层之间增加新的一层</li>
-</ul>
-<p><img src="/images/2020/rubik.jpg"><br>我个人很感兴趣的一件事情：</p>
-<ul>
-<li>三层架构模型能不能像魔方一样经过几次变换然后变成其他架构模型呢？</li>
-</ul>
-<h2 id="传统的DDD分层架构"><a href="#传统的DDD分层架构" class="headerlink" title="传统的DDD分层架构"></a>传统的DDD分层架构</h2><p>  <img src="/images/2020/ddd-traditional4-layers.png"><br>  从概念上来说, 传统的DDD4层模型可以由三层模型稍加改进得来.</p>
-<ul>
-<li>用户接口层， 这层对应三层当中的用户界面层. 可以有两者解读<ul>
-<li>广义上是指UI，API</li>
-<li>狭义上是指API</li>
-</ul>
-</li>
-<li>应用层，组合领域层和调用其他应用层。 这层可以看成是由业务逻辑层拆解而来。</li>
-<li>领域层，这是整个系统的重点，也是兵家必争之地。领域层要确保在整个系统的复用性.这层可以看成是由业务逻辑层拆解而来。这层包括<ul>
-<li>领域服务的定义</li>
-<li>领域对象的定义</li>
-<li>领域事件的发布</li>
-</ul>
-</li>
-<li>基础设施层，包括缓存，队列，网关，数据库，可以对应三层的数据层.</li>
-</ul>
-<p>  这里的特点是任何一层都可以访问基础设施层。 就好像一个组织里，大领导可以过问下层的工作细节，下层可以越级汇报给上层。</p>
-<h2 id="依赖倒置的DDD分层架构"><a href="#依赖倒置的DDD分层架构" class="headerlink" title="依赖倒置的DDD分层架构"></a>依赖倒置的DDD分层架构</h2><p>  <img src="/images/2020/ddd-4-layers.png"><br>   相比于传统的DDD的分层，依赖倒置的分层一点点反直觉。<br>   传统的DDD分层，层和层之间的箭头流向代表着</p>
-<ul>
-<li>调用关系-RPC调用或者发布一个事件</li>
-</ul>
-<p>  但是依赖倒置的DDD分层的箭头带来的确实含义完全不一样的理解</p>
-<ul>
-<li>绿色的箭头代表的不是调用关系，因为很明显技术设施层怎么可能调用用户接口层呢？这是最明显反直觉的一点。所以这里(A-&gt;B)的绿色箭头代表着，B比A要重要，A的任何改动不会影响B,B的变化会影响A.</li>
-<li>黑色的箭头代表着正常的调用。</li>
-<li>这幅图最大的问题在于一个箭头有两种完全不同的语义.</li>
-</ul>
-<h3 id="绿色思考帽"><a href="#绿色思考帽" class="headerlink" title="绿色思考帽"></a>绿色思考帽</h3><p>   想象一个人在飞机上，有四个包裹分别为用户接口层，应用层，领域层，基础设施层，这个四个包裹的重量一样，但价值不一样。现在飞机动力不足了，我们要扔掉包裹，才能让飞机有动力继续飞行. 我们会怎么扔？</p>
-<ul>
-<li>扔第一个包裹。扔掉基础设施层，因为落地之后，换一个基础设施层就好了</li>
-<li>扔第二个包裹。扔掉用户接口层，相比于其他层，用户接口层没那么重要.</li>
-<li>扔第三个包裹。扔掉应用层，相比于领域层，应用层没那么重要.</li>
-</ul>
-<p>  所以我们可以看到领域层是最重要，只要领域层在，一个业务的灵魂就在。正如我们听到的紧紧围绕在XX同志为代表的领导下，开发业务的时候同样如此，要紧密团结在领域层周围做事情.</p>
-<h2 id="DDD-五层架构"><a href="#DDD-五层架构" class="headerlink" title="DDD 五层架构"></a>DDD 五层架构</h2><p>  <img src="/images/2020/ddd-5-layers.png"></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>  一个人在公司里是员工，可以完成上级的任务，在家里就是父亲，可以教育子女. 如何用从代码层面描述这两种场景，而且符合开发者的心智模型？</p>
-<ul>
-<li>张三 + 场景 (公司) -&gt; 完成上级任务</li>
-<li>张三 + 场景（家里）-&gt; 教育子女</li>
-</ul>
-<p>  一个可行的的公式：谁(Who)什么时候(When)在什么地方(where)用什么方式(How)完成了某件事(What)？基本上这个公式可以描述很多场景的行为，这样能保证描述不具备歧义性。比如：我上午骑车去超市买了瓶可乐。</p>
-<h3 id="什么是五层架构？"><a href="#什么是五层架构？" class="headerlink" title="什么是五层架构？"></a>什么是五层架构？</h3><p>  五层架构也叫DCI(Data + Context + Interactive)架构，是2009年由James O. Coplien和Trygve Reenskaug共同提出.<br>  DDD五层是对DDD四层的改进</p>
-<ul>
-<li>Context层 - 由四层的domain拆解而来<ul>
-<li>负责将领域对象变成Role</li>
-</ul>
-</li>
-<li>Domain层 - 由四层的domain拆解而来<ul>
-<li>object - 描述对象的关系</li>
-<li>role - 用来给对象创建一个 role, 员工或父亲。 这个Role可能以后会带来歧义，因为一些权限验证框架里面也由Role这个概念.</li>
-</ul>
-</li>
-</ul>
-<h3 id="什么时候应该用五层架构？"><a href="#什么时候应该用五层架构？" class="headerlink" title="什么时候应该用五层架构？"></a>什么时候应该用五层架构？</h3><ul>
-<li>梳理完整个业务之后，如果一个实体在业务中有多个不同的称呼，这个时候就应当用五层架构模型，如果实体在业务中的称呼是唯一的，那们就四层模型就够了。可能有朋友要问了，如果用四层模型，现在业务实体的称呼只有一个，那将来实体要是有多个称呼可怎么办呢？那就演化到五层。</li>
-</ul>
-<h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png"></p>
-<h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png"></p>
-]]></content>
-      <categories>
-        <category>架构</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>微服务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络协议大观园</title>
     <url>/2020/10/27/network-protocol/</url>
     <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
@@ -2336,17 +2336,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>牛刀小试</title>
-    <url>/2019/07/04/new-place/</url>
-    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
-<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
-<ul>
-<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
-<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
     <url>/2020/10/11/performance-1-pc/</url>
     <content><![CDATA[<p>要提高服务器的性能，正常的思路是</p>
@@ -2406,6 +2395,17 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>高性能</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>牛刀小试</title>
+    <url>/2019/07/04/new-place/</url>
+    <content><![CDATA[<p>一直有想写博客的想法，因为各种原因不了了之，也许是搭建博客是太麻烦了。后来看到一个朋友是用Hexo搭建了博客，看上去不错，自己就尝试一下。于是，便有了这个站点。</p>
+<p>以前看见好的帖子或者文章会收藏在印象笔记, 相比于印象笔记，博客的优势就体现在如下方面：</p>
+<ul>
+<li>这是一种输出,输出是一种结果，结果可以引申为某种目的和愿景。在很多场合下，人往往会听到学以致用，知行合一，包括以终为始的习惯，还有什么费曼学习法，都是暗含了输出的思想。</li>
+<li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>编程语言概述</title>
@@ -2880,7 +2880,8 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <h3 id="开发者的角度"><a href="#开发者的角度" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h4 id="Spring-IOC容器创建的大体过程（细节可见IOC时序图）"><a href="#Spring-IOC容器创建的大体过程（细节可见IOC时序图）" class="headerlink" title="Spring IOC容器创建的大体过程（细节可见IOC时序图）"></a>Spring IOC容器创建的大体过程（细节可见IOC时序图）</h4><ul>
 <li>定位 - 设置Bean的路径，创建BeanFactory.</li>
 <li>加载 - 读取BeanDefinition文件.</li>
-<li>注册 - 解析BeanDefinition,并放入IOC容器当中.<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法    * "></a>核心方法    * <a href="https://github.com/yshua5631/spring-framework/blob/master/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550" title="" target="">Refresh</a></h4></li>
+<li>注册 - 解析BeanDefinition,并放入IOC容器当中.<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4></li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/master/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550" title="" target="">Refresh</a></li>
 </ul>
 <h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI和IOC的关系"><a href="#DI和IOC的关系" class="headerlink" title="DI和IOC的关系"></a>DI和IOC的关系</h3><p> IOC更多的是描述了做什么（要隔离规范和实现), DI是IOC的一种实现方式。 此外DL是IOC的另外一种实现方式</p>
@@ -3143,44 +3144,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>如何衡量一个人对技术框架的熟练度?</title>
-    <url>/2020/08/29/tech-proficiency/</url>
-    <content><![CDATA[<p>在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.<br>假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?<br>现在姑且从三个大的角度对技术的熟练度进行划分</p>
-<ul>
-<li>应用<ul>
-<li>简单场景的应用</li>
-<li>复杂场景的应用</li>
-</ul>
-</li>
-<li>设计<ul>
-<li>框架设计的初衷</li>
-<li>框架的核心概念</li>
-<li>框架的设计思路</li>
-<li>框架的设计模式</li>
-<li>框架的设计思想,原则和哲学</li>
-</ul>
-</li>
-<li>实现<ul>
-<li>核心模块的实现细节</li>
-<li>一些模块实现的奇技淫巧</li>
-</ul>
-</li>
-</ul>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="简单场景的应用"><a href="#简单场景的应用" class="headerlink" title="简单场景的应用"></a>简单场景的应用</h3><p>很不幸, 人往往是在框架或者特定的环境下做事的, 长此以往人会形成特定的习惯行为模式,这种特定的习惯会形成一个有陷阱的舒适圈.<br>在实际的工作中, 我们往往知道一个东西是如何使用的就是够了. 比如说这样一个例子, 现在要页面要实现一个新增用户的功能, 基本上需要写存储过程, 写DAL层, 写Service层, 写页面层(包括验证), 然后做相应的测试. 要完成这个例子基本上就是在一个框架下完成的, 每个公司都有自己相应的框架, 不同之处就是名称不一样.<br>在这样的场景下, 我们知道这个api是如何使用的就足够了, 我们也必然会变成一个api熟练工.<br>长此以往, 一年下来如果只是做这种类似的功能, 对自己能力的提升是没有任何帮助的, 换句话说你表面上有的只是一年的经历, 实际上是一个礼拜的经验. 但这事对个人来说只能说是常态, 但对组织来说是必须, 因为一个组织需要的是分工, 分工必然导致一些工作是简单的重复和可替代性, 这种模式下的做事方式是具有可预见性的</p>
-<span id="more"></span>
-<h3 id="复杂场景的应用"><a href="#复杂场景的应用" class="headerlink" title="复杂场景的应用"></a>复杂场景的应用</h3><p>复杂场景一般是指两种情况</p>
-<ul>
-<li>假设有模块A, 由项目组A负责, 模块A会被很多系统调用, 模块A依赖于模块B(项目组B负责), 模块B依赖于模块C(项目组C负责). 这里的复杂度可以细分为两种<ul>
-<li>模块依赖的复杂度, 这里模块依赖会形成一个有向无环图, 如果是一个团队负责这些所有模块, 那么这个复杂度仅仅存在于团队内部.</li>
-<li>如果是不同团队负责不同的模块, 那么就是组织之间沟通的复杂度. 这种类型的复杂度是一种玄学, 往往会伴随着如下名词或短语出现,“集成”,“扯皮”, “等他们数据准备好”, “被他们block住了”</li>
-</ul>
-</li>
-<li>假设模块之间的关系是固定的, 那么随着用户数量的上升, 这个框架在性能方面是否还能扛得住? 量变会引起质变, 在其余什么都不变的情况下,仅仅是用户量的提升, 理论上会导致系统扛不住. 这里会有一个很自然而然的问题, 这个框架或者系统的极限是什么? 遗憾的是, 只有大公司才有会遇到这个问题, 对于大部分公司开发者而言, 是没有这样的实操经验的.</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
-<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>]]></content>
-  </entry>
-  <entry>
     <title>系统的约束和动力</title>
     <url>/2020/09/18/system-restrain-power/</url>
     <content><![CDATA[<p><img src="/images/2020/car.png"><br>一个系统能发展是有动力，如果要让系统发展的好则需要约束。就好像汽车的前进是靠发动机，汽车的减速靠的是刹车，汽车行进的方向靠的是方向盘。发动机是动力，刹车和方向盘是约束.<br>那么动力和约束与生活有什么关系呢？ 让我们从直觉和感性的角度来一场探索之旅吧</p>
@@ -3228,6 +3191,44 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>思维</tag>
         <tag>系统</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>如何衡量一个人对技术框架的熟练度?</title>
+    <url>/2020/08/29/tech-proficiency/</url>
+    <content><![CDATA[<p>在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.<br>假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?<br>现在姑且从三个大的角度对技术的熟练度进行划分</p>
+<ul>
+<li>应用<ul>
+<li>简单场景的应用</li>
+<li>复杂场景的应用</li>
+</ul>
+</li>
+<li>设计<ul>
+<li>框架设计的初衷</li>
+<li>框架的核心概念</li>
+<li>框架的设计思路</li>
+<li>框架的设计模式</li>
+<li>框架的设计思想,原则和哲学</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>核心模块的实现细节</li>
+<li>一些模块实现的奇技淫巧</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="简单场景的应用"><a href="#简单场景的应用" class="headerlink" title="简单场景的应用"></a>简单场景的应用</h3><p>很不幸, 人往往是在框架或者特定的环境下做事的, 长此以往人会形成特定的习惯行为模式,这种特定的习惯会形成一个有陷阱的舒适圈.<br>在实际的工作中, 我们往往知道一个东西是如何使用的就是够了. 比如说这样一个例子, 现在要页面要实现一个新增用户的功能, 基本上需要写存储过程, 写DAL层, 写Service层, 写页面层(包括验证), 然后做相应的测试. 要完成这个例子基本上就是在一个框架下完成的, 每个公司都有自己相应的框架, 不同之处就是名称不一样.<br>在这样的场景下, 我们知道这个api是如何使用的就足够了, 我们也必然会变成一个api熟练工.<br>长此以往, 一年下来如果只是做这种类似的功能, 对自己能力的提升是没有任何帮助的, 换句话说你表面上有的只是一年的经历, 实际上是一个礼拜的经验. 但这事对个人来说只能说是常态, 但对组织来说是必须, 因为一个组织需要的是分工, 分工必然导致一些工作是简单的重复和可替代性, 这种模式下的做事方式是具有可预见性的</p>
+<span id="more"></span>
+<h3 id="复杂场景的应用"><a href="#复杂场景的应用" class="headerlink" title="复杂场景的应用"></a>复杂场景的应用</h3><p>复杂场景一般是指两种情况</p>
+<ul>
+<li>假设有模块A, 由项目组A负责, 模块A会被很多系统调用, 模块A依赖于模块B(项目组B负责), 模块B依赖于模块C(项目组C负责). 这里的复杂度可以细分为两种<ul>
+<li>模块依赖的复杂度, 这里模块依赖会形成一个有向无环图, 如果是一个团队负责这些所有模块, 那么这个复杂度仅仅存在于团队内部.</li>
+<li>如果是不同团队负责不同的模块, 那么就是组织之间沟通的复杂度. 这种类型的复杂度是一种玄学, 往往会伴随着如下名词或短语出现,“集成”,“扯皮”, “等他们数据准备好”, “被他们block住了”</li>
+</ul>
+</li>
+<li>假设模块之间的关系是固定的, 那么随着用户数量的上升, 这个框架在性能方面是否还能扛得住? 量变会引起质变, 在其余什么都不变的情况下,仅仅是用户量的提升, 理论上会导致系统扛不住. 这里会有一个很自然而然的问题, 这个框架或者系统的极限是什么? 遗憾的是, 只有大公司才有会遇到这个问题, 对于大部分公司开发者而言, 是没有这样的实操经验的.</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>]]></content>
   </entry>
   <entry>
     <title>三适原则</title>
