@@ -678,89 +678,6 @@
       </tags>
   </entry>
   <entry>
-    <title>数据，信息，知识和智慧</title>
-    <url>/2020/09/10/data-knowledge/</url>
-    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
-<p>下面简单的谈谈我对这幅图片的个人理解.</p>
-<ul>
-<li>数据</li>
-<li>信息</li>
-<li>知识</li>
-<li>智慧</li>
-</ul>
-<span id="more"></span>
-<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
-<ul>
-<li>程序的日志</li>
-<li>每天的步行记录</li>
-<li>太阳升起了</li>
-</ul>
-<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
-<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
-<ul>
-<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
-<li>菜谱</li>
-<li>两人之间日常的交流</li>
-<li>软件的安装手册</li>
-<li>新闻报道</li>
-<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
-<li>一个谣言或者情报</li>
-<li>代码库</li>
-</ul>
-<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
-<p>  特点</p>
-<ul>
-<li>适合解决某个具体的问题。</li>
-<li>结果是可以量化的和感知的。</li>
-<li>不具备通用型.</li>
-</ul>
-<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
-<ul>
-<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
-<li>牛顿的三大定律</li>
-<li>各个学科的模型</li>
-<li>做事的套路或者最佳实践</li>
-<li>思维框架</li>
-</ul>
-<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
-<ul>
-<li>《设计模式》</li>
-<li>《模型思维》</li>
-</ul>
-<p>  特点 </p>
-<ul>
-<li>适合解决某一类问题</li>
-<li>往往要结合上下文具体情况具体分析</li>
-</ul>
-<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
-<ul>
-<li>哲学。</li>
-<li>否极泰来</li>
-<li>塞翁失马，焉知非福</li>
-<li>以人为本</li>
-</ul>
-<p>  代表性的书籍</p>
-<ul>
-<li>《程序员修炼之道》</li>
-<li>《周易》</li>
-</ul>
-<p>  特点</p>
-<ul>
-<li>适用于时间跨度长的事情</li>
-<li>适用于规模比较大的组织</li>
-<li>比较灵活</li>
-<li>效果很能被直接感知和量化</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
-]]></content>
-      <categories>
-        <category>认知</category>
-      </categories>
-      <tags>
-        <tag>认知</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之离弦之箭 - 高并发</title>
     <url>/2020/10/06/concurrent/</url>
     <content><![CDATA[<p>一个系统如果足够稳定，而且客户对它也很满意，我们一般没有去优化它的必要，但如果随着用户量增加，系统变的缓慢，我们就有优化它的必要性了. 借用我前面博文《一种可以衡量事物的指标-快和好》，一个系统追求的目标之一是快，但快的前提的是<br>好，也就是稳，否则步伐太大了就容易扯着蛋了. 优化系统是大的话题，这里只讨论其中的一个小领域-高并发.<br>任何一个计算机的问题，都能从现实中找到雏形和模型，高并发也不例外。高并发的内容还是比较多的，所以不同类型的高并发问题需要不同的角度，就好像作战的时候，战斗机需要在高空1万米，也需要突然下降到高空1千米，也有可能是潜艇下沉到水下几千米配合作战. 这种思维模型我给它取了个名字叫“海陆空”模型.</p>
@@ -894,6 +811,102 @@
       </tags>
   </entry>
   <entry>
+    <title>数据，信息，知识和智慧</title>
+    <url>/2020/09/10/data-knowledge/</url>
+    <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
+<p>下面简单的谈谈我对这幅图片的个人理解.</p>
+<ul>
+<li>数据</li>
+<li>信息</li>
+<li>知识</li>
+<li>智慧</li>
+</ul>
+<span id="more"></span>
+<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>  <img src="/images/2020/data.jpg"><br>  一般而言， 数据是我们观察到的或者看到的现象.</p>
+<ul>
+<li>程序的日志</li>
+<li>每天的步行记录</li>
+<li>太阳升起了</li>
+</ul>
+<p>  数据是属于事实层面的东西。数据没有真假，不管你相信不相信， 它就在那里.</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>  <img src="/images/2020/chart.png"><br>  信息是对数据进行的简单加工.</p>
+<ul>
+<li> 每天步行的数量， 再加上时间，可以计算出上午步行了多少步，下午步行了多少步. 那么这就是一段信息</li>
+<li>菜谱</li>
+<li>两人之间日常的交流</li>
+<li>软件的安装手册</li>
+<li>新闻报道</li>
+<li>一篇耸人听闻的文章，比如《太强了，2020最新Java核心知识点整理，超全!》</li>
+<li>一个谣言或者情报</li>
+<li>代码库</li>
+</ul>
+<p>  我们日常生活中接触到最多的就是信息。信息有真假和对错之分。<br>  比如头条上的文章，有不少是标题党，是垃圾信息. 所以学会鉴别垃圾信息很重要， 可以减轻大脑的负担， 让生活做减法， 做到断舍离.<br>  根据二八法制，生活中真正有用的信息只有20%.</p>
+<p>  特点</p>
+<ul>
+<li>适合解决某个具体的问题。</li>
+<li>结果是可以量化的和感知的。</li>
+<li>不具备通用型.</li>
+</ul>
+<h2 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h2><p>  <img src="/images/2020/tree.png"><br>  知识是对数据的再加工，知识更多的是属于观点。</p>
+<ul>
+<li>从上面的步行数据，发现这个人每天步行数有2万步， 可以推断这个人是一个勤劳的人。 这就是一个知识</li>
+<li>牛顿的三大定律</li>
+<li>各个学科的模型</li>
+<li>做事的套路或者最佳实践</li>
+<li>思维框架</li>
+</ul>
+<p>  知识一定是表达了一个观点或者主题。它可以解释世界以及可以更好的指导实践。 根据二八法则， 对自己有用的知识只有20%.<br>  代表性的书籍</p>
+<ul>
+<li>《设计模式》</li>
+<li>《模型思维》</li>
+</ul>
+<p>  特点 </p>
+<ul>
+<li>适合解决某一类问题</li>
+<li>往往要结合上下文具体情况具体分析</li>
+</ul>
+<h2 id="智慧"><a href="#智慧" class="headerlink" title="智慧"></a>智慧</h2><p> <img src="/images/2020/yin-yang.png"><br>  智慧严格来说，是知识的一种，也属于一种观点，普适性较强，是老祖宗的长期实践总结下来的知识。</p>
+<ul>
+<li>哲学。</li>
+<li>否极泰来</li>
+<li>塞翁失马，焉知非福</li>
+<li>以人为本</li>
+</ul>
+<p>  代表性的书籍</p>
+<ul>
+<li>《程序员修炼之道》</li>
+<li>《周易》</li>
+</ul>
+<p>  特点</p>
+<ul>
+<li>适用于时间跨度长的事情</li>
+<li>适用于规模比较大的组织</li>
+<li>比较灵活</li>
+<li>效果很能被直接感知和量化</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据属于事实。<br>信息，知识和智慧属于观点。<br>数据的终极使命是形成智慧。<br>数据，信息，知识，智慧都属于知的范畴。知是起点， 知的终点是行.<br>数据 -》信息-》知识-》智慧， 这是一个熵简的过程。<br>我们在求学的过程中， 就是不断读书，形成观点的过程。<br>我们在工作中就是在不断梳理和整合信息，形成观点和解决问题的过程。<br>这是一个无序到有秩序的过程。<br>这是一个需要长时间精细加工的过程。<br>这是一个从无价值到有价值的过程。<br>这是一个从低维到高维的过程。<br>这是一个从具体到抽象的过程。<br>最后最重要的是， 当我们看文章，或者刷微博，或者和别人交流的时候，要能鉴别出什么是有用的数据，什么是有用的信息，什么是有用的知识，什么是智慧</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>人多力量大 - 分布式导言</title>
     <url>/2020/10/11/distributed-system/</url>
     <content><![CDATA[<p>一个人抗一个木头会很重，如果两个人一起抗木头，两个人承担的分量会少点，如果三个人呢？那么三个人承担的分量会更少. 换言之，如果从整体上看，三个人的力量要大于两个人<br>现在的应用的数据变得越来越大，业务的流量越来越多了，分布式成为了一个不可避免的趋势。<br>这篇文章主要谈谈</p>
@@ -961,19 +974,6 @@
       <tags>
         <tag>分布式</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
   </entry>
   <entry>
     <title>Docker初回忆</title>
@@ -1145,6 +1145,24 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2019/07/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>前端发展史</title>
     <url>/2020/09/07/history-of-frontend-development/</url>
     <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
@@ -1185,24 +1203,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 </li>
 </ul>
 <h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/07/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
   <entry>
