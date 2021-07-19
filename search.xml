@@ -121,175 +121,6 @@
       </tags>
   </entry>
   <entry>
-    <title>网络协议之靠谱邮差 - TCP</title>
-    <url>/2020/11/03/TCP/</url>
-    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
-<ul>
-<li>什么是TCP</li>
-<li>TCP要解决什么问题</li>
-<li>TCP是如何解决这些问题的</li>
-<li>拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
-<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
-<ul>
-<li>可靠<ul>
-<li>如果发送的包丢了，应该如何处理？</li>
-<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
-</ul>
-</li>
-<li>有效<ul>
-<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
-</ul>
-</li>
-</ul>
-<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
-<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
-<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
-<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
-<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
-<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
-<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
-</ul>
-<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
-<ul>
-<li>客户端知道自己和对方有接受和发送的能力</li>
-<li>服务端知道自己和对方有接受和发送的能力</li>
-</ul>
-<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
-<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
-<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
-<ul>
-<li>什么时候进行包重传？</li>
-<li>重传哪些包？</li>
-<li>如何进行重转</li>
-</ul>
-<p>  服务端返回 ACK 包的机制</p>
-<ul>
-<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
-</ul>
-<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
-<ul>
-<li>超时重传<ul>
-<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
-<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
-<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
-</ul>
-</li>
-<li>快速重传<ul>
-<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
-<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
-<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
-<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
-<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
-</ul>
-</li>
-<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
-</ul>
-</li>
-<li>SACK - Selective Acknowledgment<ul>
-<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
-<li>SACK需要客户端和服务端同时支持</li>
-<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
-</ul>
-</li>
-<li>D-SACK - Duplicate SACK<ul>
-<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
-<li>通过D-SACK, 我们可以知道<ul>
-<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
-<li>先发的包后到的情况.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
-<ul>
-<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
-<li>网卡接受到的数据会放到内核缓冲区</li>
-<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
-<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
-<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
-<li>将发送窗口的数据挪到内核缓冲区</li>
-<li>内核缓冲区的数据从网卡发送出去</li>
-</ul>
-<p>拾遗</p>
-<ul>
-<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
-<li>TCP头里有一个字段叫 Window代表窗口大小</li>
-<li>窗口的大小是有接受方的窗口大小决定的.</li>
-<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
-<li>窗口为0会引起死锁</li>
-<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
-<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
-<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
-<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
-</ul>
-</li>
-<li>流量控制和用塞控制的区别是什么？<ul>
-<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
-<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
-<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
-</ul>
-</li>
-</ul>
-<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
-<ul>
-<li>客户端发送FIN，代表要释放发送通道</li>
-<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
-<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
-<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
-</ul>
-<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
-<ul>
-<li>车主上高速的时候，收费站限流，只开几个闸口</li>
-<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
-<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
-</ul>
-<p>网络拥塞发生的时候，有如下策略</p>
-<ul>
-<li>慢启动<ul>
-<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
-<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
-</ul>
-</li>
-<li>拥塞避免<ul>
-<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
-</ul>
-</li>
-<li>拥塞发生<ul>
-<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
-<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
-<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
-</ul>
-</li>
-<li>快速恢复<ul>
-<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
-</ul>
-</li>
-</ul>
-<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
-<ul>
-<li>尽量的发包，而不是不发.</li>
-<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
-<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
-<ul>
-<li>移动基站的弱网环境</li>
-<li>防火墙针对性的丢包</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>协议</tag>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统行为之警卫局 - 登录和授权</title>
     <url>/2020/11/22/auth/</url>
     <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
@@ -489,6 +320,175 @@
       <tags>
         <tag>安全</tag>
         <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络协议之靠谱邮差 - TCP</title>
+    <url>/2020/11/03/TCP/</url>
+    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
+<ul>
+<li>什么是TCP</li>
+<li>TCP要解决什么问题</li>
+<li>TCP是如何解决这些问题的</li>
+<li>拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
+<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
+<ul>
+<li>可靠<ul>
+<li>如果发送的包丢了，应该如何处理？</li>
+<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
+</ul>
+</li>
+<li>有效<ul>
+<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
+</ul>
+</li>
+</ul>
+<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
+<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
+<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
+<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
+<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
+<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
+</ul>
+<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
+<ul>
+<li>客户端知道自己和对方有接受和发送的能力</li>
+<li>服务端知道自己和对方有接受和发送的能力</li>
+</ul>
+<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
+<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
+<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
+<ul>
+<li>什么时候进行包重传？</li>
+<li>重传哪些包？</li>
+<li>如何进行重转</li>
+</ul>
+<p>  服务端返回 ACK 包的机制</p>
+<ul>
+<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
+</ul>
+<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
+<ul>
+<li>超时重传<ul>
+<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
+<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
+<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
+</ul>
+</li>
+<li>快速重传<ul>
+<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
+<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
+<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
+<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
+<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
+</ul>
+</li>
+<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
+</ul>
+</li>
+<li>SACK - Selective Acknowledgment<ul>
+<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
+<li>SACK需要客户端和服务端同时支持</li>
+<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
+</ul>
+</li>
+<li>D-SACK - Duplicate SACK<ul>
+<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
+<li>通过D-SACK, 我们可以知道<ul>
+<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
+<li>先发的包后到的情况.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
+<ul>
+<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
+<li>网卡接受到的数据会放到内核缓冲区</li>
+<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
+<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
+<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
+<li>将发送窗口的数据挪到内核缓冲区</li>
+<li>内核缓冲区的数据从网卡发送出去</li>
+</ul>
+<p>拾遗</p>
+<ul>
+<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
+<li>TCP头里有一个字段叫 Window代表窗口大小</li>
+<li>窗口的大小是有接受方的窗口大小决定的.</li>
+<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
+<li>窗口为0会引起死锁</li>
+<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
+<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
+<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
+<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
+</ul>
+</li>
+<li>流量控制和用塞控制的区别是什么？<ul>
+<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
+<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
+<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
+</ul>
+</li>
+</ul>
+<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
+<ul>
+<li>客户端发送FIN，代表要释放发送通道</li>
+<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
+<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
+<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
+</ul>
+<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
+<ul>
+<li>车主上高速的时候，收费站限流，只开几个闸口</li>
+<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
+<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
+</ul>
+<p>网络拥塞发生的时候，有如下策略</p>
+<ul>
+<li>慢启动<ul>
+<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
+<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
+</ul>
+</li>
+<li>拥塞避免<ul>
+<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
+</ul>
+</li>
+<li>拥塞发生<ul>
+<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
+<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
+<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
+</ul>
+</li>
+<li>快速恢复<ul>
+<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
+</ul>
+</li>
+</ul>
+<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
+<ul>
+<li>尽量的发包，而不是不发.</li>
+<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
+<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
+<ul>
+<li>移动基站的弱网环境</li>
+<li>防火墙针对性的丢包</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>协议</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2867,10 +2867,7 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>Guice - Google出品</li>
 <li>如果没有上述框架，只能手写了</li>
 </ul>
-<h3 id="使用者的角度"><a href="#使用者的角度" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 创建IOC容器</span>
-<span class="token class-name">ClassPathXmlApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"defaultconstruct/user.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 实例化Bean,包含依赖注入的过程</span>
-<span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="使用者的角度"><a href="#使用者的角度" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h4><p>{ % codeblock lang:java % }<br>  // 创建IOC容器<br>  ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(“defaultconstruct/user.xml”);<br>  // 实例化Bean,包含依赖注入的过程<br>  User user = (User) context.getBean(“user”);{ % endcodeblock % }</p>
 <h4 id="有哪些框架支持IOC功能？-1"><a href="#有哪些框架支持IOC功能？-1" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h4><ul>
 <li>.net的Autofac</li>
 <li>HK2 - 轻量级的IOC框架，</li>
@@ -2883,51 +2880,40 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
 </ul>
 <h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4><ul>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638" title="" target="">refresh</a>
-<ul>
-<li>prepareRefresh<ul>
-<li>preInstantiateSingletons<ul>
+<li>{ % link refresh <a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638">https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638</a> % }<ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L645-L682">prepareRefresh</a><ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java#L912-L978">preInstantiateSingletons</a><ul>
 <li>getBean</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>obtainFreshBeanFactory<ul>
-<li>refreshBeanFactory</li>
-<li>customizeBeanFactory</li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L122-L139">refreshBeanFactory</a></li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L218-L227">customizeBeanFactory</a></li>
 <li>loadBeanDefinitions</li>
 </ul>
 </li>
 <li>prepareBeanFactory</li>
-<li>finishBeanFactoryInitialization</li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L929-L961">finishBeanFactoryInitialization</a></li>
 </ul>
 </li>
 </ul>
 <h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI和IOC的关系"><a href="#DI和IOC的关系" class="headerlink" title="DI和IOC的关系"></a>DI和IOC的关系</h3><p> IOC更多的是描述了做什么（要隔离规范和实现), DI是IOC的一种实现方式。 此外DL是IOC的另外一种实现方式</p>
 <h3 id="使用者的角度-1"><a href="#使用者的角度-1" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="warmup-一个简单的依赖注入例子"><a href="#warmup-一个简单的依赖注入例子" class="headerlink" title="warmup: 一个简单的依赖注入例子"></a>warmup: 一个简单的依赖注入例子</h4><ul>
-<li><p>定义Bean</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedisConfig</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Primary</span> <span class="token comment">/* 在装配的时候，可能会匹配多个Bean, Primary代表了这个Bean会被优先选择 */</span>
-    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"redisTemplate"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> <span class="token function">redisTemplate</span><span class="token punctuation">(</span><span class="token class-name">RedisConnectionFactory</span> factory<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> template <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> template<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>注入Bean</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">AppRedisCacheManager</span> <span class="token keyword">implements</span> <span class="token class-name">IGlobalCache</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> redisTemplate<span class="token punctuation">;</span>
-
-    <span class="token comment">/* 注入RedisTemplate实例 */</span>
-    <span class="token comment">/* Autowired是Spring特有的注解，如果想让项目不局限于Spring可以使用Inject注解 */</span>
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">public</span> <span class="token class-name">AppRedisCacheManager</span><span class="token punctuation">(</span><span class="token class-name">RedisTemplate</span> redisTemplate<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate <span class="token operator">=</span> redisTemplate<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>定义Bean<br>{ % codeblock lang:java % }<br>@Configuration<br>public class RedisConfig {<br> @Primary /* 在装配的时候，可能会匹配多个Bean, Primary代表了这个Bean会被优先选择 */<br> @Bean(name = “redisTemplate”)<br> public RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory factory) {</p>
+<pre><code> RedisTemplate&lt;String, Object&gt; template = new RedisTemplate&lt;&gt;();
+ return template;
+</code></pre>
+<p> }<br>}<br>{ % endcodeblock % }</p>
+</li>
+<li><p>注入Bean<br>{ % codeblock lang:java % }<br>@Component<br>public final class AppRedisCacheManager implements IGlobalCache {<br>   private RedisTemplate&lt;String, Object&gt; redisTemplate;</p>
+<p>   /* 注入RedisTemplate实例 <em>/<br>   /</em> Autowired是Spring特有的注解，如果想让项目不局限于Spring可以使用Inject注解 */<br>   @Autowired<br>   public AppRedisCacheManager(RedisTemplate redisTemplate){</p>
+<pre><code>   this.redisTemplate = redisTemplate;
+</code></pre>
+<p>   }<br>}<br>{ % endcodeblock % }</p>
+</li>
 </ul>
 <h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>   上面的例子是典型的基于注解的自动注入。我看过不少介绍依赖注入的文章，有说有三种，有的说有五种. 按照我自己的理解，依赖注入有两大方式</p>
 <ul>
@@ -2937,10 +2923,8 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>@Autowired - Spring特有的注解，默认按类型查找，如果找不到，按照名字查找.<ul>
 <li>Autowire加载Bean可能失败的原因<ul>
 <li>被加载的Bean没有加上@Service相关的注解</li>
-<li>加了@Service的注解,但没有被@ComponentScan扫描。<div class="note info"><p>在Springboot中, @<mark class="label danger">SpringBootApplication</mark> 注解包含了@<mark class="label danger">ComponentScan， 这就是为什么在Spring Boot应用中看不到ComponentScan注解的原因</mark>
-              </p>
-</div></li>
-<li>Spring MVC 的filter不能加载某个Bean, 因为在这个时候Bean还没有被初始化. 解决的办法是拿到<mark class="label danger">ApplycationContext</mark> 然后调用<mark class="label danger">getBean</mark>方法.</li>
+<li>加了@Service的注解,但没有被@ComponentScan扫描。<br>{ % note info % }<br>  在Springboot中, @{ % label danger@SpringBootApplication % } 注解包含了@{ % label danger@ComponentScan， 这就是为什么在Spring Boot应用中看不到ComponentScan注解的原因 % }<br>{ % endnote % }</li>
+<li>Spring MVC 的filter不能加载某个Bean, 因为在这个时候Bean还没有被初始化. 解决的办法是拿到{ % label danger@ApplycationContext % } 然后调用{ % label danger@getBean % }方法.</li>
 <li>循环依赖</li>
 </ul>
 </li>
@@ -2968,14 +2952,13 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
 <li>依赖查找是什么？</li>
 <li>规范<ul>
-<li><a href="https://jcp.org/en/jsr/detail?id=330" title="" target="">JSR-330</a>
-<ul>
+<li>{ % link JSR-330 <a href="https://jcp.org/en/jsr/detail?id=330">https://jcp.org/en/jsr/detail?id=330</a> % }<ul>
 <li>Spring 从3.0开始支持JSR-330规范</li>
 <li>@Inject和Spring的@Autowired等价</li>
 <li>@Named和Spring的@Component等价</li>
 </ul>
 </li>
-<li><a href="https://jcp.org/en/jsr/detail?id=250" title="" target="">JSR-250</a></li>
+<li>{ % link JSR-250 <a href="https://jcp.org/en/jsr/detail?id=250">https://jcp.org/en/jsr/detail?id=250</a> % }</li>
 </ul>
 </li>
 </ul>
