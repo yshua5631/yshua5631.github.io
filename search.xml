@@ -121,6 +121,175 @@
       </tags>
   </entry>
   <entry>
+    <title>网络协议之靠谱邮差 - TCP</title>
+    <url>/2020/11/03/TCP/</url>
+    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
+<ul>
+<li>什么是TCP</li>
+<li>TCP要解决什么问题</li>
+<li>TCP是如何解决这些问题的</li>
+<li>拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
+<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
+<ul>
+<li>可靠<ul>
+<li>如果发送的包丢了，应该如何处理？</li>
+<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
+</ul>
+</li>
+<li>有效<ul>
+<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
+</ul>
+</li>
+</ul>
+<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
+<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
+<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
+<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
+<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
+<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
+</ul>
+<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
+<ul>
+<li>客户端知道自己和对方有接受和发送的能力</li>
+<li>服务端知道自己和对方有接受和发送的能力</li>
+</ul>
+<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
+<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
+<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
+<ul>
+<li>什么时候进行包重传？</li>
+<li>重传哪些包？</li>
+<li>如何进行重转</li>
+</ul>
+<p>  服务端返回 ACK 包的机制</p>
+<ul>
+<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
+</ul>
+<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
+<ul>
+<li>超时重传<ul>
+<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
+<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
+<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
+</ul>
+</li>
+<li>快速重传<ul>
+<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
+<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
+<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
+<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
+<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
+</ul>
+</li>
+<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
+</ul>
+</li>
+<li>SACK - Selective Acknowledgment<ul>
+<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
+<li>SACK需要客户端和服务端同时支持</li>
+<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
+</ul>
+</li>
+<li>D-SACK - Duplicate SACK<ul>
+<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
+<li>通过D-SACK, 我们可以知道<ul>
+<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
+<li>先发的包后到的情况.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
+<ul>
+<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
+<li>网卡接受到的数据会放到内核缓冲区</li>
+<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
+<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
+<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
+<li>将发送窗口的数据挪到内核缓冲区</li>
+<li>内核缓冲区的数据从网卡发送出去</li>
+</ul>
+<p>拾遗</p>
+<ul>
+<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
+<li>TCP头里有一个字段叫 Window代表窗口大小</li>
+<li>窗口的大小是有接受方的窗口大小决定的.</li>
+<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
+<li>窗口为0会引起死锁</li>
+<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
+<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
+<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
+<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
+</ul>
+</li>
+<li>流量控制和用塞控制的区别是什么？<ul>
+<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
+<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
+<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
+</ul>
+</li>
+</ul>
+<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
+<ul>
+<li>客户端发送FIN，代表要释放发送通道</li>
+<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
+<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
+<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
+</ul>
+<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
+<ul>
+<li>车主上高速的时候，收费站限流，只开几个闸口</li>
+<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
+<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
+</ul>
+<p>网络拥塞发生的时候，有如下策略</p>
+<ul>
+<li>慢启动<ul>
+<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
+<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
+</ul>
+</li>
+<li>拥塞避免<ul>
+<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
+</ul>
+</li>
+<li>拥塞发生<ul>
+<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
+<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
+<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
+</ul>
+</li>
+<li>快速恢复<ul>
+<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
+</ul>
+</li>
+</ul>
+<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
+<ul>
+<li>尽量的发包，而不是不发.</li>
+<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
+<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
+<ul>
+<li>移动基站的弱网环境</li>
+<li>防火墙针对性的丢包</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>协议</tag>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>系统行为之警卫局 - 登录和授权</title>
     <url>/2020/11/22/auth/</url>
     <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
@@ -320,175 +489,6 @@
       <tags>
         <tag>安全</tag>
         <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络协议之靠谱邮差 - TCP</title>
-    <url>/2020/11/03/TCP/</url>
-    <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
-<ul>
-<li>什么是TCP</li>
-<li>TCP要解决什么问题</li>
-<li>TCP是如何解决这些问题的</li>
-<li>拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>TCP全称是Transmission control Protocal, 是一个工作在传输层上的协议. 它只关心数据如何可靠和有效的到达目的地，但不关心数据如何到底目的地。</p>
-<h2 id="TCP要解决什么问题"><a href="#TCP要解决什么问题" class="headerlink" title="TCP要解决什么问题"></a>TCP要解决什么问题</h2><p>TCP要解决的问题是数据如何可靠和有效的到达目的地。</p>
-<ul>
-<li>可靠<ul>
-<li>如果发送的包丢了，应该如何处理？</li>
-<li>数据包是有顺序的，如何保证接受方拿到的包也是有顺序的？</li>
-</ul>
-</li>
-<li>有效<ul>
-<li>如果服务端比较忙或者比较闲，客户端应该采取什么样的策略来发送包？</li>
-</ul>
-</li>
-</ul>
-<p>TCP就是为了解决这三大问题而存在。 但这三大问题会衍生一些子问题.</p>
-<p>回到一开始的那个问题： 光缆都断了，数据还怎么可靠传输呢？<br>答案是光缆断了，数据没法可靠传输。<br>网络不可靠是一个事实和大前提， 在网络不可靠的大前提，TCP尽可能的保证可靠的数据传输。<br>一个不太恰当的比喻： 张三娶了一个漂亮老婆，这个老婆有点花心和不可靠。 但即使老婆花心和不可靠， 那日子是不是还得照样过？所以张三就想了各种办法，比如平时对老婆好点，让她收收心，平时也查查她的手机，看看是否有可疑的聊天记录。张三所做的一切就是让一个本性不靠谱的女人行为上稍微靠谱一点. </p>
-<h2 id="TCP是如何解决这些问题的"><a href="#TCP是如何解决这些问题的" class="headerlink" title="TCP是如何解决这些问题的"></a>TCP是如何解决这些问题的</h2><p>一个完成的TCP过程是建立连接，收发数据，释放连接.</p>
-<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><ul>
-<li>TCP的包是没有IP地址的，那么是IP层的事情.</li>
-<li>TCP连接是点对点的，也就是说一个TCP连接对应的是两个端口.</li>
-<li>ACKn代表着到目前为止，对方序号n-1的之前的数据都正常收到了，也代表期望对象下次发送序号为n的数据.</li>
-</ul>
-<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>建立连接是为了进行可靠的数据传输做保证。就好比去拜访一位朋友，得事先打个招呼告知一下.<br>TCP建立连接是通过三次握手的策略来保证的。三次握手保证了</p>
-<ul>
-<li>客户端知道自己和对方有接受和发送的能力</li>
-<li>服务端知道自己和对方有接受和发送的能力</li>
-</ul>
-<p>第一次握手是保证了服务端知道自己有接受能力，对方有发送能力.<br>第二次握手是保证了客户端知道自己有发送和接受能力，服务端有发送和接受能力.<br>第三次握手是保证了服务端知道客户端自己有发送的能力，客户端有接受能力.</p>
-<p>从这里可以看出，二次握手是不能保证服务端知道自己是否有发送的能力，客户端是否有接受的能力.<br>四次握手也可以，但画蛇添足了.</p>
-<h3 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h3><h4 id="客户端给服务端的发送数据包，数据包丢了怎么办？"><a href="#客户端给服务端的发送数据包，数据包丢了怎么办？" class="headerlink" title="客户端给服务端的发送数据包，数据包丢了怎么办？"></a>客户端给服务端的发送数据包，数据包丢了怎么办？</h4><p>  如果快递员给别人送货，货物弄丢了，快递员的选择很简单重发一个或者赔偿, TCP也不例外， 这就是TCP的重传策略. 对于重传，我们需要考虑以下问题 </p>
-<ul>
-<li>什么时候进行包重传？</li>
-<li>重传哪些包？</li>
-<li>如何进行重转</li>
-</ul>
-<p>  服务端返回 ACK 包的机制</p>
-<ul>
-<li>客户端发送了1, 2, 3, 4, 5 总共5个包，服务端收到了1, 2，会返回ACK3, 然后收到了4(此时没有收到 3)， 那么服务端应该返回什么？ 还是ACK3. ACKn的真正含义是服务端已经收到了n-1个连续的包, 并期望客户端发送第n个包.</li>
-</ul>
-<p>  假设存在一种上帝策略X, 这个策略可以让客户端及时的发送服务端所需要的包，且不重复.<br>  围绕上面三个问题，看看下面四种重传策略是如何逼近这个上帝策略的.</p>
-<ul>
-<li>超时重传<ul>
-<li>超时重传的思路是：设定一个定时器，如果在规定时间内没有响应，则重发数据包.</li>
-<li>超时重传的思路是朴素和直观的。但超时时间应该怎么定？如果时间间隔太长，则发包的效率太慢，如果时间间隔太短，会导致响应包还没收到，就重发了，就导致更多的重发。目前主流的策略是超时重传的时间（Retransmission Timeout）略大于包往返时间（Round-Trip Time）。</li>
-<li>实际情况是 ，RTT是动态的，所以相应的 RTO也是动态的. RTO的计算规则相对复杂，具体公式可参考RFC 6298. 这里顺便说一下，这个公式的一些参数是长期实践得到的，无法从逻辑上推导出来，有点类似于现在的机器学习现状，参数调一调，发现可以得到预期的结果，但没有办法解释为什么，简单的说就是两眼一抹黑，完全靠不断的尝试.</li>
-</ul>
-</li>
-<li>快速重传<ul>
-<li>快速重传的思路是从多次发送包的响应值中找规律。</li>
-<li>如果客户端发送1，2，3，4，5份数据， 1先到了，ack返回2，然后2因为某种原因没收到，3到了，ack返回的还是2，4，5也到了，ack还是2. 至此，客户端收到了三个ack=2的包，就知道2出问题了。于是重发2，因为3，4，5都收到了，ack返回的是6.</li>
-<li>上面这个例子是一个比较理想化的例子。我们需要面两个选择：究竟是重发2，还是后面的3，4，5也要重发？<ul>
-<li>重发2 - 如果3，4，5里面没有丢包，重发2是最完美的选择。 但 3，4，5里面如果有丢包的，那么还得重发丢失的包</li>
-<li>重发2，3，4，5 - 如果3，4，5里面没有丢包，重发3, 4, 5是一种浪费。</li>
-</ul>
-</li>
-<li>快速重传仅仅解决了定时器效率的问题，但没有解决什么时候应该发2，什么时候该发3， 4，5这个问题.</li>
-</ul>
-</li>
-<li>SACK - Selective Acknowledgment<ul>
-<li>SACK的思路是服务端告诉客户端一个大体的全貌，我当前已经收到了什么，我还没收到什么。所以这也是一个比较自然的思路. 具体细节可参考 RFC 2018</li>
-<li>SACK需要客户端和服务端同时支持</li>
-<li>SACK会占用发送方的资源。试想一下，如果黑客劫持了服务端，给客户端发送不正常的SACK包，那么客户端就会每次都要计算服务端哪些包收到了，哪些包没有收到.</li>
-</ul>
-</li>
-<li>D-SACK - Duplicate SACK<ul>
-<li>D-SACK的核心思路是告诉客户端哪些数据是被重复接受了。具体可见RFC 2833.</li>
-<li>通过D-SACK, 我们可以知道<ul>
-<li>丢失的包是发送的包还是ACK包，如果丢失的包是ACK包，客户端就不要无脑重发服务端已经收到的包</li>
-<li>先发的包后到的情况.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"><a href="#客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？" class="headerlink" title="客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？"></a>客户端给服务端发送数据包是按顺序发送的，服务端是如何保证拿到的一些数据包是有序的？</h4><h4 id="客户端给服务端发送数据包的过快怎么办？"><a href="#客户端给服务端发送数据包的过快怎么办？" class="headerlink" title="客户端给服务端发送数据包的过快怎么办？"></a>客户端给服务端发送数据包的过快怎么办？</h4><p>前置知识</p>
-<ul>
-<li>滑动窗口 - TCP是每发一个请求，就会有一个响应，如此循环。 这明显效率太低了。有没有可能我一次发送多个请求， 然后只需要一次响应就可以了？这个思路直觉上是可行的. TCP的滑动窗口是为了协调发送方和接收方的速度. 这本质上是个生产者-消费者模型。生产者发送速度过快，消费者接受不了怎么办？增加一个中间缓存带。滑动窗口其实就是一个缓存带.<br>流量控制是TCP提供的一种机制，是为了匹配收发双方的速度.<br>以服务端接受数据为过程为例</li>
-<li>网卡接受到的数据会放到内核缓冲区</li>
-<li>内核缓冲区会将相应的信息挪到某一个TCP连接的接受缓存区(接受窗口就是接受缓存区)</li>
-<li>然后应用程序会从接受缓冲区读取数据<br>客户端发送数据如下</li>
-<li>应用程序将数据放到发送缓存区（发送窗口就是发送缓存区）</li>
-<li>将发送窗口的数据挪到内核缓冲区</li>
-<li>内核缓冲区的数据从网卡发送出去</li>
-</ul>
-<p>拾遗</p>
-<ul>
-<li>发送缓冲区和接受缓存区是针对一个TCP连接的。整个内核缓冲区是针对整个操作系统的</li>
-<li>TCP头里有一个字段叫 Window代表窗口大小</li>
-<li>窗口的大小是有接受方的窗口大小决定的.</li>
-<li>如果客户端到的TCP window的值为0, 那么意味着服务端处在水深火热当中，没能力处理数据了。那么客户端就不会发送数据了。但是万一过会，服务端又复活了呢？ TCP是用Zero Window Probe技术，发zwp包给服务端。</li>
-<li>窗口为0会引起死锁</li>
-<li>糊涂窗口综合症(Silly Window Syndrome) - 如果接受方的可用窗口太小，只能容纳几个字节，发送方还在为了发几个字节需要带上很多的附加信息，显得很耗带宽资源，得不偿失。有点像服务端对客户端说我的仓库没空间了，你不要大老远过来送一些牙膏牙膏牙刷了，等我空间大了，你再送些大件过来.<ul>
-<li>如果是服务端导致的糊涂窗口综合症，那就关闭窗口</li>
-<li>如果是客户端导致的糊涂窗口综合症， 使用Nagels算法。核心思路是等可用的窗口变大了再发数据</li>
-<li>Nagle算法默认是打开的，对telnet或ssh交互性比较强的程序，需要关闭这个算法。</li>
-</ul>
-</li>
-<li>流量控制和用塞控制的区别是什么？<ul>
-<li>流量控制是针对发送者和接受者之间的策略，侧重于微观，并不知道网络的整体情况。</li>
-<li>拥塞控制是为了从宏观保证整个网络畅通的</li>
-<li>流量控制为拥塞控制做了一小部分铺垫，但这还不够，拥塞控制还需要额外的策略.</li>
-</ul>
-</li>
-</ul>
-<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>直观上说，建立连接是三次握手，关闭连接应该是更简单，直接一句GoodBye就完事。<br>但事实并非如此，根本原因TCP是全双工。TCP建立连接之后，双方是可以同时收发数据的，那么就意味着连接需要两个通道. 所以关闭连接就变成了如何处理两个通道.<br>两个通道都没有数据收发才是最关闭连接的标志. 关闭的真正的含义是要关闭两个通道一起关闭，但前提是两个通道都要确认没有收据收发.<br>释放连接可以用客户端和服务端任意一方发起。<br>下面是客户端是发起释放连接的过程</p>
-<ul>
-<li>客户端发送FIN，代表要释放发送通道</li>
-<li>服务端收到客户端的FIN, 知道客户端没有数据要发送了. 发送ACK给客户端, 代表我同意你的请求. 但此时服务端还不能关闭连接，因为服务端可能还有数据要发送给客户端. </li>
-<li>服务端觉得直接没有数据要发送了，就发送一个FIN请求关闭连接</li>
-<li>客户端发送ACK给服务端，同意服务端的关闭连接请求.服务端收到ACK之后就关闭连接，客户端在等待2MSL时间之后，没有收到回复，就关闭连接.</li>
-</ul>
-<h3 id="整个网络发生了阻塞怎么办？"><a href="#整个网络发生了阻塞怎么办？" class="headerlink" title="整个网络发生了阻塞怎么办？"></a>整个网络发生了阻塞怎么办？</h3><p>想象一下每次过节开车回家，怎么知道回家的路是一路通畅的呢？看地图上面的交通线路状况是不是绿色，如果是红色，则代表路况拥堵. 整个网络也是出现拥堵和通畅两种情况。<br>在节假日的时候，交警应对这种情况有好几种方法 </p>
-<ul>
-<li>车主上高速的时候，收费站限流，只开几个闸口</li>
-<li>车主上高速的时候，收费站完全关闭，让车主改选国道</li>
-<li>已经在高速上的车流，交警会尽可能的疏导让它们快速的去目的地.</li>
-</ul>
-<p>网络拥塞发生的时候，有如下策略</p>
-<ul>
-<li>慢启动<ul>
-<li>慢启动的核心原理是第一次发包的时候发一个包，第二次翻倍，以此类推。发包的数量是指数级增长。当发包的数量超过某个阀值的时候，采用拥塞避免算法。</li>
-<li>可以看出慢启动的策略还是有点粗鲁，不够灵活。</li>
-</ul>
-</li>
-<li>拥塞避免<ul>
-<li>拥塞避免和慢启动有类似之处。当一次发送包的数量超过某个阀值的时候，那么下次发包的数量，就呈现线性增长。相比于指数增长，这个增长很慢了。</li>
-</ul>
-</li>
-<li>拥塞发生<ul>
-<li>当网络发生阻塞的时候，会发生丢包，既然发生了丢包，那么就要重传</li>
-<li>发生超时重传的时候，会导致又要重新进入慢启动的过程</li>
-<li>发生快速重传的时候，TCP认为你还能收到三个ACK包，说明网络还可以啊。于是将发包的数量降到一半，而不是像超时重传，将发包的数据量降到1. 然后进入快速恢复算法</li>
-</ul>
-</li>
-<li>快速恢复<ul>
-<li>快速恢复的核心是用另外一种策略来控制发生包的大小。 这个策略先不详细展开。</li>
-</ul>
-</li>
-</ul>
-<p> 至此，介绍了拥塞控制的四个算法。这四个算法的都遵循的原则是</p>
-<ul>
-<li>尽量的发包，而不是不发.</li>
-<li>这个四个算法的思路都是围绕着“什么时候发多少包”展开的.这一点很像高速收费站，什么时候允许多少车辆进去.</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><p>  客户端在发送包D的时候，服务的滑动窗口容纳不下这个包，所以只能接受一部分包D1，一个包就被拆开了。<br>  客户端在发送D1和D2两个包，服务端接受的时候，接受到一个包，包含D1和D2, 服务端无法鉴别 D1和D2.<br>  上面的这种现象是由TCP的特性决定的。 我们可以给这些现象命名。但这些是问题吗？如果是问题，TCP应该背这个锅吗？<br>  答案是：TCP不背这个锅，TCP不解决这个问题。如果这是个问题，应该由应用层去解决.</p>
-<h3 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h3><p>  TCP设计的时候有个大前提：网络的包的丢失是因为网络堵塞引起的. 这个大前提直接决定了TCP的设计方向.<br>  但其实网络包的丢失可能是</p>
-<ul>
-<li>移动基站的弱网环境</li>
-<li>防火墙针对性的丢包</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>协议</tag>
-        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -976,6 +976,56 @@
       </tags>
   </entry>
   <entry>
+    <title>一种可以衡量事物的指标-快和好</title>
+    <url>/2020/08/30/good-quick/</url>
+    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
+<ul>
+<li>好</li>
+<li>快</li>
+</ul>
+<span id="more"></span>
+<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
+<ul>
+<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
+<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
+<li>好在架构层面可以理解为高可用，可扩展</li>
+<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
+<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
+</ul>
+<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
+<ul>
+<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
+<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
+<li>多<ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
+</ul>
+</li>
+<li>省 <ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
+</ul>
+</li>
+</ul>
+<p>具体的一些例子</p>
+<ul>
+<li>快在架构层面可以理解为高性能</li>
+</ul>
+<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本/收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本/收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
+<ul>
+<li>代码能跑起来是不是意味着好?</li>
+<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
+<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
+</ul>
+<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
+]]></content>
+      <categories>
+        <category>思维</category>
+      </categories>
+      <tags>
+        <tag>思维</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker初回忆</title>
     <url>/2020/09/21/docker/</url>
     <content><![CDATA[<p>从第一次接触Docker到现在大概也有两年多了, 基本上停留在用的层面.<br>现在是时候回顾一下这项革命式的技术了.</p>
@@ -1092,56 +1142,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>虚拟化</tag>
         <tag>容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一种可以衡量事物的指标-快和好</title>
-    <url>/2020/08/30/good-quick/</url>
-    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
-<ul>
-<li>好</li>
-<li>快</li>
-</ul>
-<span id="more"></span>
-<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
-<ul>
-<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
-<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
-<li>好在架构层面可以理解为高可用，可扩展</li>
-<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
-<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
-</ul>
-<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
-<ul>
-<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
-<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
-<li>多<ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
-</ul>
-</li>
-<li>省 <ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
-</ul>
-</li>
-</ul>
-<p>具体的一些例子</p>
-<ul>
-<li>快在架构层面可以理解为高性能</li>
-</ul>
-<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本/收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本/收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
-<ul>
-<li>代码能跑起来是不是意味着好?</li>
-<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
-<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
-</ul>
-<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
-]]></content>
-      <categories>
-        <category>思维</category>
-      </categories>
-      <tags>
-        <tag>思维</tag>
       </tags>
   </entry>
   <entry>
@@ -2782,197 +2782,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>Spring源码系列 - IOC和DI</title>
-    <url>/2021/06/20/spring-ioc/</url>
-    <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
-<ul>
-<li>背景</li>
-<li>IOC</li>
-<li>DI</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么需要读源码？"><a href="#为什么需要读源码？" class="headerlink" title="为什么需要读源码？"></a>为什么需要读源码？</h3><p>  搞清楚目的和动机，往往比做什么和怎么做更重要.<br>  先说结论</p>
-<ul>
-<li>对于我们大多数人来说，不需要读源码或者说读了没什么用. 换言之，我们在读任何源码之前，要问一个问题，为什么要读它?</li>
-</ul>
-<p>  如果我们需要读源码，基本上就是下面两个大的理由</p>
-<ul>
-<li>为了源码而源码<ul>
-<li>因为别人看了，我们也要看</li>
-<li>为了装X或面试</li>
-<li>….</li>
-</ul>
-</li>
-<li>为了解决某个问题<ul>
-<li>代码运行的时候遇到报错，需要跟踪源码，这种情况很少见，如果出现这种情况，只能说明这个框架是做的还是不够好.</li>
-<li>吸取源码的一些思想和设计思路，应用到自己的项目中</li>
-</ul>
-</li>
-</ul>
-<h3 id="读框架源码的基本策略"><a href="#读框架源码的基本策略" class="headerlink" title="读框架源码的基本策略"></a>读框架源码的基本策略</h3><ul>
-<li>将框架拆解成模块，找到最核心的几个功能或者模块</li>
-<li>聚焦一个模块，两种角度<ul>
-<li>使用者(黑盒)角度<ul>
-<li>需要了解哪些最少必要概念</li>
-<li>引入哪些包</li>
-<li>需要配置哪些参数</li>
-<li>在代码层面需要添加什么东西</li>
-<li>别的框架中是否有类似的模块？</li>
-</ul>
-</li>
-<li>开发者(白盒)角度<ul>
-<li>需要了解哪些最少必要概念</li>
-<li>设计原则，模式</li>
-<li>模块的workflow是什么，牵涉到时序图，类图，流程图等，这些图都是从不同的角度来描述这个模块.</li>
-<li>与别的框架相比，模块有什么相同和不同</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="读源码和读书的类似"><a href="#读源码和读书的类似" class="headerlink" title="读源码和读书的类似"></a>读源码和读书的类似</h3><p> 读源码和读一本武侠小说或者宏观经济学没有大的区别，因为源码和书本质上都是信息，读源码就是萃取信息的过程。<br> 不同的阅读目的，需要用不同的姿势。这里的目的就预设为：吸取源码的一些思想和设计思路，应用到自己的项目中</p>
-<ul>
-<li><p>小说的主题和源码的初衷<br>一本书肯定有一个或者某几个主题，比如歌颂爱情，追求真理。 框架的源码也是的，就Spring来说是为了简化Java开发 - 说起来是简单的，但实现起来并不简单。</p>
-</li>
-<li><p>小说的线索和源码的设计原则和策略<br>就拿天龙八部来说，它的主线可以是侠义，恩仇，爱情。然后爱情这块就分为三个主人公的分线。Spring源码也可以认为有几条主线:IOC，AOP，POJO, 模版. 这些是Spring的起点和基石，贯穿了Spring的方方面面.</p>
-</li>
-<li><p>小说的结构和源码的的模块设计<br>小说可以分为几个章节，每个章节大概讲了什么，每个章节的编排顺序是什么。同理，源码可以分为几个模块，模块之间的关系是什么？</p>
-</li>
-<li><p>小说的细节和代码的细节<br>里面会有一些观点，然后为了证明这些观点会有事实和逻辑。同理，源码模块里的一些方法会有一些技术细节，比如if,else, try, catch, synchronized, 某个数据结构，或者某个事件的的触发. 所以在这里我们可以得出一个结论：如果读源码二话不说闷着头就跳进入到方法的细节里，这是不对的，是错误的方向.</p>
-</li>
-<li><p>看书读后感和看源码读后感<br>小时候记得往往要写个什么观后感，现在想想这个事还是挺重要的。看一本书，可以看到作者传递的思想和价值主张(value proposal),得到某个启发，某个思维模型或框架，或者某个精彩的案例和论证,或者优雅的遣词造句，这些是对写作文有帮助的. 看源码也是，举个命名方面的例子，Spring在定位Bean的过程中涉及到AbstractRefreshableConfigAplicationContext类， 这个类名就很长，由5个单词组成, 一般而言，项目中很少取这么长名字来给类命名. 所以Spring的作者传递了这样一个思想：能清楚的表达设计意图是最重要的，其次才是长不长的问题。</p>
-</li>
-<li><p>心态<br>如果用大口吃烤串的心态去看书和读源码，很显然是没有效果和收益的。现在大多数人比较浮躁，看东西讲究快和多，讲究快本身没有问题，但快了之后，质量就会下降。所以看经典框架的核心模块，要以喝茶的心态来看，也就是《思考，快与慢》里提到的”系统2”.</p>
-</li>
-<li><p>重要的的东西<br>根据二八法则，一本书里只有20%的东西是重要的，看书不是越多越好，而是看少而精的书，那么源码也不例外，不需要阅读很多框架的源码，也不需要阅读一个框架的所有源码，那如何找到这20%？这是另外一个话题</p>
-</li>
-</ul>
-<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC想要讲的故事"><a href="#IOC想要讲的故事" class="headerlink" title="IOC想要讲的故事"></a>IOC想要讲的故事</h3><p> IOC - Inversion of Control, 中文是控制反转， 不管是中文还是英文，从字面上很难理解它的意思, 这与我随便说个词语”依赖变换“没什么区别。<br> 让我们切换一个角度，看看在代码层面IOC意味着什么. 现在有类A和类B，传统的做法是类A依赖于类B，IOC的做法是，A不要依赖于B, 要依赖于B的抽象AbstractB. 比较一下前后的变化</p>
-<ul>
-<li>A -&gt; 具体的B</li>
-<li>A -&gt; AbstractB -&gt; (某种方式指向) 具体B</li>
-</ul>
-<p> 这种变化让人想到了什么？AbstractB像是一个中介，隔离了A和具体的B. AbstractB侧重描述做什么，具体的B侧重于描述怎么做。<br> 所以可以得出一个结论: IOC真正的内涵是将做什么(what)和怎么做(how)隔离开了, 可以认为<strong>做什么</strong> 是某个企业几十年不会变的核心概念和流程, <strong>怎么做</strong> 为了达成某件事的手段是多样的，现在世界本身也是如此，付款的方式有现金和手机支付。所以如果一个复杂的系统没有基于IOC, 那么这个系统没有未来，如果一个系统基于IOC，这个复杂的系统才有演化的可能.</p>
-<p>对于IOC，我们有这样的肖像刻画</p>
-<ul>
-<li>将做什么和怎么做<strong>隔离</strong>出来了 - 总感觉做开发的天天无脑的念叨<strong>隔离</strong>就可以了….</li>
-<li>符合依赖倒置原则</li>
-<li>符合好莱坞原则 - 体现在对象实例化的过程中</li>
-</ul>
-<p>对于开发者来说，IOC在框架层面是标配，就好比汽车有个ABS系统一样，如果现在买辆车，如果没有防抱死系统，那真的是很奇怪.</p>
-<h3 id="有哪些框架支持IOC功能？"><a href="#有哪些框架支持IOC功能？" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h3><ul>
-<li>Spring算一个 - Spring提供了很多功能，我们可以只使用其中的IOC功能</li>
-<li>.net的Autofac</li>
-<li>HK2 - 轻量级的IOC框架，</li>
-<li>Guice - Google出品</li>
-<li>如果没有上述框架，只能手写了</li>
-</ul>
-<h3 id="使用者的角度"><a href="#使用者的角度" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h4><p>{ % codeblock lang:java % }<br>  // 创建IOC容器<br>  ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(“defaultconstruct/user.xml”);<br>  // 实例化Bean,包含依赖注入的过程<br>  User user = (User) context.getBean(“user”);{ % endcodeblock % }</p>
-<h4 id="有哪些框架支持IOC功能？-1"><a href="#有哪些框架支持IOC功能？-1" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h4><ul>
-<li>.net的Autofac</li>
-<li>HK2 - 轻量级的IOC框架，</li>
-<li>Guice - Google出品</li>
-<li>如果没有上述框架，只能手写了</li>
-</ul>
-<h3 id="开发者的角度"><a href="#开发者的角度" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h4 id="Spring-IOC容器创建的大体过程（细节可见IOC时序图）"><a href="#Spring-IOC容器创建的大体过程（细节可见IOC时序图）" class="headerlink" title="Spring IOC容器创建的大体过程（细节可见IOC时序图）"></a>Spring IOC容器创建的大体过程（细节可见IOC时序图）</h4><ul>
-<li>定位 - 设置Bean的路径，创建BeanFactory.</li>
-<li>加载 - 读取BeanDefinition文件.</li>
-<li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
-</ul>
-<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4><ul>
-<li>{ % link refresh <a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638">https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638</a> % }<ul>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L645-L682">prepareRefresh</a><ul>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java#L912-L978">preInstantiateSingletons</a><ul>
-<li>getBean</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>obtainFreshBeanFactory<ul>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L122-L139">refreshBeanFactory</a></li>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L218-L227">customizeBeanFactory</a></li>
-<li>loadBeanDefinitions</li>
-</ul>
-</li>
-<li>prepareBeanFactory</li>
-<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L929-L961">finishBeanFactoryInitialization</a></li>
-</ul>
-</li>
-</ul>
-<h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI和IOC的关系"><a href="#DI和IOC的关系" class="headerlink" title="DI和IOC的关系"></a>DI和IOC的关系</h3><p> IOC更多的是描述了做什么（要隔离规范和实现), DI是IOC的一种实现方式。 此外DL是IOC的另外一种实现方式</p>
-<h3 id="使用者的角度-1"><a href="#使用者的角度-1" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="warmup-一个简单的依赖注入例子"><a href="#warmup-一个简单的依赖注入例子" class="headerlink" title="warmup: 一个简单的依赖注入例子"></a>warmup: 一个简单的依赖注入例子</h4><ul>
-<li><p>定义Bean<br>{ % codeblock lang:java % }<br>@Configuration<br>public class RedisConfig {<br> @Primary /* 在装配的时候，可能会匹配多个Bean, Primary代表了这个Bean会被优先选择 */<br> @Bean(name = “redisTemplate”)<br> public RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory factory) {</p>
-<pre><code> RedisTemplate&lt;String, Object&gt; template = new RedisTemplate&lt;&gt;();
- return template;
-</code></pre>
-<p> }<br>}<br>{ % endcodeblock % }</p>
-</li>
-<li><p>注入Bean<br>{ % codeblock lang:java % }<br>@Component<br>public final class AppRedisCacheManager implements IGlobalCache {<br>   private RedisTemplate&lt;String, Object&gt; redisTemplate;</p>
-<p>   /* 注入RedisTemplate实例 <em>/<br>   /</em> Autowired是Spring特有的注解，如果想让项目不局限于Spring可以使用Inject注解 */<br>   @Autowired<br>   public AppRedisCacheManager(RedisTemplate redisTemplate){</p>
-<pre><code>   this.redisTemplate = redisTemplate;
-</code></pre>
-<p>   }<br>}<br>{ % endcodeblock % }</p>
-</li>
-</ul>
-<h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>   上面的例子是典型的基于注解的自动注入。我看过不少介绍依赖注入的文章，有说有三种，有的说有五种. 按照我自己的理解，依赖注入有两大方式</p>
-<ul>
-<li>手动注入 - 必须显示的指定实例A的引用是B,一般是在XML里面定义或者JavaConfig里定义。</li>
-<li>自动注入 - 不需要显示的指定实例A的引用是是B, 典型的形式是基于注解。 自动注入更加通用的内涵是：如果基于不同的条件，加载不同的Bean<ul>
-<li>有哪些注解可以加载Bean?<ul>
-<li>@Autowired - Spring特有的注解，默认按类型查找，如果找不到，按照名字查找.<ul>
-<li>Autowire加载Bean可能失败的原因<ul>
-<li>被加载的Bean没有加上@Service相关的注解</li>
-<li>加了@Service的注解,但没有被@ComponentScan扫描。<br>{ % note info % }<br>  在Springboot中, @{ % label danger@SpringBootApplication % } 注解包含了@{ % label danger@ComponentScan， 这就是为什么在Spring Boot应用中看不到ComponentScan注解的原因 % }<br>{ % endnote % }</li>
-<li>Spring MVC 的filter不能加载某个Bean, 因为在这个时候Bean还没有被初始化. 解决的办法是拿到{ % label danger@ApplycationContext % } 然后调用{ % label danger@getBean % }方法.</li>
-<li>循环依赖</li>
-</ul>
-</li>
-<li>Autowired可以注入到构造器，字段，属性，参数</li>
-</ul>
-</li>
-<li>@Resouce - Spring特有的注解，默认按名字查找，找不到，按类型查找，如果按类型找到多个，再按照@Qualifier筛选</li>
-<li>@Inject - 非Spring特有的注解,</li>
-</ul>
-</li>
-<li>有哪些注解可以让Bean被加载?<ul>
-<li>@Component - 作用在类上, 用来描述通用的Bean, 业务内涵不是特别强.</li>
-<li>@Controller - 作用在类上，与Spring mvc强相关，不能用别的注解替换， 内部会包含路由等信息</li>
-<li>@Service - 作用在类上, 一般情况下从Repository拿数据然后提供数据给Controller消费，</li>
-<li>@Repository - 作用在类上， 语义上来说与持久化相关，对应DAO, 不能用别的注解替换, 内部会包含SQL语句的信息.</li>
-<li>@Bean - Spring 3.0引入，和@Configuration一起工作. 如果存在第三方插件，很显然无法使用@Component注解的，所以可以在某个方法A上使用Bean注解，然后在方法A的内部返回实例.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="一些额外发现的问题"><a href="#一些额外发现的问题" class="headerlink" title="一些额外发现的问题"></a>一些额外发现的问题</h4><ul>
-<li>ApplycationContext的getBean和@Autowired的区别是什么？</li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li>依赖查找是什么？</li>
-<li>规范<ul>
-<li>{ % link JSR-330 <a href="https://jcp.org/en/jsr/detail?id=330">https://jcp.org/en/jsr/detail?id=330</a> % }<ul>
-<li>Spring 从3.0开始支持JSR-330规范</li>
-<li>@Inject和Spring的@Autowired等价</li>
-<li>@Named和Spring的@Component等价</li>
-</ul>
-</li>
-<li>{ % link JSR-250 <a href="https://jcp.org/en/jsr/detail?id=250">https://jcp.org/en/jsr/detail?id=250</a> % }</li>
-</ul>
-</li>
-</ul>
-<h3 id="开发者的角度-1"><a href="#开发者的角度-1" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
-<h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之武林盟主 - Spring</title>
     <url>/2020/10/20/spring/</url>
     <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
@@ -3144,6 +2953,204 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>Java</tag>
         <tag>框架</tag>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring源码系列 - IOC和DI</title>
+    <url>/2021/06/20/spring-ioc/</url>
+    <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
+<ul>
+<li>背景</li>
+<li>IOC</li>
+<li>DI</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么需要读源码？"><a href="#为什么需要读源码？" class="headerlink" title="为什么需要读源码？"></a>为什么需要读源码？</h3><p>  搞清楚目的和动机，往往比做什么和怎么做更重要.<br>  先说结论</p>
+<ul>
+<li>对于我们大多数人来说，不需要读源码或者说读了没什么用. 换言之，我们在读任何源码之前，要问一个问题，为什么要读它?</li>
+</ul>
+<p>  如果我们需要读源码，基本上就是下面两个大的理由</p>
+<ul>
+<li>为了源码而源码<ul>
+<li>因为别人看了，我们也要看</li>
+<li>为了装X或面试</li>
+<li>….</li>
+</ul>
+</li>
+<li>为了解决某个问题<ul>
+<li>代码运行的时候遇到报错，需要跟踪源码，这种情况很少见，如果出现这种情况，只能说明这个框架是做的还是不够好.</li>
+<li>吸取源码的一些思想和设计思路，应用到自己的项目中</li>
+</ul>
+</li>
+</ul>
+<h3 id="读框架源码的基本策略"><a href="#读框架源码的基本策略" class="headerlink" title="读框架源码的基本策略"></a>读框架源码的基本策略</h3><ul>
+<li>将框架拆解成模块，找到最核心的几个功能或者模块</li>
+<li>聚焦一个模块，两种角度<ul>
+<li>使用者(黑盒)角度<ul>
+<li>需要了解哪些最少必要概念</li>
+<li>引入哪些包</li>
+<li>需要配置哪些参数</li>
+<li>在代码层面需要添加什么东西</li>
+<li>别的框架中是否有类似的模块？</li>
+</ul>
+</li>
+<li>开发者(白盒)角度<ul>
+<li>需要了解哪些最少必要概念</li>
+<li>设计原则，模式</li>
+<li>模块的workflow是什么，牵涉到时序图，类图，流程图等，这些图都是从不同的角度来描述这个模块.</li>
+<li>与别的框架相比，模块有什么相同和不同</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="读源码和读书的类似"><a href="#读源码和读书的类似" class="headerlink" title="读源码和读书的类似"></a>读源码和读书的类似</h3><p> 读源码和读一本武侠小说或者宏观经济学没有大的区别，因为源码和书本质上都是信息，读源码就是萃取信息的过程。<br> 不同的阅读目的，需要用不同的姿势。这里的目的就预设为：吸取源码的一些思想和设计思路，应用到自己的项目中</p>
+<ul>
+<li><p>小说的主题和源码的初衷<br>一本书肯定有一个或者某几个主题，比如歌颂爱情，追求真理。 框架的源码也是的，就Spring来说是为了简化Java开发 - 说起来是简单的，但实现起来并不简单。</p>
+</li>
+<li><p>小说的线索和源码的设计原则和策略<br>就拿天龙八部来说，它的主线可以是侠义，恩仇，爱情。然后爱情这块就分为三个主人公的分线。Spring源码也可以认为有几条主线:IOC，AOP，POJO, 模版. 这些是Spring的起点和基石，贯穿了Spring的方方面面.</p>
+</li>
+<li><p>小说的结构和源码的的模块设计<br>小说可以分为几个章节，每个章节大概讲了什么，每个章节的编排顺序是什么。同理，源码可以分为几个模块，模块之间的关系是什么？</p>
+</li>
+<li><p>小说的细节和代码的细节<br>里面会有一些观点，然后为了证明这些观点会有事实和逻辑。同理，源码模块里的一些方法会有一些技术细节，比如if,else, try, catch, synchronized, 某个数据结构，或者某个事件的的触发. 所以在这里我们可以得出一个结论：如果读源码二话不说闷着头就跳进入到方法的细节里，这是不对的，是错误的方向.</p>
+</li>
+<li><p>看书读后感和看源码读后感<br>小时候记得往往要写个什么观后感，现在想想这个事还是挺重要的。看一本书，可以看到作者传递的思想和价值主张(value proposal),得到某个启发，某个思维模型或框架，或者某个精彩的案例和论证,或者优雅的遣词造句，这些是对写作文有帮助的. 看源码也是，举个命名方面的例子，Spring在定位Bean的过程中涉及到AbstractRefreshableConfigAplicationContext类， 这个类名就很长，由5个单词组成, 一般而言，项目中很少取这么长名字来给类命名. 所以Spring的作者传递了这样一个思想：能清楚的表达设计意图是最重要的，其次才是长不长的问题。</p>
+</li>
+<li><p>心态<br>如果用大口吃烤串的心态去看书和读源码，很显然是没有效果和收益的。现在大多数人比较浮躁，看东西讲究快和多，讲究快本身没有问题，但快了之后，质量就会下降。所以看经典框架的核心模块，要以喝茶的心态来看，也就是《思考，快与慢》里提到的”系统2”.</p>
+</li>
+<li><p>重要的的东西<br>根据二八法则，一本书里只有20%的东西是重要的，看书不是越多越好，而是看少而精的书，那么源码也不例外，不需要阅读很多框架的源码，也不需要阅读一个框架的所有源码，那如何找到这20%？这是另外一个话题</p>
+</li>
+</ul>
+<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC想要讲的故事"><a href="#IOC想要讲的故事" class="headerlink" title="IOC想要讲的故事"></a>IOC想要讲的故事</h3><p> IOC - Inversion of Control, 中文是控制反转， 不管是中文还是英文，从字面上很难理解它的意思, 这与我随便说个词语”依赖变换“没什么区别。<br> 让我们切换一个角度，看看在代码层面IOC意味着什么. 现在有类A和类B，传统的做法是类A依赖于类B，IOC的做法是，A不要依赖于B, 要依赖于B的抽象AbstractB. 比较一下前后的变化</p>
+<ul>
+<li>A -&gt; 具体的B</li>
+<li>A -&gt; AbstractB -&gt; (某种方式指向) 具体B</li>
+</ul>
+<p> 这种变化让人想到了什么？AbstractB像是一个中介，隔离了A和具体的B. AbstractB侧重描述做什么，具体的B侧重于描述怎么做。<br> 所以可以得出一个结论: IOC真正的内涵是将做什么(what)和怎么做(how)隔离开了, 可以认为<strong>做什么</strong> 是某个企业几十年不会变的核心概念和流程, <strong>怎么做</strong> 为了达成某件事的手段是多样的，现在世界本身也是如此，付款的方式有现金和手机支付。所以如果一个复杂的系统没有基于IOC, 那么这个系统没有未来，如果一个系统基于IOC，这个复杂的系统才有演化的可能.</p>
+<p>对于IOC，我们有这样的肖像刻画</p>
+<ul>
+<li>将做什么和怎么做<strong>隔离</strong>出来了 - 总感觉做开发的天天无脑的念叨<strong>隔离</strong>就可以了….</li>
+<li>符合依赖倒置原则</li>
+<li>符合好莱坞原则 - 体现在对象实例化的过程中</li>
+</ul>
+<p>对于开发者来说，IOC在框架层面是标配，就好比汽车有个ABS系统一样，如果现在买辆车，如果没有防抱死系统，那真的是很奇怪.</p>
+<h3 id="有哪些框架支持IOC功能？"><a href="#有哪些框架支持IOC功能？" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h3><ul>
+<li>Spring算一个 - Spring提供了很多功能，我们可以只使用其中的IOC功能</li>
+<li>.net的Autofac</li>
+<li>HK2 - 轻量级的IOC框架，</li>
+<li>Guice - Google出品</li>
+<li>如果没有上述框架，只能手写了</li>
+</ul>
+<h3 id="使用者的角度"><a href="#使用者的角度" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 创建IOC容器</span>
+<span class="token class-name">ClassPathXmlApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"defaultconstruct/user.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 实例化Bean,包含依赖注入的过程</span>
+<span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="有哪些框架支持IOC功能？-1"><a href="#有哪些框架支持IOC功能？-1" class="headerlink" title="有哪些框架支持IOC功能？"></a>有哪些框架支持IOC功能？</h4><ul>
+<li>.net的Autofac</li>
+<li>HK2 - 轻量级的IOC框架，</li>
+<li>Guice - Google出品</li>
+<li>如果没有上述框架，只能手写了</li>
+</ul>
+<h3 id="开发者的角度"><a href="#开发者的角度" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h4 id="Spring-IOC容器创建的大体过程（细节可见IOC时序图）"><a href="#Spring-IOC容器创建的大体过程（细节可见IOC时序图）" class="headerlink" title="Spring IOC容器创建的大体过程（细节可见IOC时序图）"></a>Spring IOC容器创建的大体过程（细节可见IOC时序图）</h4><ul>
+<li>定位 - 设置Bean的路径，创建BeanFactory.</li>
+<li>加载 - 读取BeanDefinition文件.</li>
+<li>注册 - 解析BeanDefinition,并放入IOC容器当中.</li>
+</ul>
+<h4 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h4><ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L550-L638" title="" target="">refresh</a>
+<ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L645-L682">prepareRefresh</a><ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java#L912-L978">preInstantiateSingletons</a><ul>
+<li>getBean</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>obtainFreshBeanFactory<ul>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L122-L139">refreshBeanFactory</a></li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractRefreshableApplicationContext.java#L218-L227">customizeBeanFactory</a></li>
+<li>loadBeanDefinitions</li>
+</ul>
+</li>
+<li>prepareBeanFactory</li>
+<li><a href="https://github.com/yshua5631/spring-framework/blob/study/spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java#L929-L961">finishBeanFactoryInitialization</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="IOC-时序图"><a href="#IOC-时序图" class="headerlink" title="IOC 时序图"></a>IOC 时序图</h4><p>  <img src="/images/spring/ioc.jpg" alt="avatar"></p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h2 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h2><h3 id="DI和IOC的关系"><a href="#DI和IOC的关系" class="headerlink" title="DI和IOC的关系"></a>DI和IOC的关系</h3><p> IOC更多的是描述了做什么（要隔离规范和实现), DI是IOC的一种实现方式。 此外DL是IOC的另外一种实现方式</p>
+<h3 id="使用者的角度-1"><a href="#使用者的角度-1" class="headerlink" title="使用者的角度"></a>使用者的角度</h3><h4 id="warmup-一个简单的依赖注入例子"><a href="#warmup-一个简单的依赖注入例子" class="headerlink" title="warmup: 一个简单的依赖注入例子"></a>warmup: 一个简单的依赖注入例子</h4><ul>
+<li><p>定义Bean<br>{ % codeblock lang:java % }<br>@Configuration<br>public class RedisConfig {<br> @Primary /* 在装配的时候，可能会匹配多个Bean, Primary代表了这个Bean会被优先选择 */<br> @Bean(name = “redisTemplate”)<br> public RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory factory) {</p>
+<pre><code> RedisTemplate&lt;String, Object&gt; template = new RedisTemplate&lt;&gt;();
+ return template;
+</code></pre>
+<p> }<br>}<br>{ % endcodeblock % }</p>
+</li>
+<li><p>注入Bean<br>{ % codeblock lang:java % }<br>@Component<br>public final class AppRedisCacheManager implements IGlobalCache {<br>   private RedisTemplate&lt;String, Object&gt; redisTemplate;</p>
+<p>   /* 注入RedisTemplate实例 <em>/<br>   /</em> Autowired是Spring特有的注解，如果想让项目不局限于Spring可以使用Inject注解 */<br>   @Autowired<br>   public AppRedisCacheManager(RedisTemplate redisTemplate){</p>
+<pre><code>   this.redisTemplate = redisTemplate;
+</code></pre>
+<p>   }<br>}<br>{ % endcodeblock % }</p>
+</li>
+</ul>
+<h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>   上面的例子是典型的基于注解的自动注入。我看过不少介绍依赖注入的文章，有说有三种，有的说有五种. 按照我自己的理解，依赖注入有两大方式</p>
+<ul>
+<li>手动注入 - 必须显示的指定实例A的引用是B,一般是在XML里面定义或者JavaConfig里定义。</li>
+<li>自动注入 - 不需要显示的指定实例A的引用是是B, 典型的形式是基于注解。 自动注入更加通用的内涵是：如果基于不同的条件，加载不同的Bean<ul>
+<li>有哪些注解可以加载Bean?<ul>
+<li>@Autowired - Spring特有的注解，默认按类型查找，如果找不到，按照名字查找.<ul>
+<li>Autowire加载Bean可能失败的原因<ul>
+<li>被加载的Bean没有加上@Service相关的注解</li>
+<li>加了@Service的注解,但没有被@ComponentScan扫描。<div class="note info"><p>在Springboot中, @<mark class="label danger">SpringBootApplication</mark> 注解包含了@<mark class="label danger">ComponentScan， 这就是为什么在Spring Boot应用中看不到ComponentScan注解的原因</mark>
+              </p>
+</div></li>
+<li>Spring MVC 的filter不能加载某个Bean, 因为在这个时候Bean还没有被初始化. 解决的办法是拿到<mark class="label danger">ApplycationContext</mark> 然后调用<mark class="label danger">getBean</mark>方法.</li>
+<li>循环依赖</li>
+</ul>
+</li>
+<li>Autowired可以注入到构造器，字段，属性，参数</li>
+</ul>
+</li>
+<li>@Resouce - Spring特有的注解，默认按名字查找，找不到，按类型查找，如果按类型找到多个，再按照@Qualifier筛选</li>
+<li>@Inject - 非Spring特有的注解,</li>
+</ul>
+</li>
+<li>有哪些注解可以让Bean被加载?<ul>
+<li>@Component - 作用在类上, 用来描述通用的Bean, 业务内涵不是特别强.</li>
+<li>@Controller - 作用在类上，与Spring mvc强相关，不能用别的注解替换， 内部会包含路由等信息</li>
+<li>@Service - 作用在类上, 一般情况下从Repository拿数据然后提供数据给Controller消费，</li>
+<li>@Repository - 作用在类上， 语义上来说与持久化相关，对应DAO, 不能用别的注解替换, 内部会包含SQL语句的信息.</li>
+<li>@Bean - Spring 3.0引入，和@Configuration一起工作. 如果存在第三方插件，很显然无法使用@Component注解的，所以可以在某个方法A上使用Bean注解，然后在方法A的内部返回实例.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="一些额外发现的问题"><a href="#一些额外发现的问题" class="headerlink" title="一些额外发现的问题"></a>一些额外发现的问题</h4><ul>
+<li>ApplycationContext的getBean和@Autowired的区别是什么？</li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li>依赖查找是什么？</li>
+<li>规范<ul>
+<li><a href="https://jcp.org/en/jsr/detail?id=330" title="" target="">JSR-330</a>
+<ul>
+<li>Spring 从3.0开始支持JSR-330规范</li>
+<li>@Inject和Spring的@Autowired等价</li>
+<li>@Named和Spring的@Component等价</li>
+</ul>
+</li>
+<li><a href="https://jcp.org/en/jsr/detail?id=250" title="" target="">JSR-250</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="开发者的角度-1"><a href="#开发者的角度-1" class="headerlink" title="开发者的角度"></a>开发者的角度</h3><h3 id="DI-时序图"><a href="#DI-时序图" class="headerlink" title="DI 时序图"></a>DI 时序图</h3><p> <img src="/images/spring/di.jpg" alt="avatar"></p>
+<h2 id="未来"><a href="#未来" class="headerlink" title="未来"></a>未来</h2>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>源码</tag>
       </tags>
   </entry>
   <entry>
