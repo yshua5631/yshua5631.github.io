@@ -564,120 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java之效率管家 - Redis</title>
-    <url>/2020/10/15/cache/</url>
-    <content><![CDATA[<p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
-<ul>
-<li>CPU - CPU缓存</li>
-<li>操作系统 - Page Cache</li>
-<li>数据库 - 数据库缓存</li>
-<li>浏览器 - 浏览器缓存</li>
-</ul>
-<p>这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题</p>
-<ul>
-<li>缓存概述</li>
-<li>Redis历史</li>
-<li>什么是Redis</li>
-<li>为什么是Redis</li>
-<li>Redis是如何实现的</li>
-<li>Redis实践</li>
-<li>Redis的未来</li>
-</ul>
-<span id="more"></span>
-<h2 id="缓存概述"><a href="#缓存概述" class="headerlink" title="缓存概述"></a>缓存概述</h2><h3 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h3><p>  没有看到缓存的通用定义，这里尝试定义一下. 我们有系统X, C, D，这三个系统有如下特征</p>
-<ul>
-<li>系统X可以从C和D拿到同样的数据</li>
-<li>系统X从C拿到的数据比从D拿到的数据更快</li>
-<li>系统C的数据是来自于D</li>
-</ul>
-<p>  如果上述三个条件满足，那么系统C可以称做为D的缓存.</p>
-<h3 id="为什么需要缓存"><a href="#为什么需要缓存" class="headerlink" title="为什么需要缓存"></a>为什么需要缓存</h3><p>  如果系统D满足不了单位时间内多次请求，那么系统C一定是存在的. 原因是</p>
-<ul>
-<li>系统C比系统D更快，那么可以提供更好的用户体验.</li>
-</ul>
-<h3 id="实现一个缓存会遇到什么问题？"><a href="#实现一个缓存会遇到什么问题？" class="headerlink" title="实现一个缓存会遇到什么问题？"></a>实现一个缓存会遇到什么问题？</h3><pre><code>* 缓存更新策略
-  * Cache Aside Pattern
-  * Write / Read Through Pattern
-  * Write Behind Caching Pattern
-</code></pre>
-<h2 id="Redis历史"><a href="#Redis历史" class="headerlink" title="Redis历史"></a>Redis历史</h2><p>2008年，一家意大利公司Merzia推出了一个几个基于Mysql的实时统计系统，但是该公司的创始人Salvatore Sanfilippo对这套系统感到失望，于是自己对这套系统量身定做了一个数据库，且在2009年开发完成, 这就是Redis. 所以这就是比较典型的思路：有了一个痛点，然后才有了一个技术。 而现在不少公司的思路是反的：不管有没有痛点，先用高大上的技术再说.<br>2010年VMware公司赞助Redis, Salvatore Sanfilippo和另外一位开发者加入了VMware公司，全职开发Redis. 所以也是当时的一个痛点问题，改变了作者的人生之路.</p>
-<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>我看看官网上Redis的定义:</p>
-<blockquote>
-<p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker</p>
-</blockquote>
-<p>在我们的印象中，数据库是指MySql, Sql Server，或者Oracle. 所以从这里看得出Redis的定位是多种多样的，可以做缓存，数据库或者消息队列.<br>但有点事实可以确定</p>
-<ul>
-<li>相比于Kafka, Redis的消息队列没那么专业</li>
-</ul>
-<p>从核心行为的角度来看：Redis是一个支持Key, value的存储系统. 换句话说, Redis的灵魂在于Key,Value.</p>
-<h2 id="为什么是Redis"><a href="#为什么是Redis" class="headerlink" title="为什么是Redis"></a>为什么是Redis</h2><h2 id="Redis是如何实现的"><a href="#Redis是如何实现的" class="headerlink" title="Redis是如何实现的"></a>Redis是如何实现的</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><ul>
-<li>如何又快又好的实现一个Key, Value存储？</li>
-</ul>
-<p>  所以可以设想一个最简单的Key, Value的存储， 它应该支持</p>
-<ul>
-<li>支持数据的增删改查</li>
-<li>数据类型多样</li>
-<li>最好支持集群功能 - 或者说任何的框架都应该支持集群功能</li>
-</ul>
-<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><pre><code>N/A
-</code></pre>
-<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p>  Redis也是基于Reactor模式来实现的，这一点和Netty类似.</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
-<li>高性能视角 - 对应快这个指标</li>
-<li>高可用视角 - 对应好这个指标<ul>
-<li>分布式维度<ul>
-<li>主从库模式<ul>
-<li>全量复制</li>
-<li>基于长连接的命令传播</li>
-<li>增量复制 </li>
-</ul>
-</li>
-<li>哨兵机制</li>
-<li>集群</li>
-</ul>
-</li>
-<li>容错维度<ul>
-<li>AOF日志 - 先更新缓存，然后再更新日志，这样可以得出一个结论：只有日志里有记录，就一定有执行过缓存的命令 。<ul>
-<li>优点</li>
-<li>缺点</li>
-</ul>
-</li>
-<li>内存快照 -  RDB 文件</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>可扩展视角 - 对应好这个指标<ul>
-<li>数据分片</li>
-<li>负载均衡</li>
-</ul>
-</li>
-<li>Redis API</li>
-</ul>
-<h3 id="Redis用到的数据结构"><a href="#Redis用到的数据结构" class="headerlink" title="Redis用到的数据结构"></a>Redis用到的数据结构</h3><ul>
-<li>跳表</li>
-<li>布隆过滤器</li>
-<li>位图</li>
-<li>延时队列</li>
-</ul>
-<h3 id="Redis用到的算法"><a href="#Redis用到的算法" class="headerlink" title="Redis用到的算法"></a>Redis用到的算法</h3><ul>
-<li>限流算法</li>
-<li>GeoHash</li>
-</ul>
-<h2 id="Redis的实践"><a href="#Redis的实践" class="headerlink" title="Redis的实践"></a>Redis的实践</h2><ul>
-<li>Redis做消息队列，业界有日活百万的案例.</li>
-<li>Redis所在的宿主机挂了之后怎么办？</li>
-</ul>
-<h2 id="Redis的未来"><a href="#Redis的未来" class="headerlink" title="Redis的未来"></a>Redis的未来</h2>]]></content>
-      <categories>
-        <category>缓存</category>
-      </categories>
-      <tags>
-        <tag>缓存</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之离弦之箭 - 高并发</title>
     <url>/2020/10/06/concurrent/</url>
     <content><![CDATA[<p>一个系统如果足够稳定，而且客户对它也很满意，我们一般没有去优化它的必要，但如果随着用户量增加，系统变的缓慢，我们就有优化它的必要性了. 借用我前面博文《一种可以衡量事物的指标-快和好》，一个系统追求的目标之一是快，但快的前提的是<br>好，也就是稳，否则步伐太大了就容易扯着蛋了. 优化系统是大的话题，这里只讨论其中的一个小领域-高并发.<br>任何一个计算机的问题，都能从现实中找到雏形和模型，高并发也不例外。高并发的内容还是比较多的，所以不同类型的高并发问题需要不同的角度，就好像作战的时候，战斗机需要在高空1万米，也需要突然下降到高空1千米，也有可能是潜艇下沉到水下几千米配合作战. 这种思维模型我给它取了个名字叫“海陆空”模型.</p>
@@ -808,6 +694,120 @@
         <tag>Java</tag>
         <tag>高并发</tag>
         <tag>高性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java之效率管家 - Redis</title>
+    <url>/2020/10/15/cache/</url>
+    <content><![CDATA[<p>计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在</p>
+<ul>
+<li>CPU - CPU缓存</li>
+<li>操作系统 - Page Cache</li>
+<li>数据库 - 数据库缓存</li>
+<li>浏览器 - 浏览器缓存</li>
+</ul>
+<p>这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题</p>
+<ul>
+<li>缓存概述</li>
+<li>Redis历史</li>
+<li>什么是Redis</li>
+<li>为什么是Redis</li>
+<li>Redis是如何实现的</li>
+<li>Redis实践</li>
+<li>Redis的未来</li>
+</ul>
+<span id="more"></span>
+<h2 id="缓存概述"><a href="#缓存概述" class="headerlink" title="缓存概述"></a>缓存概述</h2><h3 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h3><p>  没有看到缓存的通用定义，这里尝试定义一下. 我们有系统X, C, D，这三个系统有如下特征</p>
+<ul>
+<li>系统X可以从C和D拿到同样的数据</li>
+<li>系统X从C拿到的数据比从D拿到的数据更快</li>
+<li>系统C的数据是来自于D</li>
+</ul>
+<p>  如果上述三个条件满足，那么系统C可以称做为D的缓存.</p>
+<h3 id="为什么需要缓存"><a href="#为什么需要缓存" class="headerlink" title="为什么需要缓存"></a>为什么需要缓存</h3><p>  如果系统D满足不了单位时间内多次请求，那么系统C一定是存在的. 原因是</p>
+<ul>
+<li>系统C比系统D更快，那么可以提供更好的用户体验.</li>
+</ul>
+<h3 id="实现一个缓存会遇到什么问题？"><a href="#实现一个缓存会遇到什么问题？" class="headerlink" title="实现一个缓存会遇到什么问题？"></a>实现一个缓存会遇到什么问题？</h3><pre><code>* 缓存更新策略
+  * Cache Aside Pattern
+  * Write / Read Through Pattern
+  * Write Behind Caching Pattern
+</code></pre>
+<h2 id="Redis历史"><a href="#Redis历史" class="headerlink" title="Redis历史"></a>Redis历史</h2><p>2008年，一家意大利公司Merzia推出了一个几个基于Mysql的实时统计系统，但是该公司的创始人Salvatore Sanfilippo对这套系统感到失望，于是自己对这套系统量身定做了一个数据库，且在2009年开发完成, 这就是Redis. 所以这就是比较典型的思路：有了一个痛点，然后才有了一个技术。 而现在不少公司的思路是反的：不管有没有痛点，先用高大上的技术再说.<br>2010年VMware公司赞助Redis, Salvatore Sanfilippo和另外一位开发者加入了VMware公司，全职开发Redis. 所以也是当时的一个痛点问题，改变了作者的人生之路.</p>
+<h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>我看看官网上Redis的定义:</p>
+<blockquote>
+<p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker</p>
+</blockquote>
+<p>在我们的印象中，数据库是指MySql, Sql Server，或者Oracle. 所以从这里看得出Redis的定位是多种多样的，可以做缓存，数据库或者消息队列.<br>但有点事实可以确定</p>
+<ul>
+<li>相比于Kafka, Redis的消息队列没那么专业</li>
+</ul>
+<p>从核心行为的角度来看：Redis是一个支持Key, value的存储系统. 换句话说, Redis的灵魂在于Key,Value.</p>
+<h2 id="为什么是Redis"><a href="#为什么是Redis" class="headerlink" title="为什么是Redis"></a>为什么是Redis</h2><h2 id="Redis是如何实现的"><a href="#Redis是如何实现的" class="headerlink" title="Redis是如何实现的"></a>Redis是如何实现的</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><ul>
+<li>如何又快又好的实现一个Key, Value存储？</li>
+</ul>
+<p>  所以可以设想一个最简单的Key, Value的存储， 它应该支持</p>
+<ul>
+<li>支持数据的增删改查</li>
+<li>数据类型多样</li>
+<li>最好支持集群功能 - 或者说任何的框架都应该支持集群功能</li>
+</ul>
+<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><pre><code>N/A
+</code></pre>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><p>  Redis也是基于Reactor模式来实现的，这一点和Netty类似.</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
+<li>高性能视角 - 对应快这个指标</li>
+<li>高可用视角 - 对应好这个指标<ul>
+<li>分布式维度<ul>
+<li>主从库模式<ul>
+<li>全量复制</li>
+<li>基于长连接的命令传播</li>
+<li>增量复制 </li>
+</ul>
+</li>
+<li>哨兵机制</li>
+<li>集群</li>
+</ul>
+</li>
+<li>容错维度<ul>
+<li>AOF日志 - 先更新缓存，然后再更新日志，这样可以得出一个结论：只有日志里有记录，就一定有执行过缓存的命令 。<ul>
+<li>优点</li>
+<li>缺点</li>
+</ul>
+</li>
+<li>内存快照 -  RDB 文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可扩展视角 - 对应好这个指标<ul>
+<li>数据分片</li>
+<li>负载均衡</li>
+</ul>
+</li>
+<li>Redis API</li>
+</ul>
+<h3 id="Redis用到的数据结构"><a href="#Redis用到的数据结构" class="headerlink" title="Redis用到的数据结构"></a>Redis用到的数据结构</h3><ul>
+<li>跳表</li>
+<li>布隆过滤器</li>
+<li>位图</li>
+<li>延时队列</li>
+</ul>
+<h3 id="Redis用到的算法"><a href="#Redis用到的算法" class="headerlink" title="Redis用到的算法"></a>Redis用到的算法</h3><ul>
+<li>限流算法</li>
+<li>GeoHash</li>
+</ul>
+<h2 id="Redis的实践"><a href="#Redis的实践" class="headerlink" title="Redis的实践"></a>Redis的实践</h2><ul>
+<li>Redis做消息队列，业界有日活百万的案例.</li>
+<li>Redis所在的宿主机挂了之后怎么办？</li>
+</ul>
+<h2 id="Redis的未来"><a href="#Redis的未来" class="headerlink" title="Redis的未来"></a>Redis的未来</h2>]]></content>
+      <categories>
+        <category>缓存</category>
+      </categories>
+      <tags>
+        <tag>缓存</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1095,6 +1095,24 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2019/07/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>一种可以衡量事物的指标-快和好</title>
     <url>/2020/08/30/good-quick/</url>
     <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
@@ -1143,24 +1161,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>思维</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/07/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>前端发展史</title>
@@ -1528,6 +1528,84 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Java之黑暗森林 - JVM</title>
+    <url>/2020/09/30/jvm/</url>
+    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
+<ul>
+<li>什么是JVM</li>
+<li>JVM主要解决了哪些问题？</li>
+<li>JVM点滴</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
+<ul>
+<li>JVM规范</li>
+<li>JVM实现</li>
+</ul>
+<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
+<ul>
+<li>将Java文件转为Class文件</li>
+<li>将Class文件转为机器码</li>
+</ul>
+<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
+<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
+<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
+<ul>
+<li>线程共享<ul>
+<li>堆<ul>
+<li>存放new出来的对象</li>
+<li>数组</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>类信息<ul>
+<li>class文件常量池</li>
+</ul>
+</li>
+<li>静态变量</li>
+<li>常量信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>线程不共享<ul>
+<li>程序计数器<ul>
+<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
+<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
+</ul>
+</li>
+<li>虚拟机栈<ul>
+<li>符合栈的特性：先进后出</li>
+<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
+<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
+</ul>
+</li>
+<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
+<li>没有栈帧的概念</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
+<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
+
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
+
+<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
+<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
+
+
+<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议之保密局 - Https</title>
     <url>/2020/11/17/https/</url>
     <content><![CDATA[<p>安全，这件事情无处不在。<br>我们不希望自己的个人信息被泄漏。<br>我们不希望自己的银行卡密码被盗取。<br>我们不希望自己的一言一行被监控，我们希望能有个人的隐私.<br>作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.</p>
@@ -1622,84 +1700,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>安全</tag>
         <tag>网络协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java之黑暗森林 - JVM</title>
-    <url>/2020/09/30/jvm/</url>
-    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
-<ul>
-<li>什么是JVM</li>
-<li>JVM主要解决了哪些问题？</li>
-<li>JVM点滴</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
-<ul>
-<li>JVM规范</li>
-<li>JVM实现</li>
-</ul>
-<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
-<ul>
-<li>将Java文件转为Class文件</li>
-<li>将Class文件转为机器码</li>
-</ul>
-<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
-<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
-<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
-<ul>
-<li>线程共享<ul>
-<li>堆<ul>
-<li>存放new出来的对象</li>
-<li>数组</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>类信息<ul>
-<li>class文件常量池</li>
-</ul>
-</li>
-<li>静态变量</li>
-<li>常量信息</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>线程不共享<ul>
-<li>程序计数器<ul>
-<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
-<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
-</ul>
-</li>
-<li>虚拟机栈<ul>
-<li>符合栈的特性：先进后出</li>
-<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
-<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
-</ul>
-</li>
-<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
-<li>没有栈帧的概念</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
-<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
-
-<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
-
-<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
-<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
-
-
-<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -2005,111 +2005,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>微服务架构二三事</title>
-    <url>/2020/09/20/mircro-services-archi/</url>
-    <content><![CDATA[<p>就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。<br>这篇文章聚焦于传统的架构应该如何过渡到微服务架构。</p>
-<ul>
-<li>传统三层架构</li>
-<li>传统的DDD分层架构</li>
-<li>依赖倒置的DDD分层架构</li>
-<li>DDD 五层架构</li>
-<li>DDD 六层架构</li>
-<li>六边形架构</li>
-<li>整洁架构-洋葱模型</li>
-</ul>
-<span id="more"></span>
-<h2 id="传统的三层架构"><a href="#传统的三层架构" class="headerlink" title="传统的三层架构"></a>传统的三层架构</h2><p><img src="/images/2020/3-layers.png"><br>人往往会忽视简单和习以为常的东西，就比如“好好学习”这句话。<br>三层架构是所有架构的基石和鼻祖，当若干年之后人们再会想架构的时候，首先想到的应该是三层架构。我们应当向三层架构致敬.<br>正如我前面的提到的《分解》，软件开发的核心原则是分解。今天是这个分解，明天是那个分解，分解和分解之间的不同是维度的不同</p>
-<p>根据奥卡姆剃刀原则，如果一个问题有两个模型可以解释，那么肯定选择最简单的那个模型。<br>想到霍金提到的一个例子</p>
-<blockquote>
-<p>两者都是正确的宇宙模型，人们既可以假定地球静止，也可以假定太阳静止来解释星球的运转，只是哥白尼的日心说具有比较简洁的优势，可以用简单的运动方程来解释太阳系行星的运转。因为用地心说来描述星球的运行将非常复杂，不但要考虑天体的旋转，还要考虑地球的自转，因此托勒密虽然制作了以地球为中心的模型，很多现象依然无法解释，不得不用偏心圆和小轮体系来进行修正.</p>
-</blockquote>
-<p>简而言之，地心说本身没有问题，只是在解释宇宙的时候更复杂，不如日心说那么简单. 这个道理通用适用于三层架构模型。</p>
-<p>三层架构不考虑实现，仅仅从概念上来说是完美的。</p>
-<ul>
-<li>数据库 - 代表了信息存储的地方，也代表了事实，可以作为企业决策的依据。</li>
-<li>数据访问层 - 这一层主要用来获取数据库信息。</li>
-<li>业务逻辑层 - 世界上一切行为都可以看作是业务逻辑，这一层主要是加工（分解和组合）信息。</li>
-<li>用户界面层 - 用来显示给用户显示信息。</li>
-</ul>
-<p>三层模型从概念上是抽象度极高的，抽象度高意味着在落地时候还需要做很多工作.</p>
-<p>基本上，在三层模型里，对任意一层，可以有如下处理</p>
-<ul>
-<li>将这一层根据需要拆解成n层</li>
-<li>将这一层和其他层合并</li>
-<li>这一层和其他层之间增加新的一层</li>
-</ul>
-<p><img src="/images/2020/rubik.jpg"><br>我个人很感兴趣的一件事情：</p>
-<ul>
-<li>三层架构模型能不能像魔方一样经过几次变换然后变成其他架构模型呢？</li>
-</ul>
-<h2 id="传统的DDD分层架构"><a href="#传统的DDD分层架构" class="headerlink" title="传统的DDD分层架构"></a>传统的DDD分层架构</h2><p>  <img src="/images/2020/ddd-traditional4-layers.png"><br>  从概念上来说, 传统的DDD4层模型可以由三层模型稍加改进得来.</p>
-<ul>
-<li>用户接口层， 这层对应三层当中的用户界面层. 可以有两者解读<ul>
-<li>广义上是指UI，API</li>
-<li>狭义上是指API</li>
-</ul>
-</li>
-<li>应用层，组合领域层和调用其他应用层。 这层可以看成是由业务逻辑层拆解而来。</li>
-<li>领域层，这是整个系统的重点，也是兵家必争之地。领域层要确保在整个系统的复用性.这层可以看成是由业务逻辑层拆解而来。这层包括<ul>
-<li>领域服务的定义</li>
-<li>领域对象的定义</li>
-<li>领域事件的发布</li>
-</ul>
-</li>
-<li>基础设施层，包括缓存，队列，网关，数据库，可以对应三层的数据层.</li>
-</ul>
-<p>  这里的特点是任何一层都可以访问基础设施层。 就好像一个组织里，大领导可以过问下层的工作细节，下层可以越级汇报给上层。</p>
-<h2 id="依赖倒置的DDD分层架构"><a href="#依赖倒置的DDD分层架构" class="headerlink" title="依赖倒置的DDD分层架构"></a>依赖倒置的DDD分层架构</h2><p>  <img src="/images/2020/ddd-4-layers.png"><br>   相比于传统的DDD的分层，依赖倒置的分层一点点反直觉。<br>   传统的DDD分层，层和层之间的箭头流向代表着</p>
-<ul>
-<li>调用关系-RPC调用或者发布一个事件</li>
-</ul>
-<p>  但是依赖倒置的DDD分层的箭头带来的确实含义完全不一样的理解</p>
-<ul>
-<li>绿色的箭头代表的不是调用关系，因为很明显技术设施层怎么可能调用用户接口层呢？这是最明显反直觉的一点。所以这里(A-&gt;B)的绿色箭头代表着，B比A要重要，A的任何改动不会影响B,B的变化会影响A.</li>
-<li>黑色的箭头代表着正常的调用。</li>
-<li>这幅图最大的问题在于一个箭头有两种完全不同的语义.</li>
-</ul>
-<h3 id="绿色思考帽"><a href="#绿色思考帽" class="headerlink" title="绿色思考帽"></a>绿色思考帽</h3><p>   想象一个人在飞机上，有四个包裹分别为用户接口层，应用层，领域层，基础设施层，这个四个包裹的重量一样，但价值不一样。现在飞机动力不足了，我们要扔掉包裹，才能让飞机有动力继续飞行. 我们会怎么扔？</p>
-<ul>
-<li>扔第一个包裹。扔掉基础设施层，因为落地之后，换一个基础设施层就好了</li>
-<li>扔第二个包裹。扔掉用户接口层，相比于其他层，用户接口层没那么重要.</li>
-<li>扔第三个包裹。扔掉应用层，相比于领域层，应用层没那么重要.</li>
-</ul>
-<p>  所以我们可以看到领域层是最重要，只要领域层在，一个业务的灵魂就在。正如我们听到的紧紧围绕在XX同志为代表的领导下，开发业务的时候同样如此，要紧密团结在领域层周围做事情.</p>
-<h2 id="DDD-五层架构"><a href="#DDD-五层架构" class="headerlink" title="DDD 五层架构"></a>DDD 五层架构</h2><p>  <img src="/images/2020/ddd-5-layers.png"></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>  一个人在公司里是员工，可以完成上级的任务，在家里就是父亲，可以教育子女. 如何用从代码层面描述这两种场景，而且符合开发者的心智模型？</p>
-<ul>
-<li>张三 + 场景 (公司) -&gt; 完成上级任务</li>
-<li>张三 + 场景（家里）-&gt; 教育子女</li>
-</ul>
-<p>  一个可行的的公式：谁(Who)什么时候(When)在什么地方(where)用什么方式(How)完成了某件事(What)？基本上这个公式可以描述很多场景的行为，这样能保证描述不具备歧义性。比如：我上午骑车去超市买了瓶可乐。</p>
-<h3 id="什么是五层架构？"><a href="#什么是五层架构？" class="headerlink" title="什么是五层架构？"></a>什么是五层架构？</h3><p>  五层架构也叫DCI(Data + Context + Interactive)架构，是2009年由James O. Coplien和Trygve Reenskaug共同提出.<br>  DDD五层是对DDD四层的改进</p>
-<ul>
-<li>Context层 - 由四层的domain拆解而来<ul>
-<li>负责将领域对象变成Role</li>
-</ul>
-</li>
-<li>Domain层 - 由四层的domain拆解而来<ul>
-<li>object - 描述对象的关系</li>
-<li>role - 用来给对象创建一个 role, 员工或父亲。 这个Role可能以后会带来歧义，因为一些权限验证框架里面也由Role这个概念.</li>
-</ul>
-</li>
-</ul>
-<h3 id="什么时候应该用五层架构？"><a href="#什么时候应该用五层架构？" class="headerlink" title="什么时候应该用五层架构？"></a>什么时候应该用五层架构？</h3><ul>
-<li>梳理完整个业务之后，如果一个实体在业务中有多个不同的称呼，这个时候就应当用五层架构模型，如果实体在业务中的称呼是唯一的，那们就四层模型就够了。可能有朋友要问了，如果用四层模型，现在业务实体的称呼只有一个，那将来实体要是有多个称呼可怎么办呢？那就演化到五层。</li>
-</ul>
-<h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png"></p>
-<h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png"></p>
-]]></content>
-      <categories>
-        <category>架构</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>微服务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之飞鸽传书 - Netty</title>
     <url>/2020/10/12/netty/</url>
     <content><![CDATA[<p>万物互联是现在乃至未来的趋势. 只要互联就需要网络，不管是无线还是有线。只要牵涉到联网，就牵涉到两台机器上的应用程序之间的通信。 只要是通信，我们就需要又快又好的进行通信。那么应该有一个事物来做这样基础的事情，这样开发者可以专注于写业务逻辑.<br>这个事物就是Netty. 当然Netty不是进行Java进行网络通信的唯一选择，我们自己也可以写一个网络编程框架,但在此刻，它是网络通信框架领域那颗最耀眼的明星,这就是影响力，必须承认它的人气。当我们讨论Java网络编程框架的时候，Netty是一个绕不过去的话题. 让我来沏一杯茶，闲言碎语几句.</p>
@@ -2222,6 +2117,111 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>高性能</tag>
         <tag>框架</tag>
         <tag>Netty</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微服务架构二三事</title>
+    <url>/2020/09/20/mircro-services-archi/</url>
+    <content><![CDATA[<p>就现阶段而言，DDD已经成为微服务设计的事实标准，也不排除未来可能是有更好的微服务设计标准。<br>这篇文章聚焦于传统的架构应该如何过渡到微服务架构。</p>
+<ul>
+<li>传统三层架构</li>
+<li>传统的DDD分层架构</li>
+<li>依赖倒置的DDD分层架构</li>
+<li>DDD 五层架构</li>
+<li>DDD 六层架构</li>
+<li>六边形架构</li>
+<li>整洁架构-洋葱模型</li>
+</ul>
+<span id="more"></span>
+<h2 id="传统的三层架构"><a href="#传统的三层架构" class="headerlink" title="传统的三层架构"></a>传统的三层架构</h2><p><img src="/images/2020/3-layers.png"><br>人往往会忽视简单和习以为常的东西，就比如“好好学习”这句话。<br>三层架构是所有架构的基石和鼻祖，当若干年之后人们再会想架构的时候，首先想到的应该是三层架构。我们应当向三层架构致敬.<br>正如我前面的提到的《分解》，软件开发的核心原则是分解。今天是这个分解，明天是那个分解，分解和分解之间的不同是维度的不同</p>
+<p>根据奥卡姆剃刀原则，如果一个问题有两个模型可以解释，那么肯定选择最简单的那个模型。<br>想到霍金提到的一个例子</p>
+<blockquote>
+<p>两者都是正确的宇宙模型，人们既可以假定地球静止，也可以假定太阳静止来解释星球的运转，只是哥白尼的日心说具有比较简洁的优势，可以用简单的运动方程来解释太阳系行星的运转。因为用地心说来描述星球的运行将非常复杂，不但要考虑天体的旋转，还要考虑地球的自转，因此托勒密虽然制作了以地球为中心的模型，很多现象依然无法解释，不得不用偏心圆和小轮体系来进行修正.</p>
+</blockquote>
+<p>简而言之，地心说本身没有问题，只是在解释宇宙的时候更复杂，不如日心说那么简单. 这个道理通用适用于三层架构模型。</p>
+<p>三层架构不考虑实现，仅仅从概念上来说是完美的。</p>
+<ul>
+<li>数据库 - 代表了信息存储的地方，也代表了事实，可以作为企业决策的依据。</li>
+<li>数据访问层 - 这一层主要用来获取数据库信息。</li>
+<li>业务逻辑层 - 世界上一切行为都可以看作是业务逻辑，这一层主要是加工（分解和组合）信息。</li>
+<li>用户界面层 - 用来显示给用户显示信息。</li>
+</ul>
+<p>三层模型从概念上是抽象度极高的，抽象度高意味着在落地时候还需要做很多工作.</p>
+<p>基本上，在三层模型里，对任意一层，可以有如下处理</p>
+<ul>
+<li>将这一层根据需要拆解成n层</li>
+<li>将这一层和其他层合并</li>
+<li>这一层和其他层之间增加新的一层</li>
+</ul>
+<p><img src="/images/2020/rubik.jpg"><br>我个人很感兴趣的一件事情：</p>
+<ul>
+<li>三层架构模型能不能像魔方一样经过几次变换然后变成其他架构模型呢？</li>
+</ul>
+<h2 id="传统的DDD分层架构"><a href="#传统的DDD分层架构" class="headerlink" title="传统的DDD分层架构"></a>传统的DDD分层架构</h2><p>  <img src="/images/2020/ddd-traditional4-layers.png"><br>  从概念上来说, 传统的DDD4层模型可以由三层模型稍加改进得来.</p>
+<ul>
+<li>用户接口层， 这层对应三层当中的用户界面层. 可以有两者解读<ul>
+<li>广义上是指UI，API</li>
+<li>狭义上是指API</li>
+</ul>
+</li>
+<li>应用层，组合领域层和调用其他应用层。 这层可以看成是由业务逻辑层拆解而来。</li>
+<li>领域层，这是整个系统的重点，也是兵家必争之地。领域层要确保在整个系统的复用性.这层可以看成是由业务逻辑层拆解而来。这层包括<ul>
+<li>领域服务的定义</li>
+<li>领域对象的定义</li>
+<li>领域事件的发布</li>
+</ul>
+</li>
+<li>基础设施层，包括缓存，队列，网关，数据库，可以对应三层的数据层.</li>
+</ul>
+<p>  这里的特点是任何一层都可以访问基础设施层。 就好像一个组织里，大领导可以过问下层的工作细节，下层可以越级汇报给上层。</p>
+<h2 id="依赖倒置的DDD分层架构"><a href="#依赖倒置的DDD分层架构" class="headerlink" title="依赖倒置的DDD分层架构"></a>依赖倒置的DDD分层架构</h2><p>  <img src="/images/2020/ddd-4-layers.png"><br>   相比于传统的DDD的分层，依赖倒置的分层一点点反直觉。<br>   传统的DDD分层，层和层之间的箭头流向代表着</p>
+<ul>
+<li>调用关系-RPC调用或者发布一个事件</li>
+</ul>
+<p>  但是依赖倒置的DDD分层的箭头带来的确实含义完全不一样的理解</p>
+<ul>
+<li>绿色的箭头代表的不是调用关系，因为很明显技术设施层怎么可能调用用户接口层呢？这是最明显反直觉的一点。所以这里(A-&gt;B)的绿色箭头代表着，B比A要重要，A的任何改动不会影响B,B的变化会影响A.</li>
+<li>黑色的箭头代表着正常的调用。</li>
+<li>这幅图最大的问题在于一个箭头有两种完全不同的语义.</li>
+</ul>
+<h3 id="绿色思考帽"><a href="#绿色思考帽" class="headerlink" title="绿色思考帽"></a>绿色思考帽</h3><p>   想象一个人在飞机上，有四个包裹分别为用户接口层，应用层，领域层，基础设施层，这个四个包裹的重量一样，但价值不一样。现在飞机动力不足了，我们要扔掉包裹，才能让飞机有动力继续飞行. 我们会怎么扔？</p>
+<ul>
+<li>扔第一个包裹。扔掉基础设施层，因为落地之后，换一个基础设施层就好了</li>
+<li>扔第二个包裹。扔掉用户接口层，相比于其他层，用户接口层没那么重要.</li>
+<li>扔第三个包裹。扔掉应用层，相比于领域层，应用层没那么重要.</li>
+</ul>
+<p>  所以我们可以看到领域层是最重要，只要领域层在，一个业务的灵魂就在。正如我们听到的紧紧围绕在XX同志为代表的领导下，开发业务的时候同样如此，要紧密团结在领域层周围做事情.</p>
+<h2 id="DDD-五层架构"><a href="#DDD-五层架构" class="headerlink" title="DDD 五层架构"></a>DDD 五层架构</h2><p>  <img src="/images/2020/ddd-5-layers.png"></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>  一个人在公司里是员工，可以完成上级的任务，在家里就是父亲，可以教育子女. 如何用从代码层面描述这两种场景，而且符合开发者的心智模型？</p>
+<ul>
+<li>张三 + 场景 (公司) -&gt; 完成上级任务</li>
+<li>张三 + 场景（家里）-&gt; 教育子女</li>
+</ul>
+<p>  一个可行的的公式：谁(Who)什么时候(When)在什么地方(where)用什么方式(How)完成了某件事(What)？基本上这个公式可以描述很多场景的行为，这样能保证描述不具备歧义性。比如：我上午骑车去超市买了瓶可乐。</p>
+<h3 id="什么是五层架构？"><a href="#什么是五层架构？" class="headerlink" title="什么是五层架构？"></a>什么是五层架构？</h3><p>  五层架构也叫DCI(Data + Context + Interactive)架构，是2009年由James O. Coplien和Trygve Reenskaug共同提出.<br>  DDD五层是对DDD四层的改进</p>
+<ul>
+<li>Context层 - 由四层的domain拆解而来<ul>
+<li>负责将领域对象变成Role</li>
+</ul>
+</li>
+<li>Domain层 - 由四层的domain拆解而来<ul>
+<li>object - 描述对象的关系</li>
+<li>role - 用来给对象创建一个 role, 员工或父亲。 这个Role可能以后会带来歧义，因为一些权限验证框架里面也由Role这个概念.</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么时候应该用五层架构？"><a href="#什么时候应该用五层架构？" class="headerlink" title="什么时候应该用五层架构？"></a>什么时候应该用五层架构？</h3><ul>
+<li>梳理完整个业务之后，如果一个实体在业务中有多个不同的称呼，这个时候就应当用五层架构模型，如果实体在业务中的称呼是唯一的，那们就四层模型就够了。可能有朋友要问了，如果用四层模型，现在业务实体的称呼只有一个，那将来实体要是有多个称呼可怎么办呢？那就演化到五层。</li>
+</ul>
+<h2 id="DDD-六层架构"><a href="#DDD-六层架构" class="headerlink" title="DDD 六层架构"></a>DDD 六层架构</h2><h2 id="六边形架构"><a href="#六边形架构" class="headerlink" title="六边形架构"></a>六边形架构</h2><p>  <img src="/images/2020/hexagon.png"></p>
+<h2 id="整洁架构-洋葱模型"><a href="#整洁架构-洋葱模型" class="headerlink" title="整洁架构-洋葱模型"></a>整洁架构-洋葱模型</h2><p>  <img src="/images/2020/onion-model.png"></p>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>架构</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -2408,6 +2408,80 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>React设计思路</title>
+    <url>/2020/09/13/react-design/</url>
+    <content><![CDATA[<p>React作为前端主流的UI库，逐渐占据了前端的大半壁江山。所以哪个前端如果不知道React， 那基本上可以算是大大的落伍了.<br>在这里，主要聊聊</p>
+<ul>
+<li>什么是React?</li>
+<li>为什么是React?</li>
+<li>React是如何实现的？</li>
+<li>React的未来</li>
+</ul>
+<h2 id="什么是React"><a href="#什么是React" class="headerlink" title="什么是React?"></a>什么是React?</h2><p>  <img src="/images/2020/react-logo.png"><br>  React是一个UI库，所以 React的核心定位和使命是解决UI的问题.<br>  传统意义上操作UI的做法是:</p>
+<ul>
+<li>触发一个行为</li>
+<li>以某种方式获取DOM</li>
+<li>以某种方式更新DOM</li>
+</ul>
+  <span id="more"></span>
+<p>  React的做法:</p>
+<ul>
+<li>触发一个行为</li>
+<li>更新数据</li>
+</ul>
+<p>  React相对于传统的UI库有几个明显的不同</p>
+<ul>
+<li>抹去DOM的概念(除了一些特殊的场合需要操作原生的DOM). 这会带来额外的收益<ul>
+<li>如果没有DOM的话，那是不是一套逻辑可以应用在桌面端，移动端？答案是肯定的.</li>
+<li>最近几年加入前端界的朋友是不需要学习DOM的，这样学习成本就低了些.</li>
+</ul>
+</li>
+<li>开发者只需要关注数据和UI之间的关系, UI=render(data). 具体一点, 关注<ul>
+<li>数据如何存取？</li>
+<li>拿到数据之后，如何构建一个好的数据模型为UI服务？</li>
+<li>操作数据</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么是React"><a href="#为什么是React" class="headerlink" title="为什么是React?"></a>为什么是React?</h2><p>  React能得到快速的发展，离不开下面几个因素：</p>
+<ul>
+<li>大厂的加持。这年头背后得有个有钱的爸爸才能发展的好啊。</li>
+<li>繁荣的生态。单纯的React解决不了大问题。 还需要配上Redux, redux-router一系列相关的类库和框架.</li>
+<li>比较好的设计理念， UI=render(data). 相比于之前的库和框架，这个设计理念是React独有的</li>
+</ul>
+<h2 id="React是如何实现的？"><a href="#React是如何实现的？" class="headerlink" title="React是如何实现的？"></a>React是如何实现的？</h2><p>  这里不打算讨论非常细的东西，比如组件的生命周期，如何更新组件的状态等等。<br>  从宏观角度来看，在React实现上有两个绕不过去的概念</p>
+<ul>
+<li><p>JSX</p>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">  <span class="token keyword">class</span> <span class="token class-name">HelloMessage</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+        Hello </span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>看return里面的内容，是不是很熟悉？不就是模板么？对，如果非要说成模版也没错。 但在React这里可不可能这么叫，咱得换个说法，不然怎么显示出React和别人不一样呢？<br>从语法层面，这个叫JSX.<br>从抽象的角度来说，这个叫组件.<br>从实现的角度来说这个叫Virtual DOM<br>传通的UI设计是要分离CSS, Html和JS的， 这种分类的维度是基于技术层面的划分. JSX认为一段CSS, 一段Html, 一段JS组合在一起才算是一个完整意义上的实体，是可以单独交付出去的。所以这里带来了前端思维方式的变化。</p>
+</li>
+<li><p>Diff算法<br>上面说过，React对开发者是抹去了Dom的概念，但Web的展示还是基于Dom的，所以要将Virual DOM转为 真实DOM。 如何以一种更快更好的方式将Virtual DOM转为真实 DOM呢? 以后有时间单独讨论.</p>
+</li>
+</ul>
+<h2 id="React的未来"><a href="#React的未来" class="headerlink" title="React的未来"></a>React的未来</h2><ul>
+<li>React的设计理念, UI=render(data)在未来很长一段时间内很会稳定.</li>
+<li>React和Vue的生态之间的竞争是一个看点.</li>
+<li>React的许可协议将来会不会有变数？</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+        <tag>前端</tag>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>编程语言概述</title>
     <url>/2020/10/31/programming-language/</url>
     <content><![CDATA[<p>众所周知, 计算机这个行业是不断发展的。 编程语言就是其中之一，要么是出现新的语言，要么是出现这个语言的特性升级。 其他领域，比如法律和医学， 知识更新迭代的速度远比不上编程领域.<br>让我来沏一杯茶，闲聊一下编程语言这个老生常谈的话题.</p>
@@ -2586,29 +2660,41 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 <h2 id="设计一门编程语言需要考虑什么问题？"><a href="#设计一门编程语言需要考虑什么问题？" class="headerlink" title="设计一门编程语言需要考虑什么问题？"></a>设计一门编程语言需要考虑什么问题？</h2><p>如果要实现一门现代编程语言，需要考虑哪些方面的问题？ 从语言的能力的角度， 它需要有</p>
 <ul>
 <li>类型系统<ul>
-<li>如何表达基本类型？ 整型，<code>字符型</code>，布尔型.</li>
+<li>强类型系统<ul>
+<li>如何表达基本类型？ 整型，**<code>字符型</code>**，布尔型.</li>
 <li>如何表达非基本类型？ 类和函数谁是第一等公民？</li>
+</ul>
+</li>
+<li>弱类型系统</li>
+</ul>
+</li>
+<li>常用的算法和数据结构<ul>
+<li>顺序存储和链式存储。 比如数组，链表</li>
+<li>字典</li>
+<li>**<code>集合</code>**的各种操作。 比如sort, sum, map , filter…</li>
+</ul>
+</li>
+<li>模块系统<ul>
+<li>如何定义一个模块以及如何引入一个模块</li>
 </ul>
 </li>
 <li>流程控制<ul>
 <li>顺序，选择，循环</li>
 </ul>
 </li>
-<li>常用的算法和数据结构<ul>
-<li>顺序存储和链式存储。 比如数组，链表</li>
-<li>字典</li>
-<li>集合的各种操作。 比如sort, sum, filter…</li>
+<li><strong><code>异步</code></strong><ul>
+<li>如何优雅的处理异步</li>
 </ul>
 </li>
 <li>进程和线程<ul>
-<li>如何处理高并发问题</li>
+<li>如何处理高并发问题 - 这里的搞并发是狭义上的高并发</li>
 </ul>
 </li>
 <li>异常处理<ul>
 <li>如果程序遇到非正常情况， 应该如何处理？</li>
 </ul>
 </li>
-<li>时间<ul>
+<li><strong><code>时间</code></strong><ul>
 <li>任何语言都必须提供良好的API支持时间。包括时区转换，时间格式化等操作.</li>
 </ul>
 </li>
@@ -2634,87 +2720,52 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 </ul>
 </li>
 </ul>
-<h2 id="编程语言和架构是什么关系？"><a href="#编程语言和架构是什么关系？" class="headerlink" title="编程语言和架构是什么关系？"></a>编程语言和架构是什么关系？</h2><p>编程语言和架构不是一个层次上的事物。<br>从设计重要性的角度来看， 架构的选择 &gt; 编程语言的选择. 编程语言不会决定架构的选择，但是会对架构的选择产生一些影响。 当选择一门编程语言的时候，选择的往往不是这门编程语言本身，而是选择的基于这门语言的框架和生态. 就好比，张三娶了李四，娶的不仅仅是李四，还包括李四的家庭</p>
+<h2 id="编程语言和架构是什么关系？"><a href="#编程语言和架构是什么关系？" class="headerlink" title="编程语言和架构是什么关系？"></a>编程语言和架构是什么关系？</h2><p>编程语言和架构不是一个层次上的事物。<br>从设计重要性的角度来看， 架构的选择 &gt; 编程语言的选择.<br>编程语言不会决定架构的选择，但是会对架构的选择产生一些影响。 当选择一门编程语言的时候，选择的往往不是这门编程语言本身，而是选择的基于这门语言的框架和生态. 就好比，张三娶了李四，娶的不仅仅是李四，还包括李四的家庭.<br>在云原生时代，应用的基本单位是容器，你可以用Go来构建一个微服务，也可以用Java来构建一个微服务，当然，也可以用Nest.js来构建微服务，语言之间的口水之争会慢慢淡化。</p>
+<h2 id="编程语言的衍生品"><a href="#编程语言的衍生品" class="headerlink" title="编程语言的衍生品"></a>编程语言的衍生品</h2><p>我们选择的往往不是一门语言，而是与此语言相关的生态。<br>先来看看以下几个基本事实</p>
+<ul>
+<li>Java毫无疑问是成功的.<ul>
+<li>它有各种各样的规范</li>
+<li>它有Spring框架,稳定运行了20年，社区很活跃</li>
+<li>它可以运行在windows, linux, mac上</li>
+</ul>
+</li>
+<li>JS是成功的<ul>
+<li>JS 语言本身是有缺陷的, 使用起来不是那么简单.</li>
+<li>前端只有一门JS语言，你别无选择</li>
+<li>它有React框架，FaceBook背书，相关的社区很活跃</li>
+<li>可以运行在各种浏览器端</li>
+</ul>
+</li>
+<li>C#不是那么成功<ul>
+<li>.net 仅仅局限于windows. 虽然.net core 和.net5 现在可以运行在Linux上，但有相当一部分时间, .net是不能运行在linux上的.</li>
+<li>.net没有一个像样的框架，比如Spring, 所以没有形成一个相应的活跃社区</li>
+<li>.net 与微软这家公司息息相关.</li>
+<li>C#的语言特性无疑是优雅的</li>
+<li>C#的使用很简单</li>
+<li>国内大厂基本是Java系，C++系，或者Go系，没见过大厂使用.net的，典型的有京东和携程转Java</li>
+</ul>
+</li>
+</ul>
+<p>由上面的一些事实，我们可以得出一些结论</p>
+<ul>
+<li>一个语言的语法优雅，是一件好事， 但从技术决策的角度而言, 不是那么重要</li>
+<li>一个语言如果在一个领域没有替代品，而且这个领域又是刚需，那么这个语言活的很好，即使这个语言本身不好用.</li>
+<li>一个语言想要活的好，需要有一个重量级别的框架或者工具. 这个框架符合以下两个特点最好.</li>
+<li>这个框架是由大公司开发和维护的</li>
+<li>这个框架是开源的，有很多开发者参与，形成了一个活跃的社区<div class="note info"><p>以上的这两个特点意味着这个框架试已经踩过各种坑，形成了自己的最佳实践，小伙伴们可以放心使用，睡个好觉.</p>
+</div></li>
+</ul>
+<p>作为一个技术决策者来说，选择一门语言，主要考虑两个问题</p>
+<ul>
+<li>要解决什么问题？总不能说要研发一个编译器，选择Java语言.</li>
+<li>这个语言背后的生态是不是强大？</li>
+</ul>
 <h2 id="编程语言的未来"><a href="#编程语言的未来" class="headerlink" title="编程语言的未来"></a>编程语言的未来</h2>]]></content>
       <categories>
         <category>编程语言</category>
       </categories>
       <tags>
         <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React设计思路</title>
-    <url>/2020/09/13/react-design/</url>
-    <content><![CDATA[<p>React作为前端主流的UI库，逐渐占据了前端的大半壁江山。所以哪个前端如果不知道React， 那基本上可以算是大大的落伍了.<br>在这里，主要聊聊</p>
-<ul>
-<li>什么是React?</li>
-<li>为什么是React?</li>
-<li>React是如何实现的？</li>
-<li>React的未来</li>
-</ul>
-<h2 id="什么是React"><a href="#什么是React" class="headerlink" title="什么是React?"></a>什么是React?</h2><p>  <img src="/images/2020/react-logo.png"><br>  React是一个UI库，所以 React的核心定位和使命是解决UI的问题.<br>  传统意义上操作UI的做法是:</p>
-<ul>
-<li>触发一个行为</li>
-<li>以某种方式获取DOM</li>
-<li>以某种方式更新DOM</li>
-</ul>
-  <span id="more"></span>
-<p>  React的做法:</p>
-<ul>
-<li>触发一个行为</li>
-<li>更新数据</li>
-</ul>
-<p>  React相对于传统的UI库有几个明显的不同</p>
-<ul>
-<li>抹去DOM的概念(除了一些特殊的场合需要操作原生的DOM). 这会带来额外的收益<ul>
-<li>如果没有DOM的话，那是不是一套逻辑可以应用在桌面端，移动端？答案是肯定的.</li>
-<li>最近几年加入前端界的朋友是不需要学习DOM的，这样学习成本就低了些.</li>
-</ul>
-</li>
-<li>开发者只需要关注数据和UI之间的关系, UI=render(data). 具体一点, 关注<ul>
-<li>数据如何存取？</li>
-<li>拿到数据之后，如何构建一个好的数据模型为UI服务？</li>
-<li>操作数据</li>
-</ul>
-</li>
-</ul>
-<h2 id="为什么是React"><a href="#为什么是React" class="headerlink" title="为什么是React?"></a>为什么是React?</h2><p>  React能得到快速的发展，离不开下面几个因素：</p>
-<ul>
-<li>大厂的加持。这年头背后得有个有钱的爸爸才能发展的好啊。</li>
-<li>繁荣的生态。单纯的React解决不了大问题。 还需要配上Redux, redux-router一系列相关的类库和框架.</li>
-<li>比较好的设计理念， UI=render(data). 相比于之前的库和框架，这个设计理念是React独有的</li>
-</ul>
-<h2 id="React是如何实现的？"><a href="#React是如何实现的？" class="headerlink" title="React是如何实现的？"></a>React是如何实现的？</h2><p>  这里不打算讨论非常细的东西，比如组件的生命周期，如何更新组件的状态等等。<br>  从宏观角度来看，在React实现上有两个绕不过去的概念</p>
-<ul>
-<li><p>JSX</p>
-<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">  <span class="token keyword">class</span> <span class="token class-name">HelloMessage</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
-  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
-        Hello </span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-    <span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>看return里面的内容，是不是很熟悉？不就是模板么？对，如果非要说成模版也没错。 但在React这里可不可能这么叫，咱得换个说法，不然怎么显示出React和别人不一样呢？<br>从语法层面，这个叫JSX.<br>从抽象的角度来说，这个叫组件.<br>从实现的角度来说这个叫Virtual DOM<br>传通的UI设计是要分离CSS, Html和JS的， 这种分类的维度是基于技术层面的划分. JSX认为一段CSS, 一段Html, 一段JS组合在一起才算是一个完整意义上的实体，是可以单独交付出去的。所以这里带来了前端思维方式的变化。</p>
-</li>
-<li><p>Diff算法<br>上面说过，React对开发者是抹去了Dom的概念，但Web的展示还是基于Dom的，所以要将Virual DOM转为 真实DOM。 如何以一种更快更好的方式将Virtual DOM转为真实 DOM呢? 以后有时间单独讨论.</p>
-</li>
-</ul>
-<h2 id="React的未来"><a href="#React的未来" class="headerlink" title="React的未来"></a>React的未来</h2><ul>
-<li>React的设计理念, UI=render(data)在未来很长一段时间内很会稳定.</li>
-<li>React和Vue的生态之间的竞争是一个看点.</li>
-<li>React的许可协议将来会不会有变数？</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
-        <tag>前端</tag>
-        <tag>React</tag>
       </tags>
   </entry>
   <entry>
@@ -2772,180 +2823,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>框架</tag>
         <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java之武林盟主 - Spring</title>
-    <url>/2020/10/20/spring/</url>
-    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
-<ul>
-<li>什么是Spring?</li>
-<li>为什么是Spring?</li>
-<li>如何实现一个Spring?</li>
-<li>Spring实践？</li>
-<li>Spring的发展</li>
-<li>拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
-<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
-<ul>
-<li>IOC</li>
-<li>AOP<br>这是Spring其他的功能的基础和起点</li>
-</ul>
-<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
-<ul>
-<li>一个最低的JDK版本 </li>
-<li>特定的JavaEE规范 </li>
-</ul>
-<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
-<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
-<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
-<li>基于POJO的轻量级和最小侵入编程<ul>
-<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
-</ul>
-</li>
-<li>DI和面对接口实现松耦合编程<ul>
-<li>隔离了接口和实现</li>
-</ul>
-</li>
-<li>基于AOP和惯例的声明式编程<ul>
-<li>AOP是为了隔离了核心功能和非核心功能</li>
-<li>惯例是用户熟悉的事物</li>
-</ul>
-</li>
-<li>基于AOP和模板减少样板式代码<ul>
-<li>模版说明是一致的编程模型，减少重复代码.</li>
-</ul>
-</li>
-</ul>
-<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
-<ul>
-<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
-<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
-<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
-</ul>
-</li>
-<li>隔离<ul>
-<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
-<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
-</ul>
-</li>
-</ul>
-<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
-<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
-<ul>
-<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石    * Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
-<li>如何定义一个Bean</li>
-<li>如何创建一个Bean</li>
-<li>如何解析一个Bean    * Context<br>Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
-<li>获得Bean列表</li>
-<li>解析资源</li>
-<li>发布事件</li>
-<li>国际化    * Core<br>Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
-</ul>
-</li>
-</ul>
-<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
-<ul>
-<li>前后端不分离</li>
-<li>前后端分离</li>
-</ul>
-<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
-<ul>
-<li>关系型数据</li>
-<li>非关系型数据</li>
-</ul>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
-<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
-<ul>
-<li>这个用户是谁？</li>
-<li>这个用户能做什么？</li>
-</ul>
-<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
-<ul>
-<li>系统A调用系统B的接口</li>
-<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
-<ul>
-<li>日志</li>
-<li>监控</li>
-</ul>
-<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
-<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
-</blockquote>
-<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
-<ul>
-<li>没有繁琐的XML的配置</li>
-<li>不需要操作Jar包之间的依赖关系</li>
-<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
-</ul>
-<p>  两个例子</p>
-<ul>
-<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
-<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。 </li>
-</ul>
-<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
-<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
-</blockquote>
-<p>  从这里可以看出, Spring Cloud的定位和明确</p>
-<ul>
-<li>聚焦于分布式的问题 </li>
-<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul </li>
-</ul>
-<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
-<ul>
-<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
-<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
-</ul>
-</li>
-<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
-<li>竞品 - k8s的Service</li>
-</ul>
-</li>
-<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
-<li>竞品 - Sentinel, k8s的Istio</li>
-</ul>
-</li>
-<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
-<li>竞品 - Kong, k8s的Ingress</li>
-</ul>
-</li>
-<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
-<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
-</ul>
-</li>
-<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
-<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
-<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
-<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
-</ul>
-</li>
-<li>Spring Cloud Feign - 简化了服务的调用方式</li>
-<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
-<li>竞品 - ZMon, DataDog</li>
-</ul>
-</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
-<blockquote>
-<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
-</blockquote>
-<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
-<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
-<blockquote>
-<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
-</blockquote>
-<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>框架</tag>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -3156,6 +3033,218 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Java之武林盟主 - Spring</title>
+    <url>/2020/10/20/spring/</url>
+    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
+<ul>
+<li>什么是Spring?</li>
+<li>为什么是Spring?</li>
+<li>如何实现一个Spring?</li>
+<li>Spring实践？</li>
+<li>Spring的发展</li>
+<li>拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
+<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
+<ul>
+<li>IOC</li>
+<li>AOP<br>这是Spring其他的功能的基础和起点</li>
+</ul>
+<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
+<ul>
+<li>一个最低的JDK版本 </li>
+<li>特定的JavaEE规范 </li>
+</ul>
+<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
+<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
+<li>基于POJO的轻量级和最小侵入编程<ul>
+<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
+</ul>
+</li>
+<li>DI和面对接口实现松耦合编程<ul>
+<li>隔离了接口和实现</li>
+</ul>
+</li>
+<li>基于AOP和惯例的声明式编程<ul>
+<li>AOP是为了隔离了核心功能和非核心功能</li>
+<li>惯例是用户熟悉的事物</li>
+</ul>
+</li>
+<li>基于AOP和模板减少样板式代码<ul>
+<li>模版说明是一致的编程模型，减少重复代码.</li>
+</ul>
+</li>
+</ul>
+<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
+<ul>
+<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
+<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
+<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
+</ul>
+</li>
+<li>隔离<ul>
+<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
+<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
+</ul>
+</li>
+</ul>
+<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
+<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
+<ul>
+<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石    * Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
+<li>如何定义一个Bean</li>
+<li>如何创建一个Bean</li>
+<li>如何解析一个Bean    * Context<br>Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
+<li>获得Bean列表</li>
+<li>解析资源</li>
+<li>发布事件</li>
+<li>国际化    * Core<br>Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
+<ul>
+<li>前后端不分离</li>
+<li>前后端分离</li>
+</ul>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
+<ul>
+<li>关系型数据</li>
+<li>非关系型数据</li>
+</ul>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
+<ul>
+<li>这个用户是谁？</li>
+<li>这个用户能做什么？</li>
+</ul>
+<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
+<ul>
+<li>系统A调用系统B的接口</li>
+<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
+<ul>
+<li>日志</li>
+<li>监控</li>
+</ul>
+<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
+</blockquote>
+<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
+<ul>
+<li>没有繁琐的XML的配置</li>
+<li>不需要操作Jar包之间的依赖关系</li>
+<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
+</ul>
+<p>  两个例子</p>
+<ul>
+<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
+<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。 </li>
+</ul>
+<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
+<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
+</blockquote>
+<p>  从这里可以看出, Spring Cloud的定位和明确</p>
+<ul>
+<li>聚焦于分布式的问题 </li>
+<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul </li>
+</ul>
+<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
+<ul>
+<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
+<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
+</ul>
+</li>
+<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
+<li>竞品 - k8s的Service</li>
+</ul>
+</li>
+<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
+<li>竞品 - Sentinel, k8s的Istio</li>
+</ul>
+</li>
+<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
+<li>竞品 - Kong, k8s的Ingress</li>
+</ul>
+</li>
+<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
+<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
+</ul>
+</li>
+<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
+<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
+<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
+<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
+</ul>
+</li>
+<li>Spring Cloud Feign - 简化了服务的调用方式</li>
+<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
+<li>竞品 - ZMon, DataDog</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
+<blockquote>
+<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
+</blockquote>
+<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
+<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
+<blockquote>
+<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
+</blockquote>
+<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>框架</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何衡量一个人对技术框架的熟练度?</title>
+    <url>/2020/08/29/tech-proficiency/</url>
+    <content><![CDATA[<p>在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.<br>假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?<br>现在姑且从三个大的角度对技术的熟练度进行划分</p>
+<ul>
+<li>应用<ul>
+<li>简单场景的应用</li>
+<li>复杂场景的应用</li>
+</ul>
+</li>
+<li>设计<ul>
+<li>框架设计的初衷</li>
+<li>框架的核心概念</li>
+<li>框架的设计思路</li>
+<li>框架的设计模式</li>
+<li>框架的设计思想,原则和哲学</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>核心模块的实现细节</li>
+<li>一些模块实现的奇技淫巧</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="简单场景的应用"><a href="#简单场景的应用" class="headerlink" title="简单场景的应用"></a>简单场景的应用</h3><p>很不幸, 人往往是在框架或者特定的环境下做事的, 长此以往人会形成特定的习惯行为模式,这种特定的习惯会形成一个有陷阱的舒适圈.<br>在实际的工作中, 我们往往知道一个东西是如何使用的就是够了. 比如说这样一个例子, 现在要页面要实现一个新增用户的功能, 基本上需要写存储过程, 写DAL层, 写Service层, 写页面层(包括验证), 然后做相应的测试. 要完成这个例子基本上就是在一个框架下完成的, 每个公司都有自己相应的框架, 不同之处就是名称不一样.<br>在这样的场景下, 我们知道这个api是如何使用的就足够了, 我们也必然会变成一个api熟练工.<br>长此以往, 一年下来如果只是做这种类似的功能, 对自己能力的提升是没有任何帮助的, 换句话说你表面上有的只是一年的经历, 实际上是一个礼拜的经验. 但这事对个人来说只能说是常态, 但对组织来说是必须, 因为一个组织需要的是分工, 分工必然导致一些工作是简单的重复和可替代性, 这种模式下的做事方式是具有可预见性的</p>
+<span id="more"></span>
+<h3 id="复杂场景的应用"><a href="#复杂场景的应用" class="headerlink" title="复杂场景的应用"></a>复杂场景的应用</h3><p>复杂场景一般是指两种情况</p>
+<ul>
+<li>假设有模块A, 由项目组A负责, 模块A会被很多系统调用, 模块A依赖于模块B(项目组B负责), 模块B依赖于模块C(项目组C负责). 这里的复杂度可以细分为两种<ul>
+<li>模块依赖的复杂度, 这里模块依赖会形成一个有向无环图, 如果是一个团队负责这些所有模块, 那么这个复杂度仅仅存在于团队内部.</li>
+<li>如果是不同团队负责不同的模块, 那么就是组织之间沟通的复杂度. 这种类型的复杂度是一种玄学, 往往会伴随着如下名词或短语出现,“集成”,“扯皮”, “等他们数据准备好”, “被他们block住了”</li>
+</ul>
+</li>
+<li>假设模块之间的关系是固定的, 那么随着用户数量的上升, 这个框架在性能方面是否还能扛得住? 量变会引起质变, 在其余什么都不变的情况下,仅仅是用户量的提升, 理论上会导致系统扛不住. 这里会有一个很自然而然的问题, 这个框架或者系统的极限是什么? 遗憾的是, 只有大公司才有会遇到这个问题, 对于大部分公司开发者而言, 是没有这样的实操经验的.</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>]]></content>
+  </entry>
+  <entry>
     <title>系统的约束和动力</title>
     <url>/2020/09/18/system-restrain-power/</url>
     <content><![CDATA[<p><img src="/images/2020/car.png"><br>一个系统能发展是有动力，如果要让系统发展的好则需要约束。就好像汽车的前进是靠发动机，汽车的减速靠的是刹车，汽车行进的方向靠的是方向盘。发动机是动力，刹车和方向盘是约束.<br>那么动力和约束与生活有什么关系呢？ 让我们从直觉和感性的角度来一场探索之旅吧</p>
@@ -3205,44 +3294,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>如何衡量一个人对技术框架的熟练度?</title>
-    <url>/2020/08/29/tech-proficiency/</url>
-    <content><![CDATA[<p>在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.<br>假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?<br>现在姑且从三个大的角度对技术的熟练度进行划分</p>
-<ul>
-<li>应用<ul>
-<li>简单场景的应用</li>
-<li>复杂场景的应用</li>
-</ul>
-</li>
-<li>设计<ul>
-<li>框架设计的初衷</li>
-<li>框架的核心概念</li>
-<li>框架的设计思路</li>
-<li>框架的设计模式</li>
-<li>框架的设计思想,原则和哲学</li>
-</ul>
-</li>
-<li>实现<ul>
-<li>核心模块的实现细节</li>
-<li>一些模块实现的奇技淫巧</li>
-</ul>
-</li>
-</ul>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="简单场景的应用"><a href="#简单场景的应用" class="headerlink" title="简单场景的应用"></a>简单场景的应用</h3><p>很不幸, 人往往是在框架或者特定的环境下做事的, 长此以往人会形成特定的习惯行为模式,这种特定的习惯会形成一个有陷阱的舒适圈.<br>在实际的工作中, 我们往往知道一个东西是如何使用的就是够了. 比如说这样一个例子, 现在要页面要实现一个新增用户的功能, 基本上需要写存储过程, 写DAL层, 写Service层, 写页面层(包括验证), 然后做相应的测试. 要完成这个例子基本上就是在一个框架下完成的, 每个公司都有自己相应的框架, 不同之处就是名称不一样.<br>在这样的场景下, 我们知道这个api是如何使用的就足够了, 我们也必然会变成一个api熟练工.<br>长此以往, 一年下来如果只是做这种类似的功能, 对自己能力的提升是没有任何帮助的, 换句话说你表面上有的只是一年的经历, 实际上是一个礼拜的经验. 但这事对个人来说只能说是常态, 但对组织来说是必须, 因为一个组织需要的是分工, 分工必然导致一些工作是简单的重复和可替代性, 这种模式下的做事方式是具有可预见性的</p>
-<span id="more"></span>
-<h3 id="复杂场景的应用"><a href="#复杂场景的应用" class="headerlink" title="复杂场景的应用"></a>复杂场景的应用</h3><p>复杂场景一般是指两种情况</p>
-<ul>
-<li>假设有模块A, 由项目组A负责, 模块A会被很多系统调用, 模块A依赖于模块B(项目组B负责), 模块B依赖于模块C(项目组C负责). 这里的复杂度可以细分为两种<ul>
-<li>模块依赖的复杂度, 这里模块依赖会形成一个有向无环图, 如果是一个团队负责这些所有模块, 那么这个复杂度仅仅存在于团队内部.</li>
-<li>如果是不同团队负责不同的模块, 那么就是组织之间沟通的复杂度. 这种类型的复杂度是一种玄学, 往往会伴随着如下名词或短语出现,“集成”,“扯皮”, “等他们数据准备好”, “被他们block住了”</li>
-</ul>
-</li>
-<li>假设模块之间的关系是固定的, 那么随着用户数量的上升, 这个框架在性能方面是否还能扛得住? 量变会引起质变, 在其余什么都不变的情况下,仅仅是用户量的提升, 理论上会导致系统扛不住. 这里会有一个很自然而然的问题, 这个框架或者系统的极限是什么? 遗憾的是, 只有大公司才有会遇到这个问题, 对于大部分公司开发者而言, 是没有这样的实操经验的.</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
-<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>]]></content>
-  </entry>
-  <entry>
     <title>三适原则</title>
     <url>/2020/08/29/three-principles/</url>
     <content><![CDATA[<p>三是我喜欢的数字之一.<br>某个时候, 我想是不是有些原则可以指导学习,工作或者生活呢?  这个原则不必然是根本性, 也不必然是很牛, 我只是想它在大多数情况下是正确的. 于是我总结出三适原则, 和几个朋友交流了一下这个三适原则, 他们对这个原则大多还是比较认可.<br>三适就是</p>
@@ -3287,14 +3338,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>认知</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Welcome</title>
-    <url>/2019/07/02/welcome/</url>
-    <content><![CDATA[<ul>
-<li>Hello, Welcome to Ricky World!</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>系统的正确性 - 事务及相关</title>
@@ -3468,5 +3511,13 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>分布式</tag>
         <tag>数据库</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Welcome</title>
+    <url>/2019/07/02/welcome/</url>
+    <content><![CDATA[<ul>
+<li>Hello, Welcome to Ricky World!</li>
+</ul>
+]]></content>
   </entry>
 </search>
