@@ -59,6 +59,68 @@
       </tags>
   </entry>
   <entry>
+    <title>浮浮沉沉 - DDD</title>
+    <url>/2020/09/15/DDD/</url>
+    <content><![CDATA[<p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
+<ul>
+<li>DDD是什么？</li>
+<li>DDD设计的一些原则?</li>
+<li>如何基于DDD实现一个服务?</li>
+<li>DDD的反面是什么？</li>
+</ul>
+<h2 id="DDD-是什么？"><a href="#DDD-是什么？" class="headerlink" title="DDD 是什么？"></a>DDD 是什么？</h2><p>  <img src="/images/2020/cow.png"><br>  DDD(Domain Driven Design)是一种设计方法论，它提供了一种拆解知识和问题的方式.</p>
+<h3 id="DDD的背景"><a href="#DDD的背景" class="headerlink" title="DDD的背景"></a>DDD的背景</h3><p>  2004年Eric Evans 出版了《领域驱动设计》。微服务发迹于2014年。但这10年间DDD可以说是默默无闻，就好像一个妃子被打入冷宫一样，直到微服务出现，两者才喜结良缘，很难说谁成就了谁，两者是如此的契合.</p>
+  <span id="more"></span>
+<h3 id="DDD的核心概念"><a href="#DDD的核心概念" class="headerlink" title="DDD的核心概念"></a>DDD的核心概念</h3><p>  DDD有将近10个左右的概念。这些概念都是为了搞清楚一件事：业务的边界是什么？什么样的东西应该放在这个业务里？什么样的东西不应该放在这个业务里？</p>
+<p>  人世间的争论大多数是名词之争。以前看《李敖有话说》，李敖提到了这样一个故事</p>
+<blockquote>
+<p>我想起《展望》（The Outlook）总编辑艾勃特（Lyman Abbott）自传中记他父亲的谈话：“自古以来，凡在哲学上和神学上的争论，十分之九都是名词之争。”艾勃特接着说：“我父亲的话是对的。但我年纪愈大，愈感到他老人家的算术还有点儿小错。——剩下的那十分之一，其实也是名词之争。”</p>
+</blockquote>
+<p>  一个人叫张三，无论它到世界任何角落，他还是张三，这是“实”。在公司里，张三是员工。在家里张三是父亲，父亲和员工是“形”；<br>  一瓶酒在仓库里叫库存，在运输的过程中叫货物。</p>
+<p>  知识也是类似的。知识可以有不同的分类，可以按照规模大小来分，也可以按照重点和非重点分(二八法则)，所以大概有四种类型:</p>
+<ul>
+<li>总的知识</li>
+<li>细分的知识</li>
+<li>重点知识</li>
+<li>非重点知识。</li>
+</ul>
+<p>   但不管是哪种知识，都属于知识，具有知识的共性：知识表达了一系列的事实，行为，最核心的组成成分是名词和动词。所以一系列的的名词和动词构成了一个完整的知识.</p>
+<ul>
+<li>领域 - 总的知识</li>
+<li>子域 - 细分的知识</li>
+<li>核心域 - 重点知识</li>
+<li>支撑域 - 非重点知识</li>
+<li>通用域 - 非重点知识</li>
+<li>聚合 - 一系列名词和动词的集合。</li>
+<li>聚合根 - 一系列名词和动词的集合，就像一个组织一样，得有一个老大负责对内对外的沟通.</li>
+<li>实体 - 名词 + 动词，是一种充血模型，以DO的的形式存在.</li>
+<li>值对象 - 名词</li>
+</ul>
+<h2 id="DDD设计的一些原则"><a href="#DDD设计的一些原则" class="headerlink" title="DDD设计的一些原则?"></a>DDD设计的一些原则?</h2><ul>
+<li>应用层实现跨聚合的调用。</li>
+<li>聚合之间的逻辑满足最终一致性。</li>
+<li>领域层实现跨实体的调用</li>
+<li>聚合内的逻辑满足强一致性</li>
+<li>要访问聚合，先找到聚合根</li>
+</ul>
+<h2 id="如何基于DDD实现一个服务"><a href="#如何基于DDD实现一个服务" class="headerlink" title="如何基于DDD实现一个服务?"></a>如何基于DDD实现一个服务?</h2><h3 id="形成DDD的过程"><a href="#形成DDD的过程" class="headerlink" title="形成DDD的过程"></a>形成DDD的过程</h3><pre><code>* 收集信息
+  * 项目负责人收集尽可能多的信息
+  * 召集大家一起开会，分析一个领域内有多少User case
+* 形成领域模型
+  * 对所有的User case进行名词提取，汇总出有多少核心名词
+  * 提取这些名词的核心行为
+* 实现
+  * 基于上面的名词设计实体和值对象
+</code></pre>
+<h3 id="一个简单的DDD例子"><a href="#一个简单的DDD例子" class="headerlink" title="一个简单的DDD例子"></a>一个简单的DDD例子</h3><h2 id="DDD的反面是什么？"><a href="#DDD的反面是什么？" class="headerlink" title="DDD的反面是什么？"></a>DDD的反面是什么？</h2>]]></content>
+      <categories>
+        <category>软件设计方法</category>
+      </categories>
+      <tags>
+        <tag>软件设计方法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议之靠谱邮差 - TCP</title>
     <url>/2020/11/03/TCP/</url>
     <content><![CDATA[<p>网络的信道是不稳定的，有时候施工队伍一不小就把光缆给挖断了，也有时候也有可能网络上连接太多了，导致弱网环境， 这些冰山一角的事情，充分说明了网络是不可靠的. TCP设计的初衷是保证数据能在网络上进行可靠的传输。 光缆都断了，数据还怎么可靠传输呢？<br>下面，开始我们的探索之旅.</p>
@@ -225,68 +287,6 @@
       <tags>
         <tag>协议</tag>
         <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浮浮沉沉 - DDD</title>
-    <url>/2020/09/15/DDD/</url>
-    <content><![CDATA[<p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
-<ul>
-<li>DDD是什么？</li>
-<li>DDD设计的一些原则?</li>
-<li>如何基于DDD实现一个服务?</li>
-<li>DDD的反面是什么？</li>
-</ul>
-<h2 id="DDD-是什么？"><a href="#DDD-是什么？" class="headerlink" title="DDD 是什么？"></a>DDD 是什么？</h2><p>  <img src="/images/2020/cow.png"><br>  DDD(Domain Driven Design)是一种设计方法论，它提供了一种拆解知识和问题的方式.</p>
-<h3 id="DDD的背景"><a href="#DDD的背景" class="headerlink" title="DDD的背景"></a>DDD的背景</h3><p>  2004年Eric Evans 出版了《领域驱动设计》。微服务发迹于2014年。但这10年间DDD可以说是默默无闻，就好像一个妃子被打入冷宫一样，直到微服务出现，两者才喜结良缘，很难说谁成就了谁，两者是如此的契合.</p>
-  <span id="more"></span>
-<h3 id="DDD的核心概念"><a href="#DDD的核心概念" class="headerlink" title="DDD的核心概念"></a>DDD的核心概念</h3><p>  DDD有将近10个左右的概念。这些概念都是为了搞清楚一件事：业务的边界是什么？什么样的东西应该放在这个业务里？什么样的东西不应该放在这个业务里？</p>
-<p>  人世间的争论大多数是名词之争。以前看《李敖有话说》，李敖提到了这样一个故事</p>
-<blockquote>
-<p>我想起《展望》（The Outlook）总编辑艾勃特（Lyman Abbott）自传中记他父亲的谈话：“自古以来，凡在哲学上和神学上的争论，十分之九都是名词之争。”艾勃特接着说：“我父亲的话是对的。但我年纪愈大，愈感到他老人家的算术还有点儿小错。——剩下的那十分之一，其实也是名词之争。”</p>
-</blockquote>
-<p>  一个人叫张三，无论它到世界任何角落，他还是张三，这是“实”。在公司里，张三是员工。在家里张三是父亲，父亲和员工是“形”；<br>  一瓶酒在仓库里叫库存，在运输的过程中叫货物。</p>
-<p>  知识也是类似的。知识可以有不同的分类，可以按照规模大小来分，也可以按照重点和非重点分(二八法则)，所以大概有四种类型:</p>
-<ul>
-<li>总的知识</li>
-<li>细分的知识</li>
-<li>重点知识</li>
-<li>非重点知识。</li>
-</ul>
-<p>   但不管是哪种知识，都属于知识，具有知识的共性：知识表达了一系列的事实，行为，最核心的组成成分是名词和动词。所以一系列的的名词和动词构成了一个完整的知识.</p>
-<ul>
-<li>领域 - 总的知识</li>
-<li>子域 - 细分的知识</li>
-<li>核心域 - 重点知识</li>
-<li>支撑域 - 非重点知识</li>
-<li>通用域 - 非重点知识</li>
-<li>聚合 - 一系列名词和动词的集合。</li>
-<li>聚合根 - 一系列名词和动词的集合，就像一个组织一样，得有一个老大负责对内对外的沟通.</li>
-<li>实体 - 名词 + 动词，是一种充血模型，以DO的的形式存在.</li>
-<li>值对象 - 名词</li>
-</ul>
-<h2 id="DDD设计的一些原则"><a href="#DDD设计的一些原则" class="headerlink" title="DDD设计的一些原则?"></a>DDD设计的一些原则?</h2><ul>
-<li>应用层实现跨聚合的调用。</li>
-<li>聚合之间的逻辑满足最终一致性。</li>
-<li>领域层实现跨实体的调用</li>
-<li>聚合内的逻辑满足强一致性</li>
-<li>要访问聚合，先找到聚合根</li>
-</ul>
-<h2 id="如何基于DDD实现一个服务"><a href="#如何基于DDD实现一个服务" class="headerlink" title="如何基于DDD实现一个服务?"></a>如何基于DDD实现一个服务?</h2><h3 id="形成DDD的过程"><a href="#形成DDD的过程" class="headerlink" title="形成DDD的过程"></a>形成DDD的过程</h3><pre><code>* 收集信息
-  * 项目负责人收集尽可能多的信息
-  * 召集大家一起开会，分析一个领域内有多少User case
-* 形成领域模型
-  * 对所有的User case进行名词提取，汇总出有多少核心名词
-  * 提取这些名词的核心行为
-* 实现
-  * 基于上面的名词设计实体和值对象
-</code></pre>
-<h3 id="一个简单的DDD例子"><a href="#一个简单的DDD例子" class="headerlink" title="一个简单的DDD例子"></a>一个简单的DDD例子</h3><h2 id="DDD的反面是什么？"><a href="#DDD的反面是什么？" class="headerlink" title="DDD的反面是什么？"></a>DDD的反面是什么？</h2>]]></content>
-      <categories>
-        <category>软件设计方法</category>
-      </categories>
-      <tags>
-        <tag>软件设计方法</tag>
       </tags>
   </entry>
   <entry>
@@ -695,13 +695,13 @@
 <li>从人的观察者角度，在一个时间窗口(t0-t1)内，事情是同时进行的.<br>在这里，我没有没有提到任何程序领域的术语，换句话说，上面的这两个特征在管理学是常见的，这两个特征可以认为是并发的雏形.<br>本文仅仅讨论狭义上的并发：基于线程的多任务。</li>
 </ul>
   <span id="more"></span>
-<h3 id="从编程的角度，并发要解决的核心问题是什么？"><a href="#从编程的角度，并发要解决的核心问题是什么？" class="headerlink" title="从编程的角度，并发要解决的核心问题是什么？"></a>从编程的角度，并发要解决的核心问题是什么？</h3><p>  并发要解决的核心问题是 </p>
+<h3 id="从编程的角度，并发要解决的核心问题是什么？"><a href="#从编程的角度，并发要解决的核心问题是什么？" class="headerlink" title="从编程的角度，并发要解决的核心问题是什么？"></a>从编程的角度，并发要解决的核心问题是什么？</h3><p>  并发要解决的核心问题是</p>
 <ul>
 <li>分解 - 如果要对一件事情进行并发处理，那么这件事情最起码是可以分解的, 如果这件事情不能分解，那么并发无从谈起.</li>
 <li>协作 - 这个问题不具备必然性，仅仅发生在事情1和事件2有关系的前提下，比如事情2依赖事件1的结果</li>
 <li>互斥 - 处理事件1和事件2的时候需要访问同一个资源，如果保证访问资源的时候只能自己访问，而且要保证系统的整体的利用率？<br>以上三个问题可以说是层层递进的, 有了分解才有可能协作和互斥.<br>这就是任何编程领域，并发要解决的所有问题种类吗？答案是肯定的.<br>但有人可能很疑惑，并发不是会牵涉到什么自旋锁，可重入锁，分片还有什么volatile么？<br>哦，不急，因为现在战斗机还在天上1万米的高空巡逻，遇到特定的问题和特定的目标慢慢会下降的.<br>也可以想象这是一部小说，这部小说有三条主线，这三条主线最终会汇聚到一起的.</li>
 </ul>
-<p>  在开发者眼里，并发的目的和远景是：用一种符合开发者认知模型的方式来解决上述三个问题. 换句话说，就是认知成本少点。 为什么这件事情很重要?</p>
+<p>  在开发者眼里，并发的目的和愿景是：用一种符合开发者认知模型的方式来解决上述三个问题. 换句话说，就是认知成本少点。 为什么这件事情很重要?</p>
 <ul>
 <li>我们开发软件是属于工程领域而不是科学领域，所以安全可控是首要目标，要是谁写个高并发，写的很炫，但很难维护，很难测试，最终会让人抓狂.</li>
 <li>人是习惯的产物，就比如做西红柿炒蛋这个菜，我们知道放完鸡蛋会放西红柿，而不是黄瓜. 所以高并发的编写应该符合人的认知模型.</li>
@@ -710,16 +710,37 @@
 <blockquote>
 <p>姚明在休斯敦的时候，战术基本上是围绕着姚明来打造的，后来麦迪加盟火箭，管理层对麦迪的要求是球队的大战略是必须等姚明落位之后才能开始进攻，麦迪只能同意这种战略。火箭的慢的原因是在于姚明。无奈啊，黄种人跑不动。</p>
 </blockquote>
-<p>  现在基本事实已经确定了，可以说这些基本事实是原罪，是障碍的起点。可能有人要问，为什么不能把 CPU, 内存, I/O的速度弄成一样呢？这个从硬件上来说真不好弄.<br>  既然从硬件层面上解决不了这个问题，那就从设计和策略的角度上来解决. 计算机系统的参与方都开始大展拳脚.<br>  一个重要的规律： 任何的方案有好处，也有代价，这个代价可以理解为成本或者副作用，应了那句天下没有免费的午餐.<br>    * 计算机体系结构的策略 - 增加 CPU 缓存，平衡CPU和内存之间的速度差异<br>      * 在单核时代，只有一个CPU缓存，CPU缓存和内存之间的一致性很容易解决。一个线程更改了CPU的缓存，另外一个线程是可以知道这个CPU缓存被更改了的. 这个知道就叫做“可见性”.<br>      * 在多核时代, 有多个CPU缓存，线程1操作 CPU1缓存，线程2有可能操作的是CPU2缓存。这个时候线程2就不知道线程1的操作结果了.<br>    * 操作系统的策略 - 增加进程，线程，平衡 CPU和 I/O之间的速度差异<br>      * 我们之所以能一边听音乐，一边发微信，是因为操作系统多进程的功劳，换句话说操作系统定义了时间片这个概念，比如在最开始的10毫秒把CPU的资源分给进程A,接下来的10毫秒把CPU的资源分给进程B, 这样能充分利用CPU资源(充分利用资源这是一种政治正确，谁会鼓励说浪费资源呢？)，给用户的感觉就是同时做两件事情.<br>      * 正如去医院看病的时候，每个人都拿了一些号，叫到张三，张三就进去会诊，在会诊的时候，医生要让张三去抽血，才能得出完整的会诊结论，在张三出去抽血的时候，医生在干嘛呢？在等张三吗？显然不是. 可继续为李四会诊，等张三抽血完毕，再为张三会诊. 在这里可以看到, CPU和医生的角色有点类似.<br>      * 但这样的策略会带来的一些问题，从操作的角度来说，会有任务切换这个概念. 举个例子, count = count + 1 是语言层面的代码，这个代码在CPU的角度看来是三个指令, 所谓的任务切换是CPU指令级别的切换，而不是语言层面的切换. 所以我们希望能有一个策略保证任务切换的效果是基于语言层面.<br>    * 编译器的策略 - 优化指令的执行顺序<br>      * 编译器会对一些代码的执行顺序进行优化, “a=6；b=7”优化之后可能变为”b=7;a=6;”, 这个代码看上去正常, 但在某些例子上却有意想不到的情况，比如双重加锁的单例模式，会引发空指针异常.</p>
-<h2 id="为什么需要并发？"><a href="#为什么需要并发？" class="headerlink" title="为什么需要并发？"></a>为什么需要并发？</h2><p>  系统是要追求快，在快的基础上追求好.</p>
-<h2 id="如何使用并发？"><a href="#如何使用并发？" class="headerlink" title="如何使用并发？"></a>如何使用并发？</h2><h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><p>  大体有四个原则，层层递进</p>
+<p>  现在基本事实已经确定了，可以说这些基本事实是原罪，是障碍的起点。可能有人要问，为什么不能把 CPU, 内存, I/O的速度弄成一样呢？这个从硬件上来说真不好弄.<br>  既然从硬件层面上解决不了这个问题，那就从设计和策略的角度上来解决. 计算机系统的参与方都开始大展拳脚.<br>  一个重要的规律： 任何的方案有好处，也有代价，这个代价可以理解为成本或者副作用，应了那句天下没有免费的午餐.</p>
 <ul>
-<li>不要使用并发</li>
-<li>如果确实要使用并发，避免有共享变量</li>
-<li>如果确实需要共享变量，那么保证变量是只读的</li>
-<li>如果不能保证变量是只读的，那么要确保变量访问的时候要同步。基本上就是讨论各种各样的锁.</li>
+<li>计算机体系结构的策略 - 增加 CPU 缓存，平衡CPU和内存之间的速度差异<ul>
+<li>在单核时代，只有一个CPU缓存，CPU缓存和内存之间的一致性很容易解决。一个线程更改了CPU的缓存，另外一个线程是可以知道这个CPU缓存被更改了的. 这个知道就叫做“可见性”.</li>
+<li>在多核时代, 有多个CPU缓存，线程1操作 CPU1缓存，线程2有可能操作的是CPU2缓存。这个时候线程2就不知道线程1的操作结果了.</li>
 </ul>
-<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
+</li>
+<li>操作系统的策略 - 增加进程，线程，平衡 CPU和 I/O之间的速度差异<ul>
+<li>我们之所以能一边听音乐，一边发微信，是因为操作系统多进程的功劳，换句话说操作系统定义了时间片这个概念，比如在最开始的10毫秒把CPU的资源分给进程A,接下来的10毫秒把CPU的资源分给进程B, 这样能充分利用CPU资源(充分利用资源这是一种政治正确，谁会鼓励说浪费资源呢？)，给用户的感觉就是同时做两件事情.</li>
+<li>正如去医院看病的时候，每个人都拿了一些号，叫到张三，张三就进去会诊，在会诊的时候，医生要让张三去抽血，才能得出完整的会诊结论，在张三出去抽血的时候，医生在干嘛呢？在等张三吗？显然不是. 可继续为李四会诊，等张三抽血完毕，再为张三会诊. 在这里可以看到, CPU和医生的角色有点类似.</li>
+<li>但这样的策略会带来的一些问题，从操作的角度来说，会有任务切换这个概念. 举个例子, count = count + 1 是语言层面的代码，这个代码在CPU的角度看来是三个指令, 所谓的任务切换是CPU指令级别的切换，而不是语言层面的切换. 所以我们希望能有一个策略保证任务切换的效果是基于语言层面.</li>
+</ul>
+</li>
+<li>编译器的策略 - 优化指令的执行顺序<ul>
+<li>编译器会对一些代码的执行顺序进行优化, “a=6；b=7”优化之后可能变为”b=7;a=6;”, 这个代码看上去正常, 但在某些例子上却有意想不到的情况，比如双重加锁的单例模式，会引发空指针异常.</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么需要并发？"><a href="#为什么需要并发？" class="headerlink" title="为什么需要并发？"></a>为什么需要并发？</h2><p>  系统是要追求快，在快的基础上追求好. 换一种说法，如何让系统在单位时间内执行更多的任务?</p>
+<h2 id="如何使用并发？"><a href="#如何使用并发？" class="headerlink" title="如何使用并发？"></a>如何使用并发？</h2><h3 id="整体设计原则"><a href="#整体设计原则" class="headerlink" title="整体设计原则"></a>整体设计原则</h3><p>  大体有四个原则，层层递进, 不局限于Java, 是跨语言的, 这里的原则也可以类比一个国家的宪法或者党的纲领.</p>
+<ol>
+<li>不要使用并发，如果要使用高并发, 必须要有很强的理由.</li>
+<li>如果确实要使用并发，尽可能不要有共享变量</li>
+<li>如果确实需要共享变量，那么尽可能保证变量是只读的</li>
+<li>如果不能保证变量是只读的，那么要确保变量访问的时候要同步。基本上就是讨论各种各样的锁.</li>
+</ol>
+<h3 id="整体设计策略"><a href="#整体设计策略" class="headerlink" title="整体设计策略"></a>整体设计策略</h3><p>  这里的设计策略存在的前提是使用了高并发，也是应用了上面的原则2, 原则3, 原则4.</p>
+<ul>
+<li>分解</li>
+<li>同步</li>
+<li>互斥<br>这里的整体设计策略和前面提到的并发要解决的核心问题是一致的, 这也是跨语言的<h3 id="整体设计模式"><a href="#整体设计模式" class="headerlink" title="整体设计模式"></a>整体设计模式</h3></li>
 <li>Immutability</li>
 <li>Copy-on-Write</li>
 <li>ThreadLocal</li>
@@ -811,19 +832,6 @@
       </tags>
   </entry>
   <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>数据，信息，知识和智慧</title>
     <url>/2020/09/10/data-knowledge/</url>
     <content><![CDATA[<p>网络上有一副有名的图片，形象的描述了数据，信息，知识，智慧的大体关系.<br><img src="images/2020/data-knowledge.png"></p>
@@ -907,73 +915,17 @@
       </tags>
   </entry>
   <entry>
-    <title>人多力量大 - 分布式导言</title>
-    <url>/2020/10/11/distributed-system/</url>
-    <content><![CDATA[<p>一个人抗一个木头会很重，如果两个人一起抗木头，两个人承担的分量会少点，如果三个人呢？那么三个人承担的分量会更少. 换言之，如果从整体上看，三个人的力量要大于两个人<br>现在的应用的数据变得越来越大，业务的流量越来越多了，分布式成为了一个不可避免的趋势。<br>这篇文章主要谈谈</p>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
 <ul>
-<li>背景</li>
-<li>分布式系统的整体设计目标</li>
-<li>分布式系统需要解决的具体问题</li>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
 </ul>
 <span id="more"></span>
-<p><img src="/images/2020/worker.jpg"></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>从一个简单的例子开始: 计算一个nxn的矩阵，可以有两种办法</p>
-<ul>
-<li>在一台机器上直接计算出来，把结果存放到数据库或者缓存中.</li>
-<li>将矩阵划分为四个象限（每个象限为n/2），然后这四个象限分别由四个节点独自处理，处理好的结果最好再后再汇总起来，存放在某个地方. </li>
-</ul>
-<p>第一种办法就是单机处理，第二种办法就是分布式处理。<br>第二种办法可以看作分布式处理的最简单模型， 它涉及了</p>
-<ul>
-<li>计算</li>
-<li>存储</li>
-<li>节点之间的通信 - 这里的节点可以是真实的物理机器，或者虚拟机或手机，或者世界上任意可计算的设备</li>
-</ul>
-<h2 id="分布式系统的整体设计目标"><a href="#分布式系统的整体设计目标" class="headerlink" title="分布式系统的整体设计目标"></a>分布式系统的整体设计目标</h2><p>从上面的例子，我们可以看到要计算一个矩阵，我们需要CPU计算，然后保存结果。把这个例子延伸到多台机器上，我们可能会面临如下问题:</p>
-<ul>
-<li>分布式计算</li>
-<li>分布式存储</li>
-<li>分布式通信 - 这是一个很自然而然的概念，毕竟不同的机器是需要通信的.</li>
-<li>分布式资源池化 - 不同机器上的 GPU, 内存形成逻辑上性能更强的GPU, 内存.</li>
-</ul>
-<p>将上面这四个问题领域合成一个大问题就是： 在某种资源的基础上，通过某种通信方式，进行某种计算，把计算的结果存储在某个地方，然后对外提供一个服务。</p>
-<blockquote>
-<p>这个结论受极客时间上的某位专家的启发.</p>
-</blockquote>
-<p>本着站在巨人肩膀上的原则，将上面的结论和我之前提出的又快又好的指标进行整合</p>
-<blockquote>
-<p>分布式系统的整体目标和远景就是：如何又快又好的实现这个大问题？</p>
-</blockquote>
-<h2 id="分布式系统需要解决的具体问题"><a href="#分布式系统需要解决的具体问题" class="headerlink" title="分布式系统需要解决的具体问题"></a>分布式系统需要解决的具体问题</h2><h3 id="节点之间的通信问题"><a href="#节点之间的通信问题" class="headerlink" title="节点之间的通信问题"></a>节点之间的通信问题</h3><ul>
-<li>直来直往 - 想要和谁说话，直接找那个人. 这就是RPC问题</li>
-<li>专职中介 - 想和谁说话，找专门的中介就可以了。 这就是消息队列问题</li>
-</ul>
-<h3 id="一个集群中的节点管理和互相协作的问题"><a href="#一个集群中的节点管理和互相协作的问题" class="headerlink" title="一个集群中的节点管理和互相协作的问题"></a>一个集群中的节点管理和互相协作的问题</h3><ul>
-<li>国不可一日无君 - 一个集群中的leader节点挂了，如何产生一个新的Leader节点, 这就是分布式选举问题.</li>
-<li>共商国事 - 如何制定一个国家政策得到大家的认可？在分布式领域就是共识问题。</li>
-<li>国家是有秩序的 - 文明有礼，排队买票. 一个集群中的资源，在某个时间窗口只允许特定节点访问，这就是分布式互斥问题.</li>
-<li>有始有终 - 一个人做事最好不要半吊子，要么不做，要么完成。在分布式领域，这就是分布式事务问题.</li>
-</ul>
-<h3 id="分布式资源管理和负载调度"><a href="#分布式资源管理和负载调度" class="headerlink" title="分布式资源管理和负载调度"></a>分布式资源管理和负载调度</h3><ul>
-<li>单体调度</li>
-<li>两层调度</li>
-<li>共享状态调度</li>
-</ul>
-<h3 id="分布式数据存储"><a href="#分布式数据存储" class="headerlink" title="分布式数据存储"></a>分布式数据存储</h3><ul>
-<li>分布式缓存</li>
-</ul>
-<h3 id="分布式高可靠"><a href="#分布式高可靠" class="headerlink" title="分布式高可靠"></a>分布式高可靠</h3><ul>
-<li>负载均衡</li>
-<li>流量控制</li>
-<li>故障隔离</li>
-<li>故障恢复</li>
-</ul>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责/科里定律"></a>单一职责/科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则/别让我思考"></a>最少知识原则/别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度/三适里面的适度"></a>YAGNI-不要过度/三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
 ]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
   </entry>
   <entry>
     <title>Docker初回忆</title>
@@ -1092,6 +1044,75 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>虚拟化</tag>
         <tag>容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人多力量大 - 分布式导言</title>
+    <url>/2020/10/11/distributed-system/</url>
+    <content><![CDATA[<p>一个人抗一个木头会很重，如果两个人一起抗木头，两个人承担的分量会少点，如果三个人呢？那么三个人承担的分量会更少. 换言之，如果从整体上看，三个人的力量要大于两个人<br>现在的应用的数据变得越来越大，业务的流量越来越多了，分布式成为了一个不可避免的趋势。<br>这篇文章主要谈谈</p>
+<ul>
+<li>背景</li>
+<li>分布式系统的整体设计目标</li>
+<li>分布式系统需要解决的具体问题</li>
+</ul>
+<span id="more"></span>
+<p><img src="/images/2020/worker.jpg"></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>从一个简单的例子开始: 计算一个nxn的矩阵，可以有两种办法</p>
+<ul>
+<li>在一台机器上直接计算出来，把结果存放到数据库或者缓存中.</li>
+<li>将矩阵划分为四个象限（每个象限为n/2），然后这四个象限分别由四个节点独自处理，处理好的结果最好再后再汇总起来，存放在某个地方. </li>
+</ul>
+<p>第一种办法就是单机处理，第二种办法就是分布式处理。<br>第二种办法可以看作分布式处理的最简单模型， 它涉及了</p>
+<ul>
+<li>计算</li>
+<li>存储</li>
+<li>节点之间的通信 - 这里的节点可以是真实的物理机器，或者虚拟机或手机，或者世界上任意可计算的设备</li>
+</ul>
+<h2 id="分布式系统的整体设计目标"><a href="#分布式系统的整体设计目标" class="headerlink" title="分布式系统的整体设计目标"></a>分布式系统的整体设计目标</h2><p>从上面的例子，我们可以看到要计算一个矩阵，我们需要CPU计算，然后保存结果。把这个例子延伸到多台机器上，我们可能会面临如下问题:</p>
+<ul>
+<li>分布式计算</li>
+<li>分布式存储</li>
+<li>分布式通信 - 这是一个很自然而然的概念，毕竟不同的机器是需要通信的.</li>
+<li>分布式资源池化 - 不同机器上的 GPU, 内存形成逻辑上性能更强的GPU, 内存.</li>
+</ul>
+<p>将上面这四个问题领域合成一个大问题就是： 在某种资源的基础上，通过某种通信方式，进行某种计算，把计算的结果存储在某个地方，然后对外提供一个服务。</p>
+<blockquote>
+<p>这个结论受极客时间上的某位专家的启发.</p>
+</blockquote>
+<p>本着站在巨人肩膀上的原则，将上面的结论和我之前提出的又快又好的指标进行整合</p>
+<blockquote>
+<p>分布式系统的整体目标和远景就是：如何又快又好的实现这个大问题？</p>
+</blockquote>
+<h2 id="分布式系统需要解决的具体问题"><a href="#分布式系统需要解决的具体问题" class="headerlink" title="分布式系统需要解决的具体问题"></a>分布式系统需要解决的具体问题</h2><h3 id="节点之间的通信问题"><a href="#节点之间的通信问题" class="headerlink" title="节点之间的通信问题"></a>节点之间的通信问题</h3><ul>
+<li>直来直往 - 想要和谁说话，直接找那个人. 这就是RPC问题</li>
+<li>专职中介 - 想和谁说话，找专门的中介就可以了。 这就是消息队列问题</li>
+</ul>
+<h3 id="一个集群中的节点管理和互相协作的问题"><a href="#一个集群中的节点管理和互相协作的问题" class="headerlink" title="一个集群中的节点管理和互相协作的问题"></a>一个集群中的节点管理和互相协作的问题</h3><ul>
+<li>国不可一日无君 - 一个集群中的leader节点挂了，如何产生一个新的Leader节点, 这就是分布式选举问题.</li>
+<li>共商国事 - 如何制定一个国家政策得到大家的认可？在分布式领域就是共识问题。</li>
+<li>国家是有秩序的 - 文明有礼，排队买票. 一个集群中的资源，在某个时间窗口只允许特定节点访问，这就是分布式互斥问题.</li>
+<li>有始有终 - 一个人做事最好不要半吊子，要么不做，要么完成。在分布式领域，这就是分布式事务问题.</li>
+</ul>
+<h3 id="分布式资源管理和负载调度"><a href="#分布式资源管理和负载调度" class="headerlink" title="分布式资源管理和负载调度"></a>分布式资源管理和负载调度</h3><ul>
+<li>单体调度</li>
+<li>两层调度</li>
+<li>共享状态调度</li>
+</ul>
+<h3 id="分布式数据存储"><a href="#分布式数据存储" class="headerlink" title="分布式数据存储"></a>分布式数据存储</h3><ul>
+<li>分布式缓存</li>
+</ul>
+<h3 id="分布式高可靠"><a href="#分布式高可靠" class="headerlink" title="分布式高可靠"></a>分布式高可靠</h3><ul>
+<li>负载均衡</li>
+<li>流量控制</li>
+<li>故障隔离</li>
+<li>故障恢复</li>
+</ul>
+]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -1528,84 +1549,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>Java之黑暗森林 - JVM</title>
-    <url>/2020/09/30/jvm/</url>
-    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
-<ul>
-<li>什么是JVM</li>
-<li>JVM主要解决了哪些问题？</li>
-<li>JVM点滴</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
-<ul>
-<li>JVM规范</li>
-<li>JVM实现</li>
-</ul>
-<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
-<ul>
-<li>将Java文件转为Class文件</li>
-<li>将Class文件转为机器码</li>
-</ul>
-<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
-<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
-<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
-<ul>
-<li>线程共享<ul>
-<li>堆<ul>
-<li>存放new出来的对象</li>
-<li>数组</li>
-</ul>
-</li>
-<li>方法区<ul>
-<li>类信息<ul>
-<li>class文件常量池</li>
-</ul>
-</li>
-<li>静态变量</li>
-<li>常量信息</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>线程不共享<ul>
-<li>程序计数器<ul>
-<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
-<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
-</ul>
-</li>
-<li>虚拟机栈<ul>
-<li>符合栈的特性：先进后出</li>
-<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
-<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
-</ul>
-</li>
-<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
-<li>没有栈帧的概念</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
-<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
-
-<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
-
-<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
-<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
-
-
-<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络协议之保密局 - Https</title>
     <url>/2020/11/17/https/</url>
     <content><![CDATA[<p>安全，这件事情无处不在。<br>我们不希望自己的个人信息被泄漏。<br>我们不希望自己的银行卡密码被盗取。<br>我们不希望自己的一言一行被监控，我们希望能有个人的隐私.<br>作为用户获取信息的入口之一 - 浏览器，它是如何保证信息安全的？ 浏览器安全的主角Https登场了.</p>
@@ -1700,6 +1643,188 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>安全</tag>
         <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java之黑暗森林 - JVM</title>
+    <url>/2020/09/30/jvm/</url>
+    <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
+<ul>
+<li>什么是JVM</li>
+<li>JVM主要解决了哪些问题？</li>
+<li>JVM点滴</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
+<ul>
+<li>JVM规范</li>
+<li>JVM实现</li>
+</ul>
+<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
+<ul>
+<li>将Java文件转为Class文件</li>
+<li>将Class文件转为机器码</li>
+</ul>
+<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
+<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
+<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
+<ul>
+<li>线程共享<ul>
+<li>堆<ul>
+<li>存放new出来的对象</li>
+<li>数组</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>类信息<ul>
+<li>class文件常量池</li>
+</ul>
+</li>
+<li>静态变量</li>
+<li>常量信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>线程不共享<ul>
+<li>程序计数器<ul>
+<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
+<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
+</ul>
+</li>
+<li>虚拟机栈<ul>
+<li>符合栈的特性：先进后出</li>
+<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
+<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
+</ul>
+</li>
+<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
+<li>没有栈帧的概念</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
+<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
+
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
+
+<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
+<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
+
+
+<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>尘埃落定-k8s</title>
+    <url>/2020/09/24/k8s/</url>
+    <content><![CDATA[<p>K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？</p>
+<ul>
+<li>背景</li>
+<li>什么是k8s?</li>
+<li>为什么是它？</li>
+<li>k8s底层是如何实现的？</li>
+<li>k8s生态及相关</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png"><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
+<h3 id="Cloud-Foundry"><a href="#Cloud-Foundry" class="headerlink" title="Cloud Foundry"></a>Cloud Foundry</h3><p>  随着Cloud Foundry的出现，部署的方式稍微有点变化，对于用户来说，只需要将程序打包成它规定的格式，上传上去就好了，Cloud Foundry会调度一个虚拟机来执行这个程序。这个时候会遇到一种情况，如果这个虚拟机执行很多程序会不会导致程序之间会有冲突？不会，Cloud Foundry会为每个应用创建隔离环境. 这一切听起来不错.</p>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>  再后来Docker出现了，现在我们知道，Docker也是为应用创建隔离环境，看上去Docker不必Cloud Foundry高明多少啊。但Docker杀手锏是镜像，镜像意味着无论什么应用都遵循统一的格式和规范, 更关键的是镜像包含了应用所有的依赖，而Cloud Foundry则需要为不同的应用生产不同格式的包，比较繁琐. 在这个时候, Cloud Foundry并没有拥抱Docker作为自己打包的标准，失去了一次战略先机.<br>  Docker虽然可以提供标准格式的包，但它没有部署复杂应用的能力，因为Docker本质还是一个工具.于是在2014年底, Docker公司推出了自己的容器集群管理工具Swarm，打造一套以容器为核心的Paas, 并形成Docker自己的生态.</p>
+<h3 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a>Mesos</h3><p>  Docker此时有个竞争对手叫Mesos, Mesos有个独特的杀手锏就是超大规模的集群管理能力，有超过10000个节点成功案例，而且支持Docker容器部署。<br>  现在看起来，两强相争似乎成了基本盘。</p>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>  但在2014年出现了一个叫Kubernetes的东西. Google, RedHat等基础设施大佬们成立一个名为CNCF的基金会，专门来对抗以Docker为核心的生态的。<br>  所以现在是生态和生态之间的对抗，而不是工具和工具之间的小打小闹。那么K8s是如何破局的呢？</p>
+<h3 id="k8s面临的困境"><a href="#k8s面临的困境" class="headerlink" title="k8s面临的困境"></a>k8s面临的困境</h3><ul>
+<li>对于Docker生态来说， Swarm和它的配合可以说是如丝滑般的顺畅</li>
+<li>对于Mesos来说，它的特长是大规模集群调度.</li>
+</ul>
+<h3 id="k8s的突围之道"><a href="#k8s的突围之道" class="headerlink" title="k8s的突围之道"></a>k8s的突围之道</h3><p>  很明显，如果模仿Docker或者Mesos，任意一条路都是走不通的. 那么k8s只有两个方向了</p>
+<ul>
+<li>融合Docker和Mesos的优点</li>
+<li>单独开创一个局面<br>K8s选择的是单独开创一个局面：容器编排，并且要在这个领域取得压倒性的优势，并形成降维打击.</li>
+</ul>
+<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg"></p>
+<h3 id="k8s是什么？"><a href="#k8s是什么？" class="headerlink" title="k8s是什么？"></a>k8s是什么？</h3><p>正如背景里面所描述的，k8s是一个容器编排的工具. 所以</p>
+<ul>
+<li>它本质是个工具</li>
+<li>它处理的实体的是容器，这个容器不一定是Docker,说不定将来出来了一个Eocker.</li>
+<li>它的重心是编排，有点类似于NBA里面教练对球员的排兵布阵.它提供了一种通用的方式来定义任务之间的关系，并为未来可能存在的新的任务关系提供可扩展性。直白一点，这个世界上所有的任务关系都应该在k8s的掌握之中. <ul>
+<li>从抽象的角度来说，一个集合里面由很多元素，编排意味着，要将这些集合分组，可以定义组和组之间的关系，可以定义组内元素之间的关系，可以定义跨组元素之间的关系。</li>
+<li>从实践的角度来看，编排意味着<ul>
+<li>如果一个服务的访问量过大，如何扩展服务的实例</li>
+<li>如何限流</li>
+<li>如何保证服务只被合法的用户访问</li>
+<li>如何合理分配流量到不同的服务实例</li>
+<li>如何知道服务之间的调用链</li>
+<li>如何实现服务之间的启动顺序？</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="切入k8s的一种角度"><a href="#切入k8s的一种角度" class="headerlink" title="切入k8s的一种角度"></a>切入k8s的一种角度</h3><p>从宏观的角度来看，K8s有两种角色</p>
+<ul>
+<li>Master节点 - k8s的大脑，类似于球队的管理层和决策层.<ul>
+<li>kube-apiserver</li>
+<li>kube-scheduler</li>
+<li>kube-controller-manager</li>
+</ul>
+</li>
+<li>Node节点 - k8s任务的执行者。<ul>
+<li>kubelet组件， 它可以<ul>
+<li>通过CRI同容器运行时打交道，CRI请求会被转换成Linux系统调用</li>
+<li>和设备插件打交道，比如GPU</li>
+<li>和网络插件和存储插件打交道<br>不管是Master节点还是Node节点，它们运行的载体是物理机或者虚拟机，为了方便理解，可以认为一个节点对应一台物理机.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="k8s的核心概念"><a href="#k8s的核心概念" class="headerlink" title="k8s的核心概念"></a>k8s的核心概念</h3><ul>
+<li>Pod - 对于K8s来说, Pod是最小的执行单元,是对容器的抽象和封装.正如研究动植物一样，细胞是最小的单元。一个最小的Pod就是只包含一个容器镜像。也可以认为Pod是k8s的一等公民<ul>
+<li>必要性 - 有些应用之间需要通过本地文件交互信息，或者交互很频繁，需要通过LocalHost来通信。在正常情况下，这些应用（进程或者进程组）会被部署在同一台机器上. 容器本身没有管理多个进程的能力， 回到k8s身上, k8s也需要解决这些问题，所以Pod这个概念应运而生，最复杂的Pod应该是很多应用在一起, 所以Pod可以看作是一个逻辑实体.</li>
+<li>临时性 - Pod的地址是临时的，但在相应的的物理机或者虚拟上的网卡可以找到这个地址.</li>
+</ul>
+</li>
+<li>Deployment - 一个应用看作是一个实例，那么Deployment可以让Pod有多个实例.<ul>
+<li>Deployment和Pod从设计的角度是一种API对象，Depoyment用来管理Pod。一种API对象来管理另外一种API对象，在K8s里称之为控制器模式.</li>
+<li>Deployment是让Pod活跃起来的一个API对象，其他对象没有这个功能.</li>
+<li>Deployment隐含里水平扩展和收缩的功能.</li>
+<li>正常Deployment的定义包含两部分<ul>
+<li>Pod副本的数量 - spec.replicas</li>
+<li>Pod的描述 - spec.template</li>
+</ul>
+</li>
+<li>对于一些特殊的应用比如Sticky Session, 需要自定义Deployment</li>
+</ul>
+</li>
+<li>ReplicaSet - Deployment是通过ReplicaSet来控制Pod的.<ul>
+<li>ReplicaSet定义了Pod的数量</li>
+<li>Deployment控制了ReplicaSet的个数</li>
+</ul>
+</li>
+<li>Service -  由于Pod每次启动之后，IP地址都会变化，这样就导致了Pod之间相互通信很困难，必须有一个东西来解决这个问题，Service这个概念应用而生，它代表的是稳定的地址和端口.<ul>
+<li>一个Service可以对应多个Pod,所以Service需要有负载均衡的能力.</li>
+</ul>
+</li>
+<li>Ingress - Service在默认情况下，只能在k8s集群内被访问，如果想要让外网可以访问service,就需要做有些额外的事情, Ingress就是干这个的.</li>
+<li>Secret - PodA 访问 PodB 需要带上用户名和密码，那么这些用户名和密码就放在Secret对象里，这个对象本质上ETCD里的一条记录.</li>
+</ul>
+<h2 id="为什么是它？"><a href="#为什么是它？" class="headerlink" title="为什么是它？"></a>为什么是它？</h2><p>K8s能成为容器编排领域的事实标准，与它的正确的战略定位分不开，也与它本身自带“贵族气质”有关.<br>K8s每一个核心特性的推出，都来自于Borg/Omega系统的设计和经验, 可以说是站在巨人肩膀上, 而且这些特性借助于开源社区的力量，变得越来越好.</p>
+<h2 id="k8s底层是如何实现的？"><a href="#k8s底层是如何实现的？" class="headerlink" title="k8s底层是如何实现的？"></a>k8s底层是如何实现的？</h2><h2 id="k8s生态及相关"><a href="#k8s生态及相关" class="headerlink" title="k8s生态及相关"></a>k8s生态及相关</h2>]]></content>
+      <categories>
+        <category>基础设施</category>
+      </categories>
+      <tags>
+        <tag>容器</tag>
+        <tag>PaaS</tag>
+        <tag>基础设施</tag>
       </tags>
   </entry>
   <entry>
@@ -1821,110 +1946,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>网络</tag>
         <tag>I/O</tag>
         <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>尘埃落定-k8s</title>
-    <url>/2020/09/24/k8s/</url>
-    <content><![CDATA[<p>K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？</p>
-<ul>
-<li>背景</li>
-<li>什么是k8s?</li>
-<li>为什么是它？</li>
-<li>k8s底层是如何实现的？</li>
-<li>k8s生态及相关</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png"><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
-<h3 id="Cloud-Foundry"><a href="#Cloud-Foundry" class="headerlink" title="Cloud Foundry"></a>Cloud Foundry</h3><p>  随着Cloud Foundry的出现，部署的方式稍微有点变化，对于用户来说，只需要将程序打包成它规定的格式，上传上去就好了，Cloud Foundry会调度一个虚拟机来执行这个程序。这个时候会遇到一种情况，如果这个虚拟机执行很多程序会不会导致程序之间会有冲突？不会，Cloud Foundry会为每个应用创建隔离环境. 这一切听起来不错.</p>
-<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>  再后来Docker出现了，现在我们知道，Docker也是为应用创建隔离环境，看上去Docker不必Cloud Foundry高明多少啊。但Docker杀手锏是镜像，镜像意味着无论什么应用都遵循统一的格式和规范, 更关键的是镜像包含了应用所有的依赖，而Cloud Foundry则需要为不同的应用生产不同格式的包，比较繁琐. 在这个时候, Cloud Foundry并没有拥抱Docker作为自己打包的标准，失去了一次战略先机.<br>  Docker虽然可以提供标准格式的包，但它没有部署复杂应用的能力，因为Docker本质还是一个工具.于是在2014年底, Docker公司推出了自己的容器集群管理工具Swarm，打造一套以容器为核心的Paas, 并形成Docker自己的生态.</p>
-<h3 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a>Mesos</h3><p>  Docker此时有个竞争对手叫Mesos, Mesos有个独特的杀手锏就是超大规模的集群管理能力，有超过10000个节点成功案例，而且支持Docker容器部署。<br>  现在看起来，两强相争似乎成了基本盘。</p>
-<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>  但在2014年出现了一个叫Kubernetes的东西. Google, RedHat等基础设施大佬们成立一个名为CNCF的基金会，专门来对抗以Docker为核心的生态的。<br>  所以现在是生态和生态之间的对抗，而不是工具和工具之间的小打小闹。那么K8s是如何破局的呢？</p>
-<h3 id="k8s面临的困境"><a href="#k8s面临的困境" class="headerlink" title="k8s面临的困境"></a>k8s面临的困境</h3><ul>
-<li>对于Docker生态来说， Swarm和它的配合可以说是如丝滑般的顺畅</li>
-<li>对于Mesos来说，它的特长是大规模集群调度.</li>
-</ul>
-<h3 id="k8s的突围之道"><a href="#k8s的突围之道" class="headerlink" title="k8s的突围之道"></a>k8s的突围之道</h3><p>  很明显，如果模仿Docker或者Mesos，任意一条路都是走不通的. 那么k8s只有两个方向了</p>
-<ul>
-<li>融合Docker和Mesos的优点</li>
-<li>单独开创一个局面<br>K8s选择的是单独开创一个局面：容器编排，并且要在这个领域取得压倒性的优势，并形成降维打击.</li>
-</ul>
-<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg"></p>
-<h3 id="k8s是什么？"><a href="#k8s是什么？" class="headerlink" title="k8s是什么？"></a>k8s是什么？</h3><p>正如背景里面所描述的，k8s是一个容器编排的工具. 所以</p>
-<ul>
-<li>它本质是个工具</li>
-<li>它处理的实体的是容器，这个容器不一定是Docker,说不定将来出来了一个Eocker.</li>
-<li>它的重心是编排，有点类似于NBA里面教练对球员的排兵布阵.它提供了一种通用的方式来定义任务之间的关系，并为未来可能存在的新的任务关系提供可扩展性。直白一点，这个世界上所有的任务关系都应该在k8s的掌握之中. <ul>
-<li>从抽象的角度来说，一个集合里面由很多元素，编排意味着，要将这些集合分组，可以定义组和组之间的关系，可以定义组内元素之间的关系，可以定义跨组元素之间的关系。</li>
-<li>从实践的角度来看，编排意味着<ul>
-<li>如果一个服务的访问量过大，如何扩展服务的实例</li>
-<li>如何限流</li>
-<li>如何保证服务只被合法的用户访问</li>
-<li>如何合理分配流量到不同的服务实例</li>
-<li>如何知道服务之间的调用链</li>
-<li>如何实现服务之间的启动顺序？</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="切入k8s的一种角度"><a href="#切入k8s的一种角度" class="headerlink" title="切入k8s的一种角度"></a>切入k8s的一种角度</h3><p>从宏观的角度来看，K8s有两种角色</p>
-<ul>
-<li>Master节点 - k8s的大脑，类似于球队的管理层和决策层.<ul>
-<li>kube-apiserver</li>
-<li>kube-scheduler</li>
-<li>kube-controller-manager</li>
-</ul>
-</li>
-<li>Node节点 - k8s任务的执行者。<ul>
-<li>kubelet组件， 它可以<ul>
-<li>通过CRI同容器运行时打交道，CRI请求会被转换成Linux系统调用</li>
-<li>和设备插件打交道，比如GPU</li>
-<li>和网络插件和存储插件打交道<br>不管是Master节点还是Node节点，它们运行的载体是物理机或者虚拟机，为了方便理解，可以认为一个节点对应一台物理机.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="k8s的核心概念"><a href="#k8s的核心概念" class="headerlink" title="k8s的核心概念"></a>k8s的核心概念</h3><ul>
-<li>Pod - 对于K8s来说, Pod是最小的执行单元,是对容器的抽象和封装.正如研究动植物一样，细胞是最小的单元。一个最小的Pod就是只包含一个容器镜像。也可以认为Pod是k8s的一等公民<ul>
-<li>必要性 - 有些应用之间需要通过本地文件交互信息，或者交互很频繁，需要通过LocalHost来通信。在正常情况下，这些应用（进程或者进程组）会被部署在同一台机器上. 容器本身没有管理多个进程的能力， 回到k8s身上, k8s也需要解决这些问题，所以Pod这个概念应运而生，最复杂的Pod应该是很多应用在一起, 所以Pod可以看作是一个逻辑实体.</li>
-<li>临时性 - Pod的地址是临时的，但在相应的的物理机或者虚拟上的网卡可以找到这个地址.</li>
-</ul>
-</li>
-<li>Deployment - 一个应用看作是一个实例，那么Deployment可以让Pod有多个实例.<ul>
-<li>Deployment和Pod从设计的角度是一种API对象，Depoyment用来管理Pod。一种API对象来管理另外一种API对象，在K8s里称之为控制器模式.</li>
-<li>Deployment是让Pod活跃起来的一个API对象，其他对象没有这个功能.</li>
-<li>Deployment隐含里水平扩展和收缩的功能.</li>
-<li>正常Deployment的定义包含两部分<ul>
-<li>Pod副本的数量 - spec.replicas</li>
-<li>Pod的描述 - spec.template</li>
-</ul>
-</li>
-<li>对于一些特殊的应用比如Sticky Session, 需要自定义Deployment</li>
-</ul>
-</li>
-<li>ReplicaSet - Deployment是通过ReplicaSet来控制Pod的.<ul>
-<li>ReplicaSet定义了Pod的数量</li>
-<li>Deployment控制了ReplicaSet的个数</li>
-</ul>
-</li>
-<li>Service -  由于Pod每次启动之后，IP地址都会变化，这样就导致了Pod之间相互通信很困难，必须有一个东西来解决这个问题，Service这个概念应用而生，它代表的是稳定的地址和端口.<ul>
-<li>一个Service可以对应多个Pod,所以Service需要有负载均衡的能力.</li>
-</ul>
-</li>
-<li>Ingress - Service在默认情况下，只能在k8s集群内被访问，如果想要让外网可以访问service,就需要做有些额外的事情, Ingress就是干这个的.</li>
-<li>Secret - PodA 访问 PodB 需要带上用户名和密码，那么这些用户名和密码就放在Secret对象里，这个对象本质上ETCD里的一条记录.</li>
-</ul>
-<h2 id="为什么是它？"><a href="#为什么是它？" class="headerlink" title="为什么是它？"></a>为什么是它？</h2><p>K8s能成为容器编排领域的事实标准，与它的正确的战略定位分不开，也与它本身自带“贵族气质”有关.<br>K8s每一个核心特性的推出，都来自于Borg/Omega系统的设计和经验, 可以说是站在巨人肩膀上, 而且这些特性借助于开源社区的力量，变得越来越好.</p>
-<h2 id="k8s底层是如何实现的？"><a href="#k8s底层是如何实现的？" class="headerlink" title="k8s底层是如何实现的？"></a>k8s底层是如何实现的？</h2><h2 id="k8s生态及相关"><a href="#k8s生态及相关" class="headerlink" title="k8s生态及相关"></a>k8s生态及相关</h2>]]></content>
-      <categories>
-        <category>基础设施</category>
-      </categories>
-      <tags>
-        <tag>容器</tag>
-        <tag>PaaS</tag>
-        <tag>基础设施</tag>
       </tags>
   </entry>
   <entry>
@@ -2826,6 +2847,180 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Java之武林盟主 - Spring</title>
+    <url>/2020/10/20/spring/</url>
+    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
+<ul>
+<li>什么是Spring?</li>
+<li>为什么是Spring?</li>
+<li>如何实现一个Spring?</li>
+<li>Spring实践？</li>
+<li>Spring的发展</li>
+<li>拾遗</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
+<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
+<ul>
+<li>IOC</li>
+<li>AOP<br>这是Spring其他的功能的基础和起点</li>
+</ul>
+<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
+<ul>
+<li>一个最低的JDK版本 </li>
+<li>特定的JavaEE规范 </li>
+</ul>
+<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
+<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
+<li>基于POJO的轻量级和最小侵入编程<ul>
+<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
+</ul>
+</li>
+<li>DI和面对接口实现松耦合编程<ul>
+<li>隔离了接口和实现</li>
+</ul>
+</li>
+<li>基于AOP和惯例的声明式编程<ul>
+<li>AOP是为了隔离了核心功能和非核心功能</li>
+<li>惯例是用户熟悉的事物</li>
+</ul>
+</li>
+<li>基于AOP和模板减少样板式代码<ul>
+<li>模版说明是一致的编程模型，减少重复代码.</li>
+</ul>
+</li>
+</ul>
+<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
+<ul>
+<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
+<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
+<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
+</ul>
+</li>
+<li>隔离<ul>
+<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
+<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
+</ul>
+</li>
+</ul>
+<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
+<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
+<ul>
+<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石    * Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
+<li>如何定义一个Bean</li>
+<li>如何创建一个Bean</li>
+<li>如何解析一个Bean    * Context<br>Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
+<li>获得Bean列表</li>
+<li>解析资源</li>
+<li>发布事件</li>
+<li>国际化    * Core<br>Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
+<ul>
+<li>前后端不分离</li>
+<li>前后端分离</li>
+</ul>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
+<ul>
+<li>关系型数据</li>
+<li>非关系型数据</li>
+</ul>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
+<ul>
+<li>这个用户是谁？</li>
+<li>这个用户能做什么？</li>
+</ul>
+<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
+<ul>
+<li>系统A调用系统B的接口</li>
+<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
+<ul>
+<li>日志</li>
+<li>监控</li>
+</ul>
+<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
+</blockquote>
+<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
+<ul>
+<li>没有繁琐的XML的配置</li>
+<li>不需要操作Jar包之间的依赖关系</li>
+<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
+</ul>
+<p>  两个例子</p>
+<ul>
+<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
+<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。 </li>
+</ul>
+<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
+<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
+</blockquote>
+<p>  从这里可以看出, Spring Cloud的定位和明确</p>
+<ul>
+<li>聚焦于分布式的问题 </li>
+<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul </li>
+</ul>
+<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
+<ul>
+<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
+<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
+</ul>
+</li>
+<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
+<li>竞品 - k8s的Service</li>
+</ul>
+</li>
+<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
+<li>竞品 - Sentinel, k8s的Istio</li>
+</ul>
+</li>
+<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
+<li>竞品 - Kong, k8s的Ingress</li>
+</ul>
+</li>
+<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
+<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
+</ul>
+</li>
+<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
+<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
+<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
+<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
+</ul>
+</li>
+<li>Spring Cloud Feign - 简化了服务的调用方式</li>
+<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
+<li>竞品 - ZMon, DataDog</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
+<blockquote>
+<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
+</blockquote>
+<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
+<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
+<blockquote>
+<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
+</blockquote>
+<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>框架</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring源码系列 - IOC和DI</title>
     <url>/2021/06/20/spring-ioc/</url>
     <content><![CDATA[<p>对于一个系统的使用者来说，源码就是一个黑盒，不需要关心太多. 正如陀螺仪之于手表，集成电路之于CPU一样，仅仅需要了解这个系统可以做什么，以及这个系统不可以做什么就可以了.</p>
@@ -3082,180 +3277,6 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>Java之武林盟主 - Spring</title>
-    <url>/2020/10/20/spring/</url>
-    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
-<ul>
-<li>什么是Spring?</li>
-<li>为什么是Spring?</li>
-<li>如何实现一个Spring?</li>
-<li>Spring实践？</li>
-<li>Spring的发展</li>
-<li>拾遗</li>
-</ul>
-<span id="more"></span>
-<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
-<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
-<ul>
-<li>IOC</li>
-<li>AOP<br>这是Spring其他的功能的基础和起点</li>
-</ul>
-<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
-<ul>
-<li>一个最低的JDK版本 </li>
-<li>特定的JavaEE规范 </li>
-</ul>
-<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
-<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
-<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
-<li>基于POJO的轻量级和最小侵入编程<ul>
-<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
-</ul>
-</li>
-<li>DI和面对接口实现松耦合编程<ul>
-<li>隔离了接口和实现</li>
-</ul>
-</li>
-<li>基于AOP和惯例的声明式编程<ul>
-<li>AOP是为了隔离了核心功能和非核心功能</li>
-<li>惯例是用户熟悉的事物</li>
-</ul>
-</li>
-<li>基于AOP和模板减少样板式代码<ul>
-<li>模版说明是一致的编程模型，减少重复代码.</li>
-</ul>
-</li>
-</ul>
-<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
-<ul>
-<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
-<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
-<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
-</ul>
-</li>
-<li>隔离<ul>
-<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
-<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
-</ul>
-</li>
-</ul>
-<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
-<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
-<ul>
-<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石    * Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
-<li>如何定义一个Bean</li>
-<li>如何创建一个Bean</li>
-<li>如何解析一个Bean    * Context<br>Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
-<li>获得Bean列表</li>
-<li>解析资源</li>
-<li>发布事件</li>
-<li>国际化    * Core<br>Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
-</ul>
-</li>
-</ul>
-<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
-<ul>
-<li>前后端不分离</li>
-<li>前后端分离</li>
-</ul>
-<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
-<ul>
-<li>关系型数据</li>
-<li>非关系型数据</li>
-</ul>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
-<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
-<ul>
-<li>这个用户是谁？</li>
-<li>这个用户能做什么？</li>
-</ul>
-<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
-<ul>
-<li>系统A调用系统B的接口</li>
-<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
-<ul>
-<li>日志</li>
-<li>监控</li>
-</ul>
-<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
-<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
-</blockquote>
-<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
-<ul>
-<li>没有繁琐的XML的配置</li>
-<li>不需要操作Jar包之间的依赖关系</li>
-<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
-</ul>
-<p>  两个例子</p>
-<ul>
-<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
-<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。 </li>
-</ul>
-<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
-<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
-</blockquote>
-<p>  从这里可以看出, Spring Cloud的定位和明确</p>
-<ul>
-<li>聚焦于分布式的问题 </li>
-<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul </li>
-</ul>
-<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
-<ul>
-<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
-<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
-</ul>
-</li>
-<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
-<li>竞品 - k8s的Service</li>
-</ul>
-</li>
-<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
-<li>竞品 - Sentinel, k8s的Istio</li>
-</ul>
-</li>
-<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
-<li>竞品 - Kong, k8s的Ingress</li>
-</ul>
-</li>
-<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
-<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
-</ul>
-</li>
-<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
-<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
-<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
-<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
-</ul>
-</li>
-<li>Spring Cloud Feign - 简化了服务的调用方式</li>
-<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
-<li>竞品 - ZMon, DataDog</li>
-</ul>
-</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
-<blockquote>
-<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
-</blockquote>
-<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
-<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
-<blockquote>
-<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
-</blockquote>
-<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>框架</tag>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何衡量一个人对技术框架的熟练度?</title>
     <url>/2020/08/29/tech-proficiency/</url>
     <content><![CDATA[<p>在日常开发中, 作为开发者大多数时间面对的是技术和业务, 在这篇文章里, 我主要想说说作为开发者, 对一项技术应该如何合理的去把握.<br>假象一下, 现在我们要学习一个新的技术框架, 可能是Spring boot也可能是React, 或者是Redis, 我们应该如何切入?<br>现在姑且从三个大的角度对技术的熟练度进行划分</p>
@@ -3292,6 +3313,78 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个层次上，我们所需要就是会用就可以了，至于为什么要这么用，就不是很清楚了. 还真别说，这招在中小公司很管用.</p>
 <h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="框架设计的初衷"><a href="#框架设计的初衷" class="headerlink" title="框架设计的初衷"></a>框架设计的初衷</h3><h3 id="框架的核心概念"><a href="#框架的核心概念" class="headerlink" title="框架的核心概念"></a>框架的核心概念</h3><h3 id="框架的设计思路"><a href="#框架的设计思路" class="headerlink" title="框架的设计思路"></a>框架的设计思路</h3><h3 id="框架的设计模式"><a href="#框架的设计模式" class="headerlink" title="框架的设计模式"></a>框架的设计模式</h3><h3 id="框架的设计思想-原则和哲学"><a href="#框架的设计思想-原则和哲学" class="headerlink" title="框架的设计思想, 原则和哲学"></a>框架的设计思想, 原则和哲学</h3><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="核心模块的实现细节"><a href="#核心模块的实现细节" class="headerlink" title="核心模块的实现细节"></a>核心模块的实现细节</h3><h3 id="一些模块实现的奇技淫巧"><a href="#一些模块实现的奇技淫巧" class="headerlink" title="一些模块实现的奇技淫巧"></a>一些模块实现的奇技淫巧</h3>]]></content>
+  </entry>
+  <entry>
+    <title>三适原则</title>
+    <url>/2020/08/29/three-principles/</url>
+    <content><![CDATA[<p>三是我喜欢的数字之一.</p>
+<p>某个时候, 我想是不是有些原则可以指导学习,工作或者生活呢? 在这样一个变化多端世界</p>
+<ul>
+<li>我们如何从复杂的事物之中寻找简单?</li>
+<li>我们如何从不确定的事物之中寻找确定?</li>
+<li>我们如何从混乱的事物之中寻找秩序?</li>
+<li>我们如何从有诱惑，嘈杂的世界之中寻找宁静？</li>
+</ul>
+<p>这个原则不必然是根本性, 也不必然是很牛, 我只是想它可以在大多数情况下是能带来正确的启发和灵感, 不求是最优的做法，但至少可以避免糟糕的做法, 这样才<strong>有可能</strong>以<strong>正确的方式</strong>做<strong>正确的事情</strong></p>
+<p>众所周知, 整个欧式几何是建立在五条公理之上的, 这五条公理是不需要证明的. 基于这五条公理可以衍生出一级命题和定理，二级命题和定理.</p>
+<p>人天生喜欢简单的东西，比如产品设计讲究极简主义，人的生活讲究断舍离. 受这些启发, 我总结出了三适原则, 和几个朋友交流了一下这个三适原则, 他们对这个原则大多还是比较认可. 在这里，我不讨论某个具体的问题实际操作步骤和解决的细节内容是什么，因为具体问题要具体分析，需要单独展开.</p>
+<p>三适就是</p>
+<ul>
+<li>适度(moderate)</li>
+<li>适应(adaptation)</li>
+<li>适合(fit)</li>
+</ul>
+<h2 id="适度"><a href="#适度" class="headerlink" title="适度"></a>适度</h2><p>  <img src="/images/2020/teetertotter.png"><br>  我们常常说”凡事有个度“, “阴阳”, “刚柔并济”, “理论和实践”, “能力和欲望”, “出世和入世”, “天上的月亮和地上的六便士”, “长期和短期”, “宏观和微观”, “定性和定量”, “中庸”,“平衡”, “过犹不及”, “进可攻退可守”，“恰到好处” 差不多就是指这个意思.<br>  <span id="more"></span><br>  为什么适度很有用? 几个例子</p>
+<ul>
+<li>一个人如果专注于纯理论研究, 很容易眼高手低，喜欢打嘴炮, 脱离实际，如果一个人只知道盲目和埋头的干, 那么有可能一年下来就是瞎忙，不知道忙啥，而还有一种虚假的充实感和忙碌感. 不以实践为目的的理论就是空中楼阁，没有理论做指导的实践的就是没头的苍蝇. 所以要在理论和实践当中找到一种<strong>平衡</strong></li>
+<li>一个新人刚刚入职, 肯定是要表现自己的, 加班, 早到, 无论什么事都接下来, 一顿操作猛如虎, 领导很满意. 等过了试用期, 领导发现新人表现比之前差, 有点失望了. 这里的问题就在于新人在试用期用力过猛, 领导对他期望值很高, 导致后期的表现不如试用期, 领导对他失望要很正常. 换句话说，适度的表现是必要的，过度的表现很难维持很久. 任何事物都要回归平均, 回归它应该有的，本身的常态.</li>
+<li>现在的家长普遍比较焦虑, 给小孩打鸡血，学这个学那个. 也许无可厚非，大环境如此. 但对小孩不能用力过度，要<strong>适度</strong>一点, 否则到了初中，高中就会后继乏力. 一个很重要的事实就是人生是一场马拉松，关键的是要看谁笑到最后。在让小孩学习之余，也要关注小孩的心理，让他们体验美好的童年, 如果童年缺失一些东西, 会对未来的人生产生影响. 心理学家荣格说过: “一个人毕其一生的努力, 就是在整合他自童年时代起就已形成的性格”</li>
+<li>在NBA里, 有不同类型的球员, 有的暴发力一流（格里芬）, 有的力量一流（奥尼尔）, 有的三分很准（雷阿伦）. 但有一类球员, 他是靠节奏取胜的, 他没有爆发力, 也没有力量, 但他运球在该快的时候快, 该慢的时候时候慢, 节奏的<strong>平衡</strong>掌控的很好,代表球员是斯蒂夫纳什.</li>
+<li>中国人说话讲究中庸之道, 不把话说太死, 这样说话就有回旋的余地, 这里也体现了灰度思维.</li>
+<li>在学习的时候, 不能学习太长, 学习一段时间之后,就要强制休息. 精力分配要<strong>适度</strong>, 要雨露均沾, 这样才能为后续学习提供良好的基础.<h2 id="适应"><a href="#适应" class="headerlink" title="适应"></a>适应</h2><img src="/images/2020/ecosystem.jpg"><br>外部环境是在变化的, 作为人是否也要改变来适应这个变化?  适应的另外一个说法是<strong>响应变化</strong>. 一些例子和理论</li>
+<li>有些人语文不错，但数学不太好，最有可能的原因是用学语文的办法来学数学，认为像语文一样背一背几个公式就可以了，这种方式在小学阶段或者初中阶段确实很奏效，效果也棒棒的，人是习惯正反馈的，所以只要这种方式能拿到不错的分数, 他会潜意识认为这种背公式的方式是正确的，但到了高中阶段这个方法就失效了，从某种意义上说，这种方式是个陷阱, 高中的题目综合性更强，不是靠背公式就能解决的. 所以不同的学科有不同的特点，需要采用不同的方法，如果不能识别学科知识在不同阶段的<strong>变化</strong>，就容易两眼一抹黑，一个方法走到底。</li>
+<li>张三在学校里的成绩很好，每年都能拿三好生, 但到进入了职场和到了社会, 反而表现不如学校那么出色. 这里的主要原因是学校里面的评价因素太单一, 一个人拿到了90分，就会拿到奖状，是的，规则是这么清晰，可以理解为是一个一元一次方程，一个人的表现好与不好，只与成绩一个维度有关，可以认为成绩是老师给张三设定的一个目标. 但到了社会之后，谁给张三设定目标？没有人，只有张三自己，或者说张三自己也可以不设定目标. 那么什么是进入社会之后的表现呢？当然张三可以说：”嗨，我就喜欢钓鱼，这样过一生也不错”. 为了<strong>讨论方便</strong>，这里只讨论一下世俗意义上的成功表现-挣钱(个人不赞同用金钱去衡量一个人。有人也会说，有权也算是成功，权力的事情比较复杂，所以在这里不讨论), 正常情况下，一个人能挣多少钱，取决于多种因素比如行业的选择，城市的选择，公司的选择(比如公司处于上升期)，自己的学历, 能力(沟通+人际)和努力的加持，是否遇到一个好的老板等等, 这么多因素的结合, 才能最终成就一个人, 就好比一顿美味可口的菜肴，需要油盐酱醋，还要加上火候，炒工. 在这里发现了没有，一个人的成就是多种维度综合的结果，而不是学生时代就是靠成绩说话。所以张三可能不理解，为什么学习成绩出色的他，到了社会上表现不好? 这是因为张三没有对进入社会之后做出相应的思维<strong>变化</strong>. 因为整个世界是复杂的，可以理解为是一个<strong>非线性</strong>偏微分方程，任何一个细小维度的变化，都会产生<strong>蝴蝶效应</strong>，让一个人的一生从此不同. 这里的张三是个反例。现实世界还是有很多正例，有学习好，进入社会之后表现也很出色，一路高歌, 这些人他们能识别出学校和社会的不同，做出相应的调整，对于大多数问题，他们能找到最优解，坚信办法总比问题多.<ul>
+<li>顺便回答一个问题，努力是否有意义？我的答案是：努力有意义，但前提是<strong>方向要对</strong>. 我在上海，如果我想去北京，但我努力的往广东那个方向跑，很显然这种努力是浪费时间和没有意义的.</li>
+</ul>
+</li>
+<li>物竞天择, 适者生存. 这是自然界最基本的规律.生物和生物之间相互竞争, 最终适应环境的生物活下来了,这里蕴含了生态思维和演化思维. 试想一个亚马孙丛林, 没有人去干涉它, 它始终能保证着活水源头, 物种的多样性.</li>
+<li>现在开发技术更新的很快, 要不要学习? 答案是要学习, 否则无法适应技术发展的趋势. 但如何学习是另外一个单独的话题</li>
+<li>一个软件的架构要适应业务的发展，要有弹性.</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
+<li>阿里技术专家里李运华提出了架构三大原则之一-演化原则。 演化原则和这里的适应原则内涵不谋而合。</li>
+</ul>
+<h2 id="适合"><a href="#适合" class="headerlink" title="适合"></a>适合</h2><p>  <img src="/images/2020/key.jpg"><br>  这里的适合更多的是强调一种匹配. 几个例子</p>
+<ul>
+<li>一把钥匙配一把锁, 因为锁的大小决定了钥匙的大小.</li>
+<li>这对情侣真配真合适.</li>
+<li>小李很适合做销售.</li>
+<li>橘生淮南则为橘，生于淮北则为枳, 什么样的植物适合什么样的土壤.</li>
+<li>有些人工作一段时间之后, 会抱怨为什么工作内容这么无聊呢? 也许他没有错, 这份工作也没错, 他只是不适合这份工作而已.</li>
+</ul>
+<h3 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h3><ul>
+<li>如何用适合这个原则解释康威定律？<ul>
+<li>康威定律的大体意思是：软件架构受限于组织架构的沟通方式。换个说法就是公司的组织架构 -&gt; 人和人之间的层级关系-&gt;人和人之间做事方式. 简单的说，一定的做事方式和一定的组织架构是<strong>相匹配</strong>的</li>
+</ul>
+</li>
+<li>阿里的李运华在《从0开始学架构》里面提出了架构的三大原则之一-合适原则：“合适由于业界领先”</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适应和适合可能会让人感觉差不多, 但适应是一个过程, 适合是适应的结果. 比如张三一开始不能适应这个职位, 但经过一段时间的调整, 最终适应了, 也就是和这个职位匹配了.<br>适度代表了平衡， 适应代表了动态， 所以适度 + 适应代表了动态的平衡.<br>三是一个神奇的数字，一生二， 二生三，三生万物， 我喜欢三.</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Welcome</title>
+    <url>/2019/07/02/welcome/</url>
+    <content><![CDATA[<ul>
+<li>Hello, Welcome to Ricky World!</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>系统的正确性 - 事务及相关</title>
@@ -3465,77 +3558,5 @@ docker container ls -a<span aria-hidden="true" class="line-numbers-rows"><span><
         <tag>分布式</tag>
         <tag>数据库</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>三适原则</title>
-    <url>/2020/08/29/three-principles/</url>
-    <content><![CDATA[<p>三是我喜欢的数字之一.</p>
-<p>某个时候, 我想是不是有些原则可以指导学习,工作或者生活呢? 在这样一个变化多端世界</p>
-<ul>
-<li>我们如何从复杂的事物之中寻找简单?</li>
-<li>我们如何从不确定的事物之中寻找确定?</li>
-<li>我们如何从混乱的事物之中寻找秩序?</li>
-<li>我们如何从有诱惑，嘈杂的世界之中寻找宁静？</li>
-</ul>
-<p>这个原则不必然是根本性, 也不必然是很牛, 我只是想它可以在大多数情况下是能带来正确的启发和灵感, 不求是最优的做法，但至少可以避免糟糕的做法, 这样才<strong>有可能</strong>以<strong>正确的方式</strong>做<strong>正确的事情</strong></p>
-<p>众所周知, 整个欧式几何是建立在五条公理之上的, 这五条公理是不需要证明的. 基于这五条公理可以衍生出一级命题和定理，二级命题和定理.</p>
-<p>人天生喜欢简单的东西，比如产品设计讲究极简主义，人的生活讲究断舍离. 受这些启发, 我总结出了三适原则, 和几个朋友交流了一下这个三适原则, 他们对这个原则大多还是比较认可. 在这里，我不讨论某个具体的问题实际操作步骤和解决的细节内容是什么，因为具体问题要具体分析，需要单独展开.</p>
-<p>三适就是</p>
-<ul>
-<li>适度(moderate)</li>
-<li>适应(adaptation)</li>
-<li>适合(fit)</li>
-</ul>
-<h2 id="适度"><a href="#适度" class="headerlink" title="适度"></a>适度</h2><p>  <img src="/images/2020/teetertotter.png"><br>  我们常常说”凡事有个度“, “阴阳”, “刚柔并济”, “理论和实践”, “能力和欲望”, “出世和入世”, “天上的月亮和地上的六便士”, “长期和短期”, “宏观和微观”, “定性和定量”, “中庸”,“平衡”, “过犹不及”, “进可攻退可守”，“恰到好处” 差不多就是指这个意思.<br>  <span id="more"></span><br>  为什么适度很有用? 几个例子</p>
-<ul>
-<li>一个人如果专注于纯理论研究, 很容易眼高手低，喜欢打嘴炮, 脱离实际，如果一个人只知道盲目和埋头的干, 那么有可能一年下来就是瞎忙，不知道忙啥，而还有一种虚假的充实感和忙碌感. 不以实践为目的的理论就是空中楼阁，没有理论做指导的实践的就是没头的苍蝇. 所以要在理论和实践当中找到一种<strong>平衡</strong></li>
-<li>一个新人刚刚入职, 肯定是要表现自己的, 加班, 早到, 无论什么事都接下来, 一顿操作猛如虎, 领导很满意. 等过了试用期, 领导发现新人表现比之前差, 有点失望了. 这里的问题就在于新人在试用期用力过猛, 领导对他期望值很高, 导致后期的表现不如试用期, 领导对他失望要很正常. 换句话说，适度的表现是必要的，过度的表现很难维持很久. 任何事物都要回归平均, 回归它应该有的，本身的常态.</li>
-<li>现在的家长普遍比较焦虑, 给小孩打鸡血，学这个学那个. 也许无可厚非，大环境如此. 但对小孩不能用力过度，要<strong>适度</strong>一点, 否则到了初中，高中就会后继乏力. 一个很重要的事实就是人生是一场马拉松，关键的是要看谁笑到最后。在让小孩学习之余，也要关注小孩的心理，让他们体验美好的童年, 如果童年缺失一些东西, 会对未来的人生产生影响. 心理学家荣格说过: “一个人毕其一生的努力, 就是在整合他自童年时代起就已形成的性格”</li>
-<li>在NBA里, 有不同类型的球员, 有的暴发力一流（格里芬）, 有的力量一流（奥尼尔）, 有的三分很准（雷阿伦）. 但有一类球员, 他是靠节奏取胜的, 他没有爆发力, 也没有力量, 但他运球在该快的时候快, 该慢的时候时候慢, 节奏的<strong>平衡</strong>掌控的很好,代表球员是斯蒂夫纳什.</li>
-<li>中国人说话讲究中庸之道, 不把话说太死, 这样说话就有回旋的余地, 这里也体现了灰度思维.</li>
-<li>在学习的时候, 不能学习太长, 学习一段时间之后,就要强制休息. 精力分配要<strong>适度</strong>, 要雨露均沾, 这样才能为后续学习提供良好的基础.<h2 id="适应"><a href="#适应" class="headerlink" title="适应"></a>适应</h2><img src="/images/2020/ecosystem.jpg"><br>外部环境是在变化的, 作为人是否也要改变来适应这个变化?  适应的另外一个说法是<strong>响应变化</strong>. 一些例子和理论</li>
-<li>有些人语文不错，但数学不太好，最有可能的原因是用学语文的办法来学数学，认为像语文一样背一背几个公式就可以了，这种方式在小学阶段或者初中阶段确实很奏效，效果也棒棒的，人是习惯正反馈的，所以只要这种方式能拿到不错的分数, 他会潜意识认为这种背公式的方式是正确的，但到了高中阶段这个方法就失效了，从某种意义上说，这种方式是个陷阱, 高中的题目综合性更强，不是靠背公式就能解决的. 所以不同的学科有不同的特点，需要采用不同的方法，如果不能识别学科知识在不同阶段的<strong>变化</strong>，就容易两眼一抹黑，一个方法走到底。</li>
-<li>张三在学校里的成绩很好，每年都能拿三好生, 但到进入了职场和到了社会, 反而表现不如学校那么出色. 这里的主要原因是学校里面的评价因素太单一, 一个人拿到了90分，就会拿到奖状，是的，规则是这么清晰，可以理解为是一个一元一次方程，一个人的表现好与不好，只与成绩一个维度有关，可以认为成绩是老师给张三设定的一个目标. 但到了社会之后，谁给张三设定目标？没有人，只有张三自己，或者说张三自己也可以不设定目标. 那么什么是进入社会之后的表现呢？当然张三可以说：”嗨，我就喜欢钓鱼，这样过一生也不错”. 为了<strong>讨论方便</strong>，这里只讨论一下世俗意义上的成功表现-挣钱(个人不赞同用金钱去衡量一个人。有人也会说，有权也算是成功，权力的事情比较复杂，所以在这里不讨论), 正常情况下，一个人能挣多少钱，取决于多种因素比如行业的选择，城市的选择，公司的选择(比如公司处于上升期)，自己的学历, 能力(沟通+人际)和努力的加持，是否遇到一个好的老板等等, 这么多因素的结合, 才能最终成就一个人, 就好比一顿美味可口的菜肴，需要油盐酱醋，还要加上火候，炒工. 在这里发现了没有，一个人的成就是多种维度综合的结果，而不是学生时代就是靠成绩说话。所以张三可能不理解，为什么学习成绩出色的他，到了社会上表现不好? 这是因为张三没有对进入社会之后做出相应的思维<strong>变化</strong>. 因为整个世界是复杂的，可以理解为是一个<strong>非线性</strong>偏微分方程，任何一个细小维度的变化，都会产生<strong>蝴蝶效应</strong>，让一个人的一生从此不同. 这里的张三是个反例。现实世界还是有很多正例，有学习好，进入社会之后表现也很出色，一路高歌, 这些人他们能识别出学校和社会的不同，做出相应的调整，对于大多数问题，他们能找到最优解，坚信办法总比问题多.<ul>
-<li>顺便回答一个问题，努力是否有意义？我的答案是：努力有意义，但前提是<strong>方向要对</strong>. 我在上海，如果我想去北京，但我努力的往广东那个方向跑，很显然这种努力是浪费时间和没有意义的.</li>
-</ul>
-</li>
-<li>物竞天择, 适者生存. 这是自然界最基本的规律.生物和生物之间相互竞争, 最终适应环境的生物活下来了,这里蕴含了生态思维和演化思维. 试想一个亚马孙丛林, 没有人去干涉它, 它始终能保证着活水源头, 物种的多样性.</li>
-<li>现在开发技术更新的很快, 要不要学习? 答案是要学习, 否则无法适应技术发展的趋势. 但如何学习是另外一个单独的话题</li>
-<li>一个软件的架构要适应业务的发展，要有弹性.</li>
-</ul>
-<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
-<li>阿里技术专家里李运华提出了架构三大原则之一-演化原则。 演化原则和这里的适应原则内涵不谋而合。</li>
-</ul>
-<h2 id="适合"><a href="#适合" class="headerlink" title="适合"></a>适合</h2><p>  <img src="/images/2020/key.jpg"><br>  这里的适合更多的是强调一种匹配. 几个例子</p>
-<ul>
-<li>一把钥匙配一把锁, 因为锁的大小决定了钥匙的大小.</li>
-<li>这对情侣真配真合适.</li>
-<li>小李很适合做销售.</li>
-<li>橘生淮南则为橘，生于淮北则为枳, 什么样的植物适合什么样的土壤.</li>
-<li>有些人工作一段时间之后, 会抱怨为什么工作内容这么无聊呢? 也许他没有错, 这份工作也没错, 他只是不适合这份工作而已.</li>
-</ul>
-<h3 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h3><ul>
-<li>如何用适合这个原则解释康威定律？<ul>
-<li>康威定律的大体意思是：软件架构受限于组织架构的沟通方式。换个说法就是公司的组织架构 -&gt; 人和人之间的层级关系-&gt;人和人之间做事方式. 简单的说，一定的做事方式和一定的组织架构是<strong>相匹配</strong>的</li>
-</ul>
-</li>
-<li>阿里的李运华在《从0开始学架构》里面提出了架构的三大原则之一-合适原则：“合适由于业界领先”</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适应和适合可能会让人感觉差不多, 但适应是一个过程, 适合是适应的结果. 比如张三一开始不能适应这个职位, 但经过一段时间的调整, 最终适应了, 也就是和这个职位匹配了.<br>适度代表了平衡， 适应代表了动态， 所以适度 + 适应代表了动态的平衡.<br>三是一个神奇的数字，一生二， 二生三，三生万物， 我喜欢三.</p>
-]]></content>
-      <categories>
-        <category>认知</category>
-      </categories>
-      <tags>
-        <tag>认知</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Welcome</title>
-    <url>/2019/07/02/welcome/</url>
-    <content><![CDATA[<ul>
-<li>Hello, Welcome to Ricky World!</li>
-</ul>
-]]></content>
   </entry>
 </search>

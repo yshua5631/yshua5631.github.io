@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/2020/arrow.jpeg">
 <meta property="article:published_time" content="2020-10-06T15:33:47.000Z">
-<meta property="article:modified_time" content="2021-06-22T16:36:18.926Z">
+<meta property="article:modified_time" content="2022-01-20T15:50:48.438Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="高并发">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是并发？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E7%8E%B0%E5%AE%9E%E7%9A%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E5%B9%B6%E5%8F%91%E5%83%8F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">从现实的角度，并发像什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E5%B9%B6%E5%8F%91%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">从编程的角度，并发要解决的核心问题是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%98%BB%E7%A2%8D%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">并发遇到的阻碍是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要并发？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">如何使用并发？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E8%BA%AB%E5%BD%B1"><span class="nav-number">4.</span> <span class="nav-text">并发的身影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E6%9C%AA%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">并发的未来</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是并发？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E7%8E%B0%E5%AE%9E%E7%9A%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E5%B9%B6%E5%8F%91%E5%83%8F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">从现实的角度，并发像什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E5%B9%B6%E5%8F%91%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">从编程的角度，并发要解决的核心问题是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%98%BB%E7%A2%8D%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">并发遇到的阻碍是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要并发？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">如何使用并发？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">整体设计原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">整体设计策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">整体设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.5.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E8%BA%AB%E5%BD%B1"><span class="nav-number">4.</span> <span class="nav-text">并发的身影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E6%9C%AA%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">并发的未来</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -221,7 +221,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-23 00:36:18" itemprop="dateModified" datetime="2021-06-23T00:36:18+08:00">2021-06-23</time>
+        <time title="修改时间：2022-01-20 23:50:48" itemprop="dateModified" datetime="2022-01-20T23:50:48+08:00">2022-01-20</time>
       </span>
 
   
@@ -246,7 +246,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.3k</span>
+      <span>3.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -279,13 +279,13 @@
 <li>从人的观察者角度，在一个时间窗口(t0-t1)内，事情是同时进行的.<br>在这里，我没有没有提到任何程序领域的术语，换句话说，上面的这两个特征在管理学是常见的，这两个特征可以认为是并发的雏形.<br>本文仅仅讨论狭义上的并发：基于线程的多任务。</li>
 </ul>
   <span id="more"></span>
-<h3 id="从编程的角度，并发要解决的核心问题是什么？"><a href="#从编程的角度，并发要解决的核心问题是什么？" class="headerlink" title="从编程的角度，并发要解决的核心问题是什么？"></a>从编程的角度，并发要解决的核心问题是什么？</h3><p>  并发要解决的核心问题是 </p>
+<h3 id="从编程的角度，并发要解决的核心问题是什么？"><a href="#从编程的角度，并发要解决的核心问题是什么？" class="headerlink" title="从编程的角度，并发要解决的核心问题是什么？"></a>从编程的角度，并发要解决的核心问题是什么？</h3><p>  并发要解决的核心问题是</p>
 <ul>
 <li>分解 - 如果要对一件事情进行并发处理，那么这件事情最起码是可以分解的, 如果这件事情不能分解，那么并发无从谈起.</li>
 <li>协作 - 这个问题不具备必然性，仅仅发生在事情1和事件2有关系的前提下，比如事情2依赖事件1的结果</li>
 <li>互斥 - 处理事件1和事件2的时候需要访问同一个资源，如果保证访问资源的时候只能自己访问，而且要保证系统的整体的利用率？<br>以上三个问题可以说是层层递进的, 有了分解才有可能协作和互斥.<br>这就是任何编程领域，并发要解决的所有问题种类吗？答案是肯定的.<br>但有人可能很疑惑，并发不是会牵涉到什么自旋锁，可重入锁，分片还有什么volatile么？<br>哦，不急，因为现在战斗机还在天上1万米的高空巡逻，遇到特定的问题和特定的目标慢慢会下降的.<br>也可以想象这是一部小说，这部小说有三条主线，这三条主线最终会汇聚到一起的.</li>
 </ul>
-<p>  在开发者眼里，并发的目的和远景是：用一种符合开发者认知模型的方式来解决上述三个问题. 换句话说，就是认知成本少点。 为什么这件事情很重要?</p>
+<p>  在开发者眼里，并发的目的和愿景是：用一种符合开发者认知模型的方式来解决上述三个问题. 换句话说，就是认知成本少点。 为什么这件事情很重要?</p>
 <ul>
 <li>我们开发软件是属于工程领域而不是科学领域，所以安全可控是首要目标，要是谁写个高并发，写的很炫，但很难维护，很难测试，最终会让人抓狂.</li>
 <li>人是习惯的产物，就比如做西红柿炒蛋这个菜，我们知道放完鸡蛋会放西红柿，而不是黄瓜. 所以高并发的编写应该符合人的认知模型.</li>
@@ -294,16 +294,37 @@
 <blockquote>
 <p>姚明在休斯敦的时候，战术基本上是围绕着姚明来打造的，后来麦迪加盟火箭，管理层对麦迪的要求是球队的大战略是必须等姚明落位之后才能开始进攻，麦迪只能同意这种战略。火箭的慢的原因是在于姚明。无奈啊，黄种人跑不动。</p>
 </blockquote>
-<p>  现在基本事实已经确定了，可以说这些基本事实是原罪，是障碍的起点。可能有人要问，为什么不能把 CPU, 内存, I/O的速度弄成一样呢？这个从硬件上来说真不好弄.<br>  既然从硬件层面上解决不了这个问题，那就从设计和策略的角度上来解决. 计算机系统的参与方都开始大展拳脚.<br>  一个重要的规律： 任何的方案有好处，也有代价，这个代价可以理解为成本或者副作用，应了那句天下没有免费的午餐.<br>    * 计算机体系结构的策略 - 增加 CPU 缓存，平衡CPU和内存之间的速度差异<br>      * 在单核时代，只有一个CPU缓存，CPU缓存和内存之间的一致性很容易解决。一个线程更改了CPU的缓存，另外一个线程是可以知道这个CPU缓存被更改了的. 这个知道就叫做“可见性”.<br>      * 在多核时代, 有多个CPU缓存，线程1操作 CPU1缓存，线程2有可能操作的是CPU2缓存。这个时候线程2就不知道线程1的操作结果了.<br>    * 操作系统的策略 - 增加进程，线程，平衡 CPU和 I/O之间的速度差异<br>      * 我们之所以能一边听音乐，一边发微信，是因为操作系统多进程的功劳，换句话说操作系统定义了时间片这个概念，比如在最开始的10毫秒把CPU的资源分给进程A,接下来的10毫秒把CPU的资源分给进程B, 这样能充分利用CPU资源(充分利用资源这是一种政治正确，谁会鼓励说浪费资源呢？)，给用户的感觉就是同时做两件事情.<br>      * 正如去医院看病的时候，每个人都拿了一些号，叫到张三，张三就进去会诊，在会诊的时候，医生要让张三去抽血，才能得出完整的会诊结论，在张三出去抽血的时候，医生在干嘛呢？在等张三吗？显然不是. 可继续为李四会诊，等张三抽血完毕，再为张三会诊. 在这里可以看到, CPU和医生的角色有点类似.<br>      * 但这样的策略会带来的一些问题，从操作的角度来说，会有任务切换这个概念. 举个例子, count = count + 1 是语言层面的代码，这个代码在CPU的角度看来是三个指令, 所谓的任务切换是CPU指令级别的切换，而不是语言层面的切换. 所以我们希望能有一个策略保证任务切换的效果是基于语言层面.<br>    * 编译器的策略 - 优化指令的执行顺序<br>      * 编译器会对一些代码的执行顺序进行优化, “a=6；b=7”优化之后可能变为”b=7;a=6;”, 这个代码看上去正常, 但在某些例子上却有意想不到的情况，比如双重加锁的单例模式，会引发空指针异常.</p>
-<h2 id="为什么需要并发？"><a href="#为什么需要并发？" class="headerlink" title="为什么需要并发？"></a>为什么需要并发？</h2><p>  系统是要追求快，在快的基础上追求好.</p>
-<h2 id="如何使用并发？"><a href="#如何使用并发？" class="headerlink" title="如何使用并发？"></a>如何使用并发？</h2><h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><p>  大体有四个原则，层层递进</p>
+<p>  现在基本事实已经确定了，可以说这些基本事实是原罪，是障碍的起点。可能有人要问，为什么不能把 CPU, 内存, I/O的速度弄成一样呢？这个从硬件上来说真不好弄.<br>  既然从硬件层面上解决不了这个问题，那就从设计和策略的角度上来解决. 计算机系统的参与方都开始大展拳脚.<br>  一个重要的规律： 任何的方案有好处，也有代价，这个代价可以理解为成本或者副作用，应了那句天下没有免费的午餐.</p>
 <ul>
-<li>不要使用并发</li>
-<li>如果确实要使用并发，避免有共享变量</li>
-<li>如果确实需要共享变量，那么保证变量是只读的</li>
-<li>如果不能保证变量是只读的，那么要确保变量访问的时候要同步。基本上就是讨论各种各样的锁.</li>
+<li>计算机体系结构的策略 - 增加 CPU 缓存，平衡CPU和内存之间的速度差异<ul>
+<li>在单核时代，只有一个CPU缓存，CPU缓存和内存之间的一致性很容易解决。一个线程更改了CPU的缓存，另外一个线程是可以知道这个CPU缓存被更改了的. 这个知道就叫做“可见性”.</li>
+<li>在多核时代, 有多个CPU缓存，线程1操作 CPU1缓存，线程2有可能操作的是CPU2缓存。这个时候线程2就不知道线程1的操作结果了.</li>
 </ul>
-<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
+</li>
+<li>操作系统的策略 - 增加进程，线程，平衡 CPU和 I/O之间的速度差异<ul>
+<li>我们之所以能一边听音乐，一边发微信，是因为操作系统多进程的功劳，换句话说操作系统定义了时间片这个概念，比如在最开始的10毫秒把CPU的资源分给进程A,接下来的10毫秒把CPU的资源分给进程B, 这样能充分利用CPU资源(充分利用资源这是一种政治正确，谁会鼓励说浪费资源呢？)，给用户的感觉就是同时做两件事情.</li>
+<li>正如去医院看病的时候，每个人都拿了一些号，叫到张三，张三就进去会诊，在会诊的时候，医生要让张三去抽血，才能得出完整的会诊结论，在张三出去抽血的时候，医生在干嘛呢？在等张三吗？显然不是. 可继续为李四会诊，等张三抽血完毕，再为张三会诊. 在这里可以看到, CPU和医生的角色有点类似.</li>
+<li>但这样的策略会带来的一些问题，从操作的角度来说，会有任务切换这个概念. 举个例子, count = count + 1 是语言层面的代码，这个代码在CPU的角度看来是三个指令, 所谓的任务切换是CPU指令级别的切换，而不是语言层面的切换. 所以我们希望能有一个策略保证任务切换的效果是基于语言层面.</li>
+</ul>
+</li>
+<li>编译器的策略 - 优化指令的执行顺序<ul>
+<li>编译器会对一些代码的执行顺序进行优化, “a=6；b=7”优化之后可能变为”b=7;a=6;”, 这个代码看上去正常, 但在某些例子上却有意想不到的情况，比如双重加锁的单例模式，会引发空指针异常.</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么需要并发？"><a href="#为什么需要并发？" class="headerlink" title="为什么需要并发？"></a>为什么需要并发？</h2><p>  系统是要追求快，在快的基础上追求好. 换一种说法，如何让系统在单位时间内执行更多的任务?</p>
+<h2 id="如何使用并发？"><a href="#如何使用并发？" class="headerlink" title="如何使用并发？"></a>如何使用并发？</h2><h3 id="整体设计原则"><a href="#整体设计原则" class="headerlink" title="整体设计原则"></a>整体设计原则</h3><p>  大体有四个原则，层层递进, 不局限于Java, 是跨语言的, 这里的原则也可以类比一个国家的宪法或者党的纲领.</p>
+<ol>
+<li>不要使用并发，如果要使用高并发, 必须要有很强的理由.</li>
+<li>如果确实要使用并发，尽可能不要有共享变量</li>
+<li>如果确实需要共享变量，那么尽可能保证变量是只读的</li>
+<li>如果不能保证变量是只读的，那么要确保变量访问的时候要同步。基本上就是讨论各种各样的锁.</li>
+</ol>
+<h3 id="整体设计策略"><a href="#整体设计策略" class="headerlink" title="整体设计策略"></a>整体设计策略</h3><p>  这里的设计策略存在的前提是使用了高并发，也是应用了上面的原则2, 原则3, 原则4.</p>
+<ul>
+<li>分解</li>
+<li>同步</li>
+<li>互斥<br>这里的整体设计策略和前面提到的并发要解决的核心问题是一致的, 这也是跨语言的<h3 id="整体设计模式"><a href="#整体设计模式" class="headerlink" title="整体设计模式"></a>整体设计模式</h3></li>
 <li>Immutability</li>
 <li>Copy-on-Write</li>
 <li>ThreadLocal</li>
@@ -452,7 +473,7 @@
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -463,7 +484,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">72k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
