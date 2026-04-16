@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yshua5631.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.  什么是JVM JVM主要解决了哪些问题？ JVM点滴">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java之黑暗森林 - JVM">
+<meta property="og:url" content="https://yshua5631.github.io/2020/09/30/jvm/index.html">
+<meta property="og:site_name" content="迷途书童">
+<meta property="og:description" content="一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.  什么是JVM JVM主要解决了哪些问题？ JVM点滴">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yshua5631.github.io/images/2020/jvm-memory.png">
+<meta property="article:published_time" content="2020-09-30T02:25:43.000Z">
+<meta property="article:modified_time" content="2024-02-26T15:09:46.517Z">
+<meta property="article:author" content="迷途书童">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yshua5631.github.io/images/2020/jvm-memory.png">
+
+
+<link rel="canonical" href="https://yshua5631.github.io/2020/09/30/jvm/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yshua5631.github.io/2020/09/30/jvm/","path":"2020/09/30/jvm/","title":"Java之黑暗森林 - JVM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java之黑暗森林 - JVM | 迷途书童</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">迷途书童</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJVM"><span class="nav-number">1.</span> <span class="nav-text">什么是JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BA%86%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">JVM主要解决了哪些问题?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E9%85%8D"><span class="nav-number">2.1.</span> <span class="nav-text">内存的分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%9B%9E%E6%94%B6"><span class="nav-number">2.2.</span> <span class="nav-text">内存的回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E6%96%87%E4%BB%B6%E6%98%AF%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E7%9A%84"><span class="nav-number">2.4.</span> <span class="nav-text">类文件是如何加载的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-%E7%82%B9%E6%BB%B4"><span class="nav-number">3.</span> <span class="nav-text">JVM 点滴</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">迷途书童</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yshua5631" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yshua5631" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yshua5631.github.io/2020/09/30/jvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="迷途书童">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java之黑暗森林 - JVM | 迷途书童">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java之黑暗森林 - JVM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-30 10:25:43" itemprop="dateCreated datePublished" datetime="2020-09-30T10:25:43+08:00">2020-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-26 23:09:46" itemprop="dateModified" datetime="2024-02-26T23:09:46+08:00">2024-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
+<ul>
+<li>什么是JVM</li>
+<li>JVM主要解决了哪些问题？</li>
+<li>JVM点滴</li>
+</ul>
+<span id="more"></span>
+<h2 id="什么是JVM"><a href="#什么是JVM" class="headerlink" title="什么是JVM"></a>什么是JVM</h2><p>JVM是一种将高级语言转位机器码的一种工具，目前支持的语言有Java, Clojure, Kotlin, Scala, Groovy.<br>当从整体上讨论JVM的时候，有两种角度</p>
+<ul>
+<li>JVM规范</li>
+<li>JVM实现</li>
+</ul>
+<p>在Java的世界里, JVM主要干了两件事（本文以下的讨论都以Java为基础）</p>
+<ul>
+<li>将Java文件转为Class文件</li>
+<li>将Class文件转为机器码</li>
+</ul>
+<p>这两件事描述起来很简单，但从实践角度来说，有很多的细节和技巧，根据我前面提到过的“又快又好”的指标，JVM的目标是如何又快又好的干这两件事.</p>
+<h2 id="JVM主要解决了哪些问题"><a href="#JVM主要解决了哪些问题" class="headerlink" title="JVM主要解决了哪些问题?"></a>JVM主要解决了哪些问题?</h2><p>JVM要解决Java开发过程中遇到的所有问题，比如泛型，异常，基本类型等等，根据二八法则，这里我只讨论一些大的问题，其余琐碎的问题以后单独再聊.</p>
+<h3 id="内存的分配"><a href="#内存的分配" class="headerlink" title="内存的分配"></a>内存的分配</h3><p>这个问题是个通用的问题，可以简单的描述为：如何将有限的资源合理的分配给各种各样的消费者？或者这个问题接近于现实中的情况：如何将土地和财富分配给社会各阶层的人？<br><img src="/images/2020/jvm-memory.png"><br>所以内存分配的第一个问题，就是要搞清楚: Java里面占用内存资源的有哪几类要素？如图所示</p>
+<ul>
+<li>线程共享<ul>
+<li>堆<ul>
+<li>存放new出来的对象</li>
+<li>数组</li>
+</ul>
+</li>
+<li>方法区<ul>
+<li>类信息<ul>
+<li>class文件常量池</li>
+</ul>
+</li>
+<li>静态变量</li>
+<li>常量信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>线程不共享<ul>
+<li>程序计数器<ul>
+<li>程序计数器是记录的字节码的地址信息。每个线程都有自己的程序计数器，当线程的CPU时间片耗尽挂起之后，需要记录字节码的执行位置，当再次获取到时间片之后，可以从上次的位置继续执行。这个功能是必要的，好比我们看完书的一段章节之后，会将这一页折一下或者用笔做个标注.</li>
+<li>执行Native方法的时候，程序计数器没有值，因为本地方法不是基于字节码来实现的.</li>
+</ul>
+</li>
+<li>虚拟机栈<ul>
+<li>符合栈的特性：先进后出</li>
+<li>栈帧 - 方法级别的概念，简单来说，方法执行之前栈帧入栈，方法执行完毕，栈帧出栈。</li>
+<li>栈顶的元素通常称为当前栈帧，里面与之相关的方法称之为当前方法.</li>
+</ul>
+</li>
+<li>本地方法栈 - 和虚拟机栈大体类似，但处理的对象不同，本地方法栈处理的是本地方法<ul>
+<li>没有栈帧的概念</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存的回收"><a href="#内存的回收" class="headerlink" title="内存的回收"></a>内存的回收</h3><p>一个消费者资源使用完了，就需要回收，以便给其他消费者使用。</p>
+<!-- TODO: 这个话题升级为垃圾回收，顺便思考一下其他语言. JVM知识体系里必须要掌握的事情 -->
+
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><!-- TODO: 这个话题升级为高并发，注意内存模型这个名词，可能有点疑惑 -->
+
+<h3 id="类文件是如何加载的"><a href="#类文件是如何加载的" class="headerlink" title="类文件是如何加载的"></a>类文件是如何加载的</h3><!-- TODO: 类加载的高层次逻辑是什么样的？ -->
+<!-- TODO: 为什么在需要有类加载这件事情，而.net的世界里没有这回事？JVM只是体系里必须要掌握的事情 -->
+
+
+<h2 id="JVM-点滴"><a href="#JVM-点滴" class="headerlink" title="JVM 点滴"></a>JVM 点滴</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/24/k8s/" rel="prev" title="尘埃落定-k8s">
+                  <i class="fa fa-angle-left"></i> 尘埃落定-k8s
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/06/concurrent/" rel="next" title="Java之离弦之箭 - 高并发">
+                  Java之离弦之箭 - 高并发 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">迷途书童</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">72k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:06</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
