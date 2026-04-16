@@ -17,12 +17,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"yshua5631.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yangricky.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在  CPU - CPU缓存 操作系统 - Page Cache 数据库 - 数据库缓存 浏览器 - 浏览器缓存  这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题  缓存概述 Redis历史 什么是Redis 为什么是Redis Redis是如何实现的 Redis实践 Redis的未来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java之效率管家 - Redis">
-<meta property="og:url" content="https://yshua5631.github.io/2020/10/15/cache/index.html">
+<meta property="og:url" content="https://blog.yangricky.com/2020/10/15/cache/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="计算机有两大问题，一个是命名问题，一个是缓存失效。缓存在整个计算机体系里无处不在  CPU - CPU缓存 操作系统 - Page Cache 数据库 - 数据库缓存 浏览器 - 浏览器缓存  这篇文章主要是探讨一下缓存的通用问题以及Redis相关问题  缓存概述 Redis历史 什么是Redis 为什么是Redis Redis是如何实现的 Redis实践 Redis的未来">
 <meta property="og:locale" content="zh_CN">
@@ -34,10 +34,10 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yshua5631.github.io/2020/10/15/cache/">
+<link rel="canonical" href="https://blog.yangricky.com/2020/10/15/cache/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yshua5631.github.io/2020/10/15/cache/","path":"2020/10/15/cache/","title":"Java之效率管家 - Redis"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.yangricky.com/2020/10/15/cache/","path":"2020/10/15/cache/","title":"Java之效率管家 - Redis"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Java之效率管家 - Redis | 迷途书童</title>
@@ -215,7 +215,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yshua5631.github.io/2020/10/15/cache/">
+    <link itemprop="mainEntityOfPage" href="https://blog.yangricky.com/2020/10/15/cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

@@ -17,29 +17,29 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"yshua5631.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yangricky.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构之B+树">
-<meta property="og:url" content="https://yshua5631.github.io/2020/10/18/B-plus-tree/index.html">
+<meta property="og:url" content="https://blog.yangricky.com/2020/10/18/B-plus-tree/index.html">
 <meta property="og:site_name" content="迷途书童">
 <meta property="og:description" content="做应用开发的朋友大概这辈子不会遇到B+树这个数据结构,它的应用场景更多是在底层。所有做技术的人有时候会面临一些困惑，有些技术或者理论离应用太远，有点曲高和寡，导致了我们会对这类技术丧失兴趣. 但B+树有时候就像一个幽灵一样出现在一些技术文章中，引起你的关注.这篇文章主要是浅谈一下我记忆中的B+树.  背景 什么是B+树？ B+树实践 拾遗  背景要了解B+树先得说说B树, 1972年Bayer和m">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yshua5631.github.io/images/2020/bplus-tree.png">
+<meta property="og:image" content="https://blog.yangricky.com/images/2020/bplus-tree.png">
 <meta property="article:published_time" content="2020-10-18T08:50:25.000Z">
 <meta property="article:modified_time" content="2024-02-26T15:09:46.516Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="树">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yshua5631.github.io/images/2020/bplus-tree.png">
+<meta name="twitter:image" content="https://blog.yangricky.com/images/2020/bplus-tree.png">
 
 
-<link rel="canonical" href="https://yshua5631.github.io/2020/10/18/B-plus-tree/">
+<link rel="canonical" href="https://blog.yangricky.com/2020/10/18/B-plus-tree/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yshua5631.github.io/2020/10/18/B-plus-tree/","path":"2020/10/18/B-plus-tree/","title":"数据结构之B+树"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.yangricky.com/2020/10/18/B-plus-tree/","path":"2020/10/18/B-plus-tree/","title":"数据结构之B+树"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>数据结构之B+树 | 迷途书童</title>
@@ -217,7 +217,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yshua5631.github.io/2020/10/18/B-plus-tree/">
+    <link itemprop="mainEntityOfPage" href="https://blog.yangricky.com/2020/10/18/B-plus-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
