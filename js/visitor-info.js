@@ -10,6 +10,20 @@
   // 迁移 CF Pages 后，在最前面插入自建 Workers endpoint 即可。
   const sources = [
     {
+      name: 'ipinfo.io',
+      url: 'https://ipinfo.io/json',
+      parse: d => {
+        if (!d || !d.ip) return null;
+        // ipinfo 的 org 格式是 "AS4134 China Telecom"，去掉 ASN 前缀
+        const isp = (d.org || '').replace(/^AS\d+\s+/, '');
+        return {
+          ip: d.ip,
+          location: [d.country, d.region, d.city].filter(Boolean).join(' '),
+          isp
+        };
+      }
+    },
+    {
       name: 'ipwho.is',
       url: 'https://ipwho.is/',
       parse: d => {
@@ -19,18 +33,6 @@
           ip: d.ip,
           location: [d.country, d.region, d.city].filter(Boolean).join(' '),
           isp: conn.isp || conn.org || ''
-        };
-      }
-    },
-    {
-      name: 'ipinfo.io',
-      url: 'https://ipinfo.io/json',
-      parse: d => {
-        if (!d || !d.ip) return null;
-        return {
-          ip: d.ip,
-          location: [d.country, d.region, d.city].filter(Boolean).join(' '),
-          isp: d.org || ''
         };
       }
     }
