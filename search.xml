@@ -60,208 +60,6 @@
       </tags>
   </entry>
   <entry>
-    <title>系统行为之警卫局 - 登录和授权</title>
-    <url>/2020/11/22/auth/</url>
-    <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
-<ul>
-<li>背景</li>
-<li>什么是登录和授权</li>
-<li>如何进行登录和授权</li>
-<li>登录和授权相关的实践</li>
-<li>登录和授权的未来</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>登录和授权是一个软件系统里最常见的行为。<br>还记得在第一家公司使用过一个ERP系统，登录进去只能看到自己所属的模块.<br>如今应用多了，一个企业内部，可能有专门的财务软件，也有可能有外部购买的软件，基于时间就是金钱，效率就是生命的原则，在一家公司内部，如何统一管理用户的账号，在一个地方登录了系统A, 在另外一个地方可以直接登录系统B，成为一个企业必须解决的问题（SSO）.<br>我要登录极客时间，有好几种方式，但最省时的方式肯定的是第三方登录，点击微信图标， 唰唰几步就完成了登录，而不是重新注册一个账号，输入电话，电子邮件。这也体现了用户至上的设计理念。 换句话说，没有人喜欢复杂和繁琐的东西。简单，简单，还是简单.</p>
-<h2 id="什么是登录和授权"><a href="#什么是登录和授权" class="headerlink" title="什么是登录和授权"></a>什么是登录和授权</h2><p>登录和授权是两件事，要分开说.</p>
-<h3 id="什么是登录"><a href="#什么是登录" class="headerlink" title="什么是登录"></a>什么是登录</h3><p>登录是指一个主体可以进入系统S的行为. 这里的主体可以是人或者是一个物体，系统S可以是软件，也可以是指一个组织<br>以下是一些登录的例子</p>
-<ul>
-<li>打开一个web，输入用户名和密码 - 这个是最常见的行为，也是所有验证模型的雏形.</li>
-<li>张三刷门禁进公司</li>
-<li>插入银行卡，输入密码取钱</li>
-</ul>
-<p>登录的形式</p>
-<ul>
-<li>输入用户和密码</li>
-<li>输入用户和密码，再加上n重验证(比如验证码，或者回答一个私密问题)</li>
-<li>按指纹</li>
-<li>面部识别<br>从这里看出来，登录这个行为隐藏了一个主题：更简单的方式追求更高的安全</li>
-</ul>
-<h3 id="什么是授权"><a href="#什么是授权" class="headerlink" title="什么是授权"></a>什么是授权</h3><p>授权是指一个主体进入系统S之后，它在系统S里面能做什么. 这里的授权是广义上的授权，和之后讨论的oAuth的概念稍微有点不一样<br>授权的例子如下</p>
-<ul>
-<li>登录一个电商网站之后，可以下单买东西</li>
-<li>进入公司内部，可以做在自己的座位上，不能坐在别人的座位上。</li>
-<li>登录进入一个ERP系统，我是销售部门的人，只能看到销售模块，不能看到财务模块.</li>
-</ul>
-<p>授权这个行为表明了主体在系统S里面基于特定的约束，只能做特定的事情.</p>
-<h2 id="如何进行登录和授权"><a href="#如何进行登录和授权" class="headerlink" title="如何进行登录和授权"></a>如何进行登录和授权</h2><h3 id="单系统的登录和授权"><a href="#单系统的登录和授权" class="headerlink" title="单系统的登录和授权"></a>单系统的登录和授权</h3><p>  单系统登录设计原则</p>
-<ul>
-<li>密码需要设计复杂度</li>
-<li>存在数据里的密码需要加密</li>
-<li>最好加一些额外的验证 - 比如验证码</li>
-<li>能以最小的成本平滑的过渡到SSO</li>
-</ul>
-<p>  单系统授权设计原则</p>
-<ul>
-<li>权限表能很好的添加或者删除权限</li>
-<li>有专门的工具来维护权限的添加和删除</li>
-</ul>
-<h3 id="多系统登录和授权相关规范"><a href="#多系统登录和授权相关规范" class="headerlink" title="多系统登录和授权相关规范"></a>多系统登录和授权相关规范</h3><p>  下面是一些有关登录和授权的规范，我之所以称它们为规范是为了便于方便讨论。 因为地方会称这些规范是个协议，或者是个框架，或者从字面上看是个语言，这样概念太多，会让人迷糊不清。<br>  规范本质上是一种约束。 它描述了</p>
-<ul>
-<li>一个系统可以做什么</li>
-<li>一个系统不可以做什么</li>
-<li>一个系统如何做某件事</li>
-</ul>
-<h4 id="SAML"><a href="#SAML" class="headerlink" title="SAML"></a>SAML</h4><p>  SAML（Security Assertion MarkUp Language）顾名思义是一个与安全和断言有关的规范。 下面引用了维基百科的定义</p>
-<blockquote>
-<p>SAML is an open standard for exchanging authentication and authorization data between parties, in particular, between an identity provider and a service provider. SAML is an XML-based markup language for security assertions (statements that service providers use to make access-control decisions).</p>
-</blockquote>
-<p>  维基百科回答的大体还是准确，但一会说这是个标准，一会又说这是一个语言，所以很乱。<br>  从这里也可以看出, SAML主要解决这样一个问题: 如何在IDP和SP之间交换验证和授权的信息？<br>  SAML有三个角色</p>
-<ul>
-<li>Client - 张三</li>
-<li>Identity Provider - 微信</li>
-<li>Service Provider - 极客时间</li>
-</ul>
-<p>  <img src="/images/2020/saml-workflow.png"><br>  基于上面三个角色， SAML大体的workflow是</p>
-<ul>
-<li>Client 访问 Service</li>
-<li>Service 将 Client 导向到 IDP<ul>
-<li>Client 登录成功</li>
-</ul>
-</li>
-<li>IPD将Client导向到 Service<ul>
-<li>Service验证用户登录成功</li>
-</ul>
-</li>
-<li>Client在浏览器上可以正常访问资源</li>
-</ul>
-<h4 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h4><p>  OAuth是一个关于授权的标准，它不做验证。</p>
-<blockquote>
-<p>OAuth 2.0 is the industry-standard protocol for authorization. OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications, desktop applications, mobile phones, and living room devices</p>
-</blockquote>
-<p>  OAuth的的角色</p>
-<ul>
-<li>Resource Server - 资源，比如房子</li>
-<li>Resource Owner - 资源的拥有者，比如这个房子是属于张三的</li>
-<li>Authorization Server - 有个组织负责给张三配房子的临时钥匙</li>
-<li>Client - 李四</li>
-</ul>
-<p>  <img src="/images/2020/oauth-workflow.png"></p>
-<p>  OAuth的故事大概是这样的：<br>  张三有一家公司，李四想去张三的公司仓库里取货，但张三不能把真正的钥匙给李四，只能委托一个机构给李四一把临时的钥匙，这把临时的钥匙只能去仓库，不能去财务室. 这把临时钥匙是不记名的，换句话说，如果王五抢劫到这把临时钥匙，也是可以去仓库取东西的.</p>
-<p>  更技术一点就是说</p>
-<ul>
-<li>授权服务器如何采取一种简单又安全的方式给Client生成access token?</li>
-</ul>
-<p>  OAuth的花式生成access token的方式</p>
-<ul>
-<li>授权码</li>
-<li>简化模式</li>
-<li>密码模式</li>
-<li>客户端模式</li>
-</ul>
-<h4 id="OpenId-Connect-OIDC"><a href="#OpenId-Connect-OIDC" class="headerlink" title="OpenId Connect(OIDC)"></a>OpenId Connect(OIDC)</h4><p>  OpenId Connect是一个专注于身份验证的规范.</p>
-<blockquote>
-<p>OpenID Connect is an interoperable authentication protocol based on the OAuth 2.0 family of specifications. It uses straightforward REST&#x2F;JSON message flows with a design goal of “making simple things simple and complicated things possible”. It’s uniquely easy for developers to integrate, compared to any preceding Identity protocol.</p>
-</blockquote>
-<p>  从上面的描述可以知道 OIDC也包含授权功能，因为它是基于OAuth2.0, 但我们要记住OIDC的主业是认证，认证是它的价值主张, 授权只是它的副业.<br>  如果说授权最终的产出是access token, 那么验证最终的产出就是id token. 基本上，只要拿到了这两种token, 就可以在各个软件系统中为所欲为的横着走了.</p>
-<p>  OIDC的角色</p>
-<ul>
-<li>End User - 张三</li>
-<li>Relying Party - 相当于OAuth的Resource Server。 比如极客时间</li>
-<li>OpenID Provider - 身份认证服务，类似于SAML中的IDP。 比如微信</li>
-<li>ID-Token - 包含身份认证信息的JWT</li>
-<li>UserInfo Endpoint - 获取用户的昵称和头像等信息</li>
-</ul>
-<p>  OIDC的大体的WorkFlow是这样的</p>
-<ul>
-<li>RP 发送认证请求给 OP</li>
-<li>OP 让用户来验证 <ul>
-<li>用户提供正确的身份验证</li>
-</ul>
-</li>
-<li>OP 生成 id token 和 access token给RP</li>
-<li>RP 根据 access token 发送一个获取用户信息的请求.</li>
-<li>RP 获得用户的信息</li>
-</ul>
-<p>  <img src="/images/2020/OIDC-workflow.jpg"></p>
-<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4>  <!--TODO SpringSecurity的设计初衷和目的以及核心功能和概念 -->
-<h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4>  <!--TODO SpringShiro的设计初衷和目的以及核心功能和概念 -->
-<h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4>  <!--TODO KeyCloak的设计初衷和目的以及核心功能和概念 -->
-  <!--TODO 这三个框架共同表达了什么主题？ -->
-  <!--TODO 这三个框架有哪些优秀的设计原则和思路？ -->
-<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>  这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>  所以权限设计是为了解决这样一个终极问题</p>
-<ul>
-<li>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</li>
-</ul>
-<p>  一些权限模型</p>
-<ul>
-<li>ACL - 基本的思路是：对一个文件A需要配置张三读写权限，文件B李四需要配置写权限<ul>
-<li>这种配置是符合直觉的，但是随着用户量的增加，需要一个一个的配，很繁琐.</li>
-</ul>
-</li>
-<li>DAC (Discretionary access control) - 是基于 ACL的扩展。 它引入了组和给其他主体授权的概念<ul>
-<li>张三可以具有对文件A读写的权限，张三属于销售组，所以销售组也可以对文件具有读的权限</li>
-<li>文件A的拥有者张三同时也可以将文件A读的权限赋给李四，这样是自主的核心要义。</li>
-<li>Windows和Linux权限是基于DAC的。<ul>
-<li>Windows的权限设计不够灵活，比如说“读取和执行”是一个权限，但其实是微软将读取和执行两个权限打包在一起了，然后让用户选择允许和拒绝</li>
-<li>Linux的的权限设计充分体现了细粒度，互斥的组合的思想。比如说权限只有三种，读，写，执行，一个文件有三大类用户: 拥有者，所属组，其他人。每大类用户有7中权限，所以总的权限组合是7<em>7</em>7</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>MAC (Mandatory access control) - 相比于DAC, MAC强调的是更安全。张三和李四同属于销售组，但是张三是经理，李四是员工，所以张三和李四对文件A是有不同对访问权限的，这个问题DAC就解决不了. MAC引入了信息敏感度这个概念, 也就是引入了一个新的维度.<ul>
-<li>要配置资源的信息等级</li>
-<li>要配置用户主体的信息等级</li>
-<li>核心的财务文件只有经理级别的财务人员才能查看，但是经理级别的销售人员就不能查看.</li>
-</ul>
-</li>
-<li>RBAC (Role based access control) - RBAC的核心概念是：主体，角色，资源<ul>
-<li>一个销售角色有很多权限，比如查看合同，创建客户，删除客户等等，只要一个人是销售，它就具有这些权限</li>
-<li>角色是权限的集合，而组是用户的集合</li>
-</ul>
-</li>
-<li>ABAC (Attribute base access control) - ABAC相比于其他模型是它的表达力是最强的. 如果要表达张三上午可以对文件进行读取操作，那么上述所有模型都无能为力。ABAC可以表述为: X在Y条件对Z执行A操作, 这里的X,Y,Z,A都是可以自定义的.<ul>
-<li>来自北京的张三在上午10点钟可以读取服务器上80端口的内容。 这段表述够复杂了吧，ABAC就可以干这事情。已经有点声明式编程的味道了.</li>
-</ul>
-</li>
-</ul>
-<h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><pre><code>* 协议
-  * X.500 - X.500是基于OSI的目录访问服务，众所周知，OSI现在已经被淘汰.
-  * LDAP（Lightweight Directory Access Protocol） - LDAP是一个基于X.500的目录访问的协议，但它更简单，而且支持TCP/IP，这对互联网访问非常重要.
-* 实现
-  * Active Directory - 这是LDAP在windows上的实现，它的层次结构依次是：域(Domain) -&gt; 组织单位(Orgnization Unit) -&gt; 群组(Group) -&gt; 用户(User)
-    * 一般来说，AD适合在内网中的C/S架构
-  * OpenLDAP
-  * ADFS - ADFS是一种跨网络的身份认证方案，也就是用户账户和应用程序位于不同的网络.
-    * 相比于传统的AD, ADFS可以穿透不同的网络.
-  * Azure AD - 是基于云上的身份认证和授权方案。
-    * 它支持Rest风格. 具体一点就是通过api可以拿到access token和id token, 这是开发者最关心的信息.
-    * 它支持多重身份验证
-    * 它支持多租户，租户和租户之间的数据是彻底隔离的
-    * 它不是主域控制器
-</code></pre>
-<h2 id="登录和授权的未来"><a href="#登录和授权的未来" class="headerlink" title="登录和授权的未来"></a>登录和授权的未来</h2><p>  无论是SAML, OAuth 还是 OpenId Connect, 我希望将来只有一种认证和授权协议, 姑且命名为XAuth.<br>  它有如下特征</p>
-<ul>
-<li>生成和解析token是简单的</li>
-<li>token是安全的</li>
-<li>形成规范</li>
-<li>.net, java以及前端有成熟框架和社区支持，且这些框架被大多数公司所使用.</li>
-</ul>
-<p>  所有技术无论是原则，模式，还是方式，统一是大趋势。 我们不想要两个或者多个。<br>  可以看到一些例子</p>
-<ul>
-<li>前些日子, .net5发布了，统一了.net core, mono.</li>
-<li>Spring Cloud想统一解决分布式领域内的所有问题，并形成规范.</li>
-</ul>
-<p>  这也就是为什么我对认证和授权协议会有统一的构想的原因。</p>
-]]></content>
-      <categories>
-        <category>安全</category>
-      </categories>
-      <tags>
-        <tag>安全</tag>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>浮浮沉沉 - DDD</title>
     <url>/2020/09/15/DDD/</url>
     <content><![CDATA[<p>现在谈到微服务，大多会提到DDD, 这两者之间有什么关系呢？让我在这篇文章里揭秘吧.</p>
@@ -493,75 +291,205 @@
       </tags>
   </entry>
   <entry>
-    <title>分解</title>
-    <url>/2020/09/12/break-down/</url>
-    <content><![CDATA[<p>分解是解决问题的一种有效方式之一。分解这两个字是如此的显而易见，小学生一听都知道分解是什么意思， 以至于不需要解释太多。<br>这篇文章主要探讨三方面内容</p>
+    <title>系统行为之警卫局 - 登录和授权</title>
+    <url>/2020/11/22/auth/</url>
+    <content><![CDATA[<p>在现实生活中，身份识别无处不在。 去银行取钱，得带上银行卡。 去公司上班，得带上门禁卡。想访问一个网站，需要先注册，才能访问其内容。<br>任何一个系统，无论是软件系统，还是真实的现实世界的组织，都需要对人进行识别，然后才能决定这个人能干什么。</p>
 <ul>
-<li>什么是分解？</li>
-<li>为什么要分解？</li>
-<li>如何分解一个系统？</li>
+<li>背景</li>
+<li>什么是登录和授权</li>
+<li>如何进行登录和授权</li>
+<li>登录和授权相关的实践</li>
+<li>登录和授权的未来</li>
 </ul>
-<h2 id="什么是分解？"><a href="#什么是分解？" class="headerlink" title="什么是分解？"></a>什么是分解？</h2><p>  <img src="/images/2020/organization.png"><br>  将一个事物按层次拆成层次1， 层次2，每个层次可以拆成要素1， 要素2，这就是分解。<br>  <span id="more"></span><br>  一些具体的例子</p>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>登录和授权是一个软件系统里最常见的行为。<br>还记得在第一家公司使用过一个ERP系统，登录进去只能看到自己所属的模块.<br>如今应用多了，一个企业内部，可能有专门的财务软件，也有可能有外部购买的软件，基于时间就是金钱，效率就是生命的原则，在一家公司内部，如何统一管理用户的账号，在一个地方登录了系统A, 在另外一个地方可以直接登录系统B，成为一个企业必须解决的问题（SSO）.<br>我要登录极客时间，有好几种方式，但最省时的方式肯定的是第三方登录，点击微信图标， 唰唰几步就完成了登录，而不是重新注册一个账号，输入电话，电子邮件。这也体现了用户至上的设计理念。 换句话说，没有人喜欢复杂和繁琐的东西。简单，简单，还是简单.</p>
+<h2 id="什么是登录和授权"><a href="#什么是登录和授权" class="headerlink" title="什么是登录和授权"></a>什么是登录和授权</h2><p>登录和授权是两件事，要分开说.</p>
+<h3 id="什么是登录"><a href="#什么是登录" class="headerlink" title="什么是登录"></a>什么是登录</h3><p>登录是指一个主体可以进入系统S的行为. 这里的主体可以是人或者是一个物体，系统S可以是软件，也可以是指一个组织<br>以下是一些登录的例子</p>
 <ul>
-<li>公司的组织架构。老板下面有很多经理， 经理下面有很多项目组长.</li>
-<li>公司的目标。 长期目标(愿景)，中期目标，短期目标.</li>
-<li>社会大分工</li>
-<li>软件架构的分层。</li>
-<li>微服务的拆分。</li>
-<li>分布式</li>
-<li>算法分而治之的设计思想</li>
-<li>分子可以拆分成原子，原子可以拆分为质子和电子。</li>
-<li>经济研究可以分为宏观和微观。</li>
-<li>新产业可以分解为现有产业和新技术的组合。</li>
+<li>打开一个web，输入用户名和密码 - 这个是最常见的行为，也是所有验证模型的雏形.</li>
+<li>张三刷门禁进公司</li>
+<li>插入银行卡，输入密码取钱</li>
 </ul>
-<p>  简而言之， 分解是无处不在。</p>
-<h2 id="为什么要分解？"><a href="#为什么要分解？" class="headerlink" title="为什么要分解？"></a>为什么要分解？</h2><p>  一个系统被分解之后， 它是：</p>
+<p>登录的形式</p>
 <ul>
-<li>容易理解的</li>
-<li>容易解决的</li>
+<li>输入用户和密码</li>
+<li>输入用户和密码，再加上n重验证(比如验证码，或者回答一个私密问题)</li>
+<li>按指纹</li>
+<li>面部识别<br>从这里看出来，登录这个行为隐藏了一个主题：更简单的方式追求更高的安全</li>
 </ul>
-<p>  一些具体的例子</p>
+<h3 id="什么是授权"><a href="#什么是授权" class="headerlink" title="什么是授权"></a>什么是授权</h3><p>授权是指一个主体进入系统S之后，它在系统S里面能做什么. 这里的授权是广义上的授权，和之后讨论的oAuth的概念稍微有点不一样<br>授权的例子如下</p>
 <ul>
-<li>一个很复杂的任务，被分解为任务1, 任务2。。。，每一项任务只需要简单执行就能得到预期结果，以至于简单到不可能失败。这个例子很简单的，简单的会让人感觉“不过如此，这个没什么啊”。任务分解是职场里最有效的工作方式之一。 它的表现形式是如此的简单，以致于人们意识不到这种方法论的重要性。去观察一个团队的领导或者成员有没有搞清楚任务，一个重要的指标就是这个任务有没有拆解得很清楚。 换句话说，能不能将任务拆解得很清楚是团队成熟和稳定的标志之一. 为什么这么说？<ul>
-<li>想明白 - 做事的前提就是想明白，搞清楚为什么。 如果一个任务能拆解的很细，说明这件任务是想明白了。</li>
-<li>可执行 - 可执行意味着能不能落地。人是天生讨论复杂和不确定的东西，任务分解的结果就是简单和确定的东西。 简单和确定意味着风险可控，结果可预期, 在规定时间内可以拿到结果。结果本质上是一种反馈和奖励机制，长期的反馈和奖励机制会形成良性循环.</li>
+<li>登录一个电商网站之后，可以下单买东西</li>
+<li>进入公司内部，可以做在自己的座位上，不能坐在别人的座位上。</li>
+<li>登录进入一个ERP系统，我是销售部门的人，只能看到销售模块，不能看到财务模块.</li>
+</ul>
+<p>授权这个行为表明了主体在系统S里面基于特定的约束，只能做特定的事情.</p>
+<h2 id="如何进行登录和授权"><a href="#如何进行登录和授权" class="headerlink" title="如何进行登录和授权"></a>如何进行登录和授权</h2><h3 id="单系统的登录和授权"><a href="#单系统的登录和授权" class="headerlink" title="单系统的登录和授权"></a>单系统的登录和授权</h3><p>  单系统登录设计原则</p>
+<ul>
+<li>密码需要设计复杂度</li>
+<li>存在数据里的密码需要加密</li>
+<li>最好加一些额外的验证 - 比如验证码</li>
+<li>能以最小的成本平滑的过渡到SSO</li>
+</ul>
+<p>  单系统授权设计原则</p>
+<ul>
+<li>权限表能很好的添加或者删除权限</li>
+<li>有专门的工具来维护权限的添加和删除</li>
+</ul>
+<h3 id="多系统登录和授权相关规范"><a href="#多系统登录和授权相关规范" class="headerlink" title="多系统登录和授权相关规范"></a>多系统登录和授权相关规范</h3><p>  下面是一些有关登录和授权的规范，我之所以称它们为规范是为了便于方便讨论。 因为地方会称这些规范是个协议，或者是个框架，或者从字面上看是个语言，这样概念太多，会让人迷糊不清。<br>  规范本质上是一种约束。 它描述了</p>
+<ul>
+<li>一个系统可以做什么</li>
+<li>一个系统不可以做什么</li>
+<li>一个系统如何做某件事</li>
+</ul>
+<h4 id="SAML"><a href="#SAML" class="headerlink" title="SAML"></a>SAML</h4><p>  SAML（Security Assertion MarkUp Language）顾名思义是一个与安全和断言有关的规范。 下面引用了维基百科的定义</p>
+<blockquote>
+<p>SAML is an open standard for exchanging authentication and authorization data between parties, in particular, between an identity provider and a service provider. SAML is an XML-based markup language for security assertions (statements that service providers use to make access-control decisions).</p>
+</blockquote>
+<p>  维基百科回答的大体还是准确，但一会说这是个标准，一会又说这是一个语言，所以很乱。<br>  从这里也可以看出, SAML主要解决这样一个问题: 如何在IDP和SP之间交换验证和授权的信息？<br>  SAML有三个角色</p>
+<ul>
+<li>Client - 张三</li>
+<li>Identity Provider - 微信</li>
+<li>Service Provider - 极客时间</li>
+</ul>
+<p>  <img src="/images/2020/saml-workflow.png"><br>  基于上面三个角色， SAML大体的workflow是</p>
+<ul>
+<li>Client 访问 Service</li>
+<li>Service 将 Client 导向到 IDP<ul>
+<li>Client 登录成功</li>
+</ul>
+</li>
+<li>IPD将Client导向到 Service<ul>
+<li>Service验证用户登录成功</li>
+</ul>
+</li>
+<li>Client在浏览器上可以正常访问资源</li>
+</ul>
+<h4 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h4><p>  OAuth是一个关于授权的标准，它不做验证。</p>
+<blockquote>
+<p>OAuth 2.0 is the industry-standard protocol for authorization. OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications, desktop applications, mobile phones, and living room devices</p>
+</blockquote>
+<p>  OAuth的的角色</p>
+<ul>
+<li>Resource Server - 资源，比如房子</li>
+<li>Resource Owner - 资源的拥有者，比如这个房子是属于张三的</li>
+<li>Authorization Server - 有个组织负责给张三配房子的临时钥匙</li>
+<li>Client - 李四</li>
+</ul>
+<p>  <img src="/images/2020/oauth-workflow.png"></p>
+<p>  OAuth的故事大概是这样的：<br>  张三有一家公司，李四想去张三的公司仓库里取货，但张三不能把真正的钥匙给李四，只能委托一个机构给李四一把临时的钥匙，这把临时的钥匙只能去仓库，不能去财务室. 这把临时钥匙是不记名的，换句话说，如果王五抢劫到这把临时钥匙，也是可以去仓库取东西的.</p>
+<p>  更技术一点就是说</p>
+<ul>
+<li>授权服务器如何采取一种简单又安全的方式给Client生成access token?</li>
+</ul>
+<p>  OAuth的花式生成access token的方式</p>
+<ul>
+<li>授权码</li>
+<li>简化模式</li>
+<li>密码模式</li>
+<li>客户端模式</li>
+</ul>
+<h4 id="OpenId-Connect-OIDC"><a href="#OpenId-Connect-OIDC" class="headerlink" title="OpenId Connect(OIDC)"></a>OpenId Connect(OIDC)</h4><p>  OpenId Connect是一个专注于身份验证的规范.</p>
+<blockquote>
+<p>OpenID Connect is an interoperable authentication protocol based on the OAuth 2.0 family of specifications. It uses straightforward REST&#x2F;JSON message flows with a design goal of “making simple things simple and complicated things possible”. It’s uniquely easy for developers to integrate, compared to any preceding Identity protocol.</p>
+</blockquote>
+<p>  从上面的描述可以知道 OIDC也包含授权功能，因为它是基于OAuth2.0, 但我们要记住OIDC的主业是认证，认证是它的价值主张, 授权只是它的副业.<br>  如果说授权最终的产出是access token, 那么验证最终的产出就是id token. 基本上，只要拿到了这两种token, 就可以在各个软件系统中为所欲为的横着走了.</p>
+<p>  OIDC的角色</p>
+<ul>
+<li>End User - 张三</li>
+<li>Relying Party - 相当于OAuth的Resource Server。 比如极客时间</li>
+<li>OpenID Provider - 身份认证服务，类似于SAML中的IDP。 比如微信</li>
+<li>ID-Token - 包含身份认证信息的JWT</li>
+<li>UserInfo Endpoint - 获取用户的昵称和头像等信息</li>
+</ul>
+<p>  OIDC的大体的WorkFlow是这样的</p>
+<ul>
+<li>RP 发送认证请求给 OP</li>
+<li>OP 让用户来验证 <ul>
+<li>用户提供正确的身份验证</li>
+</ul>
+</li>
+<li>OP 生成 id token 和 access token给RP</li>
+<li>RP 根据 access token 发送一个获取用户信息的请求.</li>
+<li>RP 获得用户的信息</li>
+</ul>
+<p>  <img src="/images/2020/OIDC-workflow.jpg"></p>
+<h3 id="相关框架"><a href="#相关框架" class="headerlink" title="相关框架"></a>相关框架</h3><h4 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h4>  <!--TODO SpringSecurity的设计初衷和目的以及核心功能和概念 -->
+<h4 id="Spring-Shiro"><a href="#Spring-Shiro" class="headerlink" title="Spring Shiro"></a>Spring Shiro</h4>  <!--TODO SpringShiro的设计初衷和目的以及核心功能和概念 -->
+<h4 id="KeyCloak"><a href="#KeyCloak" class="headerlink" title="KeyCloak"></a>KeyCloak</h4>  <!--TODO KeyCloak的设计初衷和目的以及核心功能和概念 -->
+  <!--TODO 这三个框架共同表达了什么主题？ -->
+  <!--TODO 这三个框架有哪些优秀的设计原则和思路？ -->
+<h2 id="登录和授权的相关实践"><a href="#登录和授权的相关实践" class="headerlink" title="登录和授权的相关实践"></a>登录和授权的相关实践</h2><h3 id="如何设计一个权限系统"><a href="#如何设计一个权限系统" class="headerlink" title="如何设计一个权限系统"></a>如何设计一个权限系统</h3><p>  这里的权限系统是指一般意义上的权限：主体对资源能执行什么样的操作？ 比如张三可以文件执行写操作.<br>  所以权限设计是为了解决这样一个终极问题</p>
+<ul>
+<li>主体在什么样的条件下可以对资源执行什么样的操作， 而且随着用户的增加，添加权限的操作尽可能的简单和更安全。</li>
+</ul>
+<p>  一些权限模型</p>
+<ul>
+<li>ACL - 基本的思路是：对一个文件A需要配置张三读写权限，文件B李四需要配置写权限<ul>
+<li>这种配置是符合直觉的，但是随着用户量的增加，需要一个一个的配，很繁琐.</li>
+</ul>
+</li>
+<li>DAC (Discretionary access control) - 是基于 ACL的扩展。 它引入了组和给其他主体授权的概念<ul>
+<li>张三可以具有对文件A读写的权限，张三属于销售组，所以销售组也可以对文件具有读的权限</li>
+<li>文件A的拥有者张三同时也可以将文件A读的权限赋给李四，这样是自主的核心要义。</li>
+<li>Windows和Linux权限是基于DAC的。<ul>
+<li>Windows的权限设计不够灵活，比如说“读取和执行”是一个权限，但其实是微软将读取和执行两个权限打包在一起了，然后让用户选择允许和拒绝</li>
+<li>Linux的的权限设计充分体现了细粒度，互斥的组合的思想。比如说权限只有三种，读，写，执行，一个文件有三大类用户: 拥有者，所属组，其他人。每大类用户有7中权限，所以总的权限组合是7<em>7</em>7</li>
 </ul>
 </li>
 </ul>
-<p>  并不是所有的系统都是可以拆解的，有些系统是非线性的，不遵守还原论.</p>
-<h2 id="如何分解一个系统？"><a href="#如何分解一个系统？" class="headerlink" title="如何分解一个系统？"></a>如何分解一个系统？</h2><ul>
-<li>识别系统的要素<ul>
-<li>不同的层次<ul>
-<li>一个组织有领导层和执行层，领导层决定了执行层。</li>
-<li>一个软件有一个根本设计目标和设计原则，模式和方法。</li>
-<li>我们知道人的生命是基于碳基的，但是我们要是收集一拖拉机碳基物质，能不能创造出人类，当然是不能。碳基物质 -&gt; 细胞 -&gt; 器官，这是一个比较简单的描述人的物质组成图，很明显，每一层都不是下一层简单的堆砌就可以形成的，而是量变引起了质变，这种现象就称为层展现象.</li>
+</li>
+<li>MAC (Mandatory access control) - 相比于DAC, MAC强调的是更安全。张三和李四同属于销售组，但是张三是经理，李四是员工，所以张三和李四对文件A是有不同对访问权限的，这个问题DAC就解决不了. MAC引入了信息敏感度这个概念, 也就是引入了一个新的维度.<ul>
+<li>要配置资源的信息等级</li>
+<li>要配置用户主体的信息等级</li>
+<li>核心的财务文件只有经理级别的财务人员才能查看，但是经理级别的销售人员就不能查看.</li>
 </ul>
 </li>
-<li>同一层次的不同维度<ul>
-<li>如何证明美国比中国比美国强？可以从政治，经济，军事，文化，教育。。等角度出发， 这些维度是平等的。</li>
+<li>RBAC (Role based access control) - RBAC的核心概念是：主体，角色，资源<ul>
+<li>一个销售角色有很多权限，比如查看合同，创建客户，删除客户等等，只要一个人是销售，它就具有这些权限</li>
+<li>角色是权限的集合，而组是用户的集合</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>识别要素之间的关系<ul>
-<li>比如在一个学校里，教师是管理学生的，而不是学生管理老师，如果是这样的话，那么系统的性质就发生变化了.</li>
-</ul>
-</li>
-<li>识别系统的目的。<ul>
-<li>系统有一个目的或者初衷。比如学校的目的是教书育人而不是从事商业化活动.</li>
-<li>有些系统的目的不是很明显。比如一个生态，它的目的就是活下来。</li>
+<li>ABAC (Attribute base access control) - ABAC相比于其他模型是它的表达力是最强的. 如果要表达张三上午可以对文件进行读取操作，那么上述所有模型都无能为力。ABAC可以表述为: X在Y条件对Z执行A操作, 这里的X,Y,Z,A都是可以自定义的.<ul>
+<li>来自北京的张三在上午10点钟可以读取服务器上80端口的内容。 这段表述够复杂了吧，ABAC就可以干这事情。已经有点声明式编程的味道了.</li>
 </ul>
 </li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  分解是无处不在的思想， 具体落实到每个实际领域的时候，需要找到这个领域的层次和维度.</p>
-<p>  分解给我们的带来的一个启示是：<br>  如果一个系统是可被分解的，那么它一定是可以被理解的。<br>  如果一个系统是可以被理解的，那么它一定是可以寻求最优解的。</p>
+<h3 id="操作系统是如何存储用户信息的？"><a href="#操作系统是如何存储用户信息的？" class="headerlink" title="操作系统是如何存储用户信息的？"></a>操作系统是如何存储用户信息的？</h3><pre><code>* 协议
+  * X.500 - X.500是基于OSI的目录访问服务，众所周知，OSI现在已经被淘汰.
+  * LDAP（Lightweight Directory Access Protocol） - LDAP是一个基于X.500的目录访问的协议，但它更简单，而且支持TCP/IP，这对互联网访问非常重要.
+* 实现
+  * Active Directory - 这是LDAP在windows上的实现，它的层次结构依次是：域(Domain) -&gt; 组织单位(Orgnization Unit) -&gt; 群组(Group) -&gt; 用户(User)
+    * 一般来说，AD适合在内网中的C/S架构
+  * OpenLDAP
+  * ADFS - ADFS是一种跨网络的身份认证方案，也就是用户账户和应用程序位于不同的网络.
+    * 相比于传统的AD, ADFS可以穿透不同的网络.
+  * Azure AD - 是基于云上的身份认证和授权方案。
+    * 它支持Rest风格. 具体一点就是通过api可以拿到access token和id token, 这是开发者最关心的信息.
+    * 它支持多重身份验证
+    * 它支持多租户，租户和租户之间的数据是彻底隔离的
+    * 它不是主域控制器
+</code></pre>
+<h2 id="登录和授权的未来"><a href="#登录和授权的未来" class="headerlink" title="登录和授权的未来"></a>登录和授权的未来</h2><p>  无论是SAML, OAuth 还是 OpenId Connect, 我希望将来只有一种认证和授权协议, 姑且命名为XAuth.<br>  它有如下特征</p>
+<ul>
+<li>生成和解析token是简单的</li>
+<li>token是安全的</li>
+<li>形成规范</li>
+<li>.net, java以及前端有成熟框架和社区支持，且这些框架被大多数公司所使用.</li>
+</ul>
+<p>  所有技术无论是原则，模式，还是方式，统一是大趋势。 我们不想要两个或者多个。<br>  可以看到一些例子</p>
+<ul>
+<li>前些日子, .net5发布了，统一了.net core, mono.</li>
+<li>Spring Cloud想统一解决分布式领域内的所有问题，并形成规范.</li>
+</ul>
+<p>  这也就是为什么我对认证和授权协议会有统一的构想的原因。</p>
 ]]></content>
       <categories>
-        <category>认知</category>
+        <category>安全</category>
       </categories>
       <tags>
-        <tag>认知</tag>
-        <tag>思维</tag>
+        <tag>安全</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -676,6 +604,78 @@
       <tags>
         <tag>缓存</tag>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分解</title>
+    <url>/2020/09/12/break-down/</url>
+    <content><![CDATA[<p>分解是解决问题的一种有效方式之一。分解这两个字是如此的显而易见，小学生一听都知道分解是什么意思， 以至于不需要解释太多。<br>这篇文章主要探讨三方面内容</p>
+<ul>
+<li>什么是分解？</li>
+<li>为什么要分解？</li>
+<li>如何分解一个系统？</li>
+</ul>
+<h2 id="什么是分解？"><a href="#什么是分解？" class="headerlink" title="什么是分解？"></a>什么是分解？</h2><p>  <img src="/images/2020/organization.png"><br>  将一个事物按层次拆成层次1， 层次2，每个层次可以拆成要素1， 要素2，这就是分解。<br>  <span id="more"></span><br>  一些具体的例子</p>
+<ul>
+<li>公司的组织架构。老板下面有很多经理， 经理下面有很多项目组长.</li>
+<li>公司的目标。 长期目标(愿景)，中期目标，短期目标.</li>
+<li>社会大分工</li>
+<li>软件架构的分层。</li>
+<li>微服务的拆分。</li>
+<li>分布式</li>
+<li>算法分而治之的设计思想</li>
+<li>分子可以拆分成原子，原子可以拆分为质子和电子。</li>
+<li>经济研究可以分为宏观和微观。</li>
+<li>新产业可以分解为现有产业和新技术的组合。</li>
+</ul>
+<p>  简而言之， 分解是无处不在。</p>
+<h2 id="为什么要分解？"><a href="#为什么要分解？" class="headerlink" title="为什么要分解？"></a>为什么要分解？</h2><p>  一个系统被分解之后， 它是：</p>
+<ul>
+<li>容易理解的</li>
+<li>容易解决的</li>
+</ul>
+<p>  一些具体的例子</p>
+<ul>
+<li>一个很复杂的任务，被分解为任务1, 任务2。。。，每一项任务只需要简单执行就能得到预期结果，以至于简单到不可能失败。这个例子很简单的，简单的会让人感觉“不过如此，这个没什么啊”。任务分解是职场里最有效的工作方式之一。 它的表现形式是如此的简单，以致于人们意识不到这种方法论的重要性。去观察一个团队的领导或者成员有没有搞清楚任务，一个重要的指标就是这个任务有没有拆解得很清楚。 换句话说，能不能将任务拆解得很清楚是团队成熟和稳定的标志之一. 为什么这么说？<ul>
+<li>想明白 - 做事的前提就是想明白，搞清楚为什么。 如果一个任务能拆解的很细，说明这件任务是想明白了。</li>
+<li>可执行 - 可执行意味着能不能落地。人是天生讨论复杂和不确定的东西，任务分解的结果就是简单和确定的东西。 简单和确定意味着风险可控，结果可预期, 在规定时间内可以拿到结果。结果本质上是一种反馈和奖励机制，长期的反馈和奖励机制会形成良性循环.</li>
+</ul>
+</li>
+</ul>
+<p>  并不是所有的系统都是可以拆解的，有些系统是非线性的，不遵守还原论.</p>
+<h2 id="如何分解一个系统？"><a href="#如何分解一个系统？" class="headerlink" title="如何分解一个系统？"></a>如何分解一个系统？</h2><ul>
+<li>识别系统的要素<ul>
+<li>不同的层次<ul>
+<li>一个组织有领导层和执行层，领导层决定了执行层。</li>
+<li>一个软件有一个根本设计目标和设计原则，模式和方法。</li>
+<li>我们知道人的生命是基于碳基的，但是我们要是收集一拖拉机碳基物质，能不能创造出人类，当然是不能。碳基物质 -&gt; 细胞 -&gt; 器官，这是一个比较简单的描述人的物质组成图，很明显，每一层都不是下一层简单的堆砌就可以形成的，而是量变引起了质变，这种现象就称为层展现象.</li>
+</ul>
+</li>
+<li>同一层次的不同维度<ul>
+<li>如何证明美国比中国比美国强？可以从政治，经济，军事，文化，教育。。等角度出发， 这些维度是平等的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>识别要素之间的关系<ul>
+<li>比如在一个学校里，教师是管理学生的，而不是学生管理老师，如果是这样的话，那么系统的性质就发生变化了.</li>
+</ul>
+</li>
+<li>识别系统的目的。<ul>
+<li>系统有一个目的或者初衷。比如学校的目的是教书育人而不是从事商业化活动.</li>
+<li>有些系统的目的不是很明显。比如一个生态，它的目的就是活下来。</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  分解是无处不在的思想， 具体落实到每个实际领域的时候，需要找到这个领域的层次和维度.</p>
+<p>  分解给我们的带来的一个启示是：<br>  如果一个系统是可被分解的，那么它一定是可以被理解的。<br>  如果一个系统是可以被理解的，那么它一定是可以寻求最优解的。</p>
+]]></content>
+      <categories>
+        <category>认知</category>
+      </categories>
+      <tags>
+        <tag>认知</tag>
+        <tag>思维</tag>
       </tags>
   </entry>
   <entry>
@@ -918,6 +918,19 @@
       </tags>
   </entry>
   <entry>
+    <title>软件设计原则</title>
+    <url>/2020/09/06/design-principle/</url>
+    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
+<ul>
+<li>总的原则</li>
+<li>通用的原则</li>
+<li>特殊的原则</li>
+</ul>
+<span id="more"></span>
+<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责&#x2F;科里定律"></a>单一职责&#x2F;科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则&#x2F;别让我思考"></a>最少知识原则&#x2F;别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度&#x2F;三适里面的适度"></a>YAGNI-不要过度&#x2F;三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>人多力量大 - 分布式导言</title>
     <url>/2020/10/11/distributed-system/</url>
     <content><![CDATA[<p>一个人抗一个木头会很重，如果两个人一起抗木头，两个人承担的分量会少点，如果三个人呢？那么三个人承担的分量会更少. 换言之，如果从整体上看，三个人的力量要大于两个人<br>现在的应用的数据变得越来越大，业务的流量越来越多了，分布式成为了一个不可避免的趋势。<br>这篇文章主要谈谈</p>
@@ -984,6 +997,56 @@
       </categories>
       <tags>
         <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一种可以衡量事物的指标-快和好</title>
+    <url>/2020/08/30/good-quick/</url>
+    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
+<ul>
+<li>好</li>
+<li>快</li>
+</ul>
+<span id="more"></span>
+<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
+<ul>
+<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
+<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
+<li>好在架构层面可以理解为高可用，可扩展</li>
+<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
+<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
+</ul>
+<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
+<ul>
+<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
+<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
+<li>多<ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
+</ul>
+</li>
+<li>省 <ul>
+<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
+</ul>
+</li>
+</ul>
+<p>具体的一些例子</p>
+<ul>
+<li>快在架构层面可以理解为高性能</li>
+</ul>
+<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本&#x2F;收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本&#x2F;收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
+<ul>
+<li>代码能跑起来是不是意味着好?</li>
+<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
+<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
+</ul>
+<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
+]]></content>
+      <categories>
+        <category>思维</category>
+      </categories>
+      <tags>
+        <tag>思维</tag>
       </tags>
   </entry>
   <entry>
@@ -1108,69 +1171,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一种可以衡量事物的指标-快和好</title>
-    <url>/2020/08/30/good-quick/</url>
-    <content><![CDATA[<p>在生活中我们会遇到各种不同的事物, 比如一辆汽车, 一部电影, 一本书, 一个技术, 一个大型项目, 一家公司, 这些事物都是处于不断的发展当中, 并且有着自己的阶段性形态或者终极形态. 有没有一种简单的方法来衡量一个事物?<br>这里有两个指标可以衡量一个事物</p>
-<ul>
-<li>好</li>
-<li>快</li>
-</ul>
-<span id="more"></span>
-<h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><p>这里的好意味着正确的结果, 高的质量, 一个事物好到极致就是一件艺术品. 所以好最基本的要求， 就是一个事物的结果至少是对的。 另外好是一个主观性比较强的指标.<br><img src="/images/2020/constantin.jpg"></p>
-<ul>
-<li>一段代码易懂而且没有Bug, 容易扩展, 耐操, 那可以说这段代码是好的代码.</li>
-<li>一个框架使用起来简单,没有侵入性, 遇到问题社区里有相应的解决方案, 可以说这是一个好的框架.</li>
-<li>好在架构层面可以理解为高可用，可扩展</li>
-<li>一个产品解决了用户的痛点问题, 提升了用户流量, 那么这是一个好的产品.</li>
-<li>一个组织有愿景, 始终以正确的方式在做正确的事情, 那么这是一个好的组织</li>
-</ul>
-<h2 id="快"><a href="#快" class="headerlink" title="快"></a>快</h2><p>快是指限定时间内完成某件事情的度量, 这里是一个独立的维度.<br><img src="/images/2020/high-speed-rail.jpg"><br>人类社会发展过程当中， 隐含了两个发展因素</p>
-<ul>
-<li>能量。从钻木取火， 到蒸汽机， 到核能，无疑让事物变的越来越快。</li>
-<li>信息。 从甲骨文，羊皮卷， 到印刷术， 再到如今的电脑， 信息传播的速度越来越快。但人脑始终没跟上信息爆炸的速度。<br>快会衍生出下面几个指标:</li>
-<li>多<ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 一个小时可以完成两件事情, 相应的产出就变多了.</li>
-</ul>
-</li>
-<li>省 <ul>
-<li>以前一个小时可以完成一件事情, 现在做事情快了之后, 那么完成一件事情只需要半个小时, 就是时间成本降低了.</li>
-</ul>
-</li>
-</ul>
-<p>具体的一些例子</p>
-<ul>
-<li>快在架构层面可以理解为高性能</li>
-</ul>
-<h2 id="快和好"><a href="#快和好" class="headerlink" title="快和好"></a>快和好</h2><p>快和好是一对矛盾体,快和好衍生出的另外一个指标就是“成本&#x2F;收益”, 也可以称作为”性价比“。<br>一个完美的组织应当有正确的目标, 然后以正确而且快速的方式去实现这个目标.<br>但很显然, 现实不是如此.<br>一个创业公司, 做事情讲究的是快, 快速试错, 快速获得反馈, 然后快速调整. 从代码的角度来看, 命名是不是优雅可读? 不重要, 代码需要可扩展性么? 不重要.一顿操作猛如虎, 简单的说, 就是“猛快糙”.<br>一个成熟的公司, 还是拿写代码来说,写代码的时候要考虑到各种各样的情况, 比如以后别人接手你的代码,比人能看懂么?  这个问题可以抽象到什么程度?<br>想起一个伦敦的同事, 偶尔会在群里分享范畴论, 这玩意就是数学领域的知识, 也就是他会尝试去了解数学领域的知识, 在我看来不太实用, 因为大多数开发者是做工程的, 不是做科学的. 如果这个同事去创业公司干活, 估计会很不适应.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个人或者一个组织很难同时做到快和好.<br>一个系统追求的是“成本&#x2F;收益”最大化，也某些场合可以理解为期望值最大化。<br>或者如果想做到快和好, 就要去合理的定义快和好, 这是一种平衡, 可以用三适原则里的适度来解释. 就拿一个组织来说, 可以尝试着问如下问题:</p>
-<ul>
-<li>代码能跑起来是不是意味着好?</li>
-<li>框架能用是不是意味着好? 如果能用, 那框架好用么?用起来舒服吗?</li>
-<li>一项任务完成之后, 时间有记录么? 平均时间是多少?</li>
-</ul>
-<p>这些问题如何能被正确的回答, 每个组织内部就会对好和快有一种感性和直觉的认识.</p>
-]]></content>
-      <categories>
-        <category>思维</category>
-      </categories>
-      <tags>
-        <tag>思维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件设计原则</title>
-    <url>/2020/09/06/design-principle/</url>
-    <content><![CDATA[<p>在设计软件模块的时候， 我们往往会遵循一些原则， 这些原则五花八门，有的是来自于面向对象领域， 有的是来自于纯设计领域。 有些原则在某些场景下会不灵光。 这篇文章主要就是聊聊这些原则。<br>在这里， 我将软件设计原则分为三类。</p>
-<ul>
-<li>总的原则</li>
-<li>通用的原则</li>
-<li>特殊的原则</li>
-</ul>
-<span id="more"></span>
-<h2 id="总的原则"><a href="#总的原则" class="headerlink" title="总的原则"></a>总的原则</h2><h3 id="没有银弹"><a href="#没有银弹" class="headerlink" title="没有银弹"></a>没有银弹</h3><h2 id="通用的原则"><a href="#通用的原则" class="headerlink" title="通用的原则"></a>通用的原则</h2><h3 id="分离关注点"><a href="#分离关注点" class="headerlink" title="分离关注点"></a>分离关注点</h3><h3 id="正交原则"><a href="#正交原则" class="headerlink" title="正交原则"></a>正交原则</h3><h3 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h3><h3 id="单一职责-科里定律"><a href="#单一职责-科里定律" class="headerlink" title="单一职责&#x2F;科里定律"></a>单一职责&#x2F;科里定律</h3><h3 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h3><h3 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h3><h3 id="最少知识原则-别让我思考"><a href="#最少知识原则-别让我思考" class="headerlink" title="最少知识原则&#x2F;别让我思考"></a>最少知识原则&#x2F;别让我思考</h3><h3 id="最小惊讶原则"><a href="#最小惊讶原则" class="headerlink" title="最小惊讶原则"></a>最小惊讶原则</h3><h3 id="YAGNI-不要过度-三适里面的适度"><a href="#YAGNI-不要过度-三适里面的适度" class="headerlink" title="YAGNI-不要过度&#x2F;三适里面的适度"></a>YAGNI-不要过度&#x2F;三适里面的适度</h3><h3 id="童子军原则"><a href="#童子军原则" class="headerlink" title="童子军原则"></a>童子军原则</h3><h2 id="特殊的原则"><a href="#特殊的原则" class="headerlink" title="特殊的原则"></a>特殊的原则</h2><h3 id="命令与查询分离"><a href="#命令与查询分离" class="headerlink" title="命令与查询分离"></a>命令与查询分离</h3><h3 id="组合优于继承"><a href="#组合优于继承" class="headerlink" title="组合优于继承"></a>组合优于继承</h3><h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><h3 id="共同封闭"><a href="#共同封闭" class="headerlink" title="共同封闭"></a>共同封闭</h3><h3 id="共同重用"><a href="#共同重用" class="headerlink" title="共同重用"></a>共同重用</h3><h3 id="封装经常修改的代码"><a href="#封装经常修改的代码" class="headerlink" title="封装经常修改的代码"></a>封装经常修改的代码</h3><h3 id="The-Rule-of-Three"><a href="#The-Rule-of-Three" class="headerlink" title="The Rule of Three"></a>The Rule of Three</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果将一个软件看做一个系统的话，那么这些原则最终的目的是让这个系统达到一个平衡。 在满足系统目的的前提下， 实现方式尽可能的简单， 尽可能的简单是控制复杂度的另外一种表述。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2019/07/01/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -1186,6 +1186,49 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>前端发展史</title>
+    <url>/2020/09/07/history-of-frontend-development/</url>
+    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
+<ul>
+<li>农耕时期</li>
+<li>工业化时期</li>
+<li>信息化时期</li>
+<li>智能时期</li>
+</ul>
+<span id="more"></span>
+<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
+<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
+<ul>
+<li>2005年左右Ajax</li>
+<li>2006年左右Jquery</li>
+<li>模块化<ul>
+<li>requirejs</li>
+<li>commonjs</li>
+</ul>
+</li>
+<li>node 2009年</li>
+</ul>
+<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
+<ul>
+<li>规范化<ul>
+<li>es6</li>
+<li>html5</li>
+</ul>
+</li>
+<li>组件化<ul>
+<li>webcomponent</li>
+</ul>
+</li>
+<li>工程化<ul>
+<li>webpack</li>
+<li>TypeScript</li>
+</ul>
+</li>
+</ul>
+<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
 ]]></content>
   </entry>
   <entry>
@@ -1407,49 +1450,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端发展史</title>
-    <url>/2020/09/07/history-of-frontend-development/</url>
-    <content><![CDATA[<p>一般来说， 当我们说到前端， 往往是说Web端， 在某些公司， 有大前端的概念， 包括移动端.<br>整个前端发展史可以分为</p>
-<ul>
-<li>农耕时期</li>
-<li>工业化时期</li>
-<li>信息化时期</li>
-<li>智能时期</li>
-</ul>
-<span id="more"></span>
-<h2 id="农耕时期"><a href="#农耕时期" class="headerlink" title="农耕时期"></a>农耕时期</h2><p>  <img src="/images/2020/agriculture.jpeg"><br>  我不打算从第一个网页诞生的时间开始说起， 让我将时间线拉到2000年左右。<br>  在这个阶段， 做的最好的网页就是搜狐，新浪，网易之类的门户网站。<br>  在这个阶段的技术比较粗燥， 也没有什么交互行为， 就是登陆站点，查看信息。<br>  要设计一个页面， 最简单的方式就是拖拉，Dreamweaver可以做到， Asp也可以做到， 桌面端的VB, Winform也支持拖拉行为。<br>  也没有设计网页有个什么规范或者模式的说法。对比同时期的Spring的概念，比如 AOP, DI. 前端真的太寒碜了。</p>
-<h2 id="工业化时期"><a href="#工业化时期" class="headerlink" title="工业化时期"></a>工业化时期</h2><p>  <img src="/images/2020/industry.jpg"><br>  这个阶段开始的标志性事件是2005年出现的Ajax, 它直接将用户体验提升了一个档次.<br>  再后来是2006年出现的Jquery, 彻底颠覆了前端的开发方式，特别是以Jquery为核心的生态的蓬勃发展。Jquery在前端界的地位比不上Spring在Java届的地位, 但接近半个Spring。<br>  前端发展史里面有一条线就是模块发展的历史</p>
-<ul>
-<li>2005年左右Ajax</li>
-<li>2006年左右Jquery</li>
-<li>模块化<ul>
-<li>requirejs</li>
-<li>commonjs</li>
-</ul>
-</li>
-<li>node 2009年</li>
-</ul>
-<h2 id="信息化时代"><a href="#信息化时代" class="headerlink" title="信息化时代"></a>信息化时代</h2><p>  <img src="/images/2020/workflow.jpeg"></p>
-<ul>
-<li>规范化<ul>
-<li>es6</li>
-<li>html5</li>
-</ul>
-</li>
-<li>组件化<ul>
-<li>webcomponent</li>
-</ul>
-</li>
-<li>工程化<ul>
-<li>webpack</li>
-<li>TypeScript</li>
-</ul>
-</li>
-</ul>
-<h2 id="智能化时代"><a href="#智能化时代" class="headerlink" title="智能化时代"></a>智能化时代</h2><p><img src="/images/2020/intelligent.jpg"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>网络协议之万维网摇篮 - Http</title>
     <url>/2020/11/09/http/</url>
     <content><![CDATA[<p>凡是与电脑打交道的人，每天必然会用浏览器，只要用了浏览器就需要输入一个网址。这个网址的样子是这样的： “http:&#x2F;&#x2F;”, 没错，它就是这篇文章的主人公。它是如此的熟悉，以致于我们会忽略它的存在.<br>它的前世今生到底是什么样子？</p>
@@ -1651,6 +1651,110 @@
       </tags>
   </entry>
   <entry>
+    <title>尘埃落定-k8s</title>
+    <url>/2020/09/24/k8s/</url>
+    <content><![CDATA[<p>K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？</p>
+<ul>
+<li>背景</li>
+<li>什么是k8s?</li>
+<li>为什么是它？</li>
+<li>k8s底层是如何实现的？</li>
+<li>k8s生态及相关</li>
+</ul>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png"><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
+<h3 id="Cloud-Foundry"><a href="#Cloud-Foundry" class="headerlink" title="Cloud Foundry"></a>Cloud Foundry</h3><p>  随着Cloud Foundry的出现，部署的方式稍微有点变化，对于用户来说，只需要将程序打包成它规定的格式，上传上去就好了，Cloud Foundry会调度一个虚拟机来执行这个程序。这个时候会遇到一种情况，如果这个虚拟机执行很多程序会不会导致程序之间会有冲突？不会，Cloud Foundry会为每个应用创建隔离环境. 这一切听起来不错.</p>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>  再后来Docker出现了，现在我们知道，Docker也是为应用创建隔离环境，看上去Docker不必Cloud Foundry高明多少啊。但Docker杀手锏是镜像，镜像意味着无论什么应用都遵循统一的格式和规范, 更关键的是镜像包含了应用所有的依赖，而Cloud Foundry则需要为不同的应用生产不同格式的包，比较繁琐. 在这个时候, Cloud Foundry并没有拥抱Docker作为自己打包的标准，失去了一次战略先机.<br>  Docker虽然可以提供标准格式的包，但它没有部署复杂应用的能力，因为Docker本质还是一个工具.于是在2014年底, Docker公司推出了自己的容器集群管理工具Swarm，打造一套以容器为核心的Paas, 并形成Docker自己的生态.</p>
+<h3 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a>Mesos</h3><p>  Docker此时有个竞争对手叫Mesos, Mesos有个独特的杀手锏就是超大规模的集群管理能力，有超过10000个节点成功案例，而且支持Docker容器部署。<br>  现在看起来，两强相争似乎成了基本盘。</p>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>  但在2014年出现了一个叫Kubernetes的东西. Google, RedHat等基础设施大佬们成立一个名为CNCF的基金会，专门来对抗以Docker为核心的生态的。<br>  所以现在是生态和生态之间的对抗，而不是工具和工具之间的小打小闹。那么K8s是如何破局的呢？</p>
+<h3 id="k8s面临的困境"><a href="#k8s面临的困境" class="headerlink" title="k8s面临的困境"></a>k8s面临的困境</h3><ul>
+<li>对于Docker生态来说， Swarm和它的配合可以说是如丝滑般的顺畅</li>
+<li>对于Mesos来说，它的特长是大规模集群调度.</li>
+</ul>
+<h3 id="k8s的突围之道"><a href="#k8s的突围之道" class="headerlink" title="k8s的突围之道"></a>k8s的突围之道</h3><p>  很明显，如果模仿Docker或者Mesos，任意一条路都是走不通的. 那么k8s只有两个方向了</p>
+<ul>
+<li>融合Docker和Mesos的优点</li>
+<li>单独开创一个局面<br>  K8s选择的是单独开创一个局面：容器编排，并且要在这个领域取得压倒性的优势，并形成降维打击.</li>
+</ul>
+<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg"></p>
+<h3 id="k8s是什么？"><a href="#k8s是什么？" class="headerlink" title="k8s是什么？"></a>k8s是什么？</h3><p>正如背景里面所描述的，k8s是一个容器编排的工具. 所以</p>
+<ul>
+<li>它本质是个工具</li>
+<li>它处理的实体的是容器，这个容器不一定是Docker,说不定将来出来了一个Eocker.</li>
+<li>它的重心是编排，有点类似于NBA里面教练对球员的排兵布阵.它提供了一种通用的方式来定义任务之间的关系，并为未来可能存在的新的任务关系提供可扩展性。直白一点，这个世界上所有的任务关系都应该在k8s的掌握之中. <ul>
+<li>从抽象的角度来说，一个集合里面由很多元素，编排意味着，要将这些集合分组，可以定义组和组之间的关系，可以定义组内元素之间的关系，可以定义跨组元素之间的关系。</li>
+<li>从实践的角度来看，编排意味着<ul>
+<li>如果一个服务的访问量过大，如何扩展服务的实例</li>
+<li>如何限流</li>
+<li>如何保证服务只被合法的用户访问</li>
+<li>如何合理分配流量到不同的服务实例</li>
+<li>如何知道服务之间的调用链</li>
+<li>如何实现服务之间的启动顺序？</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="切入k8s的一种角度"><a href="#切入k8s的一种角度" class="headerlink" title="切入k8s的一种角度"></a>切入k8s的一种角度</h3><p>从宏观的角度来看，K8s有两种角色</p>
+<ul>
+<li>Master节点 - k8s的大脑，类似于球队的管理层和决策层.<ul>
+<li>kube-apiserver</li>
+<li>kube-scheduler</li>
+<li>kube-controller-manager</li>
+</ul>
+</li>
+<li>Node节点 - k8s任务的执行者。<ul>
+<li>kubelet组件， 它可以<ul>
+<li>通过CRI同容器运行时打交道，CRI请求会被转换成Linux系统调用</li>
+<li>和设备插件打交道，比如GPU</li>
+<li>和网络插件和存储插件打交道<br>不管是Master节点还是Node节点，它们运行的载体是物理机或者虚拟机，为了方便理解，可以认为一个节点对应一台物理机.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="k8s的核心概念"><a href="#k8s的核心概念" class="headerlink" title="k8s的核心概念"></a>k8s的核心概念</h3><ul>
+<li>Pod - 对于K8s来说, Pod是最小的执行单元,是对容器的抽象和封装.正如研究动植物一样，细胞是最小的单元。一个最小的Pod就是只包含一个容器镜像。也可以认为Pod是k8s的一等公民<ul>
+<li>必要性 - 有些应用之间需要通过本地文件交互信息，或者交互很频繁，需要通过LocalHost来通信。在正常情况下，这些应用（进程或者进程组）会被部署在同一台机器上. 容器本身没有管理多个进程的能力， 回到k8s身上, k8s也需要解决这些问题，所以Pod这个概念应运而生，最复杂的Pod应该是很多应用在一起, 所以Pod可以看作是一个逻辑实体.</li>
+<li>临时性 - Pod的地址是临时的，但在相应的的物理机或者虚拟上的网卡可以找到这个地址.</li>
+</ul>
+</li>
+<li>Deployment - 一个应用看作是一个实例，那么Deployment可以让Pod有多个实例.<ul>
+<li>Deployment和Pod从设计的角度是一种API对象，Depoyment用来管理Pod。一种API对象来管理另外一种API对象，在K8s里称之为控制器模式.</li>
+<li>Deployment是让Pod活跃起来的一个API对象，其他对象没有这个功能.</li>
+<li>Deployment隐含里水平扩展和收缩的功能.</li>
+<li>正常Deployment的定义包含两部分<ul>
+<li>Pod副本的数量 - spec.replicas</li>
+<li>Pod的描述 - spec.template</li>
+</ul>
+</li>
+<li>对于一些特殊的应用比如Sticky Session, 需要自定义Deployment</li>
+</ul>
+</li>
+<li>ReplicaSet - Deployment是通过ReplicaSet来控制Pod的.<ul>
+<li>ReplicaSet定义了Pod的数量</li>
+<li>Deployment控制了ReplicaSet的个数</li>
+</ul>
+</li>
+<li>Service -  由于Pod每次启动之后，IP地址都会变化，这样就导致了Pod之间相互通信很困难，必须有一个东西来解决这个问题，Service这个概念应用而生，它代表的是稳定的地址和端口.<ul>
+<li>一个Service可以对应多个Pod,所以Service需要有负载均衡的能力.</li>
+</ul>
+</li>
+<li>Ingress - Service在默认情况下，只能在k8s集群内被访问，如果想要让外网可以访问service,就需要做有些额外的事情, Ingress就是干这个的.</li>
+<li>Secret - PodA 访问 PodB 需要带上用户名和密码，那么这些用户名和密码就放在Secret对象里，这个对象本质上ETCD里的一条记录.</li>
+</ul>
+<h2 id="为什么是它？"><a href="#为什么是它？" class="headerlink" title="为什么是它？"></a>为什么是它？</h2><p>K8s能成为容器编排领域的事实标准，与它的正确的战略定位分不开，也与它本身自带“贵族气质”有关.<br>K8s每一个核心特性的推出，都来自于Borg&#x2F;Omega系统的设计和经验, 可以说是站在巨人肩膀上, 而且这些特性借助于开源社区的力量，变得越来越好.</p>
+<h2 id="k8s底层是如何实现的？"><a href="#k8s底层是如何实现的？" class="headerlink" title="k8s底层是如何实现的？"></a>k8s底层是如何实现的？</h2><h2 id="k8s生态及相关"><a href="#k8s生态及相关" class="headerlink" title="k8s生态及相关"></a>k8s生态及相关</h2>]]></content>
+      <categories>
+        <category>基础设施</category>
+      </categories>
+      <tags>
+        <tag>容器</tag>
+        <tag>PaaS</tag>
+        <tag>基础设施</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux的I/O模型</title>
     <url>/2020/10/09/linux-IO/</url>
     <content><![CDATA[<p>I&#x2F;O顾名思义就是输入输出，I&#x2F;O设备可以指网卡，键盘，打印机等，在这里为了方便讨论，I&#x2F;O专门指网络设备.<br>之前也看过不少专门讲I&#x2F;O的帖子和文章，其中有不少帖子有误导的嫌疑，比如打一些不恰当的比喻，所以我有了一种想重新梳理一下I&#x2F;O模型的冲动。</p>
@@ -1772,187 +1876,6 @@
       </tags>
   </entry>
   <entry>
-    <title>闻香识微服务</title>
-    <url>/2020/09/14/micro-services/</url>
-    <content><![CDATA[<p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
-<p><img src="/images/2020/travel.png"><br>这篇文章不试图搞清楚微服务的确切含义是什么，因为这这样做是徒劳无功的。<br>本文试图探索</p>
-<ul>
-<li>微服务大概是什么？</li>
-<li>为什么是微服务？</li>
-<li>要实现一个微服务，它应该具备哪些行为和特征？</li>
-<li>微服务的未来</li>
-<li>微服务带来的副作用</li>
-</ul>
-<span id="more"></span>
-<h2 id="微服务大概是什么？"><a href="#微服务大概是什么？" class="headerlink" title="微服务大概是什么？"></a>微服务大概是什么？</h2><p>名不正，则言不顺，言不顺，则事不成。一个事物的准确定义是讨论这个事物的前提以及是后续对这个事物采取行动的基础. 正如上面所说，微服务没有被严格的定义。所以这里不能采取学院派的手法来讨论微服务。</p>
-<p>现在假设有个用户服务，这个用户服务支持：添加，删除，修改和查询用户。用户的信息包括姓名，电话，性别，职位，地址等等.<br>那这个用户服务是不是微服务， 至少现在它看来是微服务。但这还不够，它还需要支持</p>
-<ul>
-<li>从实现的角度来看，代码在物理上是隔离的.<ul>
-<li>如果代码不是物理上隔离的，这就会导致用户服务，地址服务，订单服务在同一个 jar文件里，这样服务就不能扩展了。 所以代码必须是物理上隔离的，这才有动态扩展的可能行。动态扩展了多个实例之后，也就有了容错性。</li>
-</ul>
-</li>
-<li>从设计上来说，微服务职责是有边界的。如果想从用户服务获取用户的工作单位呢？不好意思，没有，请去地址服务里拿。怎么确定这个边界呢？这是另外一个大的话题.</li>
-</ul>
-<p>上面这两点是我认为微服务必须具备的。这两点其实隐含了一些前提和衍生了一些必然的结论. 比如，代码库是隔离的，意味着用Java语言写的微服务可以被用Js写的微服务替代. 如果一个服务职责边界清晰且足够小的话，那们意味着这个服务是可以被组合的。</p>
-<p>应该不会有比用户服务更简单的服务， 但不是说所有微服务都应该像用户服务这么简单。</p>
-<p><img src="/images/2020/restraunt.png"><br>一家饭店有一个厨房，两个服务员.<br>厨师的主要职责是：烧菜。<br>服务员的主要职责：切菜，上菜，收拾桌子。<br>如果以后客流量激增，那么可以再招一个厨师和三个服务员, 很显然如果上面的职责集中到一个人身上，是无法做到细力度的控制的.<br>这里有个问题，切菜应该服务员负责还是厨师负责？没有标准答案，这个需要领域专家从统计学上给出建议. 这也大概是软件设计的魅力吧</p>
-<h2 id="为什么是微服务？"><a href="#为什么是微服务？" class="headerlink" title="为什么是微服务？"></a>为什么是微服务？</h2><p>因为微服务的本质就是拆分一个系统，系统拆解的越小，这一小部分就更容易被理解和控制。 分解的具体讨论可参考博文《分解》</p>
-<h2 id="要实现一个微服务，它应该具备哪些行为和特征？"><a href="#要实现一个微服务，它应该具备哪些行为和特征？" class="headerlink" title="要实现一个微服务，它应该具备哪些行为和特征？"></a>要实现一个微服务，它应该具备哪些行为和特征？</h2><p>理想的情况应该是：</p>
-<ul>
-<li>弹性扩展<br>  量变引起质变。 当用户的数量上升到一定的规模之后，只需要增加相应的机器实例就可以解决问题，这是最理想的解决方案。<ul>
-<li>如何让一个服务可以有多个一模一样的实例? - docker或者虚拟机 </li>
-<li>请求一个服务的时候，如何选择某一个服务实例？- 负载均衡</li>
-<li>不同的请求如何对应到不同的服务实例？ - 路由</li>
-<li>一些服务会有各种各样不同的参数，比如JVM参数，数据库连接字符串，如何管理这些参数？- 配置中心</li>
-<li>这些服务的网络地址是动态变化的，如何管理动态变化的网络地址？ - 服务注册中心.</li>
-<li>一个用户进来，哪些服务他可以访问，哪些服务他不可以访问 - 鉴权</li>
-<li>用户的请求很多，如何限制用户的请求？ - 限流</li>
-<li>如果一个服务因为某种原因不可用了，即使增加实例也没用，那么就应当让请求不要继续这个服务了 - 熔断</li>
-<li>服务A调用服务B，然后调用服务C， 如何知道这个调用链？ - 监控</li>
-</ul>
-</li>
-<li>业务演化<br>   业务的改变大体有两个<ul>
-<li>维护现有系统</li>
-<li>开发新的功能</li>
-</ul>
-</li>
-</ul>
-<p>   但无论是维护现有还是开发新的功能，我们不希望看到下面场景</p>
-<ul>
-<li>开发一个新的功能很难，不知道怎么和现有系统集成。</li>
-<li>维护一个功能很难， 就好像拆炸弹一样，生怕碰到不该碰的东西，一碰就爆炸，就是这个系统太脆弱了。</li>
-</ul>
-<h2 id="微服务的未来"><a href="#微服务的未来" class="headerlink" title="微服务的未来"></a>微服务的未来</h2><ul>
-<li>从分解的角度来说，基本上不可能拆的更小了，再拆连裤子都拆没了。上面提到的用户服务可以算是最小的微服务.</li>
-<li>从规范的角度来说，对鉴权，限流，网关，负载均衡,配置中心等等形成一个标准。每个实现都遵循相同标准的时候，可以有效地降低开发者的认知成本，符合开发者的心智模型.<ul>
-<li>正例：Java对依赖注入有JSR330的规范，这样不同的依赖注入框架可以遵守相同的标准</li>
-<li>反例：JS模块化方案AMD和CMD.</li>
-</ul>
-</li>
-<li>一切可以自动化都应该自动化或者必将自动化。当然，这个结论不仅仅适用于微服务。</li>
-<li>更好的性能. 比如性能更高的传输协议。</li>
-</ul>
-<h2 id="微服务带来的副作用"><a href="#微服务带来的副作用" class="headerlink" title="微服务带来的副作用"></a>微服务带来的副作用</h2><p>当大家沉浸在微服务真香的状态中，不要忘记微服务是有代价的.</p>
-<ul>
-<li>网络之间的通信。比如服务A调用服务B的时延是50ms, 如果调用链是A, B, C, D，那么这个时延就更长了，只要有网络之间通信，就存在不确定性.</li>
-<li>当微服务数量很多，且有不同团队维护的时候，这个沟通成本和维护成本是非线性的.</li>
-<li>需要一个掌握全貌的人，如果不能掌握业务全貌，出了问题都不知道根源在哪里. 根据鸡蛋不能放在一个篮子的原则，掌握全貌的人最好多于一个.</li>
-<li>相比于传统MVC开发团队，微服务对开发者的要求要高些.</li>
-</ul>
-]]></content>
-      <categories>
-        <category>架构</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>微服务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>尘埃落定-k8s</title>
-    <url>/2020/09/24/k8s/</url>
-    <content><![CDATA[<p>K8s已经成为了容器编排的事实标准。k8s一路走来也有些曲折，但最终笑傲群雄。它这一路走来发生了哪些恩怨情仇呢？</p>
-<ul>
-<li>背景</li>
-<li>什么是k8s?</li>
-<li>为什么是它？</li>
-<li>k8s底层是如何实现的？</li>
-<li>k8s生态及相关</li>
-</ul>
-<span id="more"></span>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>  <img src="/images/2020/huashan.png"><br>  想起多年前在上家公司，如果要发布一个功能，得是运维人员先停止服务，然后手动拷贝文件到服务器上，再启动服务，这个过程是纯手工操作，在那时看起来也很自然。在那个时候流行的是在aws或者Openstack上租一台虚拟机，然后通过手动或者脚本的方式来部署程序，这里会遇到一些问题，比如云上的环境和本地环境的不一致，所以云服务厂商比拼的就是谁的环境更能模拟本地环境。</p>
-<h3 id="Cloud-Foundry"><a href="#Cloud-Foundry" class="headerlink" title="Cloud Foundry"></a>Cloud Foundry</h3><p>  随着Cloud Foundry的出现，部署的方式稍微有点变化，对于用户来说，只需要将程序打包成它规定的格式，上传上去就好了，Cloud Foundry会调度一个虚拟机来执行这个程序。这个时候会遇到一种情况，如果这个虚拟机执行很多程序会不会导致程序之间会有冲突？不会，Cloud Foundry会为每个应用创建隔离环境. 这一切听起来不错.</p>
-<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>  再后来Docker出现了，现在我们知道，Docker也是为应用创建隔离环境，看上去Docker不必Cloud Foundry高明多少啊。但Docker杀手锏是镜像，镜像意味着无论什么应用都遵循统一的格式和规范, 更关键的是镜像包含了应用所有的依赖，而Cloud Foundry则需要为不同的应用生产不同格式的包，比较繁琐. 在这个时候, Cloud Foundry并没有拥抱Docker作为自己打包的标准，失去了一次战略先机.<br>  Docker虽然可以提供标准格式的包，但它没有部署复杂应用的能力，因为Docker本质还是一个工具.于是在2014年底, Docker公司推出了自己的容器集群管理工具Swarm，打造一套以容器为核心的Paas, 并形成Docker自己的生态.</p>
-<h3 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a>Mesos</h3><p>  Docker此时有个竞争对手叫Mesos, Mesos有个独特的杀手锏就是超大规模的集群管理能力，有超过10000个节点成功案例，而且支持Docker容器部署。<br>  现在看起来，两强相争似乎成了基本盘。</p>
-<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>  但在2014年出现了一个叫Kubernetes的东西. Google, RedHat等基础设施大佬们成立一个名为CNCF的基金会，专门来对抗以Docker为核心的生态的。<br>  所以现在是生态和生态之间的对抗，而不是工具和工具之间的小打小闹。那么K8s是如何破局的呢？</p>
-<h3 id="k8s面临的困境"><a href="#k8s面临的困境" class="headerlink" title="k8s面临的困境"></a>k8s面临的困境</h3><ul>
-<li>对于Docker生态来说， Swarm和它的配合可以说是如丝滑般的顺畅</li>
-<li>对于Mesos来说，它的特长是大规模集群调度.</li>
-</ul>
-<h3 id="k8s的突围之道"><a href="#k8s的突围之道" class="headerlink" title="k8s的突围之道"></a>k8s的突围之道</h3><p>  很明显，如果模仿Docker或者Mesos，任意一条路都是走不通的. 那么k8s只有两个方向了</p>
-<ul>
-<li>融合Docker和Mesos的优点</li>
-<li>单独开创一个局面<br>  K8s选择的是单独开创一个局面：容器编排，并且要在这个领域取得压倒性的优势，并形成降维打击.</li>
-</ul>
-<h2 id="什么是k8s"><a href="#什么是k8s" class="headerlink" title="什么是k8s?"></a>什么是k8s?</h2><p><img src="/images/2020/orchestration.jpg"></p>
-<h3 id="k8s是什么？"><a href="#k8s是什么？" class="headerlink" title="k8s是什么？"></a>k8s是什么？</h3><p>正如背景里面所描述的，k8s是一个容器编排的工具. 所以</p>
-<ul>
-<li>它本质是个工具</li>
-<li>它处理的实体的是容器，这个容器不一定是Docker,说不定将来出来了一个Eocker.</li>
-<li>它的重心是编排，有点类似于NBA里面教练对球员的排兵布阵.它提供了一种通用的方式来定义任务之间的关系，并为未来可能存在的新的任务关系提供可扩展性。直白一点，这个世界上所有的任务关系都应该在k8s的掌握之中. <ul>
-<li>从抽象的角度来说，一个集合里面由很多元素，编排意味着，要将这些集合分组，可以定义组和组之间的关系，可以定义组内元素之间的关系，可以定义跨组元素之间的关系。</li>
-<li>从实践的角度来看，编排意味着<ul>
-<li>如果一个服务的访问量过大，如何扩展服务的实例</li>
-<li>如何限流</li>
-<li>如何保证服务只被合法的用户访问</li>
-<li>如何合理分配流量到不同的服务实例</li>
-<li>如何知道服务之间的调用链</li>
-<li>如何实现服务之间的启动顺序？</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="切入k8s的一种角度"><a href="#切入k8s的一种角度" class="headerlink" title="切入k8s的一种角度"></a>切入k8s的一种角度</h3><p>从宏观的角度来看，K8s有两种角色</p>
-<ul>
-<li>Master节点 - k8s的大脑，类似于球队的管理层和决策层.<ul>
-<li>kube-apiserver</li>
-<li>kube-scheduler</li>
-<li>kube-controller-manager</li>
-</ul>
-</li>
-<li>Node节点 - k8s任务的执行者。<ul>
-<li>kubelet组件， 它可以<ul>
-<li>通过CRI同容器运行时打交道，CRI请求会被转换成Linux系统调用</li>
-<li>和设备插件打交道，比如GPU</li>
-<li>和网络插件和存储插件打交道<br>不管是Master节点还是Node节点，它们运行的载体是物理机或者虚拟机，为了方便理解，可以认为一个节点对应一台物理机.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="k8s的核心概念"><a href="#k8s的核心概念" class="headerlink" title="k8s的核心概念"></a>k8s的核心概念</h3><ul>
-<li>Pod - 对于K8s来说, Pod是最小的执行单元,是对容器的抽象和封装.正如研究动植物一样，细胞是最小的单元。一个最小的Pod就是只包含一个容器镜像。也可以认为Pod是k8s的一等公民<ul>
-<li>必要性 - 有些应用之间需要通过本地文件交互信息，或者交互很频繁，需要通过LocalHost来通信。在正常情况下，这些应用（进程或者进程组）会被部署在同一台机器上. 容器本身没有管理多个进程的能力， 回到k8s身上, k8s也需要解决这些问题，所以Pod这个概念应运而生，最复杂的Pod应该是很多应用在一起, 所以Pod可以看作是一个逻辑实体.</li>
-<li>临时性 - Pod的地址是临时的，但在相应的的物理机或者虚拟上的网卡可以找到这个地址.</li>
-</ul>
-</li>
-<li>Deployment - 一个应用看作是一个实例，那么Deployment可以让Pod有多个实例.<ul>
-<li>Deployment和Pod从设计的角度是一种API对象，Depoyment用来管理Pod。一种API对象来管理另外一种API对象，在K8s里称之为控制器模式.</li>
-<li>Deployment是让Pod活跃起来的一个API对象，其他对象没有这个功能.</li>
-<li>Deployment隐含里水平扩展和收缩的功能.</li>
-<li>正常Deployment的定义包含两部分<ul>
-<li>Pod副本的数量 - spec.replicas</li>
-<li>Pod的描述 - spec.template</li>
-</ul>
-</li>
-<li>对于一些特殊的应用比如Sticky Session, 需要自定义Deployment</li>
-</ul>
-</li>
-<li>ReplicaSet - Deployment是通过ReplicaSet来控制Pod的.<ul>
-<li>ReplicaSet定义了Pod的数量</li>
-<li>Deployment控制了ReplicaSet的个数</li>
-</ul>
-</li>
-<li>Service -  由于Pod每次启动之后，IP地址都会变化，这样就导致了Pod之间相互通信很困难，必须有一个东西来解决这个问题，Service这个概念应用而生，它代表的是稳定的地址和端口.<ul>
-<li>一个Service可以对应多个Pod,所以Service需要有负载均衡的能力.</li>
-</ul>
-</li>
-<li>Ingress - Service在默认情况下，只能在k8s集群内被访问，如果想要让外网可以访问service,就需要做有些额外的事情, Ingress就是干这个的.</li>
-<li>Secret - PodA 访问 PodB 需要带上用户名和密码，那么这些用户名和密码就放在Secret对象里，这个对象本质上ETCD里的一条记录.</li>
-</ul>
-<h2 id="为什么是它？"><a href="#为什么是它？" class="headerlink" title="为什么是它？"></a>为什么是它？</h2><p>K8s能成为容器编排领域的事实标准，与它的正确的战略定位分不开，也与它本身自带“贵族气质”有关.<br>K8s每一个核心特性的推出，都来自于Borg&#x2F;Omega系统的设计和经验, 可以说是站在巨人肩膀上, 而且这些特性借助于开源社区的力量，变得越来越好.</p>
-<h2 id="k8s底层是如何实现的？"><a href="#k8s底层是如何实现的？" class="headerlink" title="k8s底层是如何实现的？"></a>k8s底层是如何实现的？</h2><h2 id="k8s生态及相关"><a href="#k8s生态及相关" class="headerlink" title="k8s生态及相关"></a>k8s生态及相关</h2>]]></content>
-      <categories>
-        <category>基础设施</category>
-      </categories>
-      <tags>
-        <tag>容器</tag>
-        <tag>PaaS</tag>
-        <tag>基础设施</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java之黑暗森林 - JVM</title>
     <url>/2020/09/30/jvm/</url>
     <content><![CDATA[<p>一直以来，JVM是Java开发者进阶过程必然要遇到的一块知识点。JVM离绝大多数开发者的实际工作还是比较远的，让人感觉是一个华而不实的东西。或者说有某一类群体，学习JVM就是为了面试，而且是以机械背诵的方式来学习JVM的，这都已经背离了学习一个知识的初衷.</p>
@@ -2028,6 +1951,83 @@
       <tags>
         <tag>Java</tag>
         <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>闻香识微服务</title>
+    <url>/2020/09/14/micro-services/</url>
+    <content><![CDATA[<p>微服务已经成为了后端开发的主流，也成为了后端初次见面打招呼的内容.<br>微服务三个字从这字面上可以理解，但它的内涵确实是各人有各人的理解，因为微服务本身并没有被严格的定义.噢，不， 它有被定义，只是在不同的时间段被不同的权威的人定义了，据可查的资料，大概有4位专家前后给出了不同的定义，所以大家都不知道真正的定义是什么了， 也不知道未来微服务的定义会变成什么样. 因为它没有像数学公式被严格的定义。 </p>
+<p><img src="/images/2020/travel.png"><br>这篇文章不试图搞清楚微服务的确切含义是什么，因为这这样做是徒劳无功的。<br>本文试图探索</p>
+<ul>
+<li>微服务大概是什么？</li>
+<li>为什么是微服务？</li>
+<li>要实现一个微服务，它应该具备哪些行为和特征？</li>
+<li>微服务的未来</li>
+<li>微服务带来的副作用</li>
+</ul>
+<span id="more"></span>
+<h2 id="微服务大概是什么？"><a href="#微服务大概是什么？" class="headerlink" title="微服务大概是什么？"></a>微服务大概是什么？</h2><p>名不正，则言不顺，言不顺，则事不成。一个事物的准确定义是讨论这个事物的前提以及是后续对这个事物采取行动的基础. 正如上面所说，微服务没有被严格的定义。所以这里不能采取学院派的手法来讨论微服务。</p>
+<p>现在假设有个用户服务，这个用户服务支持：添加，删除，修改和查询用户。用户的信息包括姓名，电话，性别，职位，地址等等.<br>那这个用户服务是不是微服务， 至少现在它看来是微服务。但这还不够，它还需要支持</p>
+<ul>
+<li>从实现的角度来看，代码在物理上是隔离的.<ul>
+<li>如果代码不是物理上隔离的，这就会导致用户服务，地址服务，订单服务在同一个 jar文件里，这样服务就不能扩展了。 所以代码必须是物理上隔离的，这才有动态扩展的可能行。动态扩展了多个实例之后，也就有了容错性。</li>
+</ul>
+</li>
+<li>从设计上来说，微服务职责是有边界的。如果想从用户服务获取用户的工作单位呢？不好意思，没有，请去地址服务里拿。怎么确定这个边界呢？这是另外一个大的话题.</li>
+</ul>
+<p>上面这两点是我认为微服务必须具备的。这两点其实隐含了一些前提和衍生了一些必然的结论. 比如，代码库是隔离的，意味着用Java语言写的微服务可以被用Js写的微服务替代. 如果一个服务职责边界清晰且足够小的话，那们意味着这个服务是可以被组合的。</p>
+<p>应该不会有比用户服务更简单的服务， 但不是说所有微服务都应该像用户服务这么简单。</p>
+<p><img src="/images/2020/restraunt.png"><br>一家饭店有一个厨房，两个服务员.<br>厨师的主要职责是：烧菜。<br>服务员的主要职责：切菜，上菜，收拾桌子。<br>如果以后客流量激增，那么可以再招一个厨师和三个服务员, 很显然如果上面的职责集中到一个人身上，是无法做到细力度的控制的.<br>这里有个问题，切菜应该服务员负责还是厨师负责？没有标准答案，这个需要领域专家从统计学上给出建议. 这也大概是软件设计的魅力吧</p>
+<h2 id="为什么是微服务？"><a href="#为什么是微服务？" class="headerlink" title="为什么是微服务？"></a>为什么是微服务？</h2><p>因为微服务的本质就是拆分一个系统，系统拆解的越小，这一小部分就更容易被理解和控制。 分解的具体讨论可参考博文《分解》</p>
+<h2 id="要实现一个微服务，它应该具备哪些行为和特征？"><a href="#要实现一个微服务，它应该具备哪些行为和特征？" class="headerlink" title="要实现一个微服务，它应该具备哪些行为和特征？"></a>要实现一个微服务，它应该具备哪些行为和特征？</h2><p>理想的情况应该是：</p>
+<ul>
+<li>弹性扩展<br>  量变引起质变。 当用户的数量上升到一定的规模之后，只需要增加相应的机器实例就可以解决问题，这是最理想的解决方案。<ul>
+<li>如何让一个服务可以有多个一模一样的实例? - docker或者虚拟机 </li>
+<li>请求一个服务的时候，如何选择某一个服务实例？- 负载均衡</li>
+<li>不同的请求如何对应到不同的服务实例？ - 路由</li>
+<li>一些服务会有各种各样不同的参数，比如JVM参数，数据库连接字符串，如何管理这些参数？- 配置中心</li>
+<li>这些服务的网络地址是动态变化的，如何管理动态变化的网络地址？ - 服务注册中心.</li>
+<li>一个用户进来，哪些服务他可以访问，哪些服务他不可以访问 - 鉴权</li>
+<li>用户的请求很多，如何限制用户的请求？ - 限流</li>
+<li>如果一个服务因为某种原因不可用了，即使增加实例也没用，那么就应当让请求不要继续这个服务了 - 熔断</li>
+<li>服务A调用服务B，然后调用服务C， 如何知道这个调用链？ - 监控</li>
+</ul>
+</li>
+<li>业务演化<br>   业务的改变大体有两个<ul>
+<li>维护现有系统</li>
+<li>开发新的功能</li>
+</ul>
+</li>
+</ul>
+<p>   但无论是维护现有还是开发新的功能，我们不希望看到下面场景</p>
+<ul>
+<li>开发一个新的功能很难，不知道怎么和现有系统集成。</li>
+<li>维护一个功能很难， 就好像拆炸弹一样，生怕碰到不该碰的东西，一碰就爆炸，就是这个系统太脆弱了。</li>
+</ul>
+<h2 id="微服务的未来"><a href="#微服务的未来" class="headerlink" title="微服务的未来"></a>微服务的未来</h2><ul>
+<li>从分解的角度来说，基本上不可能拆的更小了，再拆连裤子都拆没了。上面提到的用户服务可以算是最小的微服务.</li>
+<li>从规范的角度来说，对鉴权，限流，网关，负载均衡,配置中心等等形成一个标准。每个实现都遵循相同标准的时候，可以有效地降低开发者的认知成本，符合开发者的心智模型.<ul>
+<li>正例：Java对依赖注入有JSR330的规范，这样不同的依赖注入框架可以遵守相同的标准</li>
+<li>反例：JS模块化方案AMD和CMD.</li>
+</ul>
+</li>
+<li>一切可以自动化都应该自动化或者必将自动化。当然，这个结论不仅仅适用于微服务。</li>
+<li>更好的性能. 比如性能更高的传输协议。</li>
+</ul>
+<h2 id="微服务带来的副作用"><a href="#微服务带来的副作用" class="headerlink" title="微服务带来的副作用"></a>微服务带来的副作用</h2><p>当大家沉浸在微服务真香的状态中，不要忘记微服务是有代价的.</p>
+<ul>
+<li>网络之间的通信。比如服务A调用服务B的时延是50ms, 如果调用链是A, B, C, D，那么这个时延就更长了，只要有网络之间通信，就存在不确定性.</li>
+<li>当微服务数量很多，且有不同团队维护的时候，这个沟通成本和维护成本是非线性的.</li>
+<li>需要一个掌握全貌的人，如果不能掌握业务全貌，出了问题都不知道根源在哪里. 根据鸡蛋不能放在一个篮子的原则，掌握全貌的人最好多于一个.</li>
+<li>相比于传统MVC开发团队，微服务对开发者的要求要高些.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>架构</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -2133,113 +2133,6 @@
       <tags>
         <tag>架构</tag>
         <tag>微服务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络协议大观园</title>
-    <url>/2020/10/27/network-protocol/</url>
-    <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
-<span id="more"></span>
-<p>人和人之间说话是通过某种语言来沟通的，比如英语或者汉语。计算机和计算机之间通信也不例外，也需要语言，但这个语言和人类说话的语言稍微不一样，计算机和计算机之间会有不同的功能，不同的功能需要不同的语言，这里的语言往往称为协议.</p>
-<ul>
-<li>背景</li>
-<li>什么是网络协议?</li>
-<li>如何设计网络协议</li>
-<li>有哪些网络协议</li>
-</ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>试想一下，如今的互联网由哪些因素组成? 我们大概会想到</p>
-<ul>
-<li>线缆</li>
-<li>网络设备 - 交换机，路由器，网卡</li>
-<li>运营商 - 比如中国电信</li>
-<li>防火墙</li>
-<li>终端设备 - 可以是PC, 手机或者任何的智能设备</li>
-<li>终端设备上的操作系统和应用软件</li>
-</ul>
-<p>上面有提到计算机和计算机通信需要协议，那么这个协议到底存在什么地方呢？ 答案是操作系统.<br>网络协议的数量有很多，这里聊聊一些常用的的协议.</p>
-<h2 id="什么是网络协议"><a href="#什么是网络协议" class="headerlink" title="什么是网络协议"></a>什么是网络协议</h2><p>网络协议是计算机和计算机之间为来完成特定功能进行通信的某种约定.<br>现在我们知道谈到网络协议有两个概念必须要讨论： OSI和TCP&#x2F;IP</p>
-<p>先说说OSI, OSI是ISO组织制定的一个模型，用来指导网络协议设计. 很明显这个模型是分层的，至于为什么要分层？这个问题本质上和软件要分层是一样的，之前有专门讨论“分解”这个话题. OSI模型的大概分为七层</p>
-<ul>
-<li>应用层 - 用户直接接触到的，比如电子邮件客户端</li>
-<li>表示层 - 电子邮件有特定的格式，怎么转换成标准的传输格式呢？</li>
-<li>会话层 - 发送端什么时候建立连接，什么时候释放连接？</li>
-<li>传输层 - 这一层只关心数据包如何可靠达到目的地，比如这个包是不是完整的</li>
-<li>网络层 - 这一层负责认路，比如有几条路，如何更快达到目的地</li>
-<li>数据链路层 - 将数据帧转换为0&#x2F;1比特流</li>
-<li>物理层 - 将0&#x2F;1比特流转为高低电平</li>
-</ul>
-<p>这个模型很难说它是基于哪一个维度进行拆分的。我们对人进行分类，可以基于性别分类：男人和女人，也可以基于地域分类：南方人和北方人， 这很符合直觉。 但我也从中隐约看出了两条线索</p>
-<ul>
-<li>信息是如何变成高低电平？“Hello World” -&gt; 统一的字符编码 -&gt; 二进制 -&gt; 高低电平</li>
-<li>信息是如何又快又好的达到目的地?</li>
-</ul>
-<p>正如我们所知, OSI并没有称为主流协议，为什么？不实用，或者说不接地气.</p>
-<p>后来的事情，大家都知道了, TCP&#x2F;IP成为主流.<br>TCP&#x2F;IP这个名字顾名思义是TCP协议和IP协议，但这个是错觉, TCP&#x2F;IP是一个协议大家族，是互联网协议的统称, 我们知道的Telnet, ICMP，SSH都属于TCP&#x2F;IP协议.<br>但我们更想知道为什么TCP&#x2F;IP协议胜出了？或者说TCP&#x2F;IP协议做对了哪些事情？ 有以下几个因素</p>
-<ul>
-<li>开放性 - TCP&#x2F;IP是由IETF讨论决定的，IETF是一个任何人都可以加入讨论的组织，这充分证明了群众的力量是强大的.</li>
-<li>实用性 - TCP&#x2F;IP先有实现，然后才有规范。也就是规范发布出来的时候，已经有操作系统实现了这个协议。而不是像OSI整天在天上飘</li>
-</ul>
-<p>TCP&#x2F;IP 也是基于分层的</p>
-<ul>
-<li>应用层</li>
-<li>传输层</li>
-<li>网络层</li>
-<li>数据链路层</li>
-</ul>
-<h2 id="如何设计一个网络协议"><a href="#如何设计一个网络协议" class="headerlink" title="如何设计一个网络协议"></a>如何设计一个网络协议</h2><p>网络协议不可能从天而将，所以需要人来制定，既然是一种沟通工具，那么自然这个工具要符合又快又好的标准了.</p>
-<ul>
-<li>快<ul>
-<li>让网络的传输变快</li>
-</ul>
-</li>
-<li>好<ul>
-<li>安全</li>
-<li>最好一种协议能解决多个问题，如果不能解决多个问题，那么就聚焦于一个问题</li>
-<li>简单</li>
-<li>可以扩展</li>
-</ul>
-</li>
-</ul>
-<h2 id="有哪些网络协议"><a href="#有哪些网络协议" class="headerlink" title="有哪些网络协议"></a>有哪些网络协议</h2><ul>
-<li>应用层协议<ul>
-<li><p>HTTP</p>
-</li>
-<li><p>DNS</p>
-</li>
-<li><p>Ping<br>PING是应用层直接使用网络层ICMP的一个例子，它没有通过运输层的TCP或UDP. 一个系统允许Ping取决于两个因素，任意一个被禁止就不能被Ping</p>
-<ul>
-<li>内核参数</li>
-<li>防火墙<br>如果Ping被禁用，我又想知道远程主机是否还可以连接，那怎么办？ 可以通过tcping这个工具来测试某个端口是否开放.</li>
-</ul>
-</li>
-<li><p>nslookup - 用来测试域名是否可以正常解析</p>
-</li>
-<li><p>Telnet - 用来进行远程登录</p>
-</li>
-<li><p>SSH - 安全版的Telnet</p>
-</li>
-</ul>
-</li>
-<li>传输层协议<ul>
-<li>TCP - 让数据可以可靠达到目的地</li>
-<li>UDP - 牺牲正确性换取效率的协议</li>
-</ul>
-</li>
-<li>网络层协议<ul>
-<li>ICMP</li>
-<li>traceroute</li>
-<li>ARP</li>
-</ul>
-</li>
-<li>数据链路层协议</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>协议</tag>
-        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2367,6 +2260,113 @@
 <li>可以让别人来评论，从而带来观点的传播,交流和融合.</li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>网络协议大观园</title>
+    <url>/2020/10/27/network-protocol/</url>
+    <content><![CDATA[<p>我们这个世界为什么存在这么多语言？如果世界上只有一种语言，那么每个人都不需要学英语了，想想都很美.<br>相传在远古时候，人们想建造一座高可通天的塔，可以彰显自己的名气，这样也可以防止人们走散之后仍然可以找到回家的路。上帝一看，这可不对，于是设法改变了不同人的口音，这样大家就无法交流，通天塔的建造就此搁浅.</p>
+<span id="more"></span>
+<p>人和人之间说话是通过某种语言来沟通的，比如英语或者汉语。计算机和计算机之间通信也不例外，也需要语言，但这个语言和人类说话的语言稍微不一样，计算机和计算机之间会有不同的功能，不同的功能需要不同的语言，这里的语言往往称为协议.</p>
+<ul>
+<li>背景</li>
+<li>什么是网络协议?</li>
+<li>如何设计网络协议</li>
+<li>有哪些网络协议</li>
+</ul>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>试想一下，如今的互联网由哪些因素组成? 我们大概会想到</p>
+<ul>
+<li>线缆</li>
+<li>网络设备 - 交换机，路由器，网卡</li>
+<li>运营商 - 比如中国电信</li>
+<li>防火墙</li>
+<li>终端设备 - 可以是PC, 手机或者任何的智能设备</li>
+<li>终端设备上的操作系统和应用软件</li>
+</ul>
+<p>上面有提到计算机和计算机通信需要协议，那么这个协议到底存在什么地方呢？ 答案是操作系统.<br>网络协议的数量有很多，这里聊聊一些常用的的协议.</p>
+<h2 id="什么是网络协议"><a href="#什么是网络协议" class="headerlink" title="什么是网络协议"></a>什么是网络协议</h2><p>网络协议是计算机和计算机之间为来完成特定功能进行通信的某种约定.<br>现在我们知道谈到网络协议有两个概念必须要讨论： OSI和TCP&#x2F;IP</p>
+<p>先说说OSI, OSI是ISO组织制定的一个模型，用来指导网络协议设计. 很明显这个模型是分层的，至于为什么要分层？这个问题本质上和软件要分层是一样的，之前有专门讨论“分解”这个话题. OSI模型的大概分为七层</p>
+<ul>
+<li>应用层 - 用户直接接触到的，比如电子邮件客户端</li>
+<li>表示层 - 电子邮件有特定的格式，怎么转换成标准的传输格式呢？</li>
+<li>会话层 - 发送端什么时候建立连接，什么时候释放连接？</li>
+<li>传输层 - 这一层只关心数据包如何可靠达到目的地，比如这个包是不是完整的</li>
+<li>网络层 - 这一层负责认路，比如有几条路，如何更快达到目的地</li>
+<li>数据链路层 - 将数据帧转换为0&#x2F;1比特流</li>
+<li>物理层 - 将0&#x2F;1比特流转为高低电平</li>
+</ul>
+<p>这个模型很难说它是基于哪一个维度进行拆分的。我们对人进行分类，可以基于性别分类：男人和女人，也可以基于地域分类：南方人和北方人， 这很符合直觉。 但我也从中隐约看出了两条线索</p>
+<ul>
+<li>信息是如何变成高低电平？“Hello World” -&gt; 统一的字符编码 -&gt; 二进制 -&gt; 高低电平</li>
+<li>信息是如何又快又好的达到目的地?</li>
+</ul>
+<p>正如我们所知, OSI并没有称为主流协议，为什么？不实用，或者说不接地气.</p>
+<p>后来的事情，大家都知道了, TCP&#x2F;IP成为主流.<br>TCP&#x2F;IP这个名字顾名思义是TCP协议和IP协议，但这个是错觉, TCP&#x2F;IP是一个协议大家族，是互联网协议的统称, 我们知道的Telnet, ICMP，SSH都属于TCP&#x2F;IP协议.<br>但我们更想知道为什么TCP&#x2F;IP协议胜出了？或者说TCP&#x2F;IP协议做对了哪些事情？ 有以下几个因素</p>
+<ul>
+<li>开放性 - TCP&#x2F;IP是由IETF讨论决定的，IETF是一个任何人都可以加入讨论的组织，这充分证明了群众的力量是强大的.</li>
+<li>实用性 - TCP&#x2F;IP先有实现，然后才有规范。也就是规范发布出来的时候，已经有操作系统实现了这个协议。而不是像OSI整天在天上飘</li>
+</ul>
+<p>TCP&#x2F;IP 也是基于分层的</p>
+<ul>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>数据链路层</li>
+</ul>
+<h2 id="如何设计一个网络协议"><a href="#如何设计一个网络协议" class="headerlink" title="如何设计一个网络协议"></a>如何设计一个网络协议</h2><p>网络协议不可能从天而将，所以需要人来制定，既然是一种沟通工具，那么自然这个工具要符合又快又好的标准了.</p>
+<ul>
+<li>快<ul>
+<li>让网络的传输变快</li>
+</ul>
+</li>
+<li>好<ul>
+<li>安全</li>
+<li>最好一种协议能解决多个问题，如果不能解决多个问题，那么就聚焦于一个问题</li>
+<li>简单</li>
+<li>可以扩展</li>
+</ul>
+</li>
+</ul>
+<h2 id="有哪些网络协议"><a href="#有哪些网络协议" class="headerlink" title="有哪些网络协议"></a>有哪些网络协议</h2><ul>
+<li>应用层协议<ul>
+<li><p>HTTP</p>
+</li>
+<li><p>DNS</p>
+</li>
+<li><p>Ping<br>PING是应用层直接使用网络层ICMP的一个例子，它没有通过运输层的TCP或UDP. 一个系统允许Ping取决于两个因素，任意一个被禁止就不能被Ping</p>
+<ul>
+<li>内核参数</li>
+<li>防火墙<br>如果Ping被禁用，我又想知道远程主机是否还可以连接，那怎么办？ 可以通过tcping这个工具来测试某个端口是否开放.</li>
+</ul>
+</li>
+<li><p>nslookup - 用来测试域名是否可以正常解析</p>
+</li>
+<li><p>Telnet - 用来进行远程登录</p>
+</li>
+<li><p>SSH - 安全版的Telnet</p>
+</li>
+</ul>
+</li>
+<li>传输层协议<ul>
+<li>TCP - 让数据可以可靠达到目的地</li>
+<li>UDP - 牺牲正确性换取效率的协议</li>
+</ul>
+</li>
+<li>网络层协议<ul>
+<li>ICMP</li>
+<li>traceroute</li>
+<li>ARP</li>
+</ul>
+</li>
+<li>数据链路层协议</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>协议</tag>
+        <tag>网络</tag>
+      </tags>
   </entry>
   <entry>
     <title>挑战个体极限 - 如何提高一台服务器的性能?</title>
@@ -2712,6 +2712,64 @@
       </tags>
   </entry>
   <entry>
+    <title>Redux设计及相关</title>
+    <url>/2020/09/14/redux-design/</url>
+    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
+<ul>
+<li>什么是Redux?</li>
+<li>为什么是Redux?</li>
+<li>React和Redux的关系是什么？</li>
+<li>Redux的未来</li>
+</ul>
+<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
+<ul>
+<li>数据有哪些实体？</li>
+<li>数据的实体有哪些行为？ 增，删，改，查。</li>
+<li>有哪些方式能获得这些数据？</li>
+<li>如何避免不同的实体有相同的冗余数据？</li>
+</ul>
+<span id="more"></span>
+<p>对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</p>
+<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
+<ul>
+<li>store</li>
+<li>action</li>
+<li>reducer</li>
+</ul>
+<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
+<li>单一数据源</li>
+<li>数据是只读的</li>
+<li>单向数据流</li>
+</ul>
+<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
+<ul>
+<li>Flux</li>
+<li>Redux</li>
+<li>Mbox</li>
+</ul>
+<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
+<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
+<ul>
+<li>项目比较简单，所有的状态保存在React组件里</li>
+<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
+<li>用户不需要好的的UI体验</li>
+</ul>
+<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
+<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
+<ul>
+<li>如何更好的规范数据实体之间的关系</li>
+<li>如何提供api更好的操作数据</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>React设计思路</title>
     <url>/2020/09/13/react-design/</url>
     <content><![CDATA[<p>React作为前端主流的UI库，逐渐占据了前端的大半壁江山。所以哪个前端如果不知道React， 那基本上可以算是大大的落伍了.<br>在这里，主要聊聊</p>
@@ -2778,61 +2836,183 @@
       </tags>
   </entry>
   <entry>
-    <title>Redux设计及相关</title>
-    <url>/2020/09/14/redux-design/</url>
-    <content><![CDATA[<p>基本上，一说到react, 正常会有一个词随之而出现，那就是Redux. 它们是一对好基友。<br>这篇文章主要是聊聊下面一些话题</p>
+    <title>Java之武林盟主 - Spring</title>
+    <url>/2020/10/20/spring/</url>
+    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
 <ul>
-<li>什么是Redux?</li>
-<li>为什么是Redux?</li>
-<li>React和Redux的关系是什么？</li>
-<li>Redux的未来</li>
-</ul>
-<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux?"></a>什么是Redux?</h2><p><img src="/images/2020/database.png"><br>Redux是一个存储数据的地方，这个地方你可以叫它为Store,或者JS对象，或者前端数据库，这些都是名，实际的内涵是存储数据.<br>既然是存储数据的地方， 那么接下来有几个问题就很自然了</p>
-<ul>
-<li>数据有哪些实体？</li>
-<li>数据的实体有哪些行为？ 增，删，改，查。</li>
-<li>有哪些方式能获得这些数据？</li>
-<li>如何避免不同的实体有相同的冗余数据？</li>
+<li>什么是Spring?</li>
+<li>为什么是Spring?</li>
+<li>如何实现一个Spring?</li>
+<li>Spring实践？</li>
+<li>Spring的发展</li>
+<li>拾遗</li>
 </ul>
 <span id="more"></span>
-<p>对于以上问题，相信部分人可能会不耐烦了，不就是前端展示么？怎么会牵扯这么多东西.<br>这是因为现在的前端开发有一些不需要讨论的大前提：单页.<br>为什么需要单页呢？-给用户丝滑般的体验啊.<br><img src="/images/2020/chocolate.png"><br>大概的关系如下：单页 -&gt; 需要状态 -&gt; 需要存储状态的地方 -&gt; 维护状态</p>
-<h3 id="Redux的核心概念是什么？"><a href="#Redux的核心概念是什么？" class="headerlink" title="Redux的核心概念是什么？"></a>Redux的核心概念是什么？</h3><p>  <img src="/images/2020/redux-workflow.png"></p>
+<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
+<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
 <ul>
-<li>store</li>
-<li>action</li>
-<li>reducer</li>
+<li>IOC</li>
+<li>AOP<br>这是Spring其他的功能的基础和起点</li>
 </ul>
-<h3 id="Redux的核心原则是什么？"><a href="#Redux的核心原则是什么？" class="headerlink" title="Redux的核心原则是什么？"></a>Redux的核心原则是什么？</h3><ul>
-<li>单一数据源</li>
-<li>数据是只读的</li>
-<li>单向数据流</li>
-</ul>
-<h2 id="为什么是Redux"><a href="#为什么是Redux" class="headerlink" title="为什么是Redux?"></a>为什么是Redux?</h2><p>因为需要状态管理。可以有如下三个选项</p>
+<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
 <ul>
-<li>Flux</li>
-<li>Redux</li>
-<li>Mbox</li>
+<li>一个最低的JDK版本 </li>
+<li>特定的JavaEE规范</li>
 </ul>
-<p>Redux是Flux的升级版，Mbox生态圈相对小一些。 所以一般情况下会选择Reduxs</p>
-<h2 id="React和Redux的关系是什么？"><a href="#React和Redux的关系是什么？" class="headerlink" title="React和Redux的关系是什么？"></a>React和Redux的关系是什么？</h2><p><img src="/images/2020/react-redux.png"><br>前面提到了, React和Redux还是一对好基友。但React是否需要Redux？在下列情况下，是不需要Redux的</p>
+<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
+<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
+<li>基于POJO的轻量级和最小侵入编程<ul>
+<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
+</ul>
+</li>
+<li>DI和面对接口实现松耦合编程<ul>
+<li>隔离了接口和实现</li>
+</ul>
+</li>
+<li>基于AOP和惯例的声明式编程<ul>
+<li>AOP是为了隔离了核心功能和非核心功能</li>
+<li>惯例是用户熟悉的事物</li>
+</ul>
+</li>
+<li>基于AOP和模板减少样板式代码<ul>
+<li>模版说明是一致的编程模型，减少重复代码.</li>
+</ul>
+</li>
+</ul>
+<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
 <ul>
-<li>项目比较简单，所有的状态保存在React组件里</li>
-<li>每次请求的数据直接从后台api拿, api的性能很高，没有延迟</li>
-<li>用户不需要好的的UI体验</li>
+<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
+<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
+<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
 </ul>
-<p>但仔细审核这三点，在大多数情况下，是不成立的.<br>所以在大多数情况，我们需要状态管理.</p>
-<h2 id="Redux的未来"><a href="#Redux的未来" class="headerlink" title="Redux的未来?"></a>Redux的未来?</h2><p>Redux的方向大概有两个</p>
+</li>
+<li>隔离<ul>
+<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
+<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
+</ul>
+</li>
+</ul>
+<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
+<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
 <ul>
-<li>如何更好的规范数据实体之间的关系</li>
-<li>如何提供api更好的操作数据</li>
+<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石<br>* Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
+<li>如何定义一个Bean</li>
+<li>如何创建一个Bean</li>
+<li>如何解析一个Bean<ul>
+<li>Context<br> Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
 </ul>
+</li>
+<li>获得Bean列表</li>
+<li>解析资源</li>
+<li>发布事件</li>
+<li>国际化<ul>
+<li>Core<br> Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
+<ul>
+<li>前后端不分离</li>
+<li>前后端分离</li>
+</ul>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
+<ul>
+<li>关系型数据</li>
+<li>非关系型数据</li>
+</ul>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
+<ul>
+<li>这个用户是谁？</li>
+<li>这个用户能做什么？</li>
+</ul>
+<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
+<ul>
+<li>系统A调用系统B的接口</li>
+<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
+<ul>
+<li>日志</li>
+<li>监控</li>
+</ul>
+<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
+</blockquote>
+<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
+<ul>
+<li>没有繁琐的XML的配置</li>
+<li>不需要操作Jar包之间的依赖关系</li>
+<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
+</ul>
+<p>  两个例子</p>
+<ul>
+<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
+<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。</li>
+</ul>
+<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
+<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
+</blockquote>
+<p>  从这里可以看出, Spring Cloud的定位和明确</p>
+<ul>
+<li>聚焦于分布式的问题 </li>
+<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul</li>
+</ul>
+<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
+<ul>
+<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
+<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
+</ul>
+</li>
+<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
+<li>竞品 - k8s的Service</li>
+</ul>
+</li>
+<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
+<li>竞品 - Sentinel, k8s的Istio</li>
+</ul>
+</li>
+<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
+<li>竞品 - Kong, k8s的Ingress</li>
+</ul>
+</li>
+<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
+<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
+</ul>
+</li>
+<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
+<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
+<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
+<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
+</ul>
+</li>
+<li>Spring Cloud Feign - 简化了服务的调用方式</li>
+<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
+<li>竞品 - ZMon, DataDog</li>
+</ul>
+</li>
+</ul>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
+<blockquote>
+<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
+</blockquote>
+<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
+<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
+<blockquote>
+<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
+</blockquote>
+<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>Java</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>框架</tag>
-        <tag>前端</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -3026,183 +3206,52 @@
       </tags>
   </entry>
   <entry>
-    <title>Java之武林盟主 - Spring</title>
-    <url>/2020/10/20/spring/</url>
-    <content><![CDATA[<p>许多年之后，当讨论起Java开发的时候，可以不讨论安卓开发，可以不讨论多线程，可以不讨论流，可以不讨论JVM, 但Spring是一个绕不过去的话题.<br>Spring从诞生到现在已经有20年左右的历史，这个生命不如linux, 但也足够长了.<br>在前端界，还找不到和Spring框架相提并论的框架，Spring的框架在Java领域是没有对手的，可以说找不到竞品，前端至少是React和vuejs两家独大，而且也是最近几年才出来的产物.<br>这篇文章主要闲聊</p>
+    <title>系统的约束和动力</title>
+    <url>/2020/09/18/system-restrain-power/</url>
+    <content><![CDATA[<p><img src="/images/2020/car.png"><br>一个系统能发展是有动力，如果要让系统发展的好则需要约束。就好像汽车的前进是靠发动机，汽车的减速靠的是刹车，汽车行进的方向靠的是方向盘。发动机是动力，刹车和方向盘是约束.<br>那么动力和约束与生活有什么关系呢？ 让我们从直觉和感性的角度来一场探索之旅吧</p>
 <ul>
-<li>什么是Spring?</li>
-<li>为什么是Spring?</li>
-<li>如何实现一个Spring?</li>
-<li>Spring实践？</li>
-<li>Spring的发展</li>
-<li>拾遗</li>
+<li>系统的动力</li>
+<li>系统的约束</li>
+<li>约束和动力之间的关系</li>
 </ul>
 <span id="more"></span>
-<h2 id="什么是Spring"><a href="#什么是Spring" class="headerlink" title="什么是Spring?"></a>什么是Spring?</h2><p>2002年10月, Rod Johnson出版了一版名为《Expoert One-on-One J2EE设计和开发》的书，书中指出了Java EE和EJB组件框架中的主要缺陷。在这本书里，他提出了基于普通Java类和注入依赖的更简单的方案.<br>在这本书发布不久之后，有两位开发者说服了Rod Johnson基于书上的代码创建一个开源基础框架的项目. 2003年三位开发者创建了一个项目, 开发者yann给框架取了一个很有诗意的名字”Spring”.有点类似中国文化里蕴含的一元复始，万象更新的意思.<br>所以Spring是一个框架，致力于简化Java开发</p>
-<p>Spring有很多功能，如果不断的去砍掉一些功能，让Spring只具备最核心的功能，应该是</p>
+<h2 id="系统的动力"><a href="#系统的动力" class="headerlink" title="系统的动力"></a>系统的动力</h2><p><img src="/images/2020/engine.jpeg"><br>一个系统的动力在不同的情况下可以有如下的表现形式</p>
 <ul>
-<li>IOC</li>
-<li>AOP<br>这是Spring其他的功能的基础和起点</li>
+<li>人类的各种欲望，比如挣钱，获得胜利，获取别人尊重</li>
+<li>一辆汽车的引擎</li>
+<li>一个公司想盈利</li>
+<li>动物生存和繁殖的本性，尽可能得获取更多的资源。</li>
+<li>产品需求的不断变更</li>
+<li>像系统的正反馈，是一个熵增的过程</li>
+<li>一个人成长的力量，比如体能,目标，价值观</li>
 </ul>
-<p>Spring当前最新的版本是5.0, 5.0要求的最低JDK版本是8, JavaEE规范是7. Spring的大版本更新至少要基于两个因素</p>
+<h2 id="系统的约束"><a href="#系统的约束" class="headerlink" title="系统的约束"></a>系统的约束</h2><p><img src="/images/2020/steering-wheel.jpg"><br>一个系统的约束可以体现在如下方面</p>
 <ul>
-<li>一个最低的JDK版本 </li>
-<li>特定的JavaEE规范</li>
+<li>有限的客观物质。比如一个吃糖里的水是有限的。</li>
+<li>规则。人制定的法律制定</li>
+<li>道德。一个组织内自发形成的非强制性约束</li>
+<li>代码规范。长期以来形成的最佳实践。</li>
+<li>项目的发布流程。</li>
+<li>一辆汽车的刹车和方向盘</li>
+<li>像系统的负反馈，是一个熵减的过程</li>
+<li>阻碍一个人成长的要素，比如懒惰，恐惧，急躁，贪心, 骄傲, 自我认知失调 等等.</li>
+<li>规范一个人的成长要素，比如自律，计划.</li>
 </ul>
-<h2 id="为什么是Spring"><a href="#为什么是Spring" class="headerlink" title="为什么是Spring?"></a>为什么是Spring?</h2><p>这个问题很简单，在当时从框架层面简化Java开发的只有Spring框架，并没有其他框架，可谓一家独大.<br>就好比创业的时候，选择了一个赛道，然后这个赛道上只有一家企业，等这家企业壮大了，只要不作死，其他企业想进来也没有机会了.</p>
-<h2 id="如何实现一个Spring"><a href="#如何实现一个Spring" class="headerlink" title="如何实现一个Spring?"></a>如何实现一个Spring?</h2><h3 id="整体设计目标"><a href="#整体设计目标" class="headerlink" title="整体设计目标"></a>整体设计目标</h3><p>  Spring框架所有做的事情都可以说是为了一个终极目的: 简化Java开发.</p>
-<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><ul>
-<li>基于POJO的轻量级和最小侵入编程<ul>
-<li>POJO是简单的，那就说明是容易理解的，而且不含有杂质.</li>
-</ul>
-</li>
-<li>DI和面对接口实现松耦合编程<ul>
-<li>隔离了接口和实现</li>
-</ul>
-</li>
-<li>基于AOP和惯例的声明式编程<ul>
-<li>AOP是为了隔离了核心功能和非核心功能</li>
-<li>惯例是用户熟悉的事物</li>
-</ul>
-</li>
-<li>基于AOP和模板减少样板式代码<ul>
-<li>模版说明是一致的编程模型，减少重复代码.</li>
-</ul>
-</li>
-</ul>
-<h3 id="战略背后的思想"><a href="#战略背后的思想" class="headerlink" title="战略背后的思想"></a>战略背后的思想</h3><p>  基于上面的策略，可以总结出这些策略背后的思想</p>
+<p>所以约束有如下含义</p>
 <ul>
-<li>符合用户的心智模型 - 简单，熟悉，一致<ul>
-<li>用户喜欢简单和熟悉的东西. 因为简单的东西和熟悉的东西意味着可理解，可理解意味这可维护</li>
-<li>一致的编程模型。 对于类似的东西，不可能用方法A处理事物A, 方法B处理事物B, 而是要用一个统一的方法处理事物A和事物B</li>
+<li>有限的资源。</li>
+<li>只做什么，暗含着只在边界内做事</li>
+<li>不做什么，暗含着不要在边界外做事。</li>
 </ul>
-</li>
-<li>隔离<ul>
-<li>隔离抽象和和具体，抽象代表着稳定，具体代表着不稳定</li>
-<li>隔离核心和非核心，核心的东西代表着重要，非核心的东西代表着次要</li>
-</ul>
-</li>
-</ul>
-<p> 上面这两大思想可以用来指导架构设计和类库设计.</p>
-<h3 id="模块图"><a href="#模块图" class="headerlink" title="模块图"></a>模块图</h3><p>  <img src="/images/2020/spring-framework-runtime.jpeg"></p>
-<ul>
-<li>Spring容器的三架马车, 三是个好数字，三生万物. Bean, Core, Context为Spring框架奠定了基石<br>* Bean<br>Bean是Spring组件核心中核心，正如一部电视剧的主角一样，挪走了主角了，这部剧就没有什么看点了. 正如面向对象编程里，对象是第一核心，剩下的是对象的关系和行为。Spring Bean也是如此, Bean是Spring起点. Bean主要回答了三个问题<ul>
-<li>如何定义一个Bean</li>
-<li>如何创建一个Bean</li>
-<li>如何解析一个Bean<ul>
-<li>Context<br> Context赋予了Bean更丰富的内涵，让Bean活跃起来,变的更有生命力</li>
-</ul>
-</li>
-<li>获得Bean列表</li>
-<li>解析资源</li>
-<li>发布事件</li>
-<li>国际化<ul>
-<li>Core<br> Core组件是一系列工具的集合, 它的某些概念与Bean没有直接关系，比如Log功能。Core这个名字其实取的不是特别好，会让人有点疑惑,会让人感觉Core组件就是核心， 核心意味着所有的组件都围绕着Core转，其实并不是，Spring的核心是Bean。拿打仗做个比喻, Bean是冲锋陷阵的士兵，Context是指挥官，协调管理这些士兵, 那么Core是什么呢？更多类似于后勤和伙夫, 从这里可以看出Core并不是核心. 所以把Core理解为Spring的瑞士军刀比较合适, 因为Core能提供某些贴心的小功能.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Spring实践？"><a href="#Spring实践？" class="headerlink" title="Spring实践？"></a>Spring实践？</h2><h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>  展示一般而言与Web有关，这里的展示意义更加宽泛一点，可以指手机，手表等任何显示设备. 展示层实现策略有两大方向</p>
-<ul>
-<li>前后端不分离</li>
-<li>前后端分离</li>
-</ul>
-<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>  任何的信息都必须是可以存储的，或者叫做持久化。这样的信息是基本事实，可以给各种方式（比如机器学习）企业的决策提供依据。 数据存储有两大类型</p>
-<ul>
-<li>关系型数据</li>
-<li>非关系型数据</li>
-</ul>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>  用户流量增加之后，为了获得更好的用户体验，减轻数据库的压力，需要一个能抗事的家伙. 这个就是缓存.</p>
-<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>  对于大多数系统，必须回答两个问题</p>
-<ul>
-<li>这个用户是谁？</li>
-<li>这个用户能做什么？</li>
-</ul>
-<h3 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h3><p>  任何系统都不是孤立的，系统A想和系统B相互交流，有两种办法</p>
-<ul>
-<li>系统A调用系统B的接口</li>
-<li>引入一个系统M来隔离系统A和系统B, 这样系统A和系统B就完成隔离开了，符合正交的特性。换句话以后系统A即使消亡了，也与系统B没有什么关系. 这个M往往称做消息系统或者消息中间件.</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>  系统出了故障，我们希望能快速的去解决故障，而不是两眼一抹黑。换句话说，我们能对系统有掌控。 一般来说有如下方式</p>
-<ul>
-<li>日志</li>
-<li>监控</li>
-</ul>
-<h2 id="Spring的发展"><a href="#Spring的发展" class="headerlink" title="Spring的发展"></a>Spring的发展</h2><h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><blockquote>
-<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
-</blockquote>
-<p>  Spring Boot不是Spring的功能升级，而是简化了Spring的构建. 使用Spring Boot</p>
-<ul>
-<li>没有繁琐的XML的配置</li>
-<li>不需要操作Jar包之间的依赖关系</li>
-<li>内置了Jetty容器，不像之前要生成一个war包，然后拷贝到特定的jetty目录下.</li>
-</ul>
-<p>  两个例子</p>
-<ul>
-<li>我们知道汽车有一键启动的功能，在此之前我们要掏出钥匙，插入钥匙，启动。 做的事情都是启动，但很明显一键启动完全提高了效率.</li>
-<li>做过前端开发的朋友，应该知道create-react-app这个脚手架，可以大大的提搞开发者的效率，Spring-boot扮演的就是脚手架这个角色。 所以Spring boot从整个Spring的历史来看，它很重要，但没有革命性的东西。</li>
-</ul>
-<h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><blockquote>
-<p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems</p>
-</blockquote>
-<p>  从这里可以看出, Spring Cloud的定位和明确</p>
-<ul>
-<li>聚焦于分布式的问题 </li>
-<li>提供一致的编程模型. 比如在这里模型下面，服务发现框架可以从容易的从ZooKeeper切换到Consul</li>
-</ul>
-<p>  所以Spring Cloud的目标是非常宏大, 它不像Spring Shiro是为了解决某个特定的领域的问题, 它要是统一解决分布式领域的各种问题，具体一点就是微服务和云原生相关的问题， 可谓雄心勃勃。 来看看Spring Cloud都提供来哪些工具</p>
-<ul>
-<li>Spring Cloud Eureka - 解决了服务注册和发现的问题<ul>
-<li>竞品 - Nacos, k8s的Service(可以被Istio追踪，纳入servicemesh的管理)</li>
-</ul>
-</li>
-<li>Spring Cloud Ribbon - 解决了如何将流量公平得分配到每台机器的问题.<ul>
-<li>竞品 - k8s的Service</li>
-</ul>
-</li>
-<li>Spring Cloud Hystrix - 解决流量过大时， 如何将让流量不再进来的问题.<ul>
-<li>竞品 - Sentinel, k8s的Istio</li>
-</ul>
-</li>
-<li>Spring Cloud Zuul - 解决了流量是否合法，以及流量进来之后去哪里的问题.<ul>
-<li>竞品 - Kong, k8s的Ingress</li>
-</ul>
-</li>
-<li>Spring Cloud Config - 解决了服务配置信息集中管理的问题<ul>
-<li>竞品 - 携程的Apollo, k8s的ConfigMap和Secret</li>
-</ul>
-</li>
-<li>Spring Cloud Stream - 解决了不同服务之间相互通信的问题.</li>
-<li>Spring Cloud Bus - 解决了不同服务之间如何共享信息的问题</li>
-<li>Spring Cloud Sleuth - 解决了如何了解服务全貌这个问题<ul>
-<li>竞品 - 推特的Zipkin， 大众点评的CAT</li>
-</ul>
-</li>
-<li>Spring Cloud Feign - 简化了服务的调用方式</li>
-<li>Spring Boot Actuator - 解决了监控程序的问题<ul>
-<li>竞品 - ZMon, DataDog</li>
-</ul>
-</li>
-</ul>
-<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>官网中有一幅图，是从Spring boot到Spring Cloud, Spring Cloud DataFlow, 这幅图可以反应这三者之间的时间关系，但同时有个误区，它会给人传达这样一个意思</p>
-<blockquote>
-<p>小学生 -&gt; 中学生 -&gt; 大学生</p>
-</blockquote>
-<p>就是这三者是能力渐进增强的，其实并不是， Spring Boot充其量是个脚手架的角色，和Spring Cloud不是同一个层次的事物，放在一起不好比较.</p>
-<p>如果把Spring, Spring Boot, Spring Cloud放在一起，那它们应该是一个什么样的关系呢？</p>
-<blockquote>
-<p>高尔夫1.4T -&gt; 高尔夫2.0T -&gt; 途观</p>
-</blockquote>
-<p>Spring Boot让Spring变得更快，Spring Cloud让Spring 能力更强</p>
+<h2 id="约束和动力之间的关系"><a href="#约束和动力之间的关系" class="headerlink" title="约束和动力之间的关系"></a>约束和动力之间的关系</h2><p>没有约束，系统就要失去控制。<br>没有动力，系统就不会发展。<br>约束是保证系统更快更好的发展，达到一种平衡的状态。<br>一个人如果没有约束，最终会越来越堕落。<br>一个组织如果没有约束，最终会人心向背，分崩离析。<br>一个国家如果没有约束，最终会陷入混乱状态。</p>
+<p>一个小孩在成长的过程中，需要家长和老师的教育，才能成为一个有健全人格的人。<br>一个项目从立项到完成，再到维护，如果没有建立一个很好的流程规范，项目的会变得很难维护。如果一个项目存在了10年左右的时间，那么肯定有好多人修改过，每个人都有自己的风格，如果修改代码的时候不遵循一定的规范，项目最终会变成脆弱的系统。</p>
 ]]></content>
       <categories>
-        <category>Java</category>
+        <category>思维</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>框架</tag>
-        <tag>Spring</tag>
+        <tag>思维</tag>
+        <tag>系统</tag>
       </tags>
   </entry>
   <entry>
@@ -3270,63 +3319,6 @@
       </categories>
       <tags>
         <tag>认知</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Welcome</title>
-    <url>/2019/07/02/welcome/</url>
-    <content><![CDATA[<ul>
-<li>Hello, Welcome to Ricky World!</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>系统的约束和动力</title>
-    <url>/2020/09/18/system-restrain-power/</url>
-    <content><![CDATA[<p><img src="/images/2020/car.png"><br>一个系统能发展是有动力，如果要让系统发展的好则需要约束。就好像汽车的前进是靠发动机，汽车的减速靠的是刹车，汽车行进的方向靠的是方向盘。发动机是动力，刹车和方向盘是约束.<br>那么动力和约束与生活有什么关系呢？ 让我们从直觉和感性的角度来一场探索之旅吧</p>
-<ul>
-<li>系统的动力</li>
-<li>系统的约束</li>
-<li>约束和动力之间的关系</li>
-</ul>
-<span id="more"></span>
-<h2 id="系统的动力"><a href="#系统的动力" class="headerlink" title="系统的动力"></a>系统的动力</h2><p><img src="/images/2020/engine.jpeg"><br>一个系统的动力在不同的情况下可以有如下的表现形式</p>
-<ul>
-<li>人类的各种欲望，比如挣钱，获得胜利，获取别人尊重</li>
-<li>一辆汽车的引擎</li>
-<li>一个公司想盈利</li>
-<li>动物生存和繁殖的本性，尽可能得获取更多的资源。</li>
-<li>产品需求的不断变更</li>
-<li>像系统的正反馈，是一个熵增的过程</li>
-<li>一个人成长的力量，比如体能,目标，价值观</li>
-</ul>
-<h2 id="系统的约束"><a href="#系统的约束" class="headerlink" title="系统的约束"></a>系统的约束</h2><p><img src="/images/2020/steering-wheel.jpg"><br>一个系统的约束可以体现在如下方面</p>
-<ul>
-<li>有限的客观物质。比如一个吃糖里的水是有限的。</li>
-<li>规则。人制定的法律制定</li>
-<li>道德。一个组织内自发形成的非强制性约束</li>
-<li>代码规范。长期以来形成的最佳实践。</li>
-<li>项目的发布流程。</li>
-<li>一辆汽车的刹车和方向盘</li>
-<li>像系统的负反馈，是一个熵减的过程</li>
-<li>阻碍一个人成长的要素，比如懒惰，恐惧，急躁，贪心, 骄傲, 自我认知失调 等等.</li>
-<li>规范一个人的成长要素，比如自律，计划.</li>
-</ul>
-<p>所以约束有如下含义</p>
-<ul>
-<li>有限的资源。</li>
-<li>只做什么，暗含着只在边界内做事</li>
-<li>不做什么，暗含着不要在边界外做事。</li>
-</ul>
-<h2 id="约束和动力之间的关系"><a href="#约束和动力之间的关系" class="headerlink" title="约束和动力之间的关系"></a>约束和动力之间的关系</h2><p>没有约束，系统就要失去控制。<br>没有动力，系统就不会发展。<br>约束是保证系统更快更好的发展，达到一种平衡的状态。<br>一个人如果没有约束，最终会越来越堕落。<br>一个组织如果没有约束，最终会人心向背，分崩离析。<br>一个国家如果没有约束，最终会陷入混乱状态。</p>
-<p>一个小孩在成长的过程中，需要家长和老师的教育，才能成为一个有健全人格的人。<br>一个项目从立项到完成，再到维护，如果没有建立一个很好的流程规范，项目的会变得很难维护。如果一个项目存在了10年左右的时间，那么肯定有好多人修改过，每个人都有自己的风格，如果修改代码的时候不遵循一定的规范，项目最终会变成脆弱的系统。</p>
-]]></content>
-      <categories>
-        <category>思维</category>
-      </categories>
-      <tags>
-        <tag>思维</tag>
-        <tag>系统</tag>
       </tags>
   </entry>
   <entry>
@@ -3539,5 +3531,13 @@
         <tag>分布式</tag>
         <tag>数据库</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Welcome</title>
+    <url>/2019/07/02/welcome/</url>
+    <content><![CDATA[<ul>
+<li>Hello, Welcome to Ricky World!</li>
+</ul>
+]]></content>
   </entry>
 </search>
