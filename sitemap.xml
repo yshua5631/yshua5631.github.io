@@ -29,6 +29,15 @@
   </url>
   
   <url>
+    <loc>https://blog.yangricky.com/2020/10/20/spring/</loc>
+    
+    <lastmod>2024-02-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.yangricky.com/2020/09/18/system-restrain-power/</loc>
     
     <lastmod>2024-02-26</lastmod>
@@ -47,15 +56,6 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/10/20/spring/</loc>
-    
-    <lastmod>2024-02-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.yangricky.com/2020/08/29/three-principles/</loc>
     
     <lastmod>2024-02-26</lastmod>
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/10/25/transaction/</loc>
+    <loc>https://blog.yangricky.com/2019/07/02/welcome/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2019/07/02/welcome/</loc>
+    <loc>https://blog.yangricky.com/2020/10/25/transaction/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -119,16 +119,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2019/07/04/new-place/</loc>
-    
-    <lastmod>2024-02-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.yangricky.com/2020/10/11/performance-1-pc/</loc>
+    <loc>https://blog.yangricky.com/2020/09/20/mircro-services-archi/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -146,7 +137,16 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/09/20/mircro-services-archi/</loc>
+    <loc>https://blog.yangricky.com/2019/07/04/new-place/</loc>
+    
+    <lastmod>2024-02-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.yangricky.com/2020/10/11/performance-1-pc/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -182,15 +182,6 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/09/21/docker/</loc>
-    
-    <lastmod>2024-02-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.yangricky.com/2020/08/30/good-quick/</loc>
     
     <lastmod>2024-02-26</lastmod>
@@ -200,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2019/07/01/hello-world/</loc>
+    <loc>https://blog.yangricky.com/2020/09/21/docker/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -210,6 +201,15 @@
   
   <url>
     <loc>https://blog.yangricky.com/2020/09/07/history-of-frontend-development/</loc>
+    
+    <lastmod>2024-02-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.yangricky.com/2019/07/01/hello-world/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -236,6 +236,15 @@
   </url>
   
   <url>
+    <loc>https://blog.yangricky.com/2020/11/17/https/</loc>
+    
+    <lastmod>2024-02-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.yangricky.com/2020/09/30/jvm/</loc>
     
     <lastmod>2024-02-26</lastmod>
@@ -246,15 +255,6 @@
   
   <url>
     <loc>https://blog.yangricky.com/2020/09/24/k8s/</loc>
-    
-    <lastmod>2024-02-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.yangricky.com/2020/11/17/https/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -299,15 +299,6 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/10/15/cache/</loc>
-    
-    <lastmod>2024-02-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.yangricky.com/2020/09/12/break-down/</loc>
     
     <lastmod>2024-02-26</lastmod>
@@ -317,7 +308,16 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/09/06/design-principle/</loc>
+    <loc>https://blog.yangricky.com/2020/10/15/cache/</loc>
+    
+    <lastmod>2024-02-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.yangricky.com/2020/10/06/concurrent/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -335,7 +335,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/2020/10/06/concurrent/</loc>
+    <loc>https://blog.yangricky.com/2020/09/06/design-principle/</loc>
     
     <lastmod>2024-02-26</lastmod>
     
@@ -411,20 +411,6 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/tags/%E7%BC%93%E5%AD%98/</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.yangricky.com/tags/Redis/</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.yangricky.com/tags/%E8%AE%A4%E7%9F%A5/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -433,6 +419,20 @@
   
   <url>
     <loc>https://blog.yangricky.com/tags/%E6%80%9D%E7%BB%B4/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.yangricky.com/tags/%E7%BC%93%E5%AD%98/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.yangricky.com/tags/Redis/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -630,14 +630,14 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/categories/%E7%BC%93%E5%AD%98/</loc>
+    <loc>https://blog.yangricky.com/categories/%E8%AE%A4%E7%9F%A5/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/categories/%E8%AE%A4%E7%9F%A5/</loc>
+    <loc>https://blog.yangricky.com/categories/%E7%BC%93%E5%AD%98/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -651,14 +651,14 @@
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/</loc>
+    <loc>https://blog.yangricky.com/categories/%E6%80%9D%E7%BB%B4/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.yangricky.com/categories/%E6%80%9D%E7%BB%B4/</loc>
+    <loc>https://blog.yangricky.com/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
