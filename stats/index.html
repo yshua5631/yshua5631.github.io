@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yangricky.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content=".stats-embed-wrap { margin: 0.5em 0; }   .stats-embed-wrap iframe {     width: 100%;     height: 85vh;     min-height: 600px;     border: 1px solid #e5e5e5;     border-radius: 4px;     background:">
+    <meta name="description" content=".stats-summary { display:flex; flex-wrap:wrap; gap:1.5em; margin:1em 0 2em; padding:1em 1.2em; background:#f7f8fa; border-radius:6px; }   .stats-summary .item { flex:1 1 auto; min-width:140px; }">
 <meta property="og:type" content="website">
 <meta property="og:title" content="访客统计">
 <meta property="og:url" content="https://blog.yangricky.com/stats/index.html">
 <meta property="og:site_name" content="迷途书童">
-<meta property="og:description" content=".stats-embed-wrap { margin: 0.5em 0; }   .stats-embed-wrap iframe {     width: 100%;     height: 85vh;     min-height: 600px;     border: 1px solid #e5e5e5;     border-radius: 4px;     background:">
+<meta property="og:description" content=".stats-summary { display:flex; flex-wrap:wrap; gap:1.5em; margin:1em 0 2em; padding:1em 1.2em; background:#f7f8fa; border-radius:6px; }   .stats-summary .item { flex:1 1 auto; min-width:140px; }">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-02T10:22:53.905Z">
+<meta property="article:modified_time" content="2026-05-02T11:09:20.530Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="哲学,思维,问题解决,后端,架构,数据库,分布式,Go,Java,NodeJs">
 <meta name="twitter:card" content="summary">
@@ -148,7 +148,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -161,6 +161,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">1.</span> <span class="nav-text">📈 30 天访问趋势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">2.</span> <span class="nav-text">🌍 国家分布 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">3.</span> <span class="nav-text">📚 热门文章 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">4.</span> <span class="nav-text">🔗 来源 Top 10</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -228,32 +229,62 @@
       
       <div class="post-body">
           <style>
-  .stats-embed-wrap { margin: 0.5em 0; }
-  .stats-embed-wrap iframe {
-    width: 100%;
-    height: 85vh;
-    min-height: 600px;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    background: #fff;
-  }
-  .stats-meta {
-    margin: 0.8em 0 1.5em;
-    font-size: 0.85em;
-    opacity: 0.7;
-    text-align: center;
-  }
+  .stats-summary { display:flex; flex-wrap:wrap; gap:1.5em; margin:1em 0 2em; padding:1em 1.2em; background:#f7f8fa; border-radius:6px; }
+  .stats-summary .item { flex:1 1 auto; min-width:140px; }
+  .stats-summary .label { font-size:.8em; opacity:.65; }
+  .stats-summary .value { font-size:1.6em; font-weight:600; line-height:1.2; }
+  .stats-summary .meta { flex-basis:100%; font-size:.78em; opacity:.55; margin-top:.3em; }
+  .stats-section { margin:2.5em 0 1em; }
+  .stats-section h2 { border-bottom:2px solid #eee; padding-bottom:.3em; font-size:1.15em; }
+  .stats-chart-wrap { position:relative; height:280px; margin:.5em 0 1em; }
+  .stats-list { list-style:none; padding:0; margin:.5em 0; }
+  .stats-list li { display:flex; align-items:center; gap:.6em; padding:.35em 0; border-bottom:1px solid #f0f0f0; font-size:.92em; }
+  .stats-list li:last-child { border-bottom:none; }
+  .stats-list .rank { color:#999; font-variant-numeric:tabular-nums; min-width:1.5em; }
+  .stats-list .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .stats-list .name a { color:inherit; }
+  .stats-list .count { color:#666; font-variant-numeric:tabular-nums; }
+  .stats-empty { padding:2em; text-align:center; color:#999; background:#fafafa; border-radius:6px; }
 </style>
 
-<div class="stats-embed-wrap">
-  <iframe src="https://yshua5631.goatcounter.com/" loading="lazy" title="GoatCounter dashboard"></iframe>
+<div id="stats-root">
+  <div class="stats-empty" id="stats-loading">加载中…</div>
 </div>
 
-<p class="stats-meta">
-  显示空白？<a href="https://yshua5631.goatcounter.com/" target="_blank" rel="noopener">在新标签页打开完整 dashboard →</a>
-  &nbsp;·&nbsp;
-  数据来自 <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>（无 cookies / 无追踪 / 隐私友好）
-</p>
+<template id="stats-tpl">
+  <div class="stats-summary">
+    <div class="item"><div class="label">总访问</div><div class="value" data-bind="total"></div></div>
+    <div class="item"><div class="label">独立访客 (UTC)</div><div class="value" data-bind="totalUtc"></div></div>
+    <div class="meta">数据更新于 <span data-bind="fetchedAt"></span> · 每次发布博客时刷新</div>
+  </div>
+
+  <div class="stats-section">
+    <h2>📈 30 天访问趋势</h2>
+    <div class="stats-chart-wrap"><canvas id="trend-chart"></canvas></div>
+  </div>
+
+  <div class="stats-section">
+    <h2>🌍 国家分布 Top 10</h2>
+    <div class="stats-chart-wrap"><canvas id="locations-chart"></canvas></div>
+  </div>
+
+  <div class="stats-section">
+    <h2>📚 热门文章 Top 10</h2>
+    <ol class="stats-list" data-list="hits"></ol>
+  </div>
+
+  <div class="stats-section">
+    <h2>🔗 来源 Top 10</h2>
+    <ol class="stats-list" data-list="refs"></ol>
+  </div>
+
+  <p style="margin-top:2em;font-size:.82em;opacity:.55;text-align:center">
+    数据由 <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a> 提供 · 无 cookies / 无追踪 · <a href="https://shaohua.goatcounter.com/" target="_blank" rel="noopener">查看完整 dashboard</a>
+  </p>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<script src="/js/stats-render.js" defer></script>
 
       </div>
       
@@ -341,7 +372,7 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
-<script data-goatcounter="https://yshua5631.goatcounter.com/count"
+<script data-goatcounter="https://shaohua.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 <script src="/js/goatcounter-display.js" defer></script>
 

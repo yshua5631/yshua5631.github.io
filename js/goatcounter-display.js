@@ -4,7 +4,7 @@
 
   const siteEl = root.querySelector('#gc-site-total');
   const pageEl = root.querySelector('#gc-page-views');
-  const base = 'https://yshua5631.goatcounter.com/counter';
+  const base = 'https://shaohua.goatcounter.com/counter';
 
   // GoatCounter 公开计数 API。需要在后台 Settings 中开启
   // "Allow displaying visitor counts on your website"。
