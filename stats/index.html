@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yangricky.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":true,"fold":{"enable":false,"height":500},"language":false,"style":"simple"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="本站采用 GoatCounter 做访问统计——无 cookies、无追踪、不识别个人身份，符合 GDPR。这是独立博客圈常见的做法，比 Google Analytics 更克制。 数据涵盖 PV &#x2F; UV 趋势：每天&#x2F;每周&#x2F;每月的访问曲线 国家与地区分布：通过 IP 解析（GeoLite 数据库），不存原始 IP 来源：从哪些站点跳转过来 路径热度：哪些文章被读得最">
+    <meta name="description" content=".stats-embed-wrap { margin: 0.5em 0; }   .stats-embed-wrap iframe {     width: 100%;     height: 85vh;     min-height: 600px;     border: 1px solid #e5e5e5;     border-radius: 4px;     background:">
 <meta property="og:type" content="website">
 <meta property="og:title" content="访客统计">
 <meta property="og:url" content="https://blog.yangricky.com/stats/index.html">
 <meta property="og:site_name" content="迷途书童">
-<meta property="og:description" content="本站采用 GoatCounter 做访问统计——无 cookies、无追踪、不识别个人身份，符合 GDPR。这是独立博客圈常见的做法，比 Google Analytics 更克制。 数据涵盖 PV &#x2F; UV 趋势：每天&#x2F;每周&#x2F;每月的访问曲线 国家与地区分布：通过 IP 解析（GeoLite 数据库），不存原始 IP 来源：从哪些站点跳转过来 路径热度：哪些文章被读得最">
+<meta property="og:description" content=".stats-embed-wrap { margin: 0.5em 0; }   .stats-embed-wrap iframe {     width: 100%;     height: 85vh;     min-height: 600px;     border: 1px solid #e5e5e5;     border-radius: 4px;     background:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-02T10:14:10.422Z">
+<meta property="article:modified_time" content="2026-05-02T10:22:53.905Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="哲学,思维,问题解决,后端,架构,数据库,分布式,Go,Java,NodeJs">
 <meta name="twitter:card" content="summary">
@@ -148,7 +148,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -161,7 +161,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B6%B5%E7%9B%96"><span class="nav-number">1.</span> <span class="nav-text">数据涵盖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%8C%E6%95%B4%E7%BB%9F%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">查看完整统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF-Google-Analytics%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">为什么不是 Google Analytics？</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -228,28 +227,33 @@
       
       
       <div class="post-body">
-          <p>本站采用 <a target="_blank" rel="noopener" href="https://www.goatcounter.com/">GoatCounter</a> 做访问统计——<strong>无 cookies、无追踪、不识别个人身份</strong>，符合 GDPR。这是独立博客圈常见的做法，比 Google Analytics 更克制。</p>
-<h2 id="数据涵盖"><a href="#数据涵盖" class="headerlink" title="数据涵盖"></a>数据涵盖</h2><ul>
-<li><strong>PV &#x2F; UV 趋势</strong>：每天&#x2F;每周&#x2F;每月的访问曲线</li>
-<li><strong>国家与地区分布</strong>：通过 IP 解析（GeoLite 数据库），不存原始 IP</li>
-<li><strong>来源</strong>：从哪些站点跳转过来</li>
-<li><strong>路径热度</strong>：哪些文章被读得最多</li>
-<li><strong>设备 &#x2F; 浏览器 &#x2F; 语言</strong>：宏观的读者画像</li>
-</ul>
-<p>数据每天 04:00 (UTC) 滚动 6 个月以前的明细。</p>
-<h2 id="查看完整统计"><a href="#查看完整统计" class="headerlink" title="查看完整统计"></a>查看完整统计</h2><p style="text-align:center;margin:2em 0">
-  <a href="https://yshua5631.goatcounter.com/" target="_blank" rel="noopener" class="btn">
-    → 打开统计后台
-  </a>
-</p>
+          <style>
+  .stats-embed-wrap { margin: 0.5em 0; }
+  .stats-embed-wrap iframe {
+    width: 100%;
+    height: 85vh;
+    min-height: 600px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .stats-meta {
+    margin: 0.8em 0 1.5em;
+    font-size: 0.85em;
+    opacity: 0.7;
+    text-align: center;
+  }
+</style>
 
-<h2 id="为什么不是-Google-Analytics？"><a href="#为什么不是-Google-Analytics？" class="headerlink" title="为什么不是 Google Analytics？"></a>为什么不是 Google Analytics？</h2><ul>
-<li><strong>隐私</strong>：GA 用 cookies 追踪用户跨站行为；GoatCounter 不用 cookies，不做指纹</li>
-<li><strong>轻量</strong>：GoatCounter 脚本 ~3KB，GA 脚本 ~50KB+</li>
-<li><strong>数据自主</strong>：GoatCounter 开源（AGPL），数据可一键导出 CSV，未来想自托管随时可迁</li>
-<li><strong>国内可访问</strong>：GA 在国内访问不稳定，GoatCounter 没有这个问题</li>
-</ul>
-<hr>
+<div class="stats-embed-wrap">
+  <iframe src="https://yshua5631.goatcounter.com/" loading="lazy" title="GoatCounter dashboard"></iframe>
+</div>
+
+<p class="stats-meta">
+  显示空白？<a href="https://yshua5631.goatcounter.com/" target="_blank" rel="noopener">在新标签页打开完整 dashboard →</a>
+  &nbsp;·&nbsp;
+  数据来自 <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>（无 cookies / 无追踪 / 隐私友好）
+</p>
 
       </div>
       
