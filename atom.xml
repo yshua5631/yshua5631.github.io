@@ -10,7 +10,58 @@
   <rights>All rights reserved 2026, 迷途书童</rights>
   <subtitle>学习 / 职业 / 生活</subtitle>
   <title>迷途书童</title>
-  <updated>2024-02-26T15:09:46.519Z</updated>
+  <updated>2026-05-02T15:18:51.206Z</updated>
+  <entry>
+    <author>
+      <name>迷途书童</name>
+    </author>
+    <category term="认知" scheme="https://blog.yangricky.com/categories/%E8%AE%A4%E7%9F%A5/"/>
+    <category term="思维" scheme="https://blog.yangricky.com/tags/%E6%80%9D%E7%BB%B4/"/>
+    <category term="决策" scheme="https://blog.yangricky.com/tags/%E5%86%B3%E7%AD%96/"/>
+    <category term="经济学" scheme="https://blog.yangricky.com/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    <content>
+      <![CDATA[<p>同事中午出去吃饭。三个选项：米饭、面条、饺子。</p><p>同事甲：米饭 &gt; 面条 &gt; 饺子<br>同事乙：饺子 &gt; 米饭 &gt; 面条<br>同事丙：面条 &gt; 饺子 &gt; 米饭</p><p>每个人的偏好都是理性的——同事甲觉得米饭比面条好，面条比饺子好，所以米饭肯定比饺子好。这叫<strong>可传递性</strong>。同事乙和同事丙也一样。</p><p>如果直接三选一，一人一票，平局——谁也吃不上了。</p><p>于是有人说：「先把米饭和面条比一下，赢的再去和饺子比。」</p><ul><li>米饭 vs 面条 → 米饭赢（同事甲、同事乙选米饭，同事丙选面条）</li><li>米饭 vs 饺子 → 饺子赢（同事乙、同事丙选饺子，同事甲选米饭）</li></ul><p>→ 吃饺子。</p><p>但如果换个议程：「先把面条和饺子比。」</p><ul><li>面条 vs 饺子 → 面条赢（同事甲、同事丙选面条，同事乙选饺子）</li><li>面条 vs 米饭 → 米饭赢（同事甲、同事乙选米饭，同事丙选面条）</li></ul><p>→ 吃米饭。</p><p><strong>同样的三个人，同样的偏好。议程不同，结果不同。</strong></p><p>而且每一轮大家投的都是真心的，没人骗人。问题不出在投票的人，出在投票怎么被组织。</p><p>米饭 &gt; 面条，面条 &gt; 饺子，饺子 &gt; 米饭。循环了。</p><p>三个理性的个体，拼出了一个非理性的集体。阿罗用数学证明：这不是偶然，是必然。</p><p>不过，下面四种情况不在阿罗不可能定理的讨论范围之内：</p><ol><li><strong>只有一个人：</strong> 不需要投票，也就不存在集体决策的问题。阿罗研究的是「一群人的偏好怎么加总」，一个人没有加总的对象。</li><li><strong>偏好一致：</strong> 如果三个同事都最喜欢米饭，那就直接吃了。不需要投票，也就不存在悖论。</li><li><strong>只有两个选项：</strong> 如果只有米饭和面条，两个选项只有一条线，A &gt; B 或 B &gt; A，不可能形成 A &gt; B &gt; A 的环。阿罗本人明确限定，定理讨论的是<strong>不少于三种方案</strong>。这也是为什么午饭例子里一旦把饺子加进来，事情才变得不对劲。</li><li><strong>用打分代替排序：</strong> 阿罗讨论的是排序式偏好——A &gt; B &gt; C，不说「好多少」。如果让每个人打分（米饭 5 分、面条 3 分、饺子 2 分），加总后取最高分，问题就变了。打分制可以避开循环，但这不是阿罗那个框架里的东西——它属于另一个讨论。</li></ol><p>前四条，阿罗管不到。但决策不存在决策环——恰好是阿罗讨论的核心：</p><ul><li><strong>决策不存在决策环</strong>放弃的是<strong>无限制定义域</strong>条件。不让偏好转圈，悖论也消失。</li></ul><p>你不需要放弃全部四个条件。放弃任意一个，不可能就没了。但代价是：独裁丢了公平，排除循环丢了偏好自由。<br>阿罗不是证明「投票没用」。他是证明：<strong>你设计不出一种投票规则，能在所有人、所有可能的偏好组合下，都同时满足那四个合理条件。</strong> 只要有一种偏好组合能让规则失灵——比如午饭例子里那个转圈结构——这个规则就不是万能的。</p><span id="more"></span><h2 id="四个听起来像废话的条件"><a href="#四个听起来像废话的条件" class="headerlink" title="四个听起来像废话的条件"></a>四个听起来像废话的条件</h2><p>阿罗说，一个理想的集体决策规则，应该同时满足四个条件：</p><ol><li><strong>帕累托法则：</strong> 如果所有人都认为 A 比 B 好，那集体就应该选 A。但现实中，全体一致太难了——三个人里有一个不说话，你就不知道他是同意还是懒得争。</li><li><strong>无限制定义域：</strong> 不能限制任何人的偏好。你喜欢饺子？可以。但现实中，总有人说「饺子不算正餐」「这个选项不讨论」——偏好还没被投，先被过滤了。</li><li><strong>无关备选项的独立性：</strong> 在米饭和面条之间选的时候，饺子不应该干扰结果。但现实中，选项一多，人就会变——本来坚定选米饭，听说还有饺子，突然觉得面条也不错。</li><li><strong>非独裁：</strong> 不能有一个人说了就算。但现实的情况往往就是：老板的权力大，往往代替员工做选择，员工的意见往往不重要</li></ol><p>每一个单独看，都合理得像废话。阿罗证明了：这四个条件<strong>不可能同时满足</strong>。</p><h2 id="所以民主没用了吗？"><a href="#所以民主没用了吗？" class="headerlink" title="所以民主没用了吗？"></a>所以民主没用了吗？</h2><p>总有人把阿罗不可能定理当成「民主无效」的证据。不是的。</p><p>「不可能」说的是——在极其苛刻的条件下，找不到完美的投票规则。不是说所有投票都没意义。</p><p>阿罗插了一个路标：<strong>此路不通</strong>。此路不通，可以绕。后来的诺奖得主森、马斯金，都是通过放松阿罗的前提条件（比如限制某些冷僻排序），找到了绕路的方法。</p><p>其实，阿罗不可能定理更多是一种「边界提醒」。它不是说投票没意义，而是说投票有一个隐藏的前提：<strong>大家得先在目的上达成一致。</strong></p><p>回到午饭例子。如果三个同事的目标都是「吃饱、省钱、快点吃完」，那选米饭还是面条只是手段之争——可以投票，可以妥协，最终吃什么都行。但如果同事甲的目标是省钱，同事乙的目标是吃爽，同事丙的目标是吃健康——那阿罗不可能定理就不适用了。</p><h2 id="阿罗这个人"><a href="#阿罗这个人" class="headerlink" title="阿罗这个人"></a>阿罗这个人</h2><p>1921 年生于纽约，犹太移民后代。51 岁拿诺贝尔奖，是当时最年轻的诺奖经济学得主。</p><p>他证明了「一般均衡」——亚当·斯密靠直觉提出的「看不见的手」，被阿罗用数学放在了稳固的地基上。经济学界对他几乎有一个共识：阿罗的研究，可以折成好几个诺奖。</p><p>有一个细节。朋友想测试他是不是真的什么都知道，让他去参加一个聚会。阿罗推开门，发现满屋子的人都在讨论<strong>企鹅</strong>——一个冷门到不能再冷门的领域。他想都没想，马上发表了一篇演讲，专业程度折服了一屋子企鹅学家。</p><p>但他的成名作——不可能定理——最初的动机不是政治，是钱。</p><p>阿罗研究厂商理论时发现：厂商不是一个人，股东有好几个。每个股东都想利润最大化，但每个人主张的方案不一样——扩产、压成本、加研发投入，各有各的道理。厂商在做生产决策时，本质上是一次投票。怎么投？</p><p>他一头钻进去，捣鼓出了不可能定理。发表之后，才有读者告诉他：法国人孔多塞几百年前就想过类似的问题。</p><p>阿罗数学极好，但当时读书不多。书读得不多的人，有时候反而能绕开前人的设限，看到别人看不到的东西。后来他成了通才，什么书都读——企鹅都能讲。</p><h2 id="不只是民主投票的问题"><a href="#不只是民主投票的问题" class="headerlink" title="不只是民主投票的问题"></a>不只是民主投票的问题</h2><p><strong>个体理性，加起来未必集体理性。</strong></p><p>这不只是政治学的事。你想想：</p><ul><li>三个产品经理投票决定功能优先级。</li><li>五个投资人投票决定投哪家公司。</li><li>一个团队用「少数服从多数」决定技术方案。</li></ul><p>只要有三个人、三个选项，就有可能踩进同一个坑：投票结果不一定取决于每个人的偏好，而取决于谁决定了议程。</p>]]>
+    </content>
+    <id>https://blog.yangricky.com/2026/05/04/arrow-impossibility-theorem/</id>
+    <link href="https://blog.yangricky.com/2026/05/04/arrow-impossibility-theorem/"/>
+    <published>2026-05-04T00:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>同事中午出去吃饭。三个选项：米饭、面条、饺子。</p>
+<p>同事甲：米饭 &gt; 面条 &gt; 饺子<br>同事乙：饺子 &gt; 米饭 &gt; 面条<br>同事丙：面条 &gt; 饺子 &gt; 米饭</p>
+<p>每个人的偏好都是理性的——同事甲觉得米饭比面条好，面条比饺子好，所以米饭肯定比饺子好。这叫<strong>可传递性</strong>。同事乙和同事丙也一样。</p>
+<p>如果直接三选一，一人一票，平局——谁也吃不上了。</p>
+<p>于是有人说：「先把米饭和面条比一下，赢的再去和饺子比。」</p>
+<ul>
+<li>米饭 vs 面条 → 米饭赢（同事甲、同事乙选米饭，同事丙选面条）</li>
+<li>米饭 vs 饺子 → 饺子赢（同事乙、同事丙选饺子，同事甲选米饭）</li>
+</ul>
+<p>→ 吃饺子。</p>
+<p>但如果换个议程：「先把面条和饺子比。」</p>
+<ul>
+<li>面条 vs 饺子 → 面条赢（同事甲、同事丙选面条，同事乙选饺子）</li>
+<li>面条 vs 米饭 → 米饭赢（同事甲、同事乙选米饭，同事丙选面条）</li>
+</ul>
+<p>→ 吃米饭。</p>
+<p><strong>同样的三个人，同样的偏好。议程不同，结果不同。</strong></p>
+<p>而且每一轮大家投的都是真心的，没人骗人。问题不出在投票的人，出在投票怎么被组织。</p>
+<p>米饭 &gt; 面条，面条 &gt; 饺子，饺子 &gt; 米饭。循环了。</p>
+<p>三个理性的个体，拼出了一个非理性的集体。阿罗用数学证明：这不是偶然，是必然。</p>
+<p>不过，下面四种情况不在阿罗不可能定理的讨论范围之内：</p>
+<ol>
+<li><strong>只有一个人：</strong> 不需要投票，也就不存在集体决策的问题。阿罗研究的是「一群人的偏好怎么加总」，一个人没有加总的对象。</li>
+<li><strong>偏好一致：</strong> 如果三个同事都最喜欢米饭，那就直接吃了。不需要投票，也就不存在悖论。</li>
+<li><strong>只有两个选项：</strong> 如果只有米饭和面条，两个选项只有一条线，A &gt; B 或 B &gt; A，不可能形成 A &gt; B &gt; A 的环。阿罗本人明确限定，定理讨论的是<strong>不少于三种方案</strong>。这也是为什么午饭例子里一旦把饺子加进来，事情才变得不对劲。</li>
+<li><strong>用打分代替排序：</strong> 阿罗讨论的是排序式偏好——A &gt; B &gt; C，不说「好多少」。如果让每个人打分（米饭 5 分、面条 3 分、饺子 2 分），加总后取最高分，问题就变了。打分制可以避开循环，但这不是阿罗那个框架里的东西——它属于另一个讨论。</li>
+</ol>
+<p>前四条，阿罗管不到。但决策不存在决策环——恰好是阿罗讨论的核心：</p>
+<ul>
+<li><strong>决策不存在决策环</strong>放弃的是<strong>无限制定义域</strong>条件。不让偏好转圈，悖论也消失。</li>
+</ul>
+<p>你不需要放弃全部四个条件。放弃任意一个，不可能就没了。但代价是：独裁丢了公平，排除循环丢了偏好自由。<br>阿罗不是证明「投票没用」。他是证明：<strong>你设计不出一种投票规则，能在所有人、所有可能的偏好组合下，都同时满足那四个合理条件。</strong> 只要有一种偏好组合能让规则失灵——比如午饭例子里那个转圈结构——这个规则就不是万能的。</p>]]>
+    </summary>
+    <title>阿罗不可能定理：为什么三个理性的人，凑在一起会变得不理性？</title>
+    <updated>2026-05-02T15:18:51.206Z</updated>
+  </entry>
   <entry>
     <author>
       <name>迷途书童</name>
@@ -493,32 +544,6 @@
 </ul>]]>
     </summary>
     <title>尘埃落定-k8s</title>
-    <updated>2024-02-26T15:09:46.517Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>迷途书童</name>
-    </author>
-    <category term="虚拟化" scheme="https://blog.yangricky.com/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
-    <category term="虚拟化" scheme="https://blog.yangricky.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
-    <category term="容器" scheme="https://blog.yangricky.com/tags/%E5%AE%B9%E5%99%A8/"/>
-    <content>
-      <![CDATA[<p>从第一次接触Docker到现在大概也有两年多了, 基本上停留在用的层面.<br>现在是时候回顾一下这项革命式的技术了.</p><ul><li>什么是Docker?</li><li>为什么是Docker?</li><li>Docker是如何实现的？</li><li>Docker的实践</li><li>Docker的未来</li></ul><span id="more"></span><h2 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker?"></a>什么是Docker?</h2><p><img src="/images/2020/docker.png"><br>Docker是一种虚拟化技术，可以实现资源的隔离.<br>在我和朋友的交流中，我对Docker官方Logo挑过刺， 原因是</p><ul><li>docker的英文原含义是码头工人, Docker的logo没体现这一角色</li><li>这个logo上面的的集装箱代表的是一种隔离，但不能表面这是Docker，虚拟机也能隔离，也可以是集装箱啊.</li></ul><h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>Docker的前身是Linux容器(LXC), 但LXC本身比较复杂，不易于管理和使用。</p><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>Docker有三大核心概念</p><ul><li>Image - 可以理解为一个文件，这个文件包含了程序，和相应的环境.<ul><li>一个镜像可以代表特定的目的。比如最简单的镜像就是copy文件</li><li>镜像是分层次的。分层的好处就是镜像可以被复用。</li></ul></li><li>Container - 镜像运行起来可以看作是容器。<ul><li>有自己的root文件系统</li><li>有自己的网络配置</li><li>有自己的进程空间</li><li>从操作系统的角度来看， 每个容器都是docker daemon的子进程。</li><li>从容器的行为来看，对于运行在容器内的进程来说，容器就是像是操作系统。 有句俗话，如果一个动物走起来像鸭子，叫起来像鸭子，游泳起来也像鸭子，那么它就是鸭子</li></ul></li><li>Repository - 专门用来存放镜像的地方, 所以要获得一个镜像需要知道三种类型的信息<ul><li>仓库名</li><li>镜像名</li><li>镜像的版本</li></ul></li></ul><h2 id="为什么是Docker"><a href="#为什么是Docker" class="headerlink" title="为什么是Docker?"></a>为什么是Docker?</h2><h3 id="Docker和虚拟机的区别"><a href="#Docker和虚拟机的区别" class="headerlink" title="Docker和虚拟机的区别"></a>Docker和虚拟机的区别</h3><p><img src="/images/2020/docker-vs-vm.png"><br>虚拟机和Docker一样可以做到资源隔离，那为什么是Docker笑到最后呢？<br>虚拟机模拟的是硬件，在模拟的硬件基础上，安装操作系统，运行程序。<br>Docker没有模拟硬件，直接依赖于宿主的内核.</p><ul><li>启动速度。Docker启动速度约等于本地进程，虚拟机起码要10几秒以上.</li><li>占用资源。假设一个进程是10M, 如果用虚拟机启动，占用的内存资源起码好几百兆，因为虚拟机是整个操作系统的模拟。如果用Docker, 相当于在进程外面包了一个壳,充其量占用的是几十兆的资源.</li></ul><p>虚拟机的优点是能提供完整的操作系统内核，但Docker没有内核，可以认为Docker没有魂，采用了某些技巧让使用者看起来像虚拟机.</p><p>根据10倍好理论，一个事物要代替另外一个事物，仅仅是好一点是不够的，要好就要10倍以上.</p><h3 id="Docker的实际应用"><a href="#Docker的实际应用" class="headerlink" title="Docker的实际应用"></a>Docker的实际应用</h3><ul><li>构建微服务</li><li>让开发和运维之间职责分离和明确，不会打架.<ul><li>保证各地方环境的一致性</li><li>不会出现那种在本地程序是好的，怎么到了开发环境就报错这种情况. 一般来说，程序员只关心代码和本地开发环境，至于怎么上QA, Staging, Live，这些事情不是程序员关心的。</li></ul></li></ul><h2 id="Docker是如何实现的？"><a href="#Docker是如何实现的？" class="headerlink" title="Docker是如何实现的？"></a>Docker是如何实现的？</h2><h3 id="Docker隔离资源原理"><a href="#Docker隔离资源原理" class="headerlink" title="Docker隔离资源原理"></a>Docker隔离资源原理</h3><ul><li>Namespaces - 让进程看来拥有自己的资源。有以下6种隔离<ul><li>主机名和域名</li><li>进程间通信</li><li>进程号</li><li>网络</li><li>文件系统</li><li>用户管理</li></ul></li><li>CGroups -  Linux Control Group. 光隔离还没有用，因为进程还是可以无限制访问宿主加上的资源<ul><li>限制内存</li><li>限制CPU</li><li>限制磁盘</li><li>限制网络</li><li>局限性<ul><li>&#x2F;proc目录下的文件记录的是宿主机的内核运行的信息，会造成内核信息的泄露。</li></ul></li></ul></li><li>rootfs<ul><li>包含了一个操作系统的文件,配置和目录，但不包含内核，内核用的还是宿主机的。</li><li>rootfs让环境的一致性是成为了可能.</li><li>Windows上的Docker和Mac上的Docker因为没有Linux内核，只能基于虚拟化技术来完成. 所以一开始在windows接触Docker的时候，不知道为什么要安装一个虚拟机.</li></ul></li><li>一些事实<ul><li>无论怎么隔离，这些进程是共享宿主机的内核。所以在windows宿主机上运行linux容器，或者在低版本的linux宿主机上运行高版本的linux容器是行不通的</li><li>Docker容器内修改时间，目前来看不会导致宿主机Mac的时间被修改.</li></ul></li></ul><p>  所以一个容器就等于宿主机上启动了一个进程</p><ul><li>这个进程启用了多个Namespace</li><li>受 CGroup控制</li></ul><p>  <img src="/images/2020/dance.png"><br>  限制这个理念也正是我之前提到的系统的约束，戴着脚镣跳舞才能守规矩.</p><h2 id="Docker的实践"><a href="#Docker的实践" class="headerlink" title="Docker的实践"></a>Docker的实践</h2><h3 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h3><ul><li>构建镜像 - 前提是有Dockerfile存在</li></ul>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ricky:0.0.1 .</span><br></pre></td></tr></table></figure><ul><li>查看镜像</li></ul>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker image list</span><br><span class="line">或</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><ul><li>启动镜像</li></ul>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -t -i ricky:0.0.1 /bin/bash</span><br></pre></td></tr></table></figure><ul><li>查看Container</li></ul>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">运行中的容器</span><br><span class="line">docker ps</span><br><span class="line">或</span><br><span class="line">docker container ls</span><br><span class="line">所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">或</span><br><span class="line">docker container ls -a</span><br></pre></td></tr></table></figure><h2 id="Docker的未来"><a href="#Docker的未来" class="headerlink" title="Docker的未来"></a>Docker的未来</h2><p>Docker的启动速度接近于本地进程了，所以在启动速度这块未来不可能有大的进展了.<br>Docker需要做的是规范公用镜像，让公用镜像更小，更安全。<br>Docker如果运行在物理机，如何保证Docker内部的东西不暴露给外界，且不侵害到物理机呢？<br>Docker需要强大它的生态圈</p>]]>
-    </content>
-    <id>https://blog.yangricky.com/2020/09/21/docker/</id>
-    <link href="https://blog.yangricky.com/2020/09/21/docker/"/>
-    <published>2020-09-21T15:31:00.000Z</published>
-    <summary>
-      <![CDATA[<p>从第一次接触Docker到现在大概也有两年多了, 基本上停留在用的层面.<br>现在是时候回顾一下这项革命式的技术了.</p>
-<ul>
-<li>什么是Docker?</li>
-<li>为什么是Docker?</li>
-<li>Docker是如何实现的？</li>
-<li>Docker的实践</li>
-<li>Docker的未来</li>
-</ul>]]>
-    </summary>
-    <title>Docker初回忆</title>
     <updated>2024-02-26T15:09:46.517Z</updated>
   </entry>
 </feed>
