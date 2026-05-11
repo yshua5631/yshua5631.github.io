@@ -27,7 +27,7 @@
 <meta property="og:description" content=".stats-summary { display:flex; flex-wrap:wrap; gap:1.5em; margin:1em 0 2em; padding:1em 1.2em; background:#f7f8fa; border-radius:6px; }   .stats-summary .item { flex:1 1 auto; min-width:140px; }">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-02T11:09:20.530Z">
+<meta property="article:modified_time" content="2026-05-11T02:45:37.058Z">
 <meta property="article:author" content="迷途书童">
 <meta property="article:tag" content="哲学,思维,问题解决,后端,架构,数据库,分布式,Go,Java,NodeJs">
 <meta name="twitter:card" content="summary">
@@ -161,7 +161,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">1.</span> <span class="nav-text">📈 30 天访问趋势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">2.</span> <span class="nav-text">🌍 国家分布 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">3.</span> <span class="nav-text">📚 热门文章 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">4.</span> <span class="nav-text">🔗 来源 Top 10</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">1.</span> <span class="nav-text">📈 90 天访问趋势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">2.</span> <span class="nav-text">🌍 国家分布 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">3.</span> <span class="nav-text">📚 热门文章 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">4.</span> <span class="nav-text">🔗 来源 Top 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-tpl"><span class="nav-number">5.</span> <span class="nav-text">📡 服务节点</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,7 +176,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -187,7 +187,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -255,11 +255,11 @@
   <div class="stats-summary">
     <div class="item"><div class="label">总访问</div><div class="value" data-bind="total"></div></div>
     <div class="item"><div class="label">独立访客 (UTC)</div><div class="value" data-bind="totalUtc"></div></div>
-    <div class="meta">数据更新于 <span data-bind="fetchedAt"></span> · 每次发布博客时刷新</div>
+    <div class="meta">数据更新于 <span data-bind="fetchedAt"></span> · <span data-bind="refreshNote">每次发布博客时刷新</span></div>
   </div>
 
   <div class="stats-section">
-    <h2>📈 30 天访问趋势</h2>
+    <h2>📈 90 天访问趋势</h2>
     <div class="stats-chart-wrap"><canvas id="trend-chart"></canvas></div>
   </div>
 
@@ -278,7 +278,16 @@
     <ol class="stats-list" data-list="refs"></ol>
   </div>
 
-  <p style="margin-top:2em;font-size:.82em;opacity:.55;text-align:center">
+  <div class="stats-section">
+    <h2>📡 服务节点</h2>
+    <ul class="server-info" style="list-style:none;padding:0;margin:.5em 0;font-size:.92em">
+      <li style="padding:.35em 0;border-bottom:1px solid #f0f0f0"><span style="opacity:.6;display:inline-block;min-width:5em">IP</span><span data-bind="serverIp">--</span></li>
+      <li style="padding:.35em 0;border-bottom:1px solid #f0f0f0"><span style="opacity:.6;display:inline-block;min-width:5em">城市</span><span data-bind="serverCity">--</span></li>
+      <li style="padding:.35em 0"><span style="opacity:.6;display:inline-block;min-width:5em">国家</span><span data-bind="serverCountry">--</span></li>
+    </ul>
+  </div>
+
+  <p id="stats-attribution" style="margin-top:2em;font-size:.82em;opacity:.55;text-align:center">
     数据由 <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a> 提供 · 无 cookies / 无追踪 · <a href="https://shaohua.goatcounter.com/" target="_blank" rel="noopener">查看完整 dashboard</a>
   </p>
 </template>
@@ -315,13 +324,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">81k</span>
+    <span title="站点总字数">83k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:15</span>
   </span>
 </div>
 <div class="visitor-info" id="visitor-info" style="display:none">
@@ -372,9 +381,11 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
-<script data-goatcounter="https://shaohua.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-<script src="/js/goatcounter-display.js" defer></script>
+  
+  <script data-goatcounter="https://shaohua.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+  <script src="/js/goatcounter-display.js" defer></script>
+
 
 </body>
 </html>
